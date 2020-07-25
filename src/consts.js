@@ -1,0 +1,1 @@
+export const allowedPages = ['about', 'coffee', 'pictures', 'equipment', 'blog', 'home'];
