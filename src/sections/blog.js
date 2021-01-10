@@ -1,12 +1,9 @@
 import React from 'react';
+import UnderConstruction from '../sections/under_construction';
 
 function Blog() {
   return (
-    <div>
-      <header>
-          blog
-      </header>
-    </div>
+    <UnderConstruction />
   );
 }
 
