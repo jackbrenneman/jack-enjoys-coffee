@@ -1,73 +1,98 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import coffeeIcon from '../media/icons/coffee-icon.svg'
-import { allowedPages } from '../consts'
+import React, {useState} from 'react';
+import {NavLink} from 'react-router-dom';
+import {makeStyles} from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import AppBar from '@material-ui/core/AppBar';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Drawer from '@material-ui/core/Drawer';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import logo from '../media/icons/coffee-icon.png';
+import {drawerPages} from '../consts.js';
 
-const { Item, Link } = Nav
-const { Brand } = Navbar
+function TopNav() {
 
-function TopNav({ history }) {
-  const pathname = history.location.pathname
-  // The user is trying to access the initial page
-  const initialPage = pathname ? pathname.replace('/', '') : 'home'
-  // Determine if it's a page they're allowed to access; this will determine which tab is active
-  let defaultActiveKey = initialPage
-  if (!allowedPages.includes(initialPage)) {
-    defaultActiveKey = ''
-    history.replace('')
-  }
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      background: 'grey',
+    },
+    menuButton: {
+      color: 'white',
+      marginRight: '5%'
+    },
+    title: {
+      color: 'white',
+    },
+    navLink: {
+      textDecoration: 'none',
+      color: 'black'
+    },
+    activeNavLink: {
+      color: 'brown'
+    }
+  }));
+  const classes = useStyles();
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
+  };
+
+  const container = window !== undefined ? () => window.document.body : undefined;
+
+
   return (
-    <Container>
-      <Navbar expand="lg" fixed="top">
-        <Brand>
-          <Container fluid>
-            <Row>
-              <Col>
-                <img
-                  src={coffeeIcon}
-                  width="30"
-                  height="30"
-                  className="d-inline-block align-top"
-                  alt="coffee logo"
-                />
-              </Col>
-            </Row>
-          </Container>
-        </Brand>
-        <Nav
-          defaultActiveKey={defaultActiveKey}
-          fill
-          className="justify-content-center"
-          onSelect={(selectedKey) => history.push(selectedKey)}
+    <Box>
+      <AppBar className={classes.root} position="static" >
+        <Toolbar>
+          <IconButton className={classes.menuButton} disableRipple edge="start" color="inherit" aria-label="menu" size="small" onClick={handleDrawerToggle} >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title} >
+            jack-enjoys-coffee
+          </Typography>
+          <Box p={1} display="flex" justifyContent="center" >
+          <NavLink className={classes.navLink} to='/home'>
+            <img src={logo} alt="Coffee Logo" width="30px" height="30px" />
+          </NavLink>
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <nav className="Drawer" aria-label="side drawer">
+        <Drawer
+          container={container}
+          variant="temporary"
+          anchor="left"
+          open={drawerOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
         >
-          <Item>
-            <Link eventKey="">Home</Link>
-          </Item>
-          <Item>
-            <Link eventKey="coffee">Coffee</Link>
-          </Item>
-          <Item>
-            <Link eventKey="pictures">Pictures</Link>
-          </Item>
-          <Item>
-            <Link eventKey="equipment">Equipment</Link>
-          </Item>
-          <Item>
-            <Link eventKey="blog">Blog</Link>
-          </Item>
-        </Nav>
-      </Navbar>
-    </Container>
+          <List>
+            {drawerPages.map(({name, icon, path}) => (
+              <NavLink className={classes.navLink} key={name} to={path} onClick={handleDrawerToggle} activeClassName={classes.activeNavLink}>
+                <Box pr={2}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      {icon}
+                    </ListItemIcon>
+                    <ListItemText primary={name} />
+                  </ListItem>
+                </Box>
+              </NavLink>
+            ))}
+          </List>
+        </Drawer>
+      </nav>
+    </Box>
   )
-}
+};
 
-TopNav.propTypes = {
-  history: PropTypes.object.isRequired,
-}
-
-export default TopNav
+export default TopNav;
