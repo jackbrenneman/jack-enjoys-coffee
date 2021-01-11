@@ -9,6 +9,7 @@ function Home() {
   const useStyles = makeStyles((theme) => ({
     home: {
       backgroundColor: '#EEEEEE',
+      minHeight: '100vh',
     },
   }));
   const classes = useStyles();
