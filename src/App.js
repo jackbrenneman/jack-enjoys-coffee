@@ -8,11 +8,16 @@ import Blog from './sections/blog.js';
 import Coffee from './sections/coffee.js';
 import Equipment from './sections/equipment.js';
 import Data from './sections/data.js';
+import JournalInput from './sections/journal_input.js';
 
 const history = createBrowserHistory();
 
 function App() {
-  let theme = createMuiTheme();
+  const theme = createMuiTheme({
+    typography: {
+      fontFamily: ['Roboto Condensed'].join(','),
+    },
+  });
   // And this is more specific to what I like
   theme.typography.h2 = {
     fontSize: '3.75rem',
@@ -20,9 +25,9 @@ function App() {
       fontSize: '1.5rem',
       fontWeight: '400',
     },
-    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
     fontWeight: '300',
     lineHeight: '1.2',
+    fontFamily: ['Roboto Condensed'].join(','),
     letterSpacing: '-0.00833em',
   };
 
@@ -42,6 +47,9 @@ function App() {
           </Route>
           <Route exact path="/blog">
             <Blog />
+          </Route>
+          <Route exact path="/input">
+            <JournalInput />
           </Route>
           <Route path="/">
             <Home />
