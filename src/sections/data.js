@@ -27,7 +27,7 @@ function Data() {
             <Box p={2}>
               <NavLink
                 className={classes.navLink}
-                to={'/input'}
+                to={'/entry'}
                 activeClassName={classes.activeNavLink}
               >
                 <Box p={1}>

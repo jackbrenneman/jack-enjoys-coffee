@@ -8,7 +8,7 @@ import Blog from './sections/blog.js';
 import Coffee from './sections/coffee.js';
 import Equipment from './sections/equipment.js';
 import Data from './sections/data.js';
-import JournalInput from './sections/journal_input.js';
+import CoffeeEntryInputContainer from './sections/inputs/coffee_data_entry_container.js';
 
 const history = createBrowserHistory();
 
@@ -48,8 +48,8 @@ function App() {
           <Route exact path="/blog">
             <Blog />
           </Route>
-          <Route exact path="/input">
-            <JournalInput />
+          <Route exact path="/entry">
+            <CoffeeEntryInputContainer />
           </Route>
           <Route path="/">
             <Home />
