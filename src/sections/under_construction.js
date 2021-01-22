@@ -8,7 +8,7 @@ function UnderConstruction() {
   const useStyles = makeStyles((theme) => ({
     home: {
       backgroundColor: '#EEEEEE',
-      height: '100vh',
+      minHeight: '100vh',
     },
   }));
   const classes = useStyles();

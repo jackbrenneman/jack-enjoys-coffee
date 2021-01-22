@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import { drawerPages } from '../consts.js';
 
 function Footer() {
@@ -31,7 +32,9 @@ function Footer() {
                 activeClassName={classes.activeNavLink}
               >
                 <Box>{icon}</Box>
-                <Box>{name}</Box>
+                <Box>
+                  <Typography>{name}</Typography>
+                </Box>
               </NavLink>
             </Box>
           </Grid>
