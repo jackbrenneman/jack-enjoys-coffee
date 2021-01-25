@@ -6,11 +6,13 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import GeneralInfoInput from './general_info_input.js';
 import CoffeeInfoInput from './coffee_info_input.js';
-import BrewInfoInput from './brew_info_input.js';
+import BrewInfoInput from './brew_info/brew_info_input.js';
+import NotesInput from './notes_input.js';
 import logo from '../../media/icons/coffee-icon.png';
 import { defaultCoffeeEntry } from '../../consts.js';
 
@@ -20,9 +22,8 @@ function CoffeeDataEntryContainer() {
       backgroundColor: '#EEEEEE',
       minHeight: '100vh',
     },
-    formSection: {
-      outline: '2px solid white',
-      '&-title': {},
+    section: {
+      maxWidth: '800px',
     },
     submitButton: {
       background: 'linear-gradient(45deg, grey 30%, #DC7633 90%)',
@@ -44,45 +45,82 @@ function CoffeeDataEntryContainer() {
 
   // State used for the entire entry form
   const [coffeeEntry, setCoffeeEntry] = useState(defaultCoffeeEntry);
-  console.log(coffeeEntry);
 
-  const handleSubmit = () => {
-    console.log(`The current Coffee Entry is ${coffeeEntry}`);
-    return;
-  };
-
-  return (
-    <Box className={classes.page} p={4}>
-      <Box p={4} display="flex" justifyContent="center">
-        <Typography variant="h2" align="center">
-          New Coffee Entry
-        </Typography>
-      </Box>
-      <Box>
+  const sections = [
+    {
+      component: (
         <GeneralInfoInput
           coffeeEntry={coffeeEntry}
           setCoffeeEntry={setCoffeeEntry}
         />
+      ),
+      name: 'General Info',
+    },
+    {
+      component: (
         <CoffeeInfoInput
           coffeeEntry={coffeeEntry}
           setCoffeeEntry={setCoffeeEntry}
         />
+      ),
+      name: 'Coffee Info',
+    },
+    {
+      component: (
         <BrewInfoInput
           coffeeEntry={coffeeEntry}
           setCoffeeEntry={setCoffeeEntry}
         />
-        <Box p={4} display="flex" justifyContent="center">
+      ),
+      name: 'Brew Info',
+    },
+    {
+      component: (
+        <NotesInput coffeeEntry={coffeeEntry} setCoffeeEntry={setCoffeeEntry} />
+      ),
+      name: 'Notes',
+    },
+  ];
+
+  const handleSubmit = () => {
+    // TODO: save the coffee entry
+    return;
+  };
+
+  return (
+    <Grid
+      container
+      direction="column"
+      alignItems="center"
+      className={classes.page}
+    >
+      <Grid item xs={12}>
+        <Box p={4}>
+          <Typography variant="h2">New Coffee Entry</Typography>
+        </Box>
+      </Grid>
+      {sections.map(({ component, name }) => (
+        <Box p={2} className={classes.section} key={name}>
+          <Grid item xs={12}>
+            {component}
+          </Grid>
+        </Box>
+      ))}
+      <Grid item xs={12}>
+        <Box p={4}>
           <Button
             startIcon={coffeeIcon}
             endIcon={coffeeIcon}
             className={classes.submitButton}
             onClick={handleSubmit}
           >
-            <Typography variant="body1">Submit</Typography>
+            <Typography variant="body1" align="center">
+              Submit
+            </Typography>
           </Button>
         </Box>
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
   );
 }
 

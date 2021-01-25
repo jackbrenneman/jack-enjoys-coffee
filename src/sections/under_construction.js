@@ -1,3 +1,8 @@
+/**
+ * Under construction page to let people know it's being built
+ *
+ * @author Jack Brenneman
+ */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';

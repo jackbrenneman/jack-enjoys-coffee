@@ -7,113 +7,126 @@
  * @author Jack Brenneman
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
+import AutocompleteWrapper from './helpers/autocomplete_container.js';
+import {
+  coffeeEntryPropTypesShape,
+  processOptions,
+  roasterExamples,
+  originExamples,
+} from '../../consts.js';
 
 function CoffeeInfoInput({ coffeeEntry, setCoffeeEntry }) {
+  const { process } = coffeeEntry;
   const useStyles = makeStyles(() => ({
-    coffeeInfoInput: {
-      outline: '2px solid white',
-    },
-    box: {
-      padding: '4px',
+    form: {
+      width: '200px',
     },
   }));
 
   const classes = useStyles();
 
-  // TODO: possibly change this to only change state when the user is done typing or something. It works now tho so it's chill
-  const handleRoasterChange = (e) => {
+  const handleRoasterChange = (roaster) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      roaster: e.target.value,
+      roaster,
     });
   };
 
-  const handleOriginChange = (e) => {
+  const handleOriginChange = (origin) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      origin: e.target.value,
+      origin,
     });
   };
 
   const handleProcessChange = (e) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      process: e.target.value,
+      process: parseInt(e.target.value),
     });
   };
 
   return (
-    <Box p={2} className={classes.coffeeInfoInput}>
-      <Typography variant="h6" align="center">
-        Coffee Info
-      </Typography>
-      <Grid container align="center">
-        <Grid item xs={12} sm={6}>
-          <Typography variant="body1" align="center">
-            Roaster
-          </Typography>
-          <form autoComplete="off">
-            <TextField
-              id="outlined-basic"
-              label="Roaster"
-              variant="outlined"
+    <Grid container justify="center">
+      <Grid item xs={12}>
+        <Typography variant="h6" align="center">
+          Coffee Info
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Grid container align="center" spacing={2}>
+          <Grid item xs={12} sm={4}>
+            <Typography variant="body1" align="center">
+              Roaster
+            </Typography>
+            <AutocompleteWrapper
+              fieldName="roaster"
               onChange={handleRoasterChange}
+              options={roasterExamples}
+              textField={(params) => (
+                <TextField
+                  {...params}
+                  className={classes.form}
+                  id="outlined-text-field-roaster"
+                  label="Roaster"
+                  variant="outlined"
+                />
+              )}
             />
-          </form>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="body1" align="center">
-            Origin
-          </Typography>
-          <form autoComplete="off">
-            <TextField
-              id="outlined-basic"
-              label="Origin"
-              variant="outlined"
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <Typography variant="body1" align="center">
+              Origin
+            </Typography>
+            <AutocompleteWrapper
+              fieldName="origin"
               onChange={handleOriginChange}
+              options={originExamples}
+              textField={(params) => (
+                <TextField
+                  {...params}
+                  className={classes.form}
+                  id="outlined-text-field-origin"
+                  label="Origin"
+                  variant="outlined"
+                />
+              )}
             />
-          </form>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="body1" align="center">
-            Process
-          </Typography>
-          <form autoComplete="off">
-            <TextField
-              id="outlined-basic"
-              label="Process"
-              variant="outlined"
-              onChange={handleProcessChange}
-            />
-          </form>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <Typography variant="body1" align="center">
+              Process
+            </Typography>
+            <form autoComplete="off">
+              <TextField
+                className={classes.form}
+                id="outlined-select-process-native"
+                select
+                value={process}
+                onChange={handleProcessChange}
+                SelectProps={{
+                  native: true,
+                }}
+                variant="outlined"
+              >
+                {processOptions.map(({ name, value }) => (
+                  <option value={value} key={name}>
+                    {name}
+                  </option>
+                ))}
+              </TextField>
+            </form>
+          </Grid>
         </Grid>
       </Grid>
-    </Box>
+    </Grid>
   );
 }
 
-CoffeeInfoInput.propTypes = {
-  coffeeEntry: PropTypes.shape({
-    date: PropTypes.string,
-    timeOfDay: PropTypes.number,
-    roaster: PropTypes.string,
-    origin: PropTypes.string,
-    process: PropTypes.string,
-    method: PropTypes.string,
-    grinder: PropTypes.string,
-    water: PropTypes.string,
-    in: PropTypes.number,
-    out: PropTypes.number,
-    rating: PropTypes.number,
-    notes: PropTypes.string,
-  }).isRequired,
-  setCoffeeEntry: PropTypes.func.isRequired,
-};
+CoffeeInfoInput.propTypes = coffeeEntryPropTypesShape;
 
 export default CoffeeInfoInput;

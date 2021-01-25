@@ -1,3 +1,8 @@
+/**
+ * Top level component for the site
+ *
+ * @author Jack Brenneman
+ */
 import React from 'react';
 import { Router, Switch, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
