@@ -1,3 +1,8 @@
+/**
+ * All of the current coffee data for a user
+ *
+ * @author Jack Brenneman
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
