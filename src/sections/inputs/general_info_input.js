@@ -71,7 +71,7 @@ function GeneralInfoInput({ coffeeEntry, setCoffeeEntry }) {
             <form autoComplete="off">
               <TextField
                 className={classes.form}
-                id="outlined-select-process-native"
+                id="outlined-select-time-of-day-native"
                 select
                 value={timeOfDay}
                 onChange={handleTimeOfDayChange}

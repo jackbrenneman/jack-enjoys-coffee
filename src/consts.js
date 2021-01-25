@@ -48,17 +48,20 @@ const defaultTime = `${year}-${month > 9 ? month : `0${month}`}-${day}`;
 
 export const defaultCoffeeEntry = {
   date: defaultTime,
-  timeOfDay: 1,
+  timeOfDay: 0,
   roaster: '',
   origin: '',
-  process: 1,
-  method: 1,
+  process: 0,
+  method: 0,
+  brewer: 0,
+  drinkType: 0,
   grinder: '',
+  grindSetting: null,
   water: '',
   in: null,
   out: null,
-  rating: null,
-  notes: '',
+  rating: 8,
+  note: '',
 };
 
 export const coffeeEntryPropTypesShape = {
@@ -69,13 +72,15 @@ export const coffeeEntryPropTypesShape = {
     origin: PropTypes.string,
     process: PropTypes.number,
     method: PropTypes.number,
+    brewer: PropTypes.number,
     drinkType: PropTypes.number,
     grinder: PropTypes.string,
+    grindSetting: PropTypes.number,
     water: PropTypes.string,
     in: PropTypes.number,
     out: PropTypes.number,
     rating: PropTypes.number,
-    notes: PropTypes.string,
+    note: PropTypes.string,
   }).isRequired,
   setCoffeeEntry: PropTypes.func.isRequired,
 };
@@ -84,19 +89,19 @@ export const coffeeEntryPropTypesShape = {
 export const originExamples = [
   {
     name: 'Ethiopia',
-    value: 1,
+    value: 0,
   },
   {
     name: 'Yemen',
-    value: 2,
+    value: 1,
   },
   {
     name: 'Brazil',
-    value: 3,
+    value: 2,
   },
   {
     name: 'Costa Rica',
-    value: 4,
+    value: 3,
   },
 ];
 
@@ -104,23 +109,23 @@ export const originExamples = [
 export const roasterExamples = [
   {
     name: 'Little Wolf',
-    value: 1,
+    value: 0,
   },
   {
     name: 'Tandem',
-    value: 2,
+    value: 1,
   },
   {
     name: 'Abracadabra',
-    value: 3,
+    value: 2,
   },
   {
     name: 'George Howell',
-    value: 4,
+    value: 3,
   },
   {
     name: 'Square Mile',
-    value: 5,
+    value: 4,
   },
 ];
 
@@ -128,20 +133,24 @@ export const roasterExamples = [
 export const waterExamples = [
   {
     name: 'Boston Tap',
-    value: 1,
+    value: 0,
   },
   {
     name: 'Vermont Tap',
-    value: 2,
+    value: 1,
   },
   {
     name: 'Homemade',
-    value: 3,
+    value: 2,
   },
 ];
 
 // TODO: eventually get this from the backend
 export const grinderExamples = [
+  {
+    name: 'Comandante Red Clix',
+    value: 0,
+  },
   {
     name: 'Comandante',
     value: 1,
@@ -160,162 +169,317 @@ export const grinderExamples = [
 export const methodOptions = [
   {
     name: 'Espresso',
-    value: 1,
+    value: 0,
   },
   {
     name: 'Pour Over',
-    value: 2,
+    value: 1,
   },
   {
     name: 'Aeropress',
-    value: 3,
+    value: 2,
   },
   {
     name: 'French Press',
-    value: 4,
+    value: 3,
   },
   {
     name: 'Cold Brew',
-    value: 5,
+    value: 4,
   },
 ];
+
+const espressoBrewerOptions = [
+  {
+    name: 'Flair Pro 2',
+    value: 0,
+    method: 0,
+  },
+  {
+    name: 'Flair Signature 2',
+    value: 1,
+    method: 0,
+  },
+  {
+    name: 'Lelit Mara',
+    value: 2,
+    method: 0,
+  },
+];
+
+const pourOverBrewerOptions = [
+  {
+    name: 'Stagg X',
+    value: 0,
+    method: 1,
+  },
+  {
+    name: 'Stagg XF',
+    value: 1,
+    method: 1,
+  },
+  {
+    name: 'Kalita Wave',
+    value: 2,
+    method: 1,
+  },
+  {
+    name: 'V60',
+    value: 3,
+    method: 1,
+  },
+];
+
+const aeroPressBrewerOptions = [
+  {
+    name: 'Normal',
+    value: 0,
+    method: 2,
+  },
+  {
+    name: 'Inverted',
+    value: 1,
+    method: 2,
+  },
+  {
+    name: 'Prismo',
+    value: 2,
+    method: 2,
+  },
+];
+
+const frenchPressBrewerOptions = [
+  {
+    name: 'Espro P7',
+    value: 0,
+    method: 3,
+  },
+];
+
+const coldBrewBrewerOptions = [
+  {
+    name: 'French Press',
+    value: 0,
+    method: 4,
+  },
+];
+
+export const methodToBrewerMap = {
+  0: espressoBrewerOptions,
+  1: pourOverBrewerOptions,
+  2: aeroPressBrewerOptions,
+  3: frenchPressBrewerOptions,
+  4: coldBrewBrewerOptions,
+};
 
 // TODO: eventually get this from the backend
 const espressoDrinkOptions = [
   {
     name: 'Straight Espresso',
-    value: 1,
-    method: 1,
+    value: 0,
+    method: 0,
   },
   {
     name: 'Americano',
-    value: 2,
-    method: 1,
+    value: 1,
+    method: 0,
   },
   {
     name: 'Cortado',
-    value: 3,
-    method: 1,
+    value: 2,
+    method: 0,
   },
   {
     name: 'Flat White',
-    value: 4,
-    method: 1,
+    value: 3,
+    method: 0,
   },
   {
     name: 'Cappacino',
-    value: 5,
-    method: 1,
+    value: 4,
+    method: 0,
   },
   {
     name: 'Latte',
-    value: 6,
-    method: 1,
+    value: 5,
+    method: 0,
   },
   {
     name: 'Mocha',
-    value: 7,
-    method: 1,
+    value: 6,
+    method: 0,
   },
   {
     name: 'Iced Latte',
-    value: 8,
-    method: 1,
+    value: 7,
+    method: 0,
   },
 ];
 
-export const pourOverDrinkOptions = [
+const pourOverDrinkOptions = [
   {
     name: 'Normal',
-    value: 1,
-    method: 2,
+    value: 0,
+    method: 1,
   },
   {
     name: 'Japanese Iced Coffee',
-    value: 2,
-    method: 2,
+    value: 1,
+    method: 1,
   },
 ];
 
 const aeroPressDrinkOptions = [
   {
     name: 'Normal',
-    value: 1,
-    method: 3,
+    value: 0,
+    method: 2,
   },
   {
     name: 'Dilution',
-    value: 2,
-    method: 3,
+    value: 1,
+    method: 2,
   },
 ];
 
 const frenchPressDrinkOptions = [
   {
     name: 'Normal',
-    value: 1,
-    method: 4,
+    value: 0,
+    method: 3,
   },
 ];
 
 const coldBrewDrinkOptions = [
   {
     name: 'Normal',
-    value: 1,
-    method: 5,
+    value: 0,
+    method: 4,
   },
   {
     name: 'Nitro',
-    value: 1,
-    method: 5,
+    value: 0,
+    method: 4,
   },
 ];
 
-const methodToDrinkMap = {
-  1: espressoDrinkOptions,
-  2: pourOverDrinkOptions,
-  3: aeroPressDrinkOptions,
-  4: frenchPressDrinkOptions,
-  5: coldBrewDrinkOptions,
-};
-
-/**
- * Gets the correct drink types based on the method selected
- */
-export const getDrinkOptions = (methodValue) => {
-  return methodToDrinkMap[methodValue];
+export const methodToDrinkMap = {
+  0: espressoDrinkOptions,
+  1: pourOverDrinkOptions,
+  2: aeroPressDrinkOptions,
+  3: frenchPressDrinkOptions,
+  4: coldBrewDrinkOptions,
 };
 
 export const timeOfDayOptions = [
   {
     name: 'Morning',
-    value: 1,
+    value: 0,
   },
   {
     name: 'Afternoon',
-    value: 2,
+    value: 1,
   },
   {
     name: 'Night',
-    value: 3,
+    value: 2,
   },
 ];
 
 export const processOptions = [
   {
     name: 'Washed',
-    value: 1,
+    value: 0,
   },
   {
     name: 'Natural',
-    value: 2,
+    value: 1,
   },
   {
     name: 'Honey',
-    value: 3,
+    value: 2,
   },
   {
     name: 'Other',
+    value: 3,
+  },
+];
+
+export const ratingOptions = [
+  {
+    name: 1,
+    value: 0,
+  },
+  {
+    name: 1.5,
+    value: 1,
+  },
+  {
+    name: 2,
+    value: 2,
+  },
+  {
+    name: 2.5,
+    value: 3,
+  },
+  {
+    name: 3,
     value: 4,
+  },
+  {
+    name: 3.5,
+    value: 5,
+  },
+  {
+    name: 4,
+    value: 6,
+  },
+  {
+    name: 4.5,
+    value: 7,
+  },
+  {
+    name: 5,
+    value: 8,
+  },
+  {
+    name: 5.5,
+    value: 9,
+  },
+  {
+    name: 6,
+    value: 10,
+  },
+  {
+    name: 6.5,
+    value: 11,
+  },
+  {
+    name: 7,
+    value: 12,
+  },
+  {
+    name: 7.5,
+    value: 13,
+  },
+  {
+    name: 8,
+    value: 14,
+  },
+  {
+    name: 8.5,
+    value: 15,
+  },
+  {
+    name: 9,
+    value: 16,
+  },
+  {
+    name: 9.5,
+    value: 17,
+  },
+  {
+    name: 10,
+    value: 18,
   },
 ];

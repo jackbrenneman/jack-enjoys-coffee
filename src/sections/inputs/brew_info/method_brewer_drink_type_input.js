@@ -8,14 +8,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import {
-  coffeeEntryPropTypesShape,
-  methodOptions,
-  getDrinkOptions,
-} from '../../../consts.js';
+import { coffeeEntryPropTypesShape, methodOptions } from '../../../consts.js';
+import { getBrewerOptions, getDrinkOptions } from '../helpers/input_helpers.js';
 
-function MethodAndDrinkTypeInput({ coffeeEntry, setCoffeeEntry }) {
-  const { method, drinkType } = coffeeEntry;
+function MethodBrewerAndDrinkTypeInput({ coffeeEntry, setCoffeeEntry }) {
+  const { method, brewer, drinkType } = coffeeEntry;
   const useStyles = makeStyles(() => ({
     form: {
       width: '200px',
@@ -25,14 +22,15 @@ function MethodAndDrinkTypeInput({ coffeeEntry, setCoffeeEntry }) {
   const classes = useStyles();
 
   const drinkOptions = getDrinkOptions(method);
+  const brewerOptions = getBrewerOptions(method);
 
-  // TODO: possibly change these to only change state when the user is done typing or something. It works now tho so it's chill
   const handleMethodChange = (e) => {
     setCoffeeEntry({
       ...coffeeEntry,
       method: parseInt(e.target.value),
-      // Change drinkType back to the default value
-      drinkType: 1,
+      // Change drinkType and brewer back to their defaults
+      drinkType: 0,
+      brewer: 0,
     });
   };
 
@@ -40,6 +38,14 @@ function MethodAndDrinkTypeInput({ coffeeEntry, setCoffeeEntry }) {
     setCoffeeEntry({
       ...coffeeEntry,
       drinkType: parseInt(e.target.value),
+    });
+  };
+
+  const handleBrewerChange = (e) => {
+    setCoffeeEntry({
+      ...coffeeEntry,
+      brewer: parseInt(e.target.value),
+      //
     });
   };
 
@@ -62,6 +68,30 @@ function MethodAndDrinkTypeInput({ coffeeEntry, setCoffeeEntry }) {
             variant="outlined"
           >
             {methodOptions.map(({ name, value }) => (
+              <option value={value} key={name}>
+                {name}
+              </option>
+            ))}
+          </TextField>
+        </form>
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <Typography variant="body1" align="center">
+          Brewer
+        </Typography>
+        <form autoComplete="off">
+          <TextField
+            className={classes.form}
+            id="outlined-select-brewer-native"
+            select
+            value={brewer}
+            onChange={handleBrewerChange}
+            SelectProps={{
+              native: true,
+            }}
+            variant="outlined"
+          >
+            {brewerOptions.map(({ name, value }) => (
               <option value={value} key={name}>
                 {name}
               </option>
@@ -97,6 +127,6 @@ function MethodAndDrinkTypeInput({ coffeeEntry, setCoffeeEntry }) {
   );
 }
 
-MethodAndDrinkTypeInput.propTypes = coffeeEntryPropTypesShape;
+MethodBrewerAndDrinkTypeInput.propTypes = coffeeEntryPropTypesShape;
 
-export default MethodAndDrinkTypeInput;
+export default MethodBrewerAndDrinkTypeInput;

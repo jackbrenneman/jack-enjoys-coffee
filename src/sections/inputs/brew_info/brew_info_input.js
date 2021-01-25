@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import AutocompleteWrapper from '../helpers/autocomplete_container.js';
-import MethodAndDrinkTypeInput from '../../inputs/brew_info/method_to_drink_type_input.js';
+import MethodBrewerAndDrinkTypeInput from './method_brewer_drink_type_input.js';
 import {
   coffeeEntryPropTypesShape,
   waterExamples,
@@ -35,6 +35,13 @@ function BrewInfoInput({ coffeeEntry, setCoffeeEntry }) {
     setCoffeeEntry({
       ...coffeeEntry,
       grinder,
+    });
+  };
+
+  const handleGrindSettingChange = (e) => {
+    setCoffeeEntry({
+      ...coffeeEntry,
+      grindSetting: parseInt(e.target.value),
     });
   };
 
@@ -69,7 +76,7 @@ function BrewInfoInput({ coffeeEntry, setCoffeeEntry }) {
       <Grid item xs={12}>
         <Grid container align="center" justify="center" spacing={2}>
           <Grid item xs={12}>
-            <MethodAndDrinkTypeInput
+            <MethodBrewerAndDrinkTypeInput
               coffeeEntry={coffeeEntry}
               setCoffeeEntry={setCoffeeEntry}
             />
@@ -92,6 +99,20 @@ function BrewInfoInput({ coffeeEntry, setCoffeeEntry }) {
                 />
               )}
             />
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <Typography variant="body1" align="center">
+              Grind Setting
+            </Typography>
+            <form autoComplete="off">
+              <TextField
+                className={classes.form}
+                id="outlined-basic"
+                label="Grind Setting"
+                variant="outlined"
+                onChange={handleGrindSettingChange}
+              />
+            </form>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Typography variant="body1" align="center">
