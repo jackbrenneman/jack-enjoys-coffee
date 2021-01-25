@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import GeneralInfoInput from './general_info_input.js';
 import CoffeeInfoInput from './coffee_info_input.js';
 import BrewInfoInput from './brew_info/brew_info_input.js';
+import RatingInput from './rating_input.js';
 import NotesInput from './notes_input.js';
 import logo from '../../media/icons/coffee-icon.png';
 import { defaultCoffeeEntry } from '../../consts.js';
@@ -73,6 +74,15 @@ function CoffeeDataEntryContainer() {
         />
       ),
       name: 'Brew Info',
+    },
+    {
+      component: (
+        <RatingInput
+          coffeeEntry={coffeeEntry}
+          setCoffeeEntry={setCoffeeEntry}
+        />
+      ),
+      name: 'Rating',
     },
     {
       component: (
