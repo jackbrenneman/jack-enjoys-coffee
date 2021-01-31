@@ -12,12 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import AutocompleteWrapper from './helpers/autocomplete_container.js';
-import {
-  coffeeEntryPropTypesShape,
-  processOptions,
-  roasterExamples,
-  originExamples,
-} from '../../consts.js';
+import { coffeeEntryPropTypesShape } from '../../consts.js';
+import { roasterData, originData, processData } from '../../temp_db.js';
 
 function CoffeeInfoInput({ coffeeEntry, setCoffeeEntry }) {
   const { process } = coffeeEntry;
@@ -66,7 +62,7 @@ function CoffeeInfoInput({ coffeeEntry, setCoffeeEntry }) {
             <AutocompleteWrapper
               fieldName="roaster"
               onChange={handleRoasterChange}
-              options={roasterExamples}
+              options={Object.values(roasterData)}
               textField={(params) => (
                 <TextField
                   {...params}
@@ -85,7 +81,7 @@ function CoffeeInfoInput({ coffeeEntry, setCoffeeEntry }) {
             <AutocompleteWrapper
               fieldName="origin"
               onChange={handleOriginChange}
-              options={originExamples}
+              options={originData}
               textField={(params) => (
                 <TextField
                   {...params}
@@ -113,7 +109,7 @@ function CoffeeInfoInput({ coffeeEntry, setCoffeeEntry }) {
                 }}
                 variant="outlined"
               >
-                {processOptions.map(({ name, value }) => (
+                {processData.map(({ name, value }) => (
                   <option value={value} key={name}>
                     {name}
                   </option>

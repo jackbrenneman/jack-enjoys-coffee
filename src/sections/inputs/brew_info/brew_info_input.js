@@ -16,11 +16,8 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import AutocompleteWrapper from '../helpers/autocomplete_container.js';
 import MethodBrewerAndDrinkTypeInput from './method_brewer_drink_type_input.js';
-import {
-  coffeeEntryPropTypesShape,
-  waterExamples,
-  grinderExamples,
-} from '../../../consts.js';
+import { coffeeEntryPropTypesShape } from '../../../consts.js';
+import { waterData, grinderData } from '../../../temp_db.js';
 
 function BrewInfoInput({ coffeeEntry, setCoffeeEntry }) {
   const useStyles = makeStyles(() => ({
@@ -88,7 +85,7 @@ function BrewInfoInput({ coffeeEntry, setCoffeeEntry }) {
             <AutocompleteWrapper
               fieldName="grinder"
               onChange={handleGrinderChange}
-              options={grinderExamples}
+              options={grinderData}
               textField={(params) => (
                 <TextField
                   {...params}
@@ -121,7 +118,7 @@ function BrewInfoInput({ coffeeEntry, setCoffeeEntry }) {
             <AutocompleteWrapper
               fieldName="water"
               onChange={handleWaterChange}
-              options={waterExamples}
+              options={waterData}
               textField={(params) => (
                 <TextField
                   {...params}

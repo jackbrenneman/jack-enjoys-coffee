@@ -3,7 +3,7 @@
  *
  * @author Jack Brenneman
  */
-import { methodToBrewerMap, methodToDrinkMap } from '../../../consts.js';
+import { methodToBrewerMap, methodToDrinkMap } from '../../../temp_db.js';
 
 /**
  * Gets the correct brewers based on the method selected

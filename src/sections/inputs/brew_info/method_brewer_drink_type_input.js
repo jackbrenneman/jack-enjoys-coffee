@@ -8,7 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import { coffeeEntryPropTypesShape, methodOptions } from '../../../consts.js';
+import { coffeeEntryPropTypesShape } from '../../../consts.js';
+import { methodData } from '../../../temp_db.js';
 import { getBrewerOptions, getDrinkOptions } from '../helpers/input_helpers.js';
 
 function MethodBrewerAndDrinkTypeInput({ coffeeEntry, setCoffeeEntry }) {
@@ -67,7 +68,7 @@ function MethodBrewerAndDrinkTypeInput({ coffeeEntry, setCoffeeEntry }) {
             }}
             variant="outlined"
           >
-            {methodOptions.map(({ name, value }) => (
+            {methodData.map(({ name, value }) => (
               <option value={value} key={name}>
                 {name}
               </option>
