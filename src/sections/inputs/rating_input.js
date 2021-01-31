@@ -7,7 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import { coffeeEntryPropTypesShape, ratingOptions } from '../../consts.js';
+import { coffeeEntryPropTypesShape } from '../../consts.js';
+import { ratingsInputData } from '../../temp_db.js';
 
 function RatingInput({ coffeeEntry, setCoffeeEntry }) {
   const { rating } = coffeeEntry;
@@ -48,7 +49,7 @@ function RatingInput({ coffeeEntry, setCoffeeEntry }) {
                 }}
                 variant="outlined"
               >
-                {ratingOptions.map(({ name, value }) => (
+                {ratingsInputData.map(({ name, value }) => (
                   <option value={value} key={name}>
                     {name}
                   </option>

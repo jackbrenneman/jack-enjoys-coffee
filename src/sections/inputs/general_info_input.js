@@ -11,7 +11,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import { coffeeEntryPropTypesShape, timeOfDayOptions } from '../../consts.js';
+import { coffeeEntryPropTypesShape } from '../../consts.js';
+import { timeOfDayData } from '../../temp_db.js';
 
 function GeneralInfoInput({ coffeeEntry, setCoffeeEntry }) {
   const { date, timeOfDay } = coffeeEntry;
@@ -80,7 +81,7 @@ function GeneralInfoInput({ coffeeEntry, setCoffeeEntry }) {
                 }}
                 variant="outlined"
               >
-                {timeOfDayOptions.map(({ name, value }) => (
+                {timeOfDayData.map(({ name, value }) => (
                   <option value={value} key={name}>
                     {name}
                   </option>
