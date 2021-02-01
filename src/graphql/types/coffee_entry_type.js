@@ -9,18 +9,17 @@ import {
   GraphQLFloat,
 } from 'graphql';
 import { CoffeeType } from './coffee_type.js';
-import { BrewInfoType } from './brew_info_type.js';
-import { DateType } from './date_type.js';
+import { BrewType } from './brew_type.js';
+import { TimeType } from './time_type.js';
 
 export const CoffeeEntryType = new GraphQLObjectType({
   name: 'CoffeeEntry',
   description: 'Contains everything needed for a single coffee entry',
   fields: {
     id: { type: GraphQLID },
-    date: { type: DateType },
-    timeOfDay: { type: GraphQLString },
+    time: { type: TimeType },
     coffee: { type: CoffeeType },
-    brewInfo: { type: BrewInfoType },
+    brew: { type: BrewType },
     rating: { type: GraphQLFloat },
     notes: { type: GraphQLString },
   },

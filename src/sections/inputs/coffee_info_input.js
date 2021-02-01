@@ -13,10 +13,16 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import AutocompleteWrapper from './helpers/autocomplete_container.js';
 import { coffeeEntryPropTypesShape } from '../../consts.js';
-import { roasterData, originData, processData } from '../../temp_db.js';
+import {
+  nameData,
+  roasterData,
+  originData,
+  processData,
+} from '../../temp_db.js';
 
 function CoffeeInfoInput({ coffeeEntry, setCoffeeEntry }) {
-  const { process } = coffeeEntry;
+  const { coffee } = coffeeEntry;
+  const { process } = coffee;
   const useStyles = makeStyles(() => ({
     form: {
       width: '200px',
@@ -25,24 +31,43 @@ function CoffeeInfoInput({ coffeeEntry, setCoffeeEntry }) {
 
   const classes = useStyles();
 
+  const handleNameChange = (name) => {
+    setCoffeeEntry({
+      ...coffeeEntry,
+      coffee: {
+        ...coffee,
+        name,
+      },
+    });
+  };
+
   const handleRoasterChange = (roaster) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      roaster,
+      coffee: {
+        ...coffee,
+        roaster,
+      },
     });
   };
 
   const handleOriginChange = (origin) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      origin,
+      coffee: {
+        ...coffee,
+        origin,
+      },
     });
   };
 
   const handleProcessChange = (e) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      process: parseInt(e.target.value),
+      coffee: {
+        ...coffee,
+        process: parseInt(e.target.value),
+      },
     });
   };
 
@@ -54,8 +79,27 @@ function CoffeeInfoInput({ coffeeEntry, setCoffeeEntry }) {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <Grid container align="center" spacing={2}>
-          <Grid item xs={12} sm={4}>
+        <Grid container align="center" justify="center" spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body1" align="center">
+              Name
+            </Typography>
+            <AutocompleteWrapper
+              fieldName="name"
+              onChange={handleNameChange}
+              options={Object.values(nameData)}
+              textField={(params) => (
+                <TextField
+                  {...params}
+                  className={classes.form}
+                  id="outlined-text-field-name"
+                  label="Name"
+                  variant="outlined"
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
             <Typography variant="body1" align="center">
               Roaster
             </Typography>
@@ -74,7 +118,7 @@ function CoffeeInfoInput({ coffeeEntry, setCoffeeEntry }) {
               )}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="body1" align="center">
               Origin
             </Typography>
@@ -93,7 +137,7 @@ function CoffeeInfoInput({ coffeeEntry, setCoffeeEntry }) {
               )}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="body1" align="center">
               Process
             </Typography>

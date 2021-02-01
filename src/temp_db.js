@@ -203,7 +203,7 @@ const immersionDrinkData = [
   },
   {
     name: 'Nitro Cold Brew',
-    value: 1,
+    value: 2,
     method: 2,
   },
 ];
@@ -329,6 +329,13 @@ export const ratingsInputData = [
   },
 ];
 
+export const nameData = {
+  0: {
+    id: 0,
+    name: 'Test Name',
+  },
+};
+
 export const roasterData = {
   0: {
     id: 0,
@@ -366,18 +373,22 @@ export const roasterData = {
 
 const coffeeEntry = {
   id: 1,
-  date: '1-1-2021',
-  timeOfDay: 'MORNING',
+  time: {
+    date: '1-1-2021',
+    timeOfDay: 0,
+  },
   coffee: {
-    name: 'Mexico',
+    name: 'Coffee Name',
     roaster: roasterData[3],
     origin: 'Mexico',
     process: 'Natural',
   },
-  brewInfo: {
-    method: 'Espresso',
-    brewer: 'Flair Signature 2',
-    drink: 'Straight Espresso',
+  brew: {
+    method: {
+      category: 0,
+      brewer: 'Flair Signature 2',
+      drink: 'Straight Espresso',
+    },
     grind: {
       grinder: 'Niche',
       setting: '14',

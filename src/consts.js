@@ -44,41 +44,72 @@ const currentDate = new Date();
 const year = currentDate.getFullYear();
 const month = currentDate.getMonth() + 1;
 const day = currentDate.getDate();
-const defaultTime = `${year}-${month > 9 ? month : `0${month}`}-${day}`;
+const defaultDate = `${year}-${month > 9 ? month : `0${month}`}-${day}`;
 
+// Default state for a coffee entry
 export const defaultCoffeeEntry = {
-  date: defaultTime,
-  timeOfDay: 0,
-  roaster: '',
-  origin: '',
-  process: 0,
-  method: 0,
-  brewer: 0,
-  drinkType: 0,
-  grinder: '',
-  grindSetting: null,
-  water: '',
-  in: null,
-  out: null,
+  time: {
+    date: defaultDate,
+    timeOfDay: 0,
+  },
+  coffee: {
+    name: '',
+    roaster: '',
+    origin: '',
+    process: 0,
+  },
+  brew: {
+    method: 0,
+    brewer: 0,
+    drink: 0,
+    grind: {
+      grinder: '',
+      setting: null,
+    },
+    water: '',
+    in: null,
+    out: null,
+  },
   rating: 8,
   note: '',
 };
 
+// All the Time info for a coffee entry
+const timePropTypesShape = {
+  date: PropTypes.string,
+  timeOfDay: PropTypes.number,
+};
+
+// All the Coffee info for a coffee entry
+const coffeePropTypesShape = {
+  name: PropTypes.string,
+  roaster: PropTypes.string,
+  origin: PropTypes.string,
+  process: PropTypes.number,
+};
+
+// All the Grind info for a coffee entry
+const grindPropTypesShape = {
+  grinder: PropTypes.string,
+  setting: PropTypes.number,
+};
+
+// All the Brew Info for a coffee entry
+const brewPropTypesShape = {
+  method: PropTypes.number,
+  brewer: PropTypes.number,
+  drink: PropTypes.number,
+  grind: PropTypes.shape(grindPropTypesShape),
+  water: PropTypes.string,
+  in: PropTypes.number,
+  out: PropTypes.number,
+};
+
 export const coffeeEntryPropTypesShape = {
   coffeeEntry: PropTypes.shape({
-    date: PropTypes.string,
-    timeOfDay: PropTypes.number,
-    roaster: PropTypes.string,
-    origin: PropTypes.string,
-    process: PropTypes.number,
-    method: PropTypes.number,
-    brewer: PropTypes.number,
-    drinkType: PropTypes.number,
-    grinder: PropTypes.string,
-    grindSetting: PropTypes.number,
-    water: PropTypes.string,
-    in: PropTypes.number,
-    out: PropTypes.number,
+    time: PropTypes.shape(timePropTypesShape),
+    coffee: PropTypes.shape(coffeePropTypesShape),
+    brew: PropTypes.shape(brewPropTypesShape),
     rating: PropTypes.number,
     note: PropTypes.string,
   }).isRequired,

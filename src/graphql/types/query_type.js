@@ -5,7 +5,8 @@
 import { GraphQLInt, GraphQLObjectType, GraphQLList, GraphQLID } from 'graphql';
 import { UserType } from './user_type.js';
 import { RoasterType } from './roaster_type.js';
-import { roasterData, userData } from '../../temp_db.js';
+import { userTypeResolver } from '../resolvers/user_type_resolver.js';
+import { roasterTypeResolver } from '../resolvers/roaster_type_resolver.js';
 
 export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
   name: 'Query',
@@ -16,7 +17,7 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         id: { type: GraphQLID },
       },
       resolve(parentValue, { id }) {
-        return userData[id];
+        return userTypeResolver(id);
       },
     },
     roasters: {
@@ -25,7 +26,7 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve(parentValue, { id }) {
-        return id ? [roasterData[id]] : Object.values(roasterData);
+        return roasterTypeResolver(id);
       },
     },
   },

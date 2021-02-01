@@ -20,6 +20,8 @@ import { coffeeEntryPropTypesShape } from '../../../consts.js';
 import { waterData, grinderData } from '../../../temp_db.js';
 
 function BrewInfoInput({ coffeeEntry, setCoffeeEntry }) {
+  const { brew } = coffeeEntry;
+  const { grind } = brew;
   const useStyles = makeStyles(() => ({
     form: {
       width: '200px',
@@ -31,35 +33,56 @@ function BrewInfoInput({ coffeeEntry, setCoffeeEntry }) {
   const handleGrinderChange = (grinder) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      grinder,
+      brew: {
+        ...brew,
+        grind: {
+          ...grind,
+          grinder,
+        },
+      },
     });
   };
 
   const handleGrindSettingChange = (e) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      grindSetting: parseInt(e.target.value),
+      brew: {
+        ...brew,
+        grind: {
+          ...grind,
+          setting: parseInt(e.target.value),
+        },
+      },
     });
   };
 
   const handleWaterChange = (water) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      water,
+      brew: {
+        ...brew,
+        water,
+      },
     });
   };
 
   const handleInChange = (e) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      in: parseInt(e.target.value),
+      brew: {
+        ...brew,
+        in: parseInt(e.target.value),
+      },
     });
   };
 
   const handleOutChange = (e) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      out: parseInt(e.target.value),
+      brew: {
+        ...brew,
+        out: parseInt(e.target.value),
+      },
     });
   };
 

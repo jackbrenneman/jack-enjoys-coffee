@@ -13,7 +13,8 @@ import { methodData } from '../../../temp_db.js';
 import { getBrewerOptions, getDrinkOptions } from '../helpers/input_helpers.js';
 
 function MethodBrewerAndDrinkTypeInput({ coffeeEntry, setCoffeeEntry }) {
-  const { method, brewer, drinkType } = coffeeEntry;
+  const { brew } = coffeeEntry;
+  const { method, brewer, drink } = brew;
   const useStyles = makeStyles(() => ({
     form: {
       width: '200px',
@@ -28,25 +29,33 @@ function MethodBrewerAndDrinkTypeInput({ coffeeEntry, setCoffeeEntry }) {
   const handleMethodChange = (e) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      method: parseInt(e.target.value),
-      // Change drinkType and brewer back to their defaults
-      drinkType: 0,
-      brewer: 0,
+      brew: {
+        ...brew,
+        method: parseInt(e.target.value),
+        // Change drinkType and brewer back to their defaults
+        drink: 0,
+        brewer: 0,
+      },
     });
   };
 
   const handleDrinkTypeChange = (e) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      drinkType: parseInt(e.target.value),
+      brew: {
+        ...brew,
+        drink: parseInt(e.target.value),
+      },
     });
   };
 
   const handleBrewerChange = (e) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      brewer: parseInt(e.target.value),
-      //
+      brew: {
+        ...brew,
+        brewer: parseInt(e.target.value),
+      },
     });
   };
 
@@ -109,7 +118,7 @@ function MethodBrewerAndDrinkTypeInput({ coffeeEntry, setCoffeeEntry }) {
             className={classes.form}
             id="outlined-select-drink-type-native"
             select
-            value={drinkType}
+            value={drink}
             onChange={handleDrinkTypeChange}
             SelectProps={{
               native: true,
