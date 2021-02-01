@@ -15,7 +15,9 @@ import { coffeeEntryPropTypesShape } from '../../consts.js';
 import { timeOfDayData } from '../../temp_db.js';
 
 function GeneralInfoInput({ coffeeEntry, setCoffeeEntry }) {
-  const { date, timeOfDay } = coffeeEntry;
+  const { time } = coffeeEntry;
+  const { date, timeOfDay } = time;
+
   const useStyles = makeStyles(() => ({
     form: {
       width: '200px',
@@ -27,14 +29,20 @@ function GeneralInfoInput({ coffeeEntry, setCoffeeEntry }) {
   const handleDateChange = (e) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      date: e.target.value,
+      time: {
+        ...time,
+        date: e.target.value,
+      },
     });
   };
 
   const handleTimeOfDayChange = (e) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      timeOfDay: parseInt(e.target.value),
+      time: {
+        ...time,
+        timeOfDay: parseInt(e.target.value),
+      },
     });
   };
 
