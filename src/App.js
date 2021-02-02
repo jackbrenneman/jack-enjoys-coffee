@@ -14,10 +14,26 @@ import Coffee from './sections/coffee.js';
 import Equipment from './sections/equipment.js';
 import Data from './sections/data.js';
 import CoffeeEntryInputContainer from './sections/inputs/coffee_data_entry_container.js';
+// import { MongoClient } from 'mongodb';
 
 const history = createBrowserHistory();
 
 function App() {
+  // const uri =
+  //   'mongodb+srv://jbrenneman:jbrennemanenjoyscoffee@coffeecluster.fia6m.mongodb.net/coffeeData?retryWrites=true&w=majority';
+  // // Connection URL
+  // const url =
+  //   'mongodb+srv://jbrenneman:jbrennemanenjoyscoffee@coffeecluster.fia6m.mongodb.net';
+  // const dbName = 'coffeeData';
+  // const client = new MongoClient(url);
+  // client.connect((err) => {
+  //   console.log('connect', err);
+  //   console.log('Connected successfully to server');
+
+  //   const db = client.db(dbName);
+
+  //   client.close();
+  // });
   const theme = createMuiTheme({
     typography: {
       fontFamily: ['Roboto Condensed'].join(','),
