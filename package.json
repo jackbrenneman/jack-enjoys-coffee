@@ -50,6 +50,9 @@
   "devDependencies": {
     "prettier": "2.2.1"
   },
+  "engines": {
+    "node": "10.x"
+  },
   "proxy": "http://localhost:8080",
   "type": "module"
 }
