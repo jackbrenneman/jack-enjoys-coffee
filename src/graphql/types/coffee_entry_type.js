@@ -1,7 +1,6 @@
 /**
- * The Coffee Entry Type. Contains all information on a user
+ * The Coffee Entry Type. Contains all information on a user.
  */
-
 import {
   GraphQLString,
   GraphQLID,

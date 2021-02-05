@@ -1,7 +1,6 @@
 /**
- * The Grind Type. Contains all information on a grind
+ * The Grind Type. Contains all information on a grind.
  */
-
 import { GraphQLString, GraphQLID, GraphQLObjectType } from 'graphql';
 
 export const GrindType = new GraphQLObjectType({

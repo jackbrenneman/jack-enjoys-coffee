@@ -1,7 +1,6 @@
 /**
- * The top level Mutation Type for the jack-enjoys-coffee app
+ * The top level Mutation Type for the jack-enjoys-coffee app.
  */
-
 import { GraphQLObjectType } from 'graphql';
 
 const JackEnjoysCoffeeMutationType = new GraphQLObjectType({

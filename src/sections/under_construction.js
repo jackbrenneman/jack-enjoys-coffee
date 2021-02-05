@@ -1,7 +1,5 @@
 /**
- * Under construction page to let people know it's being built
- *
- * @author Jack Brenneman
+ * Under construction page to let people know it's being built.
  */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';

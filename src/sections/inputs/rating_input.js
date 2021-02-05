@@ -1,6 +1,5 @@
 /**
  * The Rating for a Coffee Entry.
- * @author Jack Brenneman
  */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';

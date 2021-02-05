@@ -1,7 +1,5 @@
 /**
- * Constants and such
- *
- * @author Jack Brenneman
+ * Constants and such.
  */
 import React from 'react';
 import PropTypes from 'prop-types';

@@ -3,8 +3,6 @@
  *   - Roaster
  *   - Origin
  *   - Process
- *
- * @author Jack Brenneman
  */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';

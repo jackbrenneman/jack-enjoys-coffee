@@ -1,7 +1,6 @@
 /**
- * Time Type. Contains all the info on the timing of a coffee entry
+ * Time Type. Contains all the info on the timing of a coffee entry.
  */
-
 import { GraphQLObjectType } from 'graphql';
 import { DateType } from './date_type.js';
 import { TimeOfDayEnum } from '../enums/time_of_day_enum.js';

@@ -1,7 +1,5 @@
 /**
- * The form to input a new Coffee Entry
- *
- * @author Jack Brenneman
+ * The form to input a new Coffee Entry.
  */
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';

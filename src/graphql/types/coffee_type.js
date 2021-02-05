@@ -1,7 +1,6 @@
 /**
- * Coffee Type. Holds all information specific to coffee
+ * Coffee Type. Holds all information specific to coffee.
  */
-
 import { GraphQLObjectType, GraphQLString } from 'graphql';
 import { RoasterType } from './roaster_type.js';
 

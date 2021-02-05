@@ -1,7 +1,6 @@
 /**
- * The Espresso Method Type. Contains all information on the Espresso brewing method
+ * The Espresso Method Type. Contains all information on the Espresso brewing method.
  */
-
 import { GraphQLString, GraphQLObjectType } from 'graphql';
 import { MethodCategoryEnum } from '../enums/method_category_enum.js';
 import { MethodInterface } from '../interfaces/method_interface.js';

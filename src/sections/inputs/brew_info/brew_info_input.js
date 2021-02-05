@@ -6,8 +6,6 @@
  *   - Water
  *   - Coffee in
  *   - Water in/out (depending upon brewing method)
- *
- * @author Jack Brenneman
  */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';

@@ -1,7 +1,6 @@
 /**
- * The Brew Info Type. Contains all information on brewing
+ * The Brew Info Type. Contains all information on brewing.
  */
-
 import { GraphQLString, GraphQLObjectType, GraphQLFloat } from 'graphql';
 import { GrindType } from './grind_type.js';
 import { MethodInterface } from '../interfaces/method_interface.js';

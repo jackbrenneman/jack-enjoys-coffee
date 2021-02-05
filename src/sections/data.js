@@ -1,7 +1,5 @@
 /**
- * All of the current coffee data for a user
- *
- * @author Jack Brenneman
+ * All of the current coffee data for a user.
  */
 import React from 'react';
 import PropTypes from 'prop-types';

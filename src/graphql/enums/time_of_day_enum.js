@@ -4,7 +4,6 @@
  *   - Afternoon
  *   - Night
  */
-
 import { GraphQLEnumType } from 'graphql';
 
 export const TimeOfDayEnum = new GraphQLEnumType({

@@ -1,3 +1,6 @@
+/**
+ * This isn't really a footer but wasn't sure what to call it yet.
+ */
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';

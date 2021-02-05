@@ -1,7 +1,5 @@
 /**
- * Helpers for the coffee entry input page
- *
- * @author Jack Brenneman
+ * Helpers for the coffee entry input page.
  */
 import { methodToBrewerMap, methodToDrinkMap } from '../../../temp_db.js';
 

@@ -7,7 +7,6 @@
  *   - Brewer (how that method was brewed)
  *   - Drink (the drink that was made with that method)
  */
-
 import { GraphQLInterfaceType, GraphQLString } from 'graphql';
 import { MethodCategoryEnum } from '../enums/method_category_enum.js';
 import { EspressoType } from '../types/espresso_type.js';
@@ -32,7 +31,6 @@ export const MethodInterface = new GraphQLInterfaceType({
       case 2:
         return ImmersionType;
       default:
-        console.log('default');
         return null;
     }
   },

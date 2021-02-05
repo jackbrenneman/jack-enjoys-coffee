@@ -1,7 +1,6 @@
 /**
- * The User Type. Contains all information on a user
+ * The User Type. Contains all information on a user.
  */
-
 import {
   GraphQLString,
   GraphQLID,

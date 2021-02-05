@@ -1,7 +1,5 @@
 /**
- * An autocomplete component wrapper
- *
- * @author Jack Brenneman
+ * An autocomplete component wrapper. Unsure if I'm gonna go this route for adding new stuff.
  */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
