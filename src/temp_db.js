@@ -1,5 +1,5 @@
 /**
- * Temp DB to test GraphQL stuff and also house data before I figure out how to get information from an actual DB
+ * Temp DB for when DB calls fail and for general testing.
  */
 export const methodData = [
   {
@@ -338,7 +338,7 @@ export const nameData = {
 
 export const roasterData = {
   0: {
-    id: 0,
+    roaster_id: 0,
     name: 'Little Wolf',
     city: 'Ipswhich',
     state: 'Massachusetts',
@@ -346,7 +346,7 @@ export const roasterData = {
     website: 'https://littlewolf.coffee/',
   },
   1: {
-    id: 1,
+    roaster_id: 1,
     name: 'Tandem',
     city: 'Portland',
     state: 'Maine',
@@ -354,7 +354,7 @@ export const roasterData = {
     website: 'https://www.tandemcoffee.com/',
   },
   2: {
-    id: 2,
+    roaster_id: 2,
     name: 'George Howell',
     city: 'Acton',
     state: 'Massachusetts',
@@ -362,7 +362,7 @@ export const roasterData = {
     website: 'https://www.georgehowellcoffee.com/',
   },
   3: {
-    id: 3,
+    roaster_id: 3,
     name: 'Abracadabra',
     city: 'Woodstock',
     state: 'Vermont',

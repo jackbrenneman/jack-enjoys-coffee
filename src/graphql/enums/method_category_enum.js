@@ -5,7 +5,6 @@
  *   - Immersion
  * This will determine which Type Method resolves to.
  */
-
 import { GraphQLEnumType } from 'graphql';
 
 export const MethodCategoryEnum = new GraphQLEnumType({

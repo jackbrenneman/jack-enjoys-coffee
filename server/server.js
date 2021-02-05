@@ -1,16 +1,12 @@
+/**
+ * The top level server file. Runs all servers needed to run the app.
+ */
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import { JackEnjoysCoffeeSchema } from '../src/graphql/schema/schema.js';
 
 const app = express();
-// const client = new Client({
-//   connectionString: process.env.DATABASE_URL,
-//   ssl: {
-//     rejectUnauthorized: false,
-//   },
-// });
 
-// client.connect();
 // const path = require('path');
 
 // app.use(express.static(path.join(__dirname, 'build')));

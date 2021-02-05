@@ -1,3 +1,6 @@
+/**
+ * The schema for GraphQL.
+ */
 import { GraphQLSchema } from 'graphql';
 import { JackEnjoysCoffeeQueryType } from '../types/query_type.js';
 // import JackEnjoysCoffeeMutationType from '../types/mutation_type.js';

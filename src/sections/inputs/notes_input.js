@@ -1,7 +1,5 @@
 /**
- * The Notes for a Coffee Entry. Is basically just a space for the user to write notes on the brew overall or whatever they're feeling
- *
- * @author Jack Brenneman
+ * The Notes for a Coffee Entry. Is basically just a space for the user to write notes on the brew overall or whatever they're feeling.
  */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';

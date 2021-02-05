@@ -1,7 +1,5 @@
 /**
- * The Brew Info for the method and drink type. When the user selects a method, the drink type should update to reflect the different drink types that can be made with that method
- *
- * @author Jack Brenneman
+ * The Brew Info for the method and drink type. When the user selects a method, the drink type should update to reflect the different drink types that can be made with that method.
  */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
