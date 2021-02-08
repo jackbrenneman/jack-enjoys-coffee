@@ -1,7 +1,7 @@
 /**
  * The Brew Info Type. Contains all information on brewing.
  */
-import { GraphQLString, GraphQLObjectType, GraphQLFloat } from 'graphql';
+import { GraphQLString, GraphQLObjectType } from 'graphql';
 import { GrindType } from './grind_type.js';
 import { MethodInterface } from '../interfaces/method_interface.js';
 
@@ -12,7 +12,5 @@ export const BrewType = new GraphQLObjectType({
     method: { type: MethodInterface },
     grind: { type: GrindType },
     water: { type: GraphQLString },
-    in: { type: GraphQLFloat },
-    out: { type: GraphQLFloat },
   },
 });

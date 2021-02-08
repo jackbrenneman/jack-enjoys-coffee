@@ -15,7 +15,7 @@ export const CoffeeEntryType = new GraphQLObjectType({
   name: 'CoffeeEntry',
   description: 'Contains everything needed for a single coffee entry',
   fields: {
-    id: { type: GraphQLID },
+    entry_id: { type: GraphQLID },
     time: { type: TimeType },
     coffee: { type: CoffeeType },
     brew: { type: BrewType },
