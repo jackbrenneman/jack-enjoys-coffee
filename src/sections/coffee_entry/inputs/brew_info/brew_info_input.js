@@ -12,10 +12,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import AutocompleteWrapper from '../helpers/autocomplete_container.js';
+import AutocompleteWrapper from '../../helpers/autocomplete_container.js';
 import MethodBrewerAndDrinkTypeInput from './method_brewer_drink_type_input.js';
-import { coffeeEntryPropTypesShape } from '../../../consts.js';
-import { waterData, grinderData } from '../../../temp_db.js';
+import { coffeeEntryPropTypesShape } from '../../../../consts.js';
+import { waterData, grinderData } from '../../../../temp_db.js';
 
 function BrewInfoInput({ coffeeEntry, setCoffeeEntry }) {
   const { brew } = coffeeEntry;
@@ -69,7 +69,7 @@ function BrewInfoInput({ coffeeEntry, setCoffeeEntry }) {
       ...coffeeEntry,
       brew: {
         ...brew,
-        in: parseInt(e.target.value),
+        coffee_in: parseInt(e.target.value),
       },
     });
   };

@@ -6,9 +6,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import { coffeeEntryPropTypesShape } from '../../../consts.js';
-import { methodData } from '../../../temp_db.js';
-import { getBrewerOptions, getDrinkOptions } from '../helpers/input_helpers.js';
+import { coffeeEntryPropTypesShape } from '../../../../consts.js';
+import { methodData } from '../../../../temp_db.js';
+import {
+  getBrewerOptions,
+  getDrinkOptions,
+} from '../../helpers/input_helpers.js';
 
 function MethodBrewerAndDrinkTypeInput({ coffeeEntry, setCoffeeEntry }) {
   const { brew } = coffeeEntry;

@@ -25,12 +25,31 @@ function Data() {
         <Grid item xs={12}>
           <Box p={4}>
             <Typography variant="body1" align="center">
-              Click on the button below to input a Coffee Journal Entry!
+              Click on the button below to input a Coffee Journal Entry
             </Typography>
             <Box p={2}>
               <NavLink
                 className={classes.navLink}
-                to={'/entry'}
+                to={'/data/coffee_entry'}
+                activeClassName={classes.activeNavLink}
+              >
+                <Box p={1}>
+                  <img src={logo} alt="Coffee Logo" />
+                </Box>
+              </NavLink>
+            </Box>
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Box p={4}>
+            <Typography variant="body1" align="center">
+              Click on the button below to input a new Roaster, Coffee, or
+              Origin
+            </Typography>
+            <Box p={2}>
+              <NavLink
+                className={classes.navLink}
+                to={'/data/entry'}
                 activeClassName={classes.activeNavLink}
               >
                 <Box p={1}>

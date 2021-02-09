@@ -6,8 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import { coffeeEntryPropTypesShape } from '../../consts.js';
-import { ratingsInputData } from '../../temp_db.js';
+import { coffeeEntryPropTypesShape } from '../../../consts.js';
+import { ratingsInputData } from '../../../temp_db.js';
 
 function RatingInput({ coffeeEntry, setCoffeeEntry }) {
   const { rating } = coffeeEntry;

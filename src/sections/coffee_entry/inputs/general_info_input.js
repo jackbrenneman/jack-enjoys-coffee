@@ -8,12 +8,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import { coffeeEntryPropTypesShape } from '../../consts.js';
-import { timeOfDayData } from '../../temp_db.js';
+import { coffeeEntryPropTypesShape } from '../../../consts.js';
 
 function GeneralInfoInput({ coffeeEntry, setCoffeeEntry }) {
-  const { time } = coffeeEntry;
-  const { date, timeOfDay } = time;
+  const { date } = coffeeEntry;
 
   const useStyles = makeStyles(() => ({
     form: {
@@ -26,20 +24,7 @@ function GeneralInfoInput({ coffeeEntry, setCoffeeEntry }) {
   const handleDateChange = (e) => {
     setCoffeeEntry({
       ...coffeeEntry,
-      time: {
-        ...time,
-        date: e.target.value,
-      },
-    });
-  };
-
-  const handleTimeOfDayChange = (e) => {
-    setCoffeeEntry({
-      ...coffeeEntry,
-      time: {
-        ...time,
-        timeOfDay: parseInt(e.target.value),
-      },
+      date: e.target.value,
     });
   };
 
@@ -68,30 +53,6 @@ function GeneralInfoInput({ coffeeEntry, setCoffeeEntry }) {
                 }}
                 variant="outlined"
               />
-            </form>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body1" align="center">
-              Time of Day
-            </Typography>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="outlined-select-time-of-day-native"
-                select
-                value={timeOfDay}
-                onChange={handleTimeOfDayChange}
-                SelectProps={{
-                  native: true,
-                }}
-                variant="outlined"
-              >
-                {timeOfDayData.map(({ name, value }) => (
-                  <option value={value} key={name}>
-                    {name}
-                  </option>
-                ))}
-              </TextField>
             </form>
           </Grid>
         </Grid>
