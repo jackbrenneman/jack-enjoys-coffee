@@ -16,7 +16,7 @@ import {
   roastersResolver,
   roasterByNameResolver,
   roastersByStateResolver,
-} from '../resolvers/roaster_type_resolver.js';
+} from '../resolvers/roaster_query_type_resolver.js';
 
 export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
   name: 'Query',
