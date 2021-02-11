@@ -4,9 +4,9 @@
 import { GraphQLObjectType, GraphQLString, GraphQLList } from 'graphql';
 import { CoffeeType } from './coffee_type.js';
 import { RoasterInputType } from './inputs/roaster_input_type.js';
-import { OriginType } from './origins_type.js';
+import { OriginType } from './origin_type.js';
 import { RoasterType } from './roaster_type.js';
-import { originsMutationResolver } from '../resolvers/origin_mutation_type_resolvers.js';
+import { originsMutationResolver } from '../resolvers/origins/origin_mutation_type_resolvers.js';
 
 const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
   name: 'Mutation',

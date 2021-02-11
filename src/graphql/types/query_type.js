@@ -10,13 +10,28 @@ import {
 } from 'graphql';
 import { UserType } from './user_type.js';
 import { RoasterType } from './roaster_type.js';
-import { userTypeResolver } from '../resolvers/user_type_resolver.js';
+import { OriginType } from './origin_type.js';
+import { userTypeResolver } from '../resolvers/users/user_type_resolvers.js';
 import {
   roasterByIdResolver,
   roastersResolver,
-  roasterByNameResolver,
+  roastersByNameResolver,
   roastersByStateResolver,
-} from '../resolvers/roaster_query_type_resolver.js';
+} from '../resolvers/roasters/roaster_query_type_resolvers.js';
+import {
+  originByIdResolver,
+  originsResolver,
+  originsByNameResolver,
+} from '../resolvers/origins/origin_query_type_resolvers.js';
+import {
+  coffeeByIdResolver,
+  coffeesResolver,
+  coffeesByNameResolver,
+  coffeesByRoasterIdResolver,
+  coffeesByOriginIdResolver,
+  coffeesByProcessIdResolver,
+} from '../resolvers/coffees/coffee_query_type_resolvers.js';
+import { CoffeeType } from './coffee_type.js';
 
 export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
   name: 'Query',
@@ -44,13 +59,66 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
           return roasterByIdResolver(roaster_id);
         } else if (name) {
           // If there's a name, get that roaster.
-          return roasterByNameResolver(name);
+          return roastersByNameResolver(name);
         } else if (state) {
           // If there's a state, get all roasters for a state.
           return roastersByStateResolver(state);
         }
         // Otherwise, return all roasters.
         return roastersResolver();
+      },
+    },
+    origins: {
+      type: new GraphQLList(OriginType),
+      args: {
+        origin_id: { type: GraphQLInt },
+        name: { type: GraphQLString },
+      },
+      resolve(parentValue, { origin_id, name }) {
+        // TODO: Move this stuff out of this file and clean it up a bit.
+        // If there's a origin_id, get that origin.
+        if (origin_id) {
+          return originByIdResolver(origin_id);
+        } else if (name) {
+          // If there's a name, get those origins.
+          return originsByNameResolver(name);
+        }
+        // Otherwise, return all origins.
+        return originsResolver();
+      },
+    },
+    coffees: {
+      type: new GraphQLList(CoffeeType),
+      args: {
+        coffee_id: { type: GraphQLInt },
+        name: { type: GraphQLString },
+        roaster_id: { type: GraphQLInt },
+        origin_id: { type: GraphQLInt },
+        process_id: { type: GraphQLInt },
+      },
+      resolve(
+        parentValue,
+        { coffee_id, name, roaster_id, origin_id, process_id }
+      ) {
+        // TODO: Move this stuff out of this file and clean it up a bit.
+        // If there's a coffee_id, get that coffee.
+        if (coffee_id) {
+          return coffeeByIdResolver(coffee_id);
+        } else if (name) {
+          // If there's a name, get those coffees.
+          return coffeesByNameResolver(name);
+        } else if (roaster_id) {
+          // If there's a roaster_id, get those coffees.
+          return coffeesByRoasterIdResolver(roaster_id);
+        } else if (origin_id) {
+          // If there's a origin_id, get those coffees.
+          return coffeesByOriginIdResolver(origin_id);
+        } else if (process_id) {
+          // If there's a process_id, get those coffees.
+          return coffeesByProcessIdResolver(process_id);
+        }
+        // Otherwise, return all coffees.
+        return coffeesResolver();
       },
     },
   },

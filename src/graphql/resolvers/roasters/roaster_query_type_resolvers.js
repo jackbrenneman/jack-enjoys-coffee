@@ -1,19 +1,19 @@
 /**
  * Roaster Type Resolvers. Fetches the information for roasters on a GraphQL request.
  */
-import { query } from '../../db/index.js';
+import { query } from '../../../db/index.js';
 import {
   selectAllRoasters,
   selectRoasterById,
-  selectRoasterByName,
-  selectRoasterByState,
-} from '../../db/queries/roasters_queries.js';
+  selectRoastersByName,
+  selectRoastersByState,
+} from '../../../db/queries/roasters_queries.js';
 import {
   normalizeRoasters,
   normalizeRoasterById,
   normalizeRoasterByName,
   normalizeRoastersByState,
-} from '../../db/normalizers/roasters_normalizers.js';
+} from '../../../db/normalizers/roasters_normalizers.js';
 
 /**
  * Resolver for all roasters.
@@ -46,8 +46,8 @@ export const roasterByIdResolver = (roaster_id) => {
  *
  * @param {string} name the name of the roaster
  */
-export const roasterByNameResolver = (name) => {
-  return query(selectRoasterByName, [`%${name}%`])
+export const roastersByNameResolver = (name) => {
+  return query(selectRoastersByName, [`%${name}%`])
     .then((result) => {
       const data = result.rows;
       return normalizeRoasterByName(data);
@@ -61,7 +61,7 @@ export const roasterByNameResolver = (name) => {
  * @param {string} state the name of the roaster
  */
 export const roastersByStateResolver = (state) => {
-  return query(selectRoasterByState, [state])
+  return query(selectRoastersByState, [state])
     .then((result) => {
       const data = result.rows;
       return normalizeRoastersByState(data);
