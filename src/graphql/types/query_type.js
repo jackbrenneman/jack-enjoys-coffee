@@ -24,6 +24,11 @@ import {
   originsByNameResolver,
 } from '../resolvers/origins/origin_query_type_resolvers.js';
 import {
+  processByIdResolver,
+  processesResolver,
+  processesByNameResolver,
+} from '../resolvers/processes/process_query_type_resolvers.js';
+import {
   coffeeByIdResolver,
   coffeesResolver,
   coffeesByNameResolver,
@@ -32,6 +37,7 @@ import {
   coffeesByProcessIdResolver,
 } from '../resolvers/coffees/coffee_query_type_resolvers.js';
 import { CoffeeType } from './coffee_type.js';
+import { ProcessType } from './process_type.js';
 
 export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
   name: 'Query',
@@ -85,6 +91,25 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         }
         // Otherwise, return all origins.
         return originsResolver();
+      },
+    },
+    processes: {
+      type: new GraphQLList(ProcessType),
+      args: {
+        process_id: { type: GraphQLInt },
+        name: { type: GraphQLString },
+      },
+      resolve(parentValue, { process_id, name }) {
+        // TODO: Move this stuff out of this file and clean it up a bit.
+        // If there's a origin_id, get that origin.
+        if (process_id) {
+          return processByIdResolver(process_id);
+        } else if (name) {
+          // If there's a name, get those origins.
+          return processesByNameResolver(name);
+        }
+        // Otherwise, return all origins.
+        return processesResolver();
       },
     },
     coffees: {
