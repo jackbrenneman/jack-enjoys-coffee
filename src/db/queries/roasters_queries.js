@@ -6,4 +6,5 @@ export const selectRoasterById = 'SELECT * FROM roasters WHERE roaster_id = $1';
 export const selectRoastersByName =
   'SELECT * FROM roasters WHERE LOWER(name) LIKE LOWER($1)';
 export const selectRoastersByState = 'SELECT * FROM roasters WHERE state = $1';
-export const insertIntoRoasters = 'INSERT';
+export const insertIntoRoasters =
+  'INSERT INTO roasters (name, city, state, country, website) VALUES $1';

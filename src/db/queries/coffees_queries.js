@@ -11,4 +11,5 @@ export const selectCoffeesByOriginId =
   'SELECT * FROM coffees WHERE origin_id = $1';
 export const selectCoffeesByProcessId =
   'SELECT * FROM coffees WHERE process_id = $1';
-export const insertIntoCoffees = 'INSERT';
+export const insertIntoCoffees =
+  'INSERT INTO coffees (name, roaster_id, origin_id, process_id) VALUES $1';

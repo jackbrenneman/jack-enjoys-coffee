@@ -6,6 +6,7 @@ import { CoffeeType } from './coffee_type.js';
 import { RoasterInputType } from './inputs/roaster_input_type.js';
 import { OriginType } from './origin_type.js';
 import { RoasterType } from './roaster_type.js';
+import { roastersMutationResolver } from '../resolvers/roasters/roaster_mutation_type_resolvers.js';
 import { originsMutationResolver } from '../resolvers/origins/origin_mutation_type_resolvers.js';
 import { processesMutationResolver } from '../resolvers/processes/process_mutation_type_resolvers.js';
 import { ProcessType } from './process_type.js';
@@ -19,9 +20,8 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       args: {
         roasters: { type: GraphQLList(RoasterInputType) },
       },
-      resolve(parentValue, args) {
-        // This is where we save the roaster to the DB
-        console.log(args);
+      resolve(parentValue, { roasters }) {
+        return roastersMutationResolver(roasters);
       },
     },
     coffees: {
@@ -29,9 +29,8 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       args: {
         coffees: { type: GraphQLList(CoffeeInputType) },
       },
-      resolve(parentValue, args) {
-        // This is where we save the coffees to the DB
-        console.log(args);
+      resolve(parentValue, { coffees }) {
+        console.log(coffees);
       },
     },
     origins: {
@@ -40,8 +39,6 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
         names: { type: GraphQLList(GraphQLString) },
       },
       resolve(parentValue, { names }) {
-        // This is where we save the origins to the DB
-        console.log(names);
         return originsMutationResolver(names);
       },
     },
@@ -52,7 +49,6 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       },
       resolve(parentValue, { names }) {
         // This is where we save the processes to the DB
-        console.log(names);
         return processesMutationResolver(names);
       },
     },
