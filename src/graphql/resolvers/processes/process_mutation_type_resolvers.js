@@ -8,14 +8,10 @@ import { insertIntoProcesses } from '../../../db/queries/processes_queries.js';
  * Resolver mutation for all processes.
  */
 export const processesMutationResolver = (processNames) => {
-  // Determine if we're trynna enter multiple processes, or just one, and handle accordingly.
-  if (processNames.length > 1) {
-    // Insert multiple origins
-    console.log('attempting multiple processes write to DB', processNames);
-    return;
-  }
-  // Insert one, measly process.
-  return query(insertIntoProcesses, [processNames[0]])
+  // processNames should just be an array of names at this point, so no need to really do much manipulation.
+  console.log(processNames);
+  return;
+  return query(insertIntoProcesses, [processNames])
     .then((result) => {
       const data = result.rows[0];
       console.log(data);

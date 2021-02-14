@@ -28,7 +28,7 @@ export const originsResolver = () => {
 /**
  * Resolver for origin by id.
  *
- * @param {int} roaster_id the origin-id of the origin
+ * @param {int} roaster_id the origin_id of the origin
  */
 export const originByIdResolver = (roaster_id) => {
   return query(selectOriginById, [roaster_id])

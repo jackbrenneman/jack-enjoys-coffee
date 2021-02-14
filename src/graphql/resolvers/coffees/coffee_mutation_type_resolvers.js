@@ -8,8 +8,14 @@ import { normalizeCoffees } from '../../../db/normalizers/coffees_normalizers.js
 /**
  * Resolver mutation for all coffees.
  */
-export const coffeesMutationResolver = (roaster) => {
-  return query(insertIntoCoffees, roaster)
+export const coffeesMutationResolver = (coffees) => {
+  // First, get the coffees into an array of the value entries for queries
+  const coffeeData = coffees.map(
+    (coffee) => `(${Object.values(coffee).toString()})`
+  );
+  console.log(coffeeData);
+  return;
+  return query(insertIntoCoffees, coffees)
     .then((result) => {
       const data = result.rows;
       return normalizeCoffees(data);

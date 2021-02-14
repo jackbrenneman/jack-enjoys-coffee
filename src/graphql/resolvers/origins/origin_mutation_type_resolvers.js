@@ -8,14 +8,10 @@ import { insertIntoOrigins } from '../../../db/queries/origins_queries.js';
  * Resolver mutation for all origins.
  */
 export const originsMutationResolver = (originNames) => {
-  // Determine if we're trynna enter multiple origins, or just one, and handle accordingly.
-  if (originNames.length > 1) {
-    // Insert multiple origins
-    console.log('attempting multiple origins write to DB', originNames);
-    return;
-  }
-  // Insert one, measly origin.
-  return query(insertIntoOrigins, [originNames[0]])
+  // originNames should just be an array of names at this point, so no need to really do much manipulation.
+  console.log(originNames);
+  return;
+  return query(insertIntoOrigins, [originNames])
     .then((result) => {
       const data = result.rows[0];
       console.log(data);
