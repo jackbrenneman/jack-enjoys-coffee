@@ -85,7 +85,6 @@ function NewRoasterInput({ dataEntry, setDataEntry }) {
   };
 
   const handleSubmit = () => {
-    // TODO: save the coffee entry
     console.log(roaster);
     return;
   };

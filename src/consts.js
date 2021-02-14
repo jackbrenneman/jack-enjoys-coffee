@@ -40,9 +40,16 @@ export const drawerPages = [
 export const roasterEnum = 'ROASTER';
 export const coffeeEnum = 'COFFEE';
 export const originEnum = 'ORIGIN';
+export const brewerEnum = 'BREWER';
+export const waterEnum = 'WATER';
 
 export const dataEntryDefault = {
   dataOption: originEnum,
+  brewer: {
+    name: '',
+    website: '',
+    method_id: '',
+  },
   roaster: {
     name: '',
     city: '',
@@ -52,12 +59,16 @@ export const dataEntryDefault = {
   },
   coffee: {
     name: '',
-    roaster: '',
-    process: 0,
-    origin: '',
+    roaster_id: '',
+    process_id: 0,
+    origin_id: '',
   },
   origin: {
     name: '',
+  },
+  water: {
+    name: '',
+    description: '',
   },
 };
 

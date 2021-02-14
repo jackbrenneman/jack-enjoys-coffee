@@ -1,19 +1,19 @@
 /**
- * A new coffee input, allowing the user to write to the DB
+ * A new brewer input, allowing the user to write to the DB
  */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import logo from '../../media/icons/coffee-icon.png';
-import { processData } from '../../temp_db.js';
+import { methodData } from '../../temp_db.js';
 
-function NewCoffeeInput({ dataEntry, setDataEntry }) {
-  const { coffee } = dataEntry;
-  const { process_id } = coffee;
+function NewBrewerInput({ dataEntry, setDataEntry }) {
+  const { brewer } = dataEntry;
+  const { method_id } = brewer;
   const useStyles = makeStyles(() => ({
     form: {
       width: '200px',
@@ -39,45 +39,35 @@ function NewCoffeeInput({ dataEntry, setDataEntry }) {
   const handleNameChange = (e) => {
     setDataEntry({
       ...dataEntry,
-      coffee: {
-        ...coffee,
+      brewer: {
+        ...brewer,
         name: e.target.value,
       },
     });
   };
 
-  const handleRoasterIdChange = (e) => {
+  const handleWebsiteChange = (e) => {
     setDataEntry({
       ...dataEntry,
-      coffee: {
-        ...coffee,
-        roaster_id: parseInt(e.target.value),
+      brewer: {
+        ...brewer,
+        website: e.target.value,
       },
     });
   };
 
-  const handleOriginIdChange = (e) => {
+  const handleMethodIdChange = (e) => {
     setDataEntry({
       ...dataEntry,
-      coffee: {
-        ...coffee,
-        origin_id: parseInt(e.target.value),
-      },
-    });
-  };
-
-  const handleProcessIdChange = (e) => {
-    setDataEntry({
-      ...dataEntry,
-      coffee: {
-        ...coffee,
-        process_id: parseInt(e.target.value),
+      brewer: {
+        ...brewer,
+        method_id: parseInt(e.target.value),
       },
     });
   };
 
   const handleSubmit = () => {
-    console.log(coffee);
+    console.log(brewer);
     return;
   };
 
@@ -85,7 +75,7 @@ function NewCoffeeInput({ dataEntry, setDataEntry }) {
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
         <Box p={4}>
-          <Typography variant="h6">New Coffee</Typography>
+          <Typography variant="h6">New Brewer</Typography>
         </Box>
       </Grid>
       <Grid item xs={12}>
@@ -98,7 +88,7 @@ function NewCoffeeInput({ dataEntry, setDataEntry }) {
               <TextField
                 className={classes.form}
                 id="outlined-basic"
-                label="Name"
+                label="Brewer Name"
                 variant="outlined"
                 onChange={handleNameChange}
               />
@@ -106,49 +96,35 @@ function NewCoffeeInput({ dataEntry, setDataEntry }) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1" align="center">
-              Roaster
+              Website
             </Typography>
             <form autoComplete="off">
               <TextField
                 className={classes.form}
                 id="outlined-basic"
-                label="Roaster"
+                label="Brewer Website"
                 variant="outlined"
-                onChange={handleRoasterIdChange}
+                onChange={handleWebsiteChange}
               />
             </form>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1" align="center">
-              Origin
-            </Typography>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="outlined-basic"
-                label="Origin"
-                variant="outlined"
-                onChange={handleOriginIdChange}
-              />
-            </form>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body1" align="center">
-              Process
+              Method
             </Typography>
             <form autoComplete="off">
               <TextField
                 className={classes.form}
                 id="outlined-select-process-native"
                 select
-                value={process_id}
-                onChange={handleProcessIdChange}
+                value={method_id}
+                onChange={handleMethodIdChange}
                 SelectProps={{
                   native: true,
                 }}
                 variant="outlined"
               >
-                {processData.map(({ name, value }) => (
+                {methodData.map(({ name, value }) => (
                   <option value={value} key={name}>
                     {name}
                   </option>
@@ -158,6 +134,7 @@ function NewCoffeeInput({ dataEntry, setDataEntry }) {
           </Grid>
         </Grid>
       </Grid>
+
       <Grid item xs={12}>
         <Box p={4}>
           <Button
@@ -176,4 +153,4 @@ function NewCoffeeInput({ dataEntry, setDataEntry }) {
   );
 }
 
-export default NewCoffeeInput;
+export default NewBrewerInput;
