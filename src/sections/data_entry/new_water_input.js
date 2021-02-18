@@ -67,7 +67,7 @@ function NewWaterInput({ dataEntry, setDataEntry }) {
         </Box>
       </Grid>
       <Grid item xs={12}>
-        <Box py={1}>
+        <Box pb={1}>
           <Typography variant="body1" align="center">
             Name
           </Typography>
@@ -83,7 +83,7 @@ function NewWaterInput({ dataEntry, setDataEntry }) {
         </Box>
       </Grid>
       <Grid item xs={12}>
-        <Box py={1}>
+        <Box pt={1}>
           <Typography variant="body1" align="center">
             Description
           </Typography>

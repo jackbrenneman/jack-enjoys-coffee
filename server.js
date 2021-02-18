@@ -19,10 +19,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.listen(process.env.PORT || 3000, async () => {
+app.listen(process.env.PORT || 3001, async () => {
   console.log(
     `Running a GraphQL API server at http://localhost:${
-      process.env.PORT || 3000
+      process.env.PORT || 3001
     }/graphql`
   );
 });

@@ -4,8 +4,9 @@
  *    - Coffees
  *    - Origins
  *    - Processes (?)
+ *    - Waters    (?)
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -32,6 +33,24 @@ function DataEntryContainer() {
   // State used for determining which data entry component to use.
   const [dataEntry, setDataEntry] = useState(dataEntryDefault);
 
+  const [currentData, setCurrentData] = useState({});
+
+  // When the component renders, we fetch all the current data
+  useEffect(() => {
+    fetch('/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ query: '{ processes { process_id, name} }' }),
+    })
+      .then((r) => r.json())
+      .then(({ data }) => {
+        setCurrentData(data);
+      });
+  }, []);
+
   const handleDataOptionChange = (e) => {
     setDataEntry({
       ...dataEntry,
@@ -40,6 +59,7 @@ function DataEntryContainer() {
   };
 
   const { dataOption } = dataEntry;
+  const { processes } = currentData;
 
   const getDataEntryForm = () => {
     switch (dataOption) {
@@ -61,7 +81,11 @@ function DataEntryContainer() {
         );
       case waterEnum:
         return (
-          <NewWaterInput dataEntry={dataEntry} setDataEntry={setDataEntry} />
+          <NewWaterInput
+            currentWaters={processes}
+            dataEntry={dataEntry}
+            setDataEntry={setDataEntry}
+          />
         );
       default:
         return <div />;
