@@ -7,11 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import GeneralInfoInput from './general_info_input.js';
-import CoffeeInfoInput from './coffee_info_input.js';
-import BrewInfoInput from './brew_info/brew_info_input.js';
-import RatingInput from './rating_input.js';
-import NotesInput from './notes_input.js';
+import GeneralInfoInput from './inputs/general_info_input.js';
+import CoffeeInfoInput from './inputs/coffee_info_input.js';
+import BrewInfoInput from './inputs/brew_info/brew_info_input.js';
+import RatingInput from './inputs/rating_input.js';
+import NotesInput from './inputs/notes_input.js';
 import logo from '../../media/icons/coffee-icon.png';
 import { defaultCoffeeEntry } from '../../consts.js';
 

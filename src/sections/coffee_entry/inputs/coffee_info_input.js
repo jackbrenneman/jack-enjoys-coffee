@@ -9,14 +9,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import AutocompleteWrapper from './helpers/autocomplete_container.js';
-import { coffeeEntryPropTypesShape } from '../../consts.js';
+import AutocompleteWrapper from '../helpers/autocomplete_container.js';
+import { coffeeEntryPropTypesShape } from '../../../consts.js';
 import {
   nameData,
   roasterData,
   originData,
   processData,
-} from '../../temp_db.js';
+} from '../../../temp_db.js';
 
 function CoffeeInfoInput({ coffeeEntry, setCoffeeEntry }) {
   const { coffee } = coffeeEntry;

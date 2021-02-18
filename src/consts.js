@@ -37,6 +37,41 @@ export const drawerPages = [
   },
 ];
 
+export const roasterEnum = 'ROASTER';
+export const coffeeEnum = 'COFFEE';
+export const originEnum = 'ORIGIN';
+export const brewerEnum = 'BREWER';
+export const waterEnum = 'WATER';
+
+export const dataEntryDefault = {
+  dataOption: originEnum,
+  brewer: {
+    name: '',
+    website: '',
+    method_id: '',
+  },
+  roaster: {
+    name: '',
+    city: '',
+    state: '',
+    country: '',
+    website: '',
+  },
+  coffee: {
+    name: '',
+    roaster_id: '',
+    process_id: 0,
+    origin_id: '',
+  },
+  origin: {
+    name: '',
+  },
+  water: {
+    name: '',
+    description: '',
+  },
+};
+
 // Used for the default time. Defaults to current day.
 const currentDate = new Date();
 const year = currentDate.getFullYear();
@@ -46,10 +81,7 @@ const defaultDate = `${year}-${month > 9 ? month : `0${month}`}-${day}`;
 
 // Default state for a coffee entry
 export const defaultCoffeeEntry = {
-  time: {
-    date: defaultDate,
-    timeOfDay: 0,
-  },
+  date: defaultDate,
   coffee: {
     name: '',
     roaster: '',
@@ -65,17 +97,11 @@ export const defaultCoffeeEntry = {
       setting: null,
     },
     water: '',
-    in: null,
+    coffee_in: null,
     out: null,
   },
   rating: 8,
   note: '',
-};
-
-// All the Time info for a coffee entry
-const timePropTypesShape = {
-  date: PropTypes.string,
-  timeOfDay: PropTypes.number,
 };
 
 // All the Coffee info for a coffee entry
@@ -99,13 +125,13 @@ const brewPropTypesShape = {
   drink: PropTypes.number,
   grind: PropTypes.shape(grindPropTypesShape),
   water: PropTypes.string,
-  in: PropTypes.number,
+  coffee_in: PropTypes.number,
   out: PropTypes.number,
 };
 
 export const coffeeEntryPropTypesShape = {
   coffeeEntry: PropTypes.shape({
-    time: PropTypes.shape(timePropTypesShape),
+    date: PropTypes.string,
     coffee: PropTypes.shape(coffeePropTypesShape),
     brew: PropTypes.shape(brewPropTypesShape),
     rating: PropTypes.number,

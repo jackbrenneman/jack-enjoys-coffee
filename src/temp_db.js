@@ -388,14 +388,14 @@ const coffeeEntry = {
       category: 0,
       brewer: 'Flair Signature 2',
       drink: 'Straight Espresso',
+      coffee_in: 14,
+      liquid_out: 30,
     },
     grind: {
       grinder: 'Niche',
       setting: '14',
     },
     water: 'Vermont',
-    in: 14,
-    out: 32,
   },
   rating: 4,
   notes:
