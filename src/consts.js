@@ -37,25 +37,32 @@ export const drawerPages = [
   },
 ];
 
+export const drinkEnum = 'DRINK';
+export const grinderEnum = 'GRINDER';
 export const roasterEnum = 'ROASTER';
 export const coffeeEnum = 'COFFEE';
 export const originEnum = 'ORIGIN';
 export const brewerEnum = 'BREWER';
 export const waterEnum = 'WATER';
 
+export const currentDataDefault = {
+  brewers: [],
+  coffees: [],
+  drinks: [],
+  grinders: [],
+  methods: [],
+  origins: [],
+  processes: [],
+  roasters: [],
+  waters: [],
+};
+
 export const dataEntryDefault = {
   dataOption: originEnum,
   brewer: {
     name: '',
     website: '',
-    method_id: '',
-  },
-  roaster: {
-    name: '',
-    city: '',
-    state: '',
-    country: '',
-    website: '',
+    method_id: 0,
   },
   coffee: {
     name: '',
@@ -63,8 +70,23 @@ export const dataEntryDefault = {
     process_id: 0,
     origin_id: '',
   },
+  drink: {
+    name: '',
+    method_id: 0,
+  },
+  grinder: {
+    name: '',
+    website: '',
+  },
   origin: {
     name: '',
+  },
+  roaster: {
+    name: '',
+    city: '',
+    state: '',
+    country: '',
+    website: '',
   },
   water: {
     name: '',

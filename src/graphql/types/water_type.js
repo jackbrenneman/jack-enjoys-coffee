@@ -1,5 +1,5 @@
 /**
- * The Water Type. Contains all information on an water.
+ * The Water Type. Contains all information on a water.
  */
 import { GraphQLString, GraphQLID, GraphQLObjectType } from 'graphql';
 

@@ -8,22 +8,36 @@ import {
   GraphQLID,
   GraphQLString,
 } from 'graphql';
-import { UserType } from './user_type.js';
-import { RoasterType } from './roaster_type.js';
-import { OriginType } from './origin_type.js';
-import { WaterType } from './water_type.js';
-import { userTypeResolver } from '../resolvers/users/user_type_resolvers.js';
 import {
-  roasterByIdResolver,
-  roastersResolver,
-  roastersByNameResolver,
-  roastersByStateResolver,
-} from '../resolvers/roasters/roaster_query_type_resolvers.js';
+  brewerByIdResolver,
+  brewersResolver,
+  brewersByMethodIdResolver,
+  brewersByNameResolver,
+} from '../resolvers/brewers/brewer_query_type_resolvers.js';
 import {
-  waterByIdResolver,
-  watersResolvers,
-  watersByNameResolver,
-} from '../resolvers/waters/water_query_type_resolvers.js';
+  coffeeByIdResolver,
+  coffeesResolver,
+  coffeesByNameResolver,
+  coffeesByRoasterIdResolver,
+  coffeesByOriginIdResolver,
+  coffeesByProcessIdResolver,
+} from '../resolvers/coffees/coffee_query_type_resolvers.js';
+import {
+  drinkByIdResolver,
+  drinksResolver,
+  drinksByMethodIdResolver,
+  drinksByNameResolver,
+} from '../resolvers/drinks/drink_query_type_resolvers.js';
+import {
+  grinderByIdResolver,
+  grindersResolver,
+  grindersByNameResolver,
+} from '../resolvers/grinders/grinder_query_type_resolvers.js';
+import {
+  methodByIdResolver,
+  methodsResolver,
+  methodsByNameResolver,
+} from '../resolvers/methods/method_query_type_resolvers.js';
 import {
   originByIdResolver,
   originsResolver,
@@ -35,29 +49,27 @@ import {
   processesByNameResolver,
 } from '../resolvers/processes/process_query_type_resolvers.js';
 import {
-  brewerByIdResolver,
-  brewersResolver,
-  brewersByMethodIdResolver,
-  brewersByNameResolver,
-} from '../resolvers/brewers/brewer_query_type_resolvers.js';
+  roasterByIdResolver,
+  roastersResolver,
+  roastersByNameResolver,
+  roastersByStateResolver,
+} from '../resolvers/roasters/roaster_query_type_resolvers.js';
+import { userTypeResolver } from '../resolvers/users/user_type_resolvers.js';
 import {
-  drinkByIdResolver,
-  drinksResolver,
-  drinksByMethodIdResolver,
-  drinksByNameResolver,
-} from '../resolvers/drinks/drink_query_type_resolvers.js';
-import {
-  coffeeByIdResolver,
-  coffeesResolver,
-  coffeesByNameResolver,
-  coffeesByRoasterIdResolver,
-  coffeesByOriginIdResolver,
-  coffeesByProcessIdResolver,
-} from '../resolvers/coffees/coffee_query_type_resolvers.js';
-import { CoffeeType } from './coffee_type.js';
-import { ProcessType } from './process_type.js';
+  waterByIdResolver,
+  watersResolvers,
+  watersByNameResolver,
+} from '../resolvers/waters/water_query_type_resolvers.js';
 import { BrewerType } from './brewer_type.js';
+import { CoffeeType } from './coffee_type.js';
 import { DrinkType } from './drink_type.js';
+import { GrinderType } from './grinder_type.js';
+import { MethodType } from './method_type.js';
+import { OriginType } from './origin_type.js';
+import { ProcessType } from './process_type.js';
+import { RoasterType } from './roaster_type.js';
+import { UserType } from './user_type.js';
+import { WaterType } from './water_type.js';
 
 export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
   name: 'Query',
@@ -69,73 +81,6 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
       },
       resolve(parentValue, { id }) {
         return userTypeResolver(id);
-      },
-    },
-    roasters: {
-      type: new GraphQLList(RoasterType),
-      args: {
-        roaster_id: { type: GraphQLInt },
-        name: { type: GraphQLString },
-        state: { type: GraphQLString },
-      },
-      resolve(parentValue, { roaster_id, name, state }) {
-        if (roaster_id) {
-          return roasterByIdResolver(roaster_id);
-        } else if (name) {
-          return roastersByNameResolver(name);
-        } else if (state) {
-          return roastersByStateResolver(state);
-        }
-        // If no args inputted, get all roasters.
-        return roastersResolver();
-      },
-    },
-    origins: {
-      type: new GraphQLList(OriginType),
-      args: {
-        origin_id: { type: GraphQLInt },
-        name: { type: GraphQLString },
-      },
-      resolve(parentValue, { origin_id, name }) {
-        if (origin_id) {
-          return originByIdResolver(origin_id);
-        } else if (name) {
-          return originsByNameResolver(name);
-        }
-        // If no args inputted, get all origins.
-        return originsResolver();
-      },
-    },
-    waters: {
-      type: new GraphQLList(WaterType),
-      args: {
-        water_id: { type: GraphQLInt },
-        name: { type: GraphQLString },
-      },
-      resolve(parentValue, { water_id, name }) {
-        if (water_id) {
-          return waterByIdResolver(water_id);
-        } else if (name) {
-          return watersByNameResolver(name);
-        }
-        // If no args inputted, get all waters.
-        return watersResolvers();
-      },
-    },
-    processes: {
-      type: new GraphQLList(ProcessType),
-      args: {
-        process_id: { type: GraphQLInt },
-        name: { type: GraphQLString },
-      },
-      resolve(parentValue, { process_id, name }) {
-        if (process_id) {
-          return processByIdResolver(process_id);
-        } else if (name) {
-          return processesByNameResolver(name);
-        }
-        // If no args inputted, get all processes.
-        return processesResolver();
       },
     },
     brewers: {
@@ -154,25 +99,6 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         }
         // If no args inputted, get all brewers.
         return brewersResolver();
-      },
-    },
-    drinks: {
-      type: new GraphQLList(DrinkType),
-      args: {
-        drink_id: { type: GraphQLID },
-        name: { type: GraphQLString },
-        method_id: { type: GraphQLID },
-      },
-      resolve(parentValue, { drink_id, method_id, name }) {
-        if (drink_id) {
-          return drinkByIdResolver(drink_id);
-        } else if (method_id) {
-          return drinksByMethodIdResolver(method_id);
-        } else if (name) {
-          return drinksByNameResolver(name);
-        }
-        // If no args inputted, get all drinks.
-        return drinksResolver();
       },
     },
     coffees: {
@@ -205,6 +131,124 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         }
         // Otherwise, return all coffees.
         return coffeesResolver();
+      },
+    },
+    drinks: {
+      type: new GraphQLList(DrinkType),
+      args: {
+        drink_id: { type: GraphQLID },
+        name: { type: GraphQLString },
+        method_id: { type: GraphQLID },
+      },
+      resolve(parentValue, { drink_id, method_id, name }) {
+        if (drink_id) {
+          return drinkByIdResolver(drink_id);
+        } else if (method_id) {
+          return drinksByMethodIdResolver(method_id);
+        } else if (name) {
+          return drinksByNameResolver(name);
+        }
+        // If no args inputted, get all drinks.
+        return drinksResolver();
+      },
+    },
+    grinders: {
+      type: new GraphQLList(GrinderType),
+      args: {
+        grinder_id: { type: GraphQLID },
+        name: { type: GraphQLString },
+      },
+      resolve(parentValue, { grinder_id, name }) {
+        if (grinder_id) {
+          return grinderByIdResolver(grinder_id);
+        } else if (name) {
+          return grindersByNameResolver(name);
+        }
+        // If no args inputted, get all grinders.
+        return grindersResolver();
+      },
+    },
+    methods: {
+      type: new GraphQLList(MethodType),
+      args: {
+        method_id: { type: GraphQLInt },
+        name: { type: GraphQLString },
+      },
+      resolve(parentValue, { method_id, name }) {
+        if (method_id) {
+          return methodByIdResolver(method_id);
+        } else if (name) {
+          return methodsByNameResolver(name);
+        }
+        // If no args inputted, get all methods.
+        return methodsResolver();
+      },
+    },
+    origins: {
+      type: new GraphQLList(OriginType),
+      args: {
+        origin_id: { type: GraphQLInt },
+        name: { type: GraphQLString },
+      },
+      resolve(parentValue, { origin_id, name }) {
+        if (origin_id) {
+          return originByIdResolver(origin_id);
+        } else if (name) {
+          return originsByNameResolver(name);
+        }
+        // If no args inputted, get all origins.
+        return originsResolver();
+      },
+    },
+    processes: {
+      type: new GraphQLList(ProcessType),
+      args: {
+        process_id: { type: GraphQLInt },
+        name: { type: GraphQLString },
+      },
+      resolve(parentValue, { process_id, name }) {
+        if (process_id) {
+          return processByIdResolver(process_id);
+        } else if (name) {
+          return processesByNameResolver(name);
+        }
+        // If no args inputted, get all processes.
+        return processesResolver();
+      },
+    },
+    roasters: {
+      type: new GraphQLList(RoasterType),
+      args: {
+        roaster_id: { type: GraphQLInt },
+        name: { type: GraphQLString },
+        state: { type: GraphQLString },
+      },
+      resolve(parentValue, { roaster_id, name, state }) {
+        if (roaster_id) {
+          return roasterByIdResolver(roaster_id);
+        } else if (name) {
+          return roastersByNameResolver(name);
+        } else if (state) {
+          return roastersByStateResolver(state);
+        }
+        // If no args inputted, get all roasters.
+        return roastersResolver();
+      },
+    },
+    waters: {
+      type: new GraphQLList(WaterType),
+      args: {
+        water_id: { type: GraphQLInt },
+        name: { type: GraphQLString },
+      },
+      resolve(parentValue, { water_id, name }) {
+        if (water_id) {
+          return waterByIdResolver(water_id);
+        } else if (name) {
+          return watersByNameResolver(name);
+        }
+        // If no args inputted, get all waters.
+        return watersResolvers();
       },
     },
   },

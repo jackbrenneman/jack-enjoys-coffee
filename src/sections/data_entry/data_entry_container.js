@@ -15,25 +15,32 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
+import { currentDataQuery } from '../../graphql/queries/data_entry_queries.js';
 import NewCoffeeInput from './new_coffee_input.js';
 import NewOriginInput from './new_origin_input.js';
 import NewRoasterInput from './new_roaster_input.js';
 import NewBrewerInput from './new_brewer_input.js';
 import NewWaterInput from './new_water_input.js';
+import NewGrinderInput from './new_grinder_input.js';
+import NewDrinkInput from './new_drink_input.js';
 import {
   roasterEnum,
   coffeeEnum,
   originEnum,
   brewerEnum,
   waterEnum,
+  drinkEnum,
+  grinderEnum,
+  currentDataDefault,
   dataEntryDefault,
 } from '../../consts.js';
 
 function DataEntryContainer() {
-  // State used for determining which data entry component to use.
+  // State used for determining which data entry component to show.
   const [dataEntry, setDataEntry] = useState(dataEntryDefault);
 
-  const [currentData, setCurrentData] = useState({});
+  // State that basically contains all the current info
+  const [currentData, setCurrentData] = useState(currentDataDefault);
 
   // When the component renders, we fetch all the current data
   useEffect(() => {
@@ -43,11 +50,14 @@ function DataEntryContainer() {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify({ query: '{ processes { process_id, name} }' }),
+      body: JSON.stringify({ query: currentDataQuery }),
     })
       .then((r) => r.json())
       .then(({ data }) => {
-        setCurrentData(data);
+        console.log(data);
+        if (data) {
+          setCurrentData(data);
+        }
       });
   }, []);
 
@@ -59,34 +69,75 @@ function DataEntryContainer() {
   };
 
   const { dataOption } = dataEntry;
-  const { processes } = currentData;
+  const {
+    brewers,
+    coffees,
+    drinks,
+    grinders,
+    origins,
+    roasters,
+    waters,
+  } = currentData;
 
   const getDataEntryForm = () => {
     switch (dataOption) {
-      case roasterEnum:
-        return (
-          <NewRoasterInput dataEntry={dataEntry} setDataEntry={setDataEntry} />
-        );
-      case coffeeEnum:
-        return (
-          <NewCoffeeInput dataEntry={dataEntry} setDataEntry={setDataEntry} />
-        );
-      case originEnum:
-        return (
-          <NewOriginInput dataEntry={dataEntry} setDataEntry={setDataEntry} />
-        );
       case brewerEnum:
         return (
-          <NewBrewerInput dataEntry={dataEntry} setDataEntry={setDataEntry} />
-        );
-      case waterEnum:
-        return (
-          <NewWaterInput
-            currentWaters={processes}
+          <NewBrewerInput
+            currentBrewers={brewers}
             dataEntry={dataEntry}
             setDataEntry={setDataEntry}
           />
         );
+      case coffeeEnum:
+        return (
+          <NewCoffeeInput
+            currentCoffees={coffees}
+            dataEntry={dataEntry}
+            setDataEntry={setDataEntry}
+          />
+        );
+      case drinkEnum:
+        return (
+          <NewDrinkInput
+            currentDrinks={drinks}
+            dataEntry={dataEntry}
+            setDataEntry={setDataEntry}
+          />
+        );
+      case grinderEnum:
+        return (
+          <NewGrinderInput
+            currentGrinders={grinders}
+            dataEntry={dataEntry}
+            setDataEntry={setDataEntry}
+          />
+        );
+      case originEnum:
+        return (
+          <NewOriginInput
+            currentOrigins={origins}
+            dataEntry={dataEntry}
+            setDataEntry={setDataEntry}
+          />
+        );
+      case roasterEnum:
+        return (
+          <NewRoasterInput
+            currentRoasters={roasters}
+            dataEntry={dataEntry}
+            setDataEntry={setDataEntry}
+          />
+        );
+      case waterEnum:
+        return (
+          <NewWaterInput
+            currentWaters={waters}
+            dataEntry={dataEntry}
+            setDataEntry={setDataEntry}
+          />
+        );
+
       default:
         return <div />;
     }
@@ -142,6 +193,18 @@ function DataEntryContainer() {
                       value={waterEnum}
                       control={<Radio />}
                       label="Water"
+                      labelPlacement="bottom"
+                    />
+                    <FormControlLabel
+                      value={grinderEnum}
+                      control={<Radio />}
+                      label="Grinder"
+                      labelPlacement="bottom"
+                    />
+                    <FormControlLabel
+                      value={drinkEnum}
+                      control={<Radio />}
+                      label="Drink"
                       labelPlacement="bottom"
                     />
                   </Grid>

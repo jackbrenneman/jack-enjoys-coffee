@@ -28,10 +28,10 @@ export const originsResolver = () => {
 /**
  * Resolver for origin by id.
  *
- * @param {int} roaster_id the origin_id of the origin
+ * @param {int} origin_id the origin_id of the origin
  */
-export const originByIdResolver = (roaster_id) => {
-  return query(selectOriginById, [roaster_id])
+export const originByIdResolver = (origin_id) => {
+  return query(selectOriginById, [origin_id])
     .then((result) => {
       const data = result.rows;
       return normalizeOriginById(data);
