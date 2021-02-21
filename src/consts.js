@@ -58,7 +58,8 @@ export const currentDataDefault = {
 };
 
 export const dataEntryDefault = {
-  dataOption: originEnum,
+  currentData: currentDataDefault,
+  dataOption: coffeeEnum,
   brewer: {
     name: '',
     website: '',

@@ -2,16 +2,28 @@
  * A new drink input, allowing the user to write to the DB
  */
 import React from 'react';
+import PropTypes from 'prop-types';
+// Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+// Queries and Fetching
+import { drinksMutation } from '../../graphql/mutations/drink_gql_mutations.js';
+import { fetchGQL } from '../../graphql/fetch.js';
+// Logo
 import logo from '../../media/icons/coffee-icon.png';
+// Constants
 import { methodData } from '../../temp_db.js';
 
-function NewDrinkInput({ dataEntry, setDataEntry }) {
+function NewDrinkInput({
+  dataEntry,
+  setDataEntry,
+  currentDrinks,
+  currentMethods,
+}) {
   const { drink } = dataEntry;
   const { method_id } = drink;
   const useStyles = makeStyles(() => ({
@@ -57,7 +69,15 @@ function NewDrinkInput({ dataEntry, setDataEntry }) {
   };
 
   const handleSubmit = () => {
-    console.log(drink);
+    fetchGQL(drinksMutation([drink]))
+      .then(({ data }) => {
+        // TODO: Determine if write was successful, then change some state
+        console.log(data);
+      })
+      .catch((e) => {
+        // TODO: Show that the write was unsuccessful
+        console.log(e);
+      });
     return;
   };
 
@@ -65,7 +85,7 @@ function NewDrinkInput({ dataEntry, setDataEntry }) {
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
         <Box p={4}>
-          <Typography variant="h6">New Brewer</Typography>
+          <Typography variant="h6">New Drink</Typography>
         </Box>
       </Grid>
       <Grid item xs={12}>
@@ -128,5 +148,12 @@ function NewDrinkInput({ dataEntry, setDataEntry }) {
     </Grid>
   );
 }
+
+NewDrinkInput.propTypes = {
+  dataEntry: PropTypes.object.isRequired,
+  setDataEntry: PropTypes.func.isRequired,
+  currentDrinks: PropTypes.array.isRequired,
+  currentMethods: PropTypes.array.isRequired,
+};
 
 export default NewDrinkInput;

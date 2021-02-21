@@ -2,6 +2,9 @@
  * All GraphQL queries regarding the Data Entry Component.
  */
 
+/**
+ * Gets all the current info for all the stuff we can add data for.
+ */
 export const currentDataQuery = `
   query {
     brewers {

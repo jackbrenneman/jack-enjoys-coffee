@@ -2,16 +2,28 @@
  * A new brewer input, allowing the user to write to the DB
  */
 import React from 'react';
+import PropTypes from 'prop-types';
+// Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+// Queries and Fetching
+import { brewersMutation } from '../../graphql/mutations/brewer_gql_mutations.js';
+import { fetchGQL } from '../../graphql/fetch.js';
+// Logo
 import logo from '../../media/icons/coffee-icon.png';
+// Constants
 import { methodData } from '../../temp_db.js';
 
-function NewBrewerInput({ dataEntry, setDataEntry }) {
+function NewBrewerInput({
+  dataEntry,
+  setDataEntry,
+  currentBrewers,
+  currentMethods,
+}) {
   const { brewer } = dataEntry;
   const { method_id } = brewer;
   const useStyles = makeStyles(() => ({
@@ -67,7 +79,15 @@ function NewBrewerInput({ dataEntry, setDataEntry }) {
   };
 
   const handleSubmit = () => {
-    console.log(brewer);
+    fetchGQL(brewersMutation([brewer]))
+      .then(({ data }) => {
+        // TODO: Determine if write was successful, then change some state
+        console.log(data);
+      })
+      .catch((e) => {
+        // TODO: Show that the write was unsuccessful
+        console.log(e);
+      });
     return;
   };
 
@@ -152,5 +172,12 @@ function NewBrewerInput({ dataEntry, setDataEntry }) {
     </Grid>
   );
 }
+
+NewBrewerInput.propTypes = {
+  dataEntry: PropTypes.object.isRequired,
+  setDataEntry: PropTypes.func.isRequired,
+  currentBrewers: PropTypes.array.isRequired,
+  currentMethods: PropTypes.array.isRequired,
+};
 
 export default NewBrewerInput;

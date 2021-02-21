@@ -2,16 +2,28 @@
  * A new coffee input, allowing the user to write to the DB
  */
 import React from 'react';
+import PropTypes from 'prop-types';
+// Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+// Queries and Fetching
+import { coffeesMutation } from '../../graphql/mutations/coffee_gql_mutations.js';
+import { fetchGQL } from '../../graphql/fetch.js';
+// Logo
 import logo from '../../media/icons/coffee-icon.png';
+// Constants
 import { processData } from '../../temp_db.js';
 
-function NewCoffeeInput({ dataEntry, setDataEntry }) {
+function NewCoffeeInput({
+  dataEntry,
+  setDataEntry,
+  currentCoffees,
+  currentProcesses,
+}) {
   const { coffee } = dataEntry;
   const { process_id } = coffee;
   const useStyles = makeStyles(() => ({
@@ -77,7 +89,15 @@ function NewCoffeeInput({ dataEntry, setDataEntry }) {
   };
 
   const handleSubmit = () => {
-    console.log(coffee);
+    fetchGQL(coffeesMutation([coffee]))
+      .then(({ data }) => {
+        // TODO: Determine if write was successful, then change some state
+        console.log(data);
+      })
+      .catch((e) => {
+        // TODO: Show that the write was unsuccessful
+        console.log(e);
+      });
     return;
   };
 
@@ -175,5 +195,12 @@ function NewCoffeeInput({ dataEntry, setDataEntry }) {
     </Grid>
   );
 }
+
+NewCoffeeInput.propTypes = {
+  dataEntry: PropTypes.object.isRequired,
+  setDataEntry: PropTypes.func.isRequired,
+  currentCoffees: PropTypes.array.isRequired,
+  currentProcesses: PropTypes.array.isRequired,
+};
 
 export default NewCoffeeInput;

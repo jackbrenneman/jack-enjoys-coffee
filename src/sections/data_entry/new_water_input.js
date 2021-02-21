@@ -2,12 +2,18 @@
  * A new brewer input, allowing the user to write to the DB
  */
 import React from 'react';
+import PropTypes from 'prop-types';
+// Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+// Queries and Fetching
+import { watersMutation } from '../../graphql/mutations/water_gql_mutations.js';
+import { fetchGQL } from '../../graphql/fetch.js';
+// Logo
 import logo from '../../media/icons/coffee-icon.png';
 
 function NewWaterInput({ dataEntry, setDataEntry }) {
@@ -55,7 +61,15 @@ function NewWaterInput({ dataEntry, setDataEntry }) {
   };
 
   const handleSubmit = () => {
-    console.log(water);
+    fetchGQL(watersMutation([water]))
+      .then(({ data }) => {
+        // TODO: Determine if write was successful, then change some state
+        console.log(data);
+      })
+      .catch((e) => {
+        // TODO: Show that the write was unsuccessful
+        console.log(e);
+      });
     return;
   };
 
@@ -117,5 +131,11 @@ function NewWaterInput({ dataEntry, setDataEntry }) {
     </Grid>
   );
 }
+
+NewWaterInput.propTypes = {
+  dataEntry: PropTypes.object.isRequired,
+  setDataEntry: PropTypes.func.isRequired,
+  currentWaters: PropTypes.array.isRequired,
+};
 
 export default NewWaterInput;

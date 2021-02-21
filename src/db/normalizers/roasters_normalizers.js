@@ -13,6 +13,14 @@ export const normalizeRoasterByName = (data) => {
   return data;
 };
 
+export const normalizeRoastersByCity = (data) => {
+  return data;
+};
+
 export const normalizeRoastersByState = (data) => {
+  return data;
+};
+
+export const normalizeRoastersByCountry = (data) => {
   return data;
 };

@@ -6,13 +6,17 @@ import {
   selectAllRoasters,
   selectRoasterById,
   selectRoastersByName,
+  selectRoastersByCity,
   selectRoastersByState,
+  selectRoastersByCountry,
 } from '../../../db/queries/roasters_queries.js';
 import {
   normalizeRoasters,
   normalizeRoasterById,
   normalizeRoasterByName,
+  normalizeRoastersByCity,
   normalizeRoastersByState,
+  normalizeRoastersByCountry,
 } from '../../../db/normalizers/roasters_normalizers.js';
 
 /**
@@ -56,15 +60,43 @@ export const roastersByNameResolver = (name) => {
 };
 
 /**
+ * Resolver for roasters by city.
+ *
+ * @param {string} city the city where the roaster resides
+ */
+export const roastersByCityResolver = (city) => {
+  return query(selectRoastersByCity, [city])
+    .then((result) => {
+      const data = result.rows;
+      return normalizeRoastersByCity(data);
+    })
+    .catch((e) => console.error(e.stack));
+};
+
+/**
  * Resolver for roasters by state.
  *
- * @param {string} state the name of the roaster
+ * @param {string} state the state where the roaster resides
  */
 export const roastersByStateResolver = (state) => {
   return query(selectRoastersByState, [state])
     .then((result) => {
       const data = result.rows;
       return normalizeRoastersByState(data);
+    })
+    .catch((e) => console.error(e.stack));
+};
+
+/**
+ * Resolver for roasters by country.
+ *
+ * @param {string} country the country where the roaster resides
+ */
+export const roastersByCountryResolver = (country) => {
+  return query(selectRoastersByCountry, [country])
+    .then((result) => {
+      const data = result.rows;
+      return normalizeRoastersByCountry(data);
     })
     .catch((e) => console.error(e.stack));
 };

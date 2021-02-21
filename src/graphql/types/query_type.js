@@ -8,6 +8,7 @@ import {
   GraphQLID,
   GraphQLString,
 } from 'graphql';
+// Resolvers
 import {
   brewerByIdResolver,
   brewersResolver,
@@ -52,7 +53,9 @@ import {
   roasterByIdResolver,
   roastersResolver,
   roastersByNameResolver,
+  roastersByCityResolver,
   roastersByStateResolver,
+  roastersByCountryResolver,
 } from '../resolvers/roasters/roaster_query_type_resolvers.js';
 import { userTypeResolver } from '../resolvers/users/user_type_resolvers.js';
 import {
@@ -60,6 +63,7 @@ import {
   watersResolvers,
   watersByNameResolver,
 } from '../resolvers/waters/water_query_type_resolvers.js';
+// Types
 import { BrewerType } from './brewer_type.js';
 import { CoffeeType } from './coffee_type.js';
 import { DrinkType } from './drink_type.js';
@@ -74,15 +78,6 @@ import { WaterType } from './water_type.js';
 export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
   name: 'Query',
   fields: {
-    user: {
-      type: UserType,
-      args: {
-        id: { type: GraphQLID },
-      },
-      resolve(parentValue, { id }) {
-        return userTypeResolver(id);
-      },
-    },
     brewers: {
       type: new GraphQLList(BrewerType),
       args: {
@@ -223,16 +218,29 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         name: { type: GraphQLString },
         state: { type: GraphQLString },
       },
-      resolve(parentValue, { roaster_id, name, state }) {
+      resolve(parentValue, { roaster_id, name, city, state, country }) {
         if (roaster_id) {
           return roasterByIdResolver(roaster_id);
         } else if (name) {
           return roastersByNameResolver(name);
+        } else if (city) {
+          return roastersByCityResolver(city);
         } else if (state) {
           return roastersByStateResolver(state);
+        } else if (country) {
+          return roastersByCountryResolver(country);
         }
         // If no args inputted, get all roasters.
         return roastersResolver();
+      },
+    },
+    user: {
+      type: UserType,
+      args: {
+        id: { type: GraphQLID },
+      },
+      resolve(parentValue, { id }) {
+        return userTypeResolver(id);
       },
     },
     waters: {

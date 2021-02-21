@@ -2,33 +2,40 @@
  * The top level Mutation Type for the jack-enjoys-coffee app.
  */
 import { GraphQLObjectType, GraphQLString, GraphQLList } from 'graphql';
+// Types
+import { BrewerType } from './brewer_type.js';
 import { CoffeeType } from './coffee_type.js';
-import { RoasterInputType } from './inputs/roaster_input_type.js';
-import { BrewerInputType } from './inputs/brewer_input_type.js';
+import { DrinkType } from './drink_type.js';
+import { GrinderType } from './grinder_type.js';
 import { OriginType } from './origin_type.js';
 import { RoasterType } from './roaster_type.js';
-import { roastersMutationResolver } from '../resolvers/roasters/roaster_mutation_type_resolvers.js';
-import { coffeesMutationResolver } from '../resolvers/coffees/coffee_mutation_type_resolvers.js';
-import { originsMutationResolver } from '../resolvers/origins/origin_mutation_type_resolvers.js';
-import { processesMutationResolver } from '../resolvers/processes/process_mutation_type_resolvers.js';
-import { brewersMutationResolver } from '../resolvers/brewers/brewer_mutation_type_resolvers.js';
-import { drinksMutationResolver } from '../resolvers/drinks/drink_mutation_type_resolvers.js';
-import { ProcessType } from './process_type.js';
+import { WaterType } from './water_type.js';
+// Input Types
+import { BrewerInputType } from './inputs/brewer_input_type.js';
 import { CoffeeInputType } from './inputs/coffee_input_type.js';
-import { BrewerType } from './brewer_type.js';
-import { DrinkType } from './drink_type.js';
 import { DrinkInputType } from './inputs/drink_input_type.js';
+import { GrinderInputType } from './inputs/grinder_input_type.js';
+import { RoasterInputType } from './inputs/roaster_input_type.js';
+import { WaterInputType } from './inputs/water_input_type.js';
+// Resolvers
+import { brewersMutationResolver } from '../resolvers/brewers/brewer_mutation_type_resolvers.js';
+import { coffeesMutationResolver } from '../resolvers/coffees/coffee_mutation_type_resolvers.js';
+import { drinksMutationResolver } from '../resolvers/drinks/drink_mutation_type_resolvers.js';
+import { grindersMutationResolver } from '../resolvers/grinders/grinder_mutation_type_resolvers.js';
+import { originsMutationResolver } from '../resolvers/origins/origin_mutation_type_resolvers.js';
+import { roastersMutationResolver } from '../resolvers/roasters/roaster_mutation_type_resolvers.js';
+import { watersMutationResolver } from '../resolvers/waters/water_mutation_type_resolvers.js';
 
 const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    roasters: {
-      type: RoasterType,
+    brewers: {
+      type: BrewerType,
       args: {
-        roasters: { type: GraphQLList(RoasterInputType) },
+        brewers: { type: GraphQLList(BrewerInputType) },
       },
-      resolve(parentValue, { roasters }) {
-        return roastersMutationResolver(roasters);
+      resolve(parentValue, { brewers }) {
+        return brewersMutationResolver(brewers);
       },
     },
     coffees: {
@@ -40,6 +47,24 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
         return coffeesMutationResolver(coffees);
       },
     },
+    drinks: {
+      type: DrinkType,
+      args: {
+        drinks: { type: GraphQLList(DrinkInputType) },
+      },
+      resolve(parentValue, { drinks }) {
+        return drinksMutationResolver(drinks);
+      },
+    },
+    grinders: {
+      type: GrinderType,
+      args: {
+        grinders: { type: GraphQLList(GrinderInputType) },
+      },
+      resolve(parentValue, { grinders }) {
+        return grindersMutationResolver(grinders);
+      },
+    },
     origins: {
       type: OriginType,
       args: {
@@ -49,31 +74,22 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
         return originsMutationResolver(names);
       },
     },
-    processes: {
-      type: ProcessType,
+    roasters: {
+      type: RoasterType,
       args: {
-        names: { type: GraphQLList(GraphQLString) },
+        roasters: { type: GraphQLList(RoasterInputType) },
       },
-      resolve(parentValue, { names }) {
-        return processesMutationResolver(names);
+      resolve(parentValue, { roasters }) {
+        return roastersMutationResolver(roasters);
       },
     },
-    brewers: {
-      type: BrewerType,
+    waters: {
+      type: WaterType,
       args: {
-        brewers: { type: GraphQLList(BrewerInputType) },
+        waters: { type: GraphQLList(WaterInputType) },
       },
-      resolve(parentValue, { brewers }) {
-        return brewersMutationResolver(brewers);
-      },
-    },
-    drinks: {
-      type: DrinkType,
-      args: {
-        drinks: { type: GraphQLList(DrinkInputType) },
-      },
-      resolve(parentValue, { drinks }) {
-        return drinksMutationResolver(drinks);
+      resolve(parentValue, { waters }) {
+        return watersMutationResolver(waters);
       },
     },
   },

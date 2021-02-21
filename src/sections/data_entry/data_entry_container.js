@@ -1,21 +1,27 @@
 /**
  * The Data Entry Container, which will allow users (or just admins, tbd) to basically update DBs with new:
- *    - Roasters
+ *    - Brewers
  *    - Coffees
+ *    - Drinks
+ *    - Grinders
  *    - Origins
- *    - Processes (?)
- *    - Waters    (?)
+ *    - Roasters
+ *    - Waters
  */
 import React, { useState, useEffect } from 'react';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+// Material UI
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Grid from '@material-ui/core/Grid';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
+import Typography from '@material-ui/core/Typography';
+// Queries and Fetching
 import { currentDataQuery } from '../../graphql/queries/data_entry_queries.js';
+import { fetchGQL } from '../../graphql/fetch.js';
+// Input Components
 import NewCoffeeInput from './new_coffee_input.js';
 import NewOriginInput from './new_origin_input.js';
 import NewRoasterInput from './new_roaster_input.js';
@@ -23,6 +29,7 @@ import NewBrewerInput from './new_brewer_input.js';
 import NewWaterInput from './new_water_input.js';
 import NewGrinderInput from './new_grinder_input.js';
 import NewDrinkInput from './new_drink_input.js';
+// Constants
 import {
   roasterEnum,
   coffeeEnum,
@@ -44,20 +51,16 @@ function DataEntryContainer() {
 
   // When the component renders, we fetch all the current data
   useEffect(() => {
-    fetch('/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({ query: currentDataQuery }),
-    })
-      .then((r) => r.json())
+    fetchGQL(currentDataQuery)
       .then(({ data }) => {
         console.log(data);
         if (data) {
           setCurrentData(data);
         }
+      })
+      .catch((e) => {
+        // TODO: Determine what to do if fetch is unsuccessful
+        console.log(e);
       });
   }, []);
 
@@ -74,7 +77,9 @@ function DataEntryContainer() {
     coffees,
     drinks,
     grinders,
+    methods,
     origins,
+    processes,
     roasters,
     waters,
   } = currentData;
@@ -84,60 +89,61 @@ function DataEntryContainer() {
       case brewerEnum:
         return (
           <NewBrewerInput
-            currentBrewers={brewers}
             dataEntry={dataEntry}
             setDataEntry={setDataEntry}
+            currentBrewers={brewers}
+            currentMethods={methods}
           />
         );
       case coffeeEnum:
         return (
           <NewCoffeeInput
-            currentCoffees={coffees}
             dataEntry={dataEntry}
             setDataEntry={setDataEntry}
+            currentCoffees={coffees}
+            currentProcesses={processes}
           />
         );
       case drinkEnum:
         return (
           <NewDrinkInput
-            currentDrinks={drinks}
             dataEntry={dataEntry}
             setDataEntry={setDataEntry}
+            currentDrinks={drinks}
           />
         );
       case grinderEnum:
         return (
           <NewGrinderInput
-            currentGrinders={grinders}
             dataEntry={dataEntry}
             setDataEntry={setDataEntry}
+            currentGrinders={grinders}
           />
         );
       case originEnum:
         return (
           <NewOriginInput
-            currentOrigins={origins}
             dataEntry={dataEntry}
             setDataEntry={setDataEntry}
+            currentOrigins={origins}
           />
         );
       case roasterEnum:
         return (
           <NewRoasterInput
-            currentRoasters={roasters}
             dataEntry={dataEntry}
             setDataEntry={setDataEntry}
+            currentRoasters={roasters}
           />
         );
       case waterEnum:
         return (
           <NewWaterInput
-            currentWaters={waters}
             dataEntry={dataEntry}
             setDataEntry={setDataEntry}
+            currentWaters={waters}
           />
         );
-
       default:
         return <div />;
     }
@@ -164,6 +170,32 @@ function DataEntryContainer() {
                 <Grid container align="center" justify="center" spacing={2}>
                   <Grid item xs={12}>
                     <FormControlLabel
+                      value={brewerEnum}
+                      control={<Radio />}
+                      label="Brewer"
+                      labelPlacement="bottom"
+                    />
+                    <FormControlLabel
+                      value={coffeeEnum}
+                      control={<Radio />}
+                      label="Coffee"
+                      labelPlacement="bottom"
+                    />
+                    <FormControlLabel
+                      value={drinkEnum}
+                      control={<Radio />}
+                      label="Drink"
+                      labelPlacement="bottom"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      value={grinderEnum}
+                      control={<Radio />}
+                      label="Grinder"
+                      labelPlacement="bottom"
+                    />
+                    <FormControlLabel
                       value={originEnum}
                       control={<Radio />}
                       label="Origin"
@@ -176,35 +208,9 @@ function DataEntryContainer() {
                       labelPlacement="bottom"
                     />
                     <FormControlLabel
-                      value={coffeeEnum}
-                      control={<Radio />}
-                      label="Coffee"
-                      labelPlacement="bottom"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <FormControlLabel
-                      value={brewerEnum}
-                      control={<Radio />}
-                      label="Brewer"
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
                       value={waterEnum}
                       control={<Radio />}
                       label="Water"
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value={grinderEnum}
-                      control={<Radio />}
-                      label="Grinder"
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value={drinkEnum}
-                      control={<Radio />}
-                      label="Drink"
                       labelPlacement="bottom"
                     />
                   </Grid>

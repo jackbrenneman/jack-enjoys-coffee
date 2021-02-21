@@ -2,15 +2,21 @@
  * A new coffee input, allowing the user to write to the DB
  */
 import React from 'react';
+import PropTypes from 'prop-types';
+// Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+// Queries and Fetching
+import { roastersMutation } from '../../graphql/mutations/roaster_gql_mutations.js';
+import { fetchGQL } from '../../graphql/fetch.js';
+// Logo
 import logo from '../../media/icons/coffee-icon.png';
 
-function NewRoasterInput({ dataEntry, setDataEntry }) {
+function NewRoasterInput({ dataEntry, setDataEntry, currentRoasters }) {
   const { roaster } = dataEntry;
   const useStyles = makeStyles(() => ({
     form: {
@@ -85,7 +91,15 @@ function NewRoasterInput({ dataEntry, setDataEntry }) {
   };
 
   const handleSubmit = () => {
-    console.log(roaster);
+    fetchGQL(roastersMutation([roaster]))
+      .then(({ data }) => {
+        // TODO: Determine if write was successful, then change some state
+        console.log(data);
+      })
+      .catch((e) => {
+        // TODO: Show that the write was unsuccessful
+        console.log(e);
+      });
     return;
   };
 
@@ -187,5 +201,11 @@ function NewRoasterInput({ dataEntry, setDataEntry }) {
     </Grid>
   );
 }
+
+NewRoasterInput.propTypes = {
+  dataEntry: PropTypes.object.isRequired,
+  setDataEntry: PropTypes.func.isRequired,
+  currentRoasters: PropTypes.array.isRequired,
+};
 
 export default NewRoasterInput;
