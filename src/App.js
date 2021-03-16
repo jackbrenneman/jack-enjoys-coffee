@@ -12,6 +12,7 @@ import Coffee from './sections/coffee.js';
 import Equipment from './sections/equipment.js';
 import Data from './sections/data.js';
 import CoffeeEntryInputContainer from './sections/coffee_entry/coffee_entry_container.js';
+import CurrentDataContainer from './sections/current_data/current_data_container.js';
 import DataEntryContainer from './sections/data_entry/data_entry_container.js';
 
 const history = createBrowserHistory();
@@ -57,6 +58,9 @@ function App() {
           </Route>
           <Route exact path="/data/entry">
             <DataEntryContainer />
+          </Route>
+          <Route exact path="/data/current">
+            <CurrentDataContainer />
           </Route>
           <Route path="/">
             <Home />

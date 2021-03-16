@@ -51,6 +51,16 @@ function NewOriginInput({ dataEntry, setDataEntry, currentOrigins }) {
   };
 
   const handleSubmit = () => {
+    // First let's make sure it's not already an origin in the DB
+    const alreadyThere = currentOrigins.find(({name}) =>
+      origin.name === name
+    );
+    console.log(alreadyThere);
+    if (alreadyThere) {
+      console.log('already there');
+      return;
+    }
+    return;
     fetchGQL(originsMutation([origin]))
       .then(({ data }) => {
         // TODO: Determine if write was successful, then change some state
