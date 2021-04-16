@@ -9,8 +9,10 @@
  *   - Coffee In (the amount of ground coffee used to make the drink)
  * Then, each of the different types have their own fields specific to the method used.
  */
-import { GraphQLInterfaceType, GraphQLString, GraphQLFloat } from 'graphql';
+import { GraphQLInterfaceType, GraphQLFloat } from 'graphql';
 import { MethodCategoryEnum } from '../enums/method_category_enum.js';
+import { BrewerType } from '../types/brewer_type.js';
+import { DrinkType } from '../types/drink_type.js';
 import { EspressoType } from '../types/espresso_type.js';
 import { PourOverType } from '../types/pour_over_type.js';
 import { ImmersionType } from '../types/immersion_type.js';
@@ -20,18 +22,18 @@ export const MethodInterface = new GraphQLInterfaceType({
   description: 'The Method in which coffee is brewed.',
   fields: {
     category: { type: MethodCategoryEnum },
-    brewer: { type: GraphQLString },
-    drink: { type: GraphQLString },
+    brewer: { type: BrewerType },
+    drink: { type: DrinkType },
     coffee_in: { type: GraphQLFloat },
   },
   resolveType(obj, info) {
     const { category } = obj;
     switch (category) {
-      case 0:
-        return EspressoType;
       case 1:
-        return PourOverType;
+        return EspressoType;
       case 2:
+        return PourOverType;
+      case 3:
         return ImmersionType;
       default:
         return null;

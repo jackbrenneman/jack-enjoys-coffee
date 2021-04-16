@@ -3,15 +3,18 @@
  */
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+// Material UI
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+// Components
 import GeneralInfoInput from './inputs/general_info_input.js';
 import CoffeeInfoInput from './inputs/coffee_info_input.js';
 import BrewInfoInput from './inputs/brew_info/brew_info_input.js';
 import RatingInput from './inputs/rating_input.js';
 import NotesInput from './inputs/notes_input.js';
+// Consts
 import logo from '../../media/icons/coffee-icon.png';
 import { defaultCoffeeEntry } from '../../consts.js';
 

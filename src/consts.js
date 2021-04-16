@@ -45,6 +45,8 @@ export const originEnum = 'ORIGIN';
 export const brewerEnum = 'BREWER';
 export const waterEnum = 'WATER';
 
+export const currentCoffeeEntriesDefault = [];
+
 export const currentDataDefault = {
   brewers: [],
   coffees: [],

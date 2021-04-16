@@ -1,9 +1,11 @@
 /**
  * The Pour Over Method Type. Contains all information on the Pour Over brewing method.
  */
-import { GraphQLString, GraphQLObjectType, GraphQLFloat } from 'graphql';
+import { GraphQLObjectType, GraphQLFloat } from 'graphql';
 import { MethodCategoryEnum } from '../enums/method_category_enum.js';
 import { MethodInterface } from '../interfaces/method_interface.js';
+import { BrewerType } from './brewer_type.js';
+import { DrinkType } from './drink_type.js';
 
 export const PourOverType = new GraphQLObjectType({
   name: 'PourOver',
@@ -11,8 +13,8 @@ export const PourOverType = new GraphQLObjectType({
   interfaces: () => [MethodInterface],
   fields: {
     category: { type: MethodCategoryEnum },
-    brewer: { type: GraphQLString },
-    drink: { type: GraphQLString },
+    brewer: { type: BrewerType },
+    drink: { type: DrinkType },
     coffee_in: { type: GraphQLFloat },
     water_in: { type: GraphQLFloat },
   },
