@@ -15,6 +15,7 @@ import {
   brewersByMethodIdResolver,
   brewersByNameResolver,
 } from '../resolvers/brewers/brewer_query_type_resolvers.js';
+import { coffeeEntriesByUserIdResolver } from '../resolvers/coffee_entries/coffee_entry_query_type_resolvers.js';
 import {
   coffeeByIdResolver,
   coffeesResolver,
@@ -57,7 +58,7 @@ import {
   roastersByStateResolver,
   roastersByCountryResolver,
 } from '../resolvers/roasters/roaster_query_type_resolvers.js';
-import { userTypeResolver } from '../resolvers/users/user_type_resolvers.js';
+import { userTypeResolver } from '../resolvers/users/user_query_type_resolvers.js';
 import {
   waterByIdResolver,
   watersResolvers,
@@ -65,6 +66,7 @@ import {
 } from '../resolvers/waters/water_query_type_resolvers.js';
 // Types
 import { BrewerType } from './brewer_type.js';
+import { CoffeeEntryType } from './coffee_entry_type.js';
 import { CoffeeType } from './coffee_type.js';
 import { DrinkType } from './drink_type.js';
 import { GrinderType } from './grinder_type.js';
@@ -81,6 +83,7 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
     brewers: {
       type: new GraphQLList(BrewerType),
       args: {
+        brewer_id: { type: GraphQLInt },
         method_id: { type: GraphQLInt },
         name: { type: GraphQLString },
       },
@@ -94,6 +97,18 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         }
         // If no args inputted, get all brewers.
         return brewersResolver();
+      },
+    },
+    coffeeEntries: {
+      type: new GraphQLList(CoffeeEntryType),
+      args: { user_id: { type: GraphQLInt } },
+      resolve(parentValue, { user_id }) {
+        if (user_id) {
+          const test = coffeeEntriesByUserIdResolver(user_id);
+          return test;
+        }
+        // If no args inputted, don't do anything
+        return;
       },
     },
     coffees: {
@@ -240,6 +255,7 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         id: { type: GraphQLID },
       },
       resolve(parentValue, { id }) {
+        console.log(parentValue, id);
         return userTypeResolver(id);
       },
     },

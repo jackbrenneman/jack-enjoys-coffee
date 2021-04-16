@@ -11,8 +11,8 @@ export const MethodCategoryEnum = new GraphQLEnumType({
   name: 'MethodCategory',
   description: 'The category for the method in which coffee is brewed.',
   values: {
-    ESPRESSO: { value: 0 },
-    POUROVER: { value: 1 },
-    IMMERSION: { value: 2 },
+    ESPRESSO: { value: 1 },
+    POUROVER: { value: 2 },
+    IMMERSION: { value: 3 },
   },
 });
