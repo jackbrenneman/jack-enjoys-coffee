@@ -22,7 +22,7 @@ export const grindersQuery = `
  */
 export const grinderByIdQuery = (grinder_id) => `
   query {
-    grinders(grinder_id=${grinder_id}) {
+    grinders(grinder_id:${grinder_id}) {
       grinder_id
       name
       website
@@ -37,7 +37,7 @@ export const grinderByIdQuery = (grinder_id) => `
  */
 export const grindersByNameQuery = (name) => `
   query {
-    grinders(name=${name}) {
+    grinders(name:${name}) {
       grinder_id
       name
       website

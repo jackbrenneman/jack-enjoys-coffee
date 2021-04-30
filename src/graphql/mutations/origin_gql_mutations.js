@@ -12,9 +12,9 @@
  *     ...
  *   ]
  */
-export const originsMutation = (origins) => `
-  mutation {
-    origins(names:${origins}) {
+export const originsMutation = `
+  mutation CreateOrigin($input: [String]) {
+    origins(names: $input) {
       origin_id
       name
     }

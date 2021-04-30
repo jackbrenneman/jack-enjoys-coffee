@@ -24,7 +24,7 @@ export const coffeesQuery = `
  */
 export const coffeeByIdQuery = (coffee_id) => `
   query {
-    coffees(coffee_id=${coffee_id}) {
+    coffees(coffee_id:${coffee_id}) {
       coffee_id
       name
       origin_id
@@ -41,7 +41,7 @@ export const coffeeByIdQuery = (coffee_id) => `
  */
 export const watersByNameQuery = (name) => `
   query {
-    coffees(name=${name}) {
+    coffees(name:${name}) {
       coffee_id
       name
       origin_id
@@ -58,7 +58,7 @@ export const watersByNameQuery = (name) => `
  */
 export const coffeesByOriginIdQuery = (origin_id) => `
   query {
-    coffees(origin_id=${origin_id}) {
+    coffees(origin_id:${origin_id}) {
       coffee_id
       name
       origin_id
@@ -75,7 +75,7 @@ export const coffeesByOriginIdQuery = (origin_id) => `
  */
 export const coffeesByProcessIdQuery = (process_id) => `
   query {
-    coffees(process_id=${process_id}) {
+    coffees(process_id:${process_id}) {
       coffee_id
       name
       origin_id
@@ -92,7 +92,7 @@ export const coffeesByProcessIdQuery = (process_id) => `
  */
 export const coffeesByRoasterIdQuery = (roaster_id) => `
   query {
-    coffees(roaster_id=${roaster_id}) {
+    coffees(roaster_id:${roaster_id}) {
       coffee_id
       name
       origin_id

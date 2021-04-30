@@ -53,7 +53,6 @@ function DataEntryContainer() {
   useEffect(() => {
     fetchGQL(currentDataQuery)
       .then(({ data }) => {
-        console.log(data);
         if (data) {
           setCurrentData(data);
         }

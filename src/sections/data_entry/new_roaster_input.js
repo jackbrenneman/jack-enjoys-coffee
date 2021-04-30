@@ -91,6 +91,7 @@ function NewRoasterInput({ dataEntry, setDataEntry, currentRoasters }) {
   };
 
   const handleSubmit = () => {
+    console.log(roaster);
     fetchGQL(roastersMutation([roaster]))
       .then(({ data }) => {
         // TODO: Determine if write was successful, then change some state

@@ -89,6 +89,7 @@ function NewCoffeeInput({
   };
 
   const handleSubmit = () => {
+    console.log(coffee);
     fetchGQL(coffeesMutation([coffee]))
       .then(({ data }) => {
         // TODO: Determine if write was successful, then change some state

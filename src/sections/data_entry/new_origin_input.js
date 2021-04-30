@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
 import { originsMutation } from '../../graphql/mutations/origin_gql_mutations.js';
-import { fetchGQL } from '../../graphql/fetch.js';
+import { writeGQL } from '../../graphql/fetch.js';
 // Logo
 import logo from '../../media/icons/coffee-icon.png';
 
@@ -55,12 +55,10 @@ function NewOriginInput({ dataEntry, setDataEntry, currentOrigins }) {
     const alreadyThere = currentOrigins.find(
       ({ name }) => origin.name === name
     );
-    console.log(alreadyThere);
     if (alreadyThere) {
-      console.log('already there');
       return;
     }
-    fetchGQL(originsMutation([origin]))
+    writeGQL(originsMutation, [origin.name])
       .then(({ data }) => {
         // TODO: Determine if write was successful, then change some state
         console.log(data);

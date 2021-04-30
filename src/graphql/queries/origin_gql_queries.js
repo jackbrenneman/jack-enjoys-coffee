@@ -21,7 +21,7 @@ export const originssQuery = `
  */
 export const originssByIdQuery = (origin_id) => `
   query {
-    origins(origin_id=${origin_id}) {
+    origins(origin_id:${origin_id}) {
       origin_id
       name
     }
@@ -35,7 +35,7 @@ export const originssByIdQuery = (origin_id) => `
  */
 export const originsByNameQuery = (name) => `
   query {
-    origin(name=${name}) {
+    origin(name:${name}) {
       origin_id
       name
     }
