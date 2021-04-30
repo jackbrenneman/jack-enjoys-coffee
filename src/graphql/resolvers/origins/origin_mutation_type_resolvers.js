@@ -9,7 +9,7 @@ import { insertIntoOrigins } from '../../../db/queries/origins_queries.js';
  */
 export const originsMutationResolver = (originNames) => {
   // originNames should just be an array of names at this point, so no need to really do much manipulation.
-  console.log('originsMutationResolver', originNames);
+  console.log(originNames);
   return;
   return query(insertIntoOrigins, [originNames])
     .then((result) => {

@@ -20,9 +20,9 @@
  *     ...
  *   ]
  */
-export const roastersMutation = (roasters) => `
-mutation {
-  roasters(roasters:${roasters}) {
+export const roastersMutation = `
+mutation CreateRoasters($input: [RoasterInput]) {
+  roasters(roasters: $input) {
     roaster_id
     name
     city

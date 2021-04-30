@@ -1,11 +1,10 @@
 /**
- * Centralized fetch function for fetching information through GraphQL.
+ * Centralized fetch function for fetching and writing information through GraphQL.
  *
  * Basically a wrapper around the fetch function.
  */
 
-export const fetchGQL = (queryString) => {
-  console.log('fetch', queryString);
+export const queryGQL = (queryString) => {
   return fetch('/graphql', {
     method: 'POST',
     headers: {
@@ -17,7 +16,6 @@ export const fetchGQL = (queryString) => {
 };
 
 export const writeGQL = (queryString, inputs) => {
-  console.log('write', queryString, inputs);
   return fetch('/graphql', {
     method: 'POST',
     headers: {

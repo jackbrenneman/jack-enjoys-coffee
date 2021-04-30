@@ -17,9 +17,9 @@
  *     ...
  *   ]
  */
-export const watersMutation = (waters) => `
-  mutation {
-    waters(waters:${waters}) {
+export const watersMutation = `
+  mutation CreateWaters($input: [WaterInput]) {
+    waters(waters: $input) {
       water_id
       name
     }

@@ -19,14 +19,23 @@
  *     ...
  *   ]
  */
-export const coffeesMutation = (coffees) => `
-  mutation {
-    coffees(coffees:${coffees}) {
+export const coffeesMutation = `
+  mutation CreateCoffees($input: [CoffeeInput]) {
+    coffees(coffees: $input) {
       coffee_id
       name
-      origin_id
-      process_id
-      roaster_id
+      process {
+        process_id
+        name
+      }
+      origin {
+        origin_id
+        name
+      }
+      roaster {
+        roaster_id
+        name
+      }
     }
   }
 `;

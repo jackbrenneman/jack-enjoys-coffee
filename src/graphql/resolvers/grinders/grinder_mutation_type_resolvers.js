@@ -10,7 +10,7 @@ import { insertIntoGrinders } from '../../../db/queries/grinders_queries.js';
 export const grindersMutationResolver = (grinders) => {
   // First, get the grinders into an array of the value entries for queries
   const grinderData = grinders.map(
-    (brewer) => `(${Object.values(brewer).toString()})`
+    (grinder) => `(${Object.values(grinder).toString()})`
   );
   console.log(grinderData);
   return;

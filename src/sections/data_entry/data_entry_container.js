@@ -20,7 +20,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
 import { currentDataQuery } from '../../graphql/queries/data_entry_queries.js';
-import { fetchGQL } from '../../graphql/fetch.js';
+import { queryGQL } from '../../graphql/fetch.js';
 // Input Components
 import NewCoffeeInput from './new_coffee_input.js';
 import NewOriginInput from './new_origin_input.js';
@@ -51,7 +51,7 @@ function DataEntryContainer() {
 
   // When the component renders, we fetch all the current data
   useEffect(() => {
-    fetchGQL(currentDataQuery)
+    queryGQL(currentDataQuery)
       .then(({ data }) => {
         if (data) {
           setCurrentData(data);
@@ -100,7 +100,9 @@ function DataEntryContainer() {
             dataEntry={dataEntry}
             setDataEntry={setDataEntry}
             currentCoffees={coffees}
+            currentOrigins={origins}
             currentProcesses={processes}
+            currentRoasters={roasters}
           />
         );
       case drinkEnum:
@@ -109,6 +111,7 @@ function DataEntryContainer() {
             dataEntry={dataEntry}
             setDataEntry={setDataEntry}
             currentDrinks={drinks}
+            currentMethods={methods}
           />
         );
       case grinderEnum:

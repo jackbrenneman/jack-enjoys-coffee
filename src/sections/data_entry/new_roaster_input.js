@@ -12,13 +12,16 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
 import { roastersMutation } from '../../graphql/mutations/roaster_gql_mutations.js';
-import { fetchGQL } from '../../graphql/fetch.js';
+import { writeGQL } from '../../graphql/fetch.js';
 // Logo
 import logo from '../../media/icons/coffee-icon.png';
 
 function NewRoasterInput({ dataEntry, setDataEntry, currentRoasters }) {
   const { roaster } = dataEntry;
   const useStyles = makeStyles(() => ({
+    inputSection: {
+      maxWidth: '600px',
+    },
     form: {
       width: '200px',
     },
@@ -91,8 +94,7 @@ function NewRoasterInput({ dataEntry, setDataEntry, currentRoasters }) {
   };
 
   const handleSubmit = () => {
-    console.log(roaster);
-    fetchGQL(roastersMutation([roaster]))
+    writeGQL(roastersMutation, [roaster])
       .then(({ data }) => {
         // TODO: Determine if write was successful, then change some state
         console.log(data);
@@ -111,7 +113,7 @@ function NewRoasterInput({ dataEntry, setDataEntry, currentRoasters }) {
           <Typography variant="h6">New Roaster</Typography>
         </Box>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.inputSection}>
         <Grid container align="center" justify="center" spacing={2}>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1" align="center">

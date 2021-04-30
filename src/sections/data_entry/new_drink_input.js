@@ -12,11 +12,9 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
 import { drinksMutation } from '../../graphql/mutations/drink_gql_mutations.js';
-import { fetchGQL } from '../../graphql/fetch.js';
+import { writeGQL } from '../../graphql/fetch.js';
 // Logo
 import logo from '../../media/icons/coffee-icon.png';
-// Constants
-import { methodData } from '../../temp_db.js';
 
 function NewDrinkInput({
   dataEntry,
@@ -69,7 +67,11 @@ function NewDrinkInput({
   };
 
   const handleSubmit = () => {
-    fetchGQL(drinksMutation([drink]))
+    const alreadyThere = currentDrinks.find(({ name }) => drink.name === name);
+    if (alreadyThere) {
+      return;
+    }
+    writeGQL(drinksMutation, [drink])
       .then(({ data }) => {
         // TODO: Determine if write was successful, then change some state
         console.log(data);
@@ -90,7 +92,7 @@ function NewDrinkInput({
       </Grid>
       <Grid item xs={12}>
         <Grid container align="center" justify="center" spacing={2}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <Typography variant="body1" align="center">
               Name
             </Typography>
@@ -104,7 +106,7 @@ function NewDrinkInput({
               />
             </form>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <Typography variant="body1" align="center">
               Method
             </Typography>
@@ -120,7 +122,7 @@ function NewDrinkInput({
                 }}
                 variant="outlined"
               >
-                {methodData.map(({ name, value }) => (
+                {currentMethods.map(({ name, value }) => (
                   <option value={value} key={name}>
                     {name}
                   </option>

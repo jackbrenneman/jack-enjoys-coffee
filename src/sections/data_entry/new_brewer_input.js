@@ -12,11 +12,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 // Queries and Fetching
 import { brewersMutation } from '../../graphql/mutations/brewer_gql_mutations.js';
-import { fetchGQL } from '../../graphql/fetch.js';
+import { writeGQL } from '../../graphql/fetch.js';
 // Logo
 import logo from '../../media/icons/coffee-icon.png';
-// Constants
-import { methodData } from '../../temp_db.js';
 
 function NewBrewerInput({
   dataEntry,
@@ -27,6 +25,9 @@ function NewBrewerInput({
   const { brewer } = dataEntry;
   const { method_id } = brewer;
   const useStyles = makeStyles(() => ({
+    inputSection: {
+      maxWidth: '600px',
+    },
     form: {
       width: '200px',
     },
@@ -79,7 +80,13 @@ function NewBrewerInput({
   };
 
   const handleSubmit = () => {
-    fetchGQL(brewersMutation([brewer]))
+    const alreadyThere = currentBrewers.find(
+      ({ name }) => brewer.name === name
+    );
+    if (alreadyThere) {
+      return;
+    }
+    writeGQL(brewersMutation, [brewer])
       .then(({ data }) => {
         // TODO: Determine if write was successful, then change some state
         console.log(data);
@@ -98,7 +105,7 @@ function NewBrewerInput({
           <Typography variant="h6">New Brewer</Typography>
         </Box>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.inputSection}>
         <Grid container align="center" justify="center" spacing={2}>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1" align="center">
@@ -144,7 +151,7 @@ function NewBrewerInput({
                 }}
                 variant="outlined"
               >
-                {methodData.map(({ name, value }) => (
+                {currentMethods.map(({ name, value }) => (
                   <option value={value} key={name}>
                     {name}
                   </option>

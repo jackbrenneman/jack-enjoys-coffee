@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
 import { watersMutation } from '../../graphql/mutations/water_gql_mutations.js';
-import { fetchGQL } from '../../graphql/fetch.js';
+import { writeGQL } from '../../graphql/fetch.js';
 // Logo
 import logo from '../../media/icons/coffee-icon.png';
 
@@ -61,7 +61,7 @@ function NewWaterInput({ dataEntry, setDataEntry }) {
   };
 
   const handleSubmit = () => {
-    fetchGQL(watersMutation([water]))
+    writeGQL(watersMutation, [water])
       .then(({ data }) => {
         // TODO: Determine if write was successful, then change some state
         console.log(data);

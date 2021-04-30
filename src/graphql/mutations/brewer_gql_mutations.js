@@ -17,9 +17,9 @@
  *     ...
  *   ]
  */
-export const brewersMutation = (brewers) => `
-  mutation {
-    brewers(brewers:${brewers}) {
+export const brewersMutation = `
+  mutation CreateBrewers($input: [BrewerInput]) {
+    brewers(brewers: $input) {
       brewer_id
       name
       website

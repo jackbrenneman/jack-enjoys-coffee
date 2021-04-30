@@ -10,9 +10,18 @@ export const coffeesQuery = `
     coffees {
       coffee_id
       name
-      process_id
-      origin_id
-      roaster_id
+      process {
+        process_id
+        name
+      }
+      origin {
+        origin_id
+        name
+      }
+      roaster {
+        roaster_id
+        name
+      }
     }
   }
 `;
@@ -27,9 +36,18 @@ export const coffeeByIdQuery = (coffee_id) => `
     coffees(coffee_id:${coffee_id}) {
       coffee_id
       name
-      origin_id
-      process_id
-      roaster_id
+      process {
+        process_id
+        name
+      }
+      origin {
+        origin_id
+        name
+      }
+      roaster {
+        roaster_id
+        name
+      }
     }
   }
 `;
@@ -44,9 +62,18 @@ export const watersByNameQuery = (name) => `
     coffees(name:${name}) {
       coffee_id
       name
-      origin_id
-      process_id
-      roaster_id
+      process {
+        process_id
+        name
+      }
+      origin {
+        origin_id
+        name
+      }
+      roaster {
+        roaster_id
+        name
+      }
     }
   }
 `;
@@ -61,9 +88,18 @@ export const coffeesByOriginIdQuery = (origin_id) => `
     coffees(origin_id:${origin_id}) {
       coffee_id
       name
-      origin_id
-      process_id
-      roaster_id
+      process {
+        process_id
+        name
+      }
+      origin {
+        origin_id
+        name
+      }
+      roaster {
+        roaster_id
+        name
+      }
     }
   }
 `;
@@ -78,9 +114,18 @@ export const coffeesByProcessIdQuery = (process_id) => `
     coffees(process_id:${process_id}) {
       coffee_id
       name
-      origin_id
-      process_id
-      roaster_id
+      process {
+        process_id
+        name
+      }
+      origin {
+        origin_id
+        name
+      }
+      roaster {
+        roaster_id
+        name
+      }
     }
   }
 `;
@@ -95,9 +140,18 @@ export const coffeesByRoasterIdQuery = (roaster_id) => `
     coffees(roaster_id:${roaster_id}) {
       coffee_id
       name
-      origin_id
-      process_id
-      roaster_id
+      process {
+        process_id
+        name
+      }
+      origin {
+        origin_id
+        name
+      }
+      roaster {
+        roaster_id
+        name
+      }
     }
   }
 `;

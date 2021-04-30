@@ -17,9 +17,9 @@
  *     ...
  *   ]
  */
-export const drinksMutation = (drinks) => `
-  mutation {
-    drinks(drinks:${drinks}) {
+export const drinksMutation = `
+  mutation CreateDrinks ($input: [DrinkInput]) {
+    drinks(drinks: $input) {
       drink_id
       name
       method_id

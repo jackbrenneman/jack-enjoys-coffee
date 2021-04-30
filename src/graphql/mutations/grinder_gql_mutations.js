@@ -17,9 +17,9 @@
  *     ...
  *   ]
  */
-export const grindersMutation = (grinders) => `
-  mutation {
-    grinders(grinders:${grinders}) {
+export const grindersMutation = `
+  mutation CreateGrinders($input: [GrinderInput]) {
+    grinders(grinders: $input) {
       grinder_id
       name
       website

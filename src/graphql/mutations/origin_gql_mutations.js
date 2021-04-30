@@ -13,7 +13,7 @@
  *   ]
  */
 export const originsMutation = `
-  mutation CreateOrigin($input: [String]) {
+  mutation CreateOrigins($input: [String]) {
     origins(names: $input) {
       origin_id
       name

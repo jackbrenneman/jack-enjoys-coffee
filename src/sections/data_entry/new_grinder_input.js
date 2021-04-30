@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
 import { grindersMutation } from '../../graphql/mutations/grinder_gql_mutations.js';
-import { fetchGQL } from '../../graphql/fetch.js';
+import { writeGQL } from '../../graphql/fetch.js';
 // Logo
 import logo from '../../media/icons/coffee-icon.png';
 
@@ -53,7 +53,7 @@ function NewGrinderInput({ dataEntry, setDataEntry, currentGrinders }) {
   const handleWebsiteChange = (e) => {
     setDataEntry({
       ...dataEntry,
-      brewer: {
+      grinder: {
         ...grinder,
         website: e.target.value,
       },
@@ -61,7 +61,7 @@ function NewGrinderInput({ dataEntry, setDataEntry, currentGrinders }) {
   };
 
   const handleSubmit = () => {
-    fetchGQL(grindersMutation([grinder]))
+    writeGQL(grindersMutation, [grinder])
       .then(({ data }) => {
         // TODO: Determine if write was successful, then change some state
         console.log(data);
@@ -82,7 +82,7 @@ function NewGrinderInput({ dataEntry, setDataEntry, currentGrinders }) {
       </Grid>
       <Grid item xs={12}>
         <Grid container align="center" justify="center" spacing={2}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <Typography variant="body1" align="center">
               Name
             </Typography>
@@ -96,7 +96,7 @@ function NewGrinderInput({ dataEntry, setDataEntry, currentGrinders }) {
               />
             </form>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <Typography variant="body1" align="center">
               Website
             </Typography>
