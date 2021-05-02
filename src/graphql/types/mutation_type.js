@@ -29,43 +29,43 @@ import { watersMutationResolver } from '../resolvers/waters/water_mutation_type_
 const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    brewers: {
+    brewer: {
       type: BrewerType,
       args: {
         brewer: { type: BrewerInputType },
       },
-      resolve(parentValue, { brewers }) {
-        return brewersMutationResolver(brewers);
+      resolve(parentValue, { brewer }) {
+        return brewersMutationResolver(brewer);
       },
     },
-    coffees: {
+    coffee: {
       type: CoffeeType,
       args: {
         coffee: { type: CoffeeInputType },
       },
-      resolve(parentValue, { coffees }) {
-        return coffeesMutationResolver(coffees);
+      resolve(parentValue, { coffee }) {
+        return coffeesMutationResolver(coffee);
       },
     },
-    drinks: {
+    drink: {
       type: DrinkType,
       args: {
         drink: { type: DrinkInputType },
       },
-      resolve(parentValue, { drinks }) {
-        return drinksMutationResolver(drinks);
+      resolve(parentValue, { drink }) {
+        return drinksMutationResolver(drink);
       },
     },
-    grinders: {
+    grinder: {
       type: GrinderType,
       args: {
         grinder: { type: GrinderInputType },
       },
-      resolve(parentValue, { grinders }) {
-        return grindersMutationResolver(grinders);
+      resolve(parentValue, { grinder }) {
+        return grindersMutationResolver(grinder);
       },
     },
-    origins: {
+    origin: {
       type: OriginType,
       args: {
         name: { type: GraphQLString },
@@ -74,7 +74,7 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
         return originsMutationResolver(name);
       },
     },
-    roasters: {
+    roaster: {
       type: RoasterType,
       args: {
         roaster: { type: RoasterInputType },
@@ -83,13 +83,13 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
         return roastersMutationResolver(roaster);
       },
     },
-    waters: {
+    water: {
       type: WaterType,
       args: {
         water: { type: WaterInputType },
       },
-      resolve(parentValue, { waters }) {
-        return watersMutationResolver(waters);
+      resolve(parentValue, { water }) {
+        return watersMutationResolver(water);
       },
     },
   },

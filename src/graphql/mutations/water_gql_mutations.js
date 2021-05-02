@@ -3,25 +3,14 @@
  */
 
 /**
- * The mutation to write new Waters into the waters table.
- *
- * @param {array} waters an array of WaterInput objects, with the shape:
- *   [
- *     {
- *       name: "Water 1 Name",
- *       description: "Water 1 Description"
- *     },
- *     {
- *       ...
- *     },
- *     ...
- *   ]
+ * The mutation to write a new Water into the waters table.
  */
 export const watersMutation = `
-  mutation CreateWaters($input: [WaterInput]) {
-    waters(waters: $input) {
+  mutation CreateWater($input: WaterInput) {
+    water(water: $input) {
       water_id
       name
+      description
     }
   }
 `;

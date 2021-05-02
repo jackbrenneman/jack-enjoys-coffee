@@ -117,8 +117,8 @@ function NewRoasterInput({
     }
     writeGQL(roastersMutation, roaster)
       .then(({ data }) => {
-        const { roasters } = data;
-        if (roasters.roaster_id) {
+        const { roaster: newRoaster } = data;
+        if (newRoaster.roaster_id) {
           // Write was successful, let user know, update state and return
           setToast({
             open: true,
@@ -127,7 +127,7 @@ function NewRoasterInput({
           });
           setCurrentData({
             ...currentData,
-            roasters: currentRoasters.concat([roasters]),
+            roasters: currentRoasters.concat([newRoaster]),
           });
           return;
         }

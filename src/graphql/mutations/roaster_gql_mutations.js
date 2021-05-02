@@ -7,7 +7,7 @@
  */
 export const roastersMutation = `
 mutation CreateRoaster($input: RoasterInput) {
-  roasters(roaster: $input) {
+  roaster(roaster: $input) {
     roaster_id
     name
     city

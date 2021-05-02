@@ -80,10 +80,10 @@ function NewWaterInput({
       });
       return;
     }
-    writeGQL(watersMutation, [water])
+    writeGQL(watersMutation, water)
       .then(({ data }) => {
-        const { waters } = data;
-        if (waters.length > currentWaters.length) {
+        const { water: newWater } = data;
+        if (newWater.water_id) {
           // Write was successful, let user know, update state and return
           setToast({
             open: true,
@@ -92,7 +92,7 @@ function NewWaterInput({
           });
           setCurrentData({
             ...currentData,
-            waters: waters,
+            waters: currentWaters.concat([newWater]),
           });
           return;
         }
