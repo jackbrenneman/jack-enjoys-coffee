@@ -129,6 +129,15 @@ export const defaultCoffeeEntry = {
   note: '',
 };
 
+// All the props for entering new data
+export const newInputPropTypesShape = {
+  currentData: PropTypes.object.isRequired,
+  dataEntry: PropTypes.object.isRequired,
+  setCurrentData: PropTypes.func.isRequired,
+  setDataEntry: PropTypes.func.isRequired,
+  setToast: PropTypes.func.isRequired,
+};
+
 // All the Coffee info for a coffee entry
 const coffeePropTypesShape = {
   name: PropTypes.string,

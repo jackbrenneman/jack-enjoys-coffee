@@ -16,6 +16,7 @@ export const queryGQL = (queryString) => {
 };
 
 export const writeGQL = (queryString, inputs) => {
+  console.log(queryString, inputs);
   return fetch('/graphql', {
     method: 'POST',
     headers: {

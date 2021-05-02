@@ -53,7 +53,6 @@ function CurrentDataContainer() {
   useEffect(() => {
     queryGQL(currentDataQuery)
       .then(({ data }) => {
-        console.log(data);
         if (data) {
           setCurrentData(data);
         }

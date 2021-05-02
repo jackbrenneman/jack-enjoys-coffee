@@ -2,7 +2,6 @@
  * A new coffee input, allowing the user to write to the DB
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -16,14 +15,15 @@ import { coffeesMutation } from '../../graphql/mutations/coffee_gql_mutations.js
 import { writeGQL } from '../../graphql/fetch.js';
 // Logo
 import logo from '../../media/icons/coffee-icon.png';
+// Constants
+import { newInputPropTypesShape } from '../../consts.js';
 
 function NewCoffeeInput({
+  currentData,
   dataEntry,
+  setCurrentData,
   setDataEntry,
-  currentCoffees,
-  currentOrigins,
-  currentProcesses,
-  currentRoasters,
+  setToast,
 }) {
   const { coffee } = dataEntry;
   const { process_id } = coffee;
@@ -51,6 +51,13 @@ function NewCoffeeInput({
   );
 
   const classes = useStyles();
+
+  const {
+    coffees: currentCoffees,
+    origins: currentOrigins,
+    processes: currentProcesses,
+    roasters: currentRoasters,
+  } = currentData;
 
   const handleNameChange = (e) => {
     setDataEntry({
@@ -97,15 +104,43 @@ function NewCoffeeInput({
       ({ name }) => coffee.name === name
     );
     if (alreadyThere) {
+      // Let user know this brewer already exists and return
+      setToast({
+        open: true,
+        severity: 'warning',
+        message: 'This coffee already exists',
+      });
       return;
     }
     writeGQL(coffeesMutation, [coffee])
       .then(({ data }) => {
-        // TODO: Determine if write was successful, then change some state
-        console.log(data);
+        const { coffees } = data;
+        if (coffees.length > currentCoffees.length) {
+          // Write was successful, let user know, update state and return
+          setToast({
+            open: true,
+            severity: 'success',
+            message: 'New Coffee Added!',
+          });
+          setCurrentData({
+            ...currentData,
+            coffees: coffees,
+          });
+          return;
+        }
+        // Write was not successful, let user know and return
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
       })
       .catch((e) => {
-        // TODO: Show that the write was unsuccessful
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
         console.log(e);
       });
     return;
@@ -128,7 +163,7 @@ function NewCoffeeInput({
               <TextField
                 className={classes.form}
                 id="outlined-basic"
-                label="Name"
+                label="Coffee Name"
                 variant="outlined"
                 onChange={handleNameChange}
               />
@@ -147,7 +182,7 @@ function NewCoffeeInput({
                   {...params}
                   className={classes.form}
                   id="outlined-text-field-name"
-                  label="Roaster"
+                  label="Coffee Roaster"
                   variant="outlined"
                 />
               )}
@@ -166,7 +201,7 @@ function NewCoffeeInput({
                   {...params}
                   className={classes.form}
                   id="outlined-text-field-name"
-                  label="Origin"
+                  label="Coffee Origin"
                   variant="outlined"
                 />
               )}
@@ -216,13 +251,6 @@ function NewCoffeeInput({
   );
 }
 
-NewCoffeeInput.propTypes = {
-  dataEntry: PropTypes.object.isRequired,
-  setDataEntry: PropTypes.func.isRequired,
-  currentCoffees: PropTypes.array.isRequired,
-  currentOrigins: PropTypes.array.isRequired,
-  currentProcesses: PropTypes.array.isRequired,
-  currentRoasters: PropTypes.array.isRequired,
-};
+NewCoffeeInput.propTypes = newInputPropTypesShape;
 
 export default NewCoffeeInput;

@@ -8,18 +8,13 @@ import { normalizeRoasters } from '../../../db/normalizers/roasters_normalizers.
 /**
  * Resolver mutation for all roasters.
  */
-export const roastersMutationResolver = (roasters) => {
+export const roastersMutationResolver = (roaster) => {
   // First, get the roasters into an array of the value entries for queries
-  const roasterData = roasters.map(
-    (roaster) => `(${Object.values(roaster).toString()})`
-  );
-  console.log(roasterData);
-  return;
-  // Then insert it
+  const roasterData = Object.values(roaster);
   return query(insertIntoRoasters, roasterData)
     .then((result) => {
-      const data = result.rows;
+      const data = result.rows[0];
       return normalizeRoasters(data);
     })
-    .catch((e) => console.error(e.stack));
+    .catch((e) => console.error(e));
 };

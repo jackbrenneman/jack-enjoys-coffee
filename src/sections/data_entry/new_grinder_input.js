@@ -2,7 +2,6 @@
  * A new grinder input, allowing the user to write to the DB
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -15,8 +14,16 @@ import { grindersMutation } from '../../graphql/mutations/grinder_gql_mutations.
 import { writeGQL } from '../../graphql/fetch.js';
 // Logo
 import logo from '../../media/icons/coffee-icon.png';
+// Constants
+import { newInputPropTypesShape } from '../../consts.js';
 
-function NewGrinderInput({ dataEntry, setDataEntry, currentGrinders }) {
+function NewGrinderInput({
+  currentData,
+  dataEntry,
+  setCurrentData,
+  setDataEntry,
+  setToast,
+}) {
   const { grinder } = dataEntry;
   const useStyles = makeStyles(() => ({
     form: {
@@ -40,6 +47,8 @@ function NewGrinderInput({ dataEntry, setDataEntry, currentGrinders }) {
 
   const classes = useStyles();
 
+  const { grinders: currentGrinders } = currentData;
+
   const handleNameChange = (e) => {
     setDataEntry({
       ...dataEntry,
@@ -61,13 +70,47 @@ function NewGrinderInput({ dataEntry, setDataEntry, currentGrinders }) {
   };
 
   const handleSubmit = () => {
+    const alreadyThere = currentGrinders.find(
+      ({ name }) => grinder.name === name
+    );
+    if (alreadyThere) {
+      // Let user know this brewer already exists and return
+      setToast({
+        open: true,
+        severity: 'warning',
+        message: 'This grinder already exists',
+      });
+      return;
+    }
     writeGQL(grindersMutation, [grinder])
       .then(({ data }) => {
-        // TODO: Determine if write was successful, then change some state
-        console.log(data);
+        const { grinders } = data;
+        if (grinders.length > currentGrinders.length) {
+          // Write was successful, let user know, update state and return
+          setToast({
+            open: true,
+            severity: 'success',
+            message: 'New Brewer Added!',
+          });
+          setCurrentData({
+            ...currentData,
+            grinders: grinders,
+          });
+          return;
+        }
+        // Write was not successful, let user know and return
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
       })
       .catch((e) => {
-        // TODO: Show that the write was unsuccessful
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
         console.log(e);
       });
     return;
@@ -77,7 +120,7 @@ function NewGrinderInput({ dataEntry, setDataEntry, currentGrinders }) {
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
         <Box p={4}>
-          <Typography variant="h6">New Brewer</Typography>
+          <Typography variant="h6">New Grinder</Typography>
         </Box>
       </Grid>
       <Grid item xs={12}>
@@ -131,10 +174,6 @@ function NewGrinderInput({ dataEntry, setDataEntry, currentGrinders }) {
   );
 }
 
-NewGrinderInput.propTypes = {
-  dataEntry: PropTypes.object.isRequired,
-  setDataEntry: PropTypes.func.isRequired,
-  currentGrinders: PropTypes.array.isRequired,
-};
+NewGrinderInput.propTypes = newInputPropTypesShape;
 
 export default NewGrinderInput;

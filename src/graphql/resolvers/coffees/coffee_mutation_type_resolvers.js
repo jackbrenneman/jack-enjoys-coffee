@@ -14,7 +14,6 @@ export const coffeesMutationResolver = (coffees) => {
     (coffee) => `(${Object.values(coffee).toString()})`
   );
   console.log(coffeeData);
-  return;
   return query(insertIntoCoffees, coffees)
     .then((result) => {
       const data = result.rows;

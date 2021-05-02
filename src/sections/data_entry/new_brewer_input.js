@@ -2,7 +2,6 @@
  * A new brewer input, allowing the user to write to the DB
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -15,12 +14,15 @@ import { brewersMutation } from '../../graphql/mutations/brewer_gql_mutations.js
 import { writeGQL } from '../../graphql/fetch.js';
 // Logo
 import logo from '../../media/icons/coffee-icon.png';
+// Constants
+import { newInputPropTypesShape } from '../../consts.js';
 
 function NewBrewerInput({
+  currentData,
   dataEntry,
+  setCurrentData,
   setDataEntry,
-  currentBrewers,
-  currentMethods,
+  setToast,
 }) {
   const { brewer } = dataEntry;
   const { method_id } = brewer;
@@ -48,6 +50,8 @@ function NewBrewerInput({
   );
 
   const classes = useStyles();
+
+  const { brewers: currentBrewers, methods: currentMethods } = currentData;
 
   const handleNameChange = (e) => {
     setDataEntry({
@@ -84,15 +88,43 @@ function NewBrewerInput({
       ({ name }) => brewer.name === name
     );
     if (alreadyThere) {
+      // Let user know this brewer already exists and return
+      setToast({
+        open: true,
+        severity: 'warning',
+        message: 'This brewer already exists',
+      });
       return;
     }
     writeGQL(brewersMutation, [brewer])
       .then(({ data }) => {
-        // TODO: Determine if write was successful, then change some state
-        console.log(data);
+        const { brewers } = data;
+        if (brewers.length > currentBrewers.length) {
+          // Write was successful, let user know, update state and return
+          setToast({
+            open: true,
+            severity: 'success',
+            message: 'New Brewer Added!',
+          });
+          setCurrentData({
+            ...currentData,
+            brewers: brewers,
+          });
+          return;
+        }
+        // Write was not successful, let user know and return
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
       })
       .catch((e) => {
-        // TODO: Show that the write was unsuccessful
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
         console.log(e);
       });
     return;
@@ -151,8 +183,8 @@ function NewBrewerInput({
                 }}
                 variant="outlined"
               >
-                {currentMethods.map(({ name, value }) => (
-                  <option value={value} key={name}>
+                {currentMethods.map(({ name, method_id }) => (
+                  <option value={method_id} key={name}>
                     {name}
                   </option>
                 ))}
@@ -180,11 +212,6 @@ function NewBrewerInput({
   );
 }
 
-NewBrewerInput.propTypes = {
-  dataEntry: PropTypes.object.isRequired,
-  setDataEntry: PropTypes.func.isRequired,
-  currentBrewers: PropTypes.array.isRequired,
-  currentMethods: PropTypes.array.isRequired,
-};
+NewBrewerInput.propTypes = newInputPropTypesShape;
 
 export default NewBrewerInput;

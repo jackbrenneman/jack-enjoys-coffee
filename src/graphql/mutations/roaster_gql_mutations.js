@@ -21,8 +21,8 @@
  *   ]
  */
 export const roastersMutation = `
-mutation CreateRoasters($input: [RoasterInput]) {
-  roasters(roasters: $input) {
+mutation CreateRoaster($input: RoasterInput) {
+  roasters(roaster: $input) {
     roaster_id
     name
     city

@@ -2,7 +2,6 @@
  * A new drink input, allowing the user to write to the DB
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -15,12 +14,15 @@ import { drinksMutation } from '../../graphql/mutations/drink_gql_mutations.js';
 import { writeGQL } from '../../graphql/fetch.js';
 // Logo
 import logo from '../../media/icons/coffee-icon.png';
+// Constants
+import { newInputPropTypesShape } from '../../consts.js';
 
 function NewDrinkInput({
+  currentData,
   dataEntry,
+  setCurrentData,
   setDataEntry,
-  currentDrinks,
-  currentMethods,
+  setToast,
 }) {
   const { drink } = dataEntry;
   const { method_id } = drink;
@@ -46,6 +48,8 @@ function NewDrinkInput({
 
   const classes = useStyles();
 
+  const { drinks: currentDrinks, methods: currentMethods } = currentData;
+
   const handleNameChange = (e) => {
     setDataEntry({
       ...dataEntry,
@@ -69,15 +73,43 @@ function NewDrinkInput({
   const handleSubmit = () => {
     const alreadyThere = currentDrinks.find(({ name }) => drink.name === name);
     if (alreadyThere) {
+      // Let user know this brewer already exists and return
+      setToast({
+        open: true,
+        severity: 'warning',
+        message: 'This drink already exists',
+      });
       return;
     }
     writeGQL(drinksMutation, [drink])
       .then(({ data }) => {
-        // TODO: Determine if write was successful, then change some state
-        console.log(data);
+        const { drinks } = data;
+        if (drinks.length > currentDrinks.length) {
+          // Write was successful, let user know, update state and return
+          setToast({
+            open: true,
+            severity: 'success',
+            message: 'New Drink Added!',
+          });
+          setCurrentData({
+            ...currentData,
+            drinks: drinks,
+          });
+          return;
+        }
+        // Write was not successful, let user know and return
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
       })
       .catch((e) => {
-        // TODO: Show that the write was unsuccessful
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
         console.log(e);
       });
     return;
@@ -151,11 +183,6 @@ function NewDrinkInput({
   );
 }
 
-NewDrinkInput.propTypes = {
-  dataEntry: PropTypes.object.isRequired,
-  setDataEntry: PropTypes.func.isRequired,
-  currentDrinks: PropTypes.array.isRequired,
-  currentMethods: PropTypes.array.isRequired,
-};
+NewDrinkInput.propTypes = newInputPropTypesShape;
 
 export default NewDrinkInput;

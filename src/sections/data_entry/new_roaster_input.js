@@ -2,7 +2,6 @@
  * A new coffee input, allowing the user to write to the DB
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -15,8 +14,16 @@ import { roastersMutation } from '../../graphql/mutations/roaster_gql_mutations.
 import { writeGQL } from '../../graphql/fetch.js';
 // Logo
 import logo from '../../media/icons/coffee-icon.png';
+// Constants
+import { newInputPropTypesShape } from '../../consts.js';
 
-function NewRoasterInput({ dataEntry, setDataEntry, currentRoasters }) {
+function NewRoasterInput({
+  currentData,
+  dataEntry,
+  setCurrentData,
+  setDataEntry,
+  setToast,
+}) {
   const { roaster } = dataEntry;
   const useStyles = makeStyles(() => ({
     inputSection: {
@@ -42,6 +49,8 @@ function NewRoasterInput({ dataEntry, setDataEntry, currentRoasters }) {
   );
 
   const classes = useStyles();
+
+  const { roasters: currentRoasters } = currentData;
 
   const handleNameChange = (e) => {
     setDataEntry({
@@ -94,13 +103,47 @@ function NewRoasterInput({ dataEntry, setDataEntry, currentRoasters }) {
   };
 
   const handleSubmit = () => {
-    writeGQL(roastersMutation, [roaster])
+    const alreadyThere = currentRoasters.find(
+      ({ name }) => roaster.name === name
+    );
+    if (alreadyThere) {
+      // Let user know this brewer already exists and return
+      setToast({
+        open: true,
+        severity: 'warning',
+        message: 'This roaster name already exists',
+      });
+      return;
+    }
+    writeGQL(roastersMutation, roaster)
       .then(({ data }) => {
-        // TODO: Determine if write was successful, then change some state
-        console.log(data);
+        const { roasters } = data;
+        if (roasters.roaster_id) {
+          // Write was successful, let user know, update state and return
+          setToast({
+            open: true,
+            severity: 'success',
+            message: 'New Roaster Added!',
+          });
+          setCurrentData({
+            ...currentData,
+            roasters: currentRoasters.concat([roasters]),
+          });
+          return;
+        }
+        // Write was not successful, let user know and return
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
       })
       .catch((e) => {
-        // TODO: Show that the write was unsuccessful
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
         console.log(e);
       });
     return;
@@ -123,7 +166,7 @@ function NewRoasterInput({ dataEntry, setDataEntry, currentRoasters }) {
               <TextField
                 className={classes.form}
                 id="outlined-basic"
-                label="Name"
+                label="Roaster Name"
                 variant="outlined"
                 onChange={handleNameChange}
               />
@@ -137,7 +180,7 @@ function NewRoasterInput({ dataEntry, setDataEntry, currentRoasters }) {
               <TextField
                 className={classes.form}
                 id="outlined-basic"
-                label="City"
+                label="Roaster City"
                 variant="outlined"
                 onChange={handleCityChange}
               />
@@ -151,7 +194,7 @@ function NewRoasterInput({ dataEntry, setDataEntry, currentRoasters }) {
               <TextField
                 className={classes.form}
                 id="outlined-basic"
-                label="State"
+                label="Roaster State"
                 variant="outlined"
                 onChange={handleStateChange}
               />
@@ -165,7 +208,7 @@ function NewRoasterInput({ dataEntry, setDataEntry, currentRoasters }) {
               <TextField
                 className={classes.form}
                 id="outlined-basic"
-                label="Contry"
+                label="Roaster Contry"
                 variant="outlined"
                 onChange={handleCountryChange}
               />
@@ -179,7 +222,7 @@ function NewRoasterInput({ dataEntry, setDataEntry, currentRoasters }) {
               <TextField
                 className={classes.form}
                 id="outlined-basic"
-                label="Website"
+                label="Roaster Website"
                 variant="outlined"
                 onChange={handleWebsiteChange}
               />
@@ -205,10 +248,6 @@ function NewRoasterInput({ dataEntry, setDataEntry, currentRoasters }) {
   );
 }
 
-NewRoasterInput.propTypes = {
-  dataEntry: PropTypes.object.isRequired,
-  setDataEntry: PropTypes.func.isRequired,
-  currentRoasters: PropTypes.array.isRequired,
-};
+NewRoasterInput.propTypes = newInputPropTypesShape;
 
 export default NewRoasterInput;
