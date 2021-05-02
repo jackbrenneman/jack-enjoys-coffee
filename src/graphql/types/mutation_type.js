@@ -70,8 +70,8 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       args: {
         name: { type: GraphQLString },
       },
-      resolve(parentValue, { names }) {
-        return originsMutationResolver(names);
+      resolve(parentValue, { name }) {
+        return originsMutationResolver(name);
       },
     },
     roasters: {

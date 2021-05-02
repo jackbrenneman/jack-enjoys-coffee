@@ -73,10 +73,10 @@ function NewOriginInput({
       });
       return;
     }
-    writeGQL(originsMutation, [origin.name])
+    writeGQL(originsMutation, origin.name)
       .then(({ data }) => {
         const { origins } = data;
-        if (origins.length > currentOrigins.length) {
+        if (origins.origin_id) {
           // Write was successful, let user know, update state and return
           setToast({
             open: true,
@@ -85,7 +85,7 @@ function NewOriginInput({
           });
           setCurrentData({
             ...currentData,
-            origins: origins,
+            origins: currentOrigins.concat([origins]),
           });
           return;
         }

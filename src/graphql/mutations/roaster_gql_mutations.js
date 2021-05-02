@@ -3,22 +3,7 @@
  */
 
 /**
- * The mutation to write new Roasters into the roasters table.
- *
- * @param {array} roasters an array of RoasterInput objects, with the shape:
- *   [
- *     {
- *       name: "Roaster 1 Name",
- *       city: "Roaster City",
- *       state: "Roaster State",
- *       country: "Roaster Country",
- *       website: "roaster1.com"
- *     },
- *     {
- *       ...
- *     },
- *     ...
- *   ]
+ * The mutation to write a new Roaster into the roasters table.
  */
 export const roastersMutation = `
 mutation CreateRoaster($input: RoasterInput) {
