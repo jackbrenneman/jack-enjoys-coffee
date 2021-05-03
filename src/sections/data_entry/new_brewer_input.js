@@ -96,10 +96,10 @@ function NewBrewerInput({
       });
       return;
     }
-    writeGQL(brewersMutation, [brewer])
+    writeGQL(brewersMutation, brewer)
       .then(({ data }) => {
-        const { brewers } = data;
-        if (brewers.length > currentBrewers.length) {
+        const { brewer: newBrewer } = data;
+        if (newBrewer.brewer_id) {
           // Write was successful, let user know, update state and return
           setToast({
             open: true,
@@ -108,7 +108,7 @@ function NewBrewerInput({
           });
           setCurrentData({
             ...currentData,
-            brewers: brewers,
+            brewers: currentBrewers.concat([newBrewer]),
           });
           return;
         }

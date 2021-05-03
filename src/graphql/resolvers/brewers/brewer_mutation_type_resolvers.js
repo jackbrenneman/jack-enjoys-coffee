@@ -7,14 +7,10 @@ import { insertIntoBrewers } from '../../../db/queries/brewers_queries.js';
 /**
  * Resolver mutation for all brewers.
  */
-export const brewersMutationResolver = (brewers) => {
-  // First, get the waters into an array of the value entries for queries
-  const brewerData = brewers.map(
-    (brewer) => `(${Object.values(brewer).toString()})`
-  );
-  console.log(brewerData);
-  return;
-  return query(insertIntoBrewers, [brewers])
+export const brewersMutationResolver = (brewer) => {
+  // First, get the brewers into an array of the value entries for queries
+  const brewerData = Object.values(brewer);
+  return query(insertIntoBrewers, brewerData)
     .then((result) => {
       const data = result.rows[0];
       console.log(data);
