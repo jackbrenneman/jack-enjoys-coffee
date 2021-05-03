@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
 import { currentCoffeeEntriesQuery } from '../../graphql/queries/current_coffee_entries_queries.js';
-import { fetchGQL } from '../../graphql/fetch.js';
+import { queryGQL } from '../../graphql/fetch.js';
 // Custom Components
 import CurrentCoffeeEntries from './current_coffee_entries.js';
 // Constants
@@ -22,7 +22,7 @@ function CurrentCoffeeEntriesContainer() {
 
   // When the component renders, we fetch all the current data
   useEffect(() => {
-    fetchGQL(currentCoffeeEntriesQuery)
+    queryGQL(currentCoffeeEntriesQuery)
       .then(({ data }) => {
         const { coffeeEntries } = data;
         if (coffeeEntries) {

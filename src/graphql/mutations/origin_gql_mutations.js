@@ -3,18 +3,11 @@
  */
 
 /**
- * The mutation to write new Origins into the origins table.
- *
- * @param {array} origins an array of origin names, with the shape:
- *   [
- *     "origin name 1",
- *     "origin name 2",
- *     ...
- *   ]
+ * The mutation to write a new Origin into the origins table.
  */
-export const originsMutation = (origins) => `
-  mutation {
-    origins(names:${origins}) {
+export const originsMutation = `
+  mutation CreateOrigins($input: String) {
+    origin(name: $input) {
       origin_id
       name
     }

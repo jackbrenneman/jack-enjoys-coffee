@@ -255,7 +255,6 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         id: { type: GraphQLID },
       },
       resolve(parentValue, { id }) {
-        console.log(parentValue, id);
         return userTypeResolver(id);
       },
     },

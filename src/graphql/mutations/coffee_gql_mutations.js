@@ -3,30 +3,29 @@
  */
 
 /**
- * The mutation to write new Coffees into the coffees table.
- *
- * @param {array} coffee an array of CoffeeInput objects, with the shape:
- *   [
- *     {
- *       name: "Coffee 1 Name",
- *       origin_id: {int},
- *       process_id: {int},
- *       roaster_id: {int},
- *     },
- *     {
- *       ...
- *     },
- *     ...
- *   ]
+ * The mutation to write a new Coffee into the coffees table.
  */
-export const coffeesMutation = (coffees) => `
-  mutation {
-    coffees(coffees:${coffees}) {
+export const coffeesMutation = `
+  mutation CreateCoffee($input: CoffeeInput) {
+    coffee(coffee: $input) {
       coffee_id
       name
-      origin_id
-      process_id
-      roaster_id
+      process {
+        process_id
+        name
+      }
+      origin {
+        origin_id
+        name
+      }
+      roaster {
+        roaster_id
+        name
+        city
+        state
+        country
+        website
+      }
     }
   }
 `;

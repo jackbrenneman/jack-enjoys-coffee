@@ -22,7 +22,7 @@ export const watersQuery = `
  */
 export const waterByIdQuery = (water_id) => `
   query {
-    waters(water_id=${water_id}) {
+    waters(water_id:${water_id}) {
       water_id
       name
       description
@@ -37,7 +37,7 @@ export const waterByIdQuery = (water_id) => `
  */
 export const watersByNameQuery = (name) => `
   query {
-    waters(name=${name}) {
+    waters(name:${name}) {
       water_id
       name
       description

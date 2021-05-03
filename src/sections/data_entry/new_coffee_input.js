@@ -2,7 +2,6 @@
  * A new coffee input, allowing the user to write to the DB
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -10,23 +9,28 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import AutocompleteWrapperSimple from '../coffee_entry/helpers/autocomplete_container_simple.js';
 // Queries and Fetching
 import { coffeesMutation } from '../../graphql/mutations/coffee_gql_mutations.js';
-import { fetchGQL } from '../../graphql/fetch.js';
+import { writeGQL } from '../../graphql/fetch.js';
 // Logo
 import logo from '../../media/icons/coffee-icon.png';
 // Constants
-import { processData } from '../../temp_db.js';
+import { newInputPropTypesShape } from '../../consts.js';
 
 function NewCoffeeInput({
+  currentData,
   dataEntry,
+  setCurrentData,
   setDataEntry,
-  currentCoffees,
-  currentProcesses,
+  setToast,
 }) {
   const { coffee } = dataEntry;
   const { process_id } = coffee;
   const useStyles = makeStyles(() => ({
+    inputSection: {
+      maxWidth: '600px',
+    },
     form: {
       width: '200px',
     },
@@ -48,6 +52,13 @@ function NewCoffeeInput({
 
   const classes = useStyles();
 
+  const {
+    coffees: currentCoffees,
+    origins: currentOrigins,
+    processes: currentProcesses,
+    roasters: currentRoasters,
+  } = currentData;
+
   const handleNameChange = (e) => {
     setDataEntry({
       ...dataEntry,
@@ -58,22 +69,22 @@ function NewCoffeeInput({
     });
   };
 
-  const handleRoasterIdChange = (e) => {
+  const handleRoasterIdChange = (roaster) => {
     setDataEntry({
       ...dataEntry,
       coffee: {
         ...coffee,
-        roaster_id: parseInt(e.target.value),
+        roaster_id: parseInt(roaster.roaster_id),
       },
     });
   };
 
-  const handleOriginIdChange = (e) => {
+  const handleOriginIdChange = (origin) => {
     setDataEntry({
       ...dataEntry,
       coffee: {
         ...coffee,
-        origin_id: parseInt(e.target.value),
+        origin_id: parseInt(origin.origin_id),
       },
     });
   };
@@ -89,13 +100,47 @@ function NewCoffeeInput({
   };
 
   const handleSubmit = () => {
-    fetchGQL(coffeesMutation([coffee]))
+    const alreadyThere = currentCoffees.find(
+      ({ name }) => coffee.name === name
+    );
+    if (alreadyThere) {
+      // Let user know this brewer already exists and return
+      setToast({
+        open: true,
+        severity: 'warning',
+        message: 'This coffee already exists',
+      });
+      return;
+    }
+    writeGQL(coffeesMutation, coffee)
       .then(({ data }) => {
-        // TODO: Determine if write was successful, then change some state
-        console.log(data);
+        const { coffee: newCoffee } = data;
+        if (newCoffee.coffee_id) {
+          // Write was successful, let user know, update state and return
+          setToast({
+            open: true,
+            severity: 'success',
+            message: 'New Coffee Added!',
+          });
+          setCurrentData({
+            ...currentData,
+            coffees: currentCoffees.concat([newCoffee]),
+          });
+          return;
+        }
+        // Write was not successful, let user know and return
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
       })
       .catch((e) => {
-        // TODO: Show that the write was unsuccessful
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
         console.log(e);
       });
     return;
@@ -108,7 +153,7 @@ function NewCoffeeInput({
           <Typography variant="h6">New Coffee</Typography>
         </Box>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.inputSection}>
         <Grid container align="center" justify="center" spacing={2}>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1" align="center">
@@ -118,7 +163,7 @@ function NewCoffeeInput({
               <TextField
                 className={classes.form}
                 id="outlined-basic"
-                label="Name"
+                label="Coffee Name"
                 variant="outlined"
                 onChange={handleNameChange}
               />
@@ -128,29 +173,39 @@ function NewCoffeeInput({
             <Typography variant="body1" align="center">
               Roaster
             </Typography>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="outlined-basic"
-                label="Roaster"
-                variant="outlined"
-                onChange={handleRoasterIdChange}
-              />
-            </form>
+            <AutocompleteWrapperSimple
+              fieldName="name"
+              options={currentRoasters}
+              onChange={handleRoasterIdChange}
+              textField={(params) => (
+                <TextField
+                  {...params}
+                  className={classes.form}
+                  id="outlined-text-field-name"
+                  label="Coffee Roaster"
+                  variant="outlined"
+                />
+              )}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1" align="center">
               Origin
             </Typography>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="outlined-basic"
-                label="Origin"
-                variant="outlined"
-                onChange={handleOriginIdChange}
-              />
-            </form>
+            <AutocompleteWrapperSimple
+              fieldName="name"
+              options={currentOrigins}
+              onChange={handleOriginIdChange}
+              textField={(params) => (
+                <TextField
+                  {...params}
+                  className={classes.form}
+                  id="outlined-text-field-name"
+                  label="Coffee Origin"
+                  variant="outlined"
+                />
+              )}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1" align="center">
@@ -168,8 +223,8 @@ function NewCoffeeInput({
                 }}
                 variant="outlined"
               >
-                {processData.map(({ name, value }) => (
-                  <option value={value} key={name}>
+                {currentProcesses.map(({ name, process_id }) => (
+                  <option value={process_id} key={name}>
                     {name}
                   </option>
                 ))}
@@ -196,11 +251,6 @@ function NewCoffeeInput({
   );
 }
 
-NewCoffeeInput.propTypes = {
-  dataEntry: PropTypes.object.isRequired,
-  setDataEntry: PropTypes.func.isRequired,
-  currentCoffees: PropTypes.array.isRequired,
-  currentProcesses: PropTypes.array.isRequired,
-};
+NewCoffeeInput.propTypes = newInputPropTypesShape;
 
 export default NewCoffeeInput;

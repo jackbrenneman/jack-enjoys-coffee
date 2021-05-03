@@ -22,7 +22,7 @@ export const brewersQuery = `
  */
 export const brewersByIdQuery = (brewer_id) => `
   query {
-    brewers(brewer_id=${brewer_id}) {
+    brewers(brewer_id:${brewer_id}) {
       brewer_id
       name
       website
@@ -37,7 +37,7 @@ export const brewersByIdQuery = (brewer_id) => `
  */
 export const brewersByNameQuery = (name) => `
   query {
-    brewer(name=${name}) {
+    brewer(name:${name}) {
       brewer_id
       name
       website

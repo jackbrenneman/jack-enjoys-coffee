@@ -2,7 +2,6 @@
  * A new drink input, allowing the user to write to the DB
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -12,17 +11,18 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
 import { drinksMutation } from '../../graphql/mutations/drink_gql_mutations.js';
-import { fetchGQL } from '../../graphql/fetch.js';
+import { writeGQL } from '../../graphql/fetch.js';
 // Logo
 import logo from '../../media/icons/coffee-icon.png';
 // Constants
-import { methodData } from '../../temp_db.js';
+import { newInputPropTypesShape } from '../../consts.js';
 
 function NewDrinkInput({
+  currentData,
   dataEntry,
+  setCurrentData,
   setDataEntry,
-  currentDrinks,
-  currentMethods,
+  setToast,
 }) {
   const { drink } = dataEntry;
   const { method_id } = drink;
@@ -48,6 +48,8 @@ function NewDrinkInput({
 
   const classes = useStyles();
 
+  const { drinks: currentDrinks, methods: currentMethods } = currentData;
+
   const handleNameChange = (e) => {
     setDataEntry({
       ...dataEntry,
@@ -59,6 +61,7 @@ function NewDrinkInput({
   };
 
   const handleMethodIdChange = (e) => {
+    console.log(e.target.value);
     setDataEntry({
       ...dataEntry,
       drink: {
@@ -69,13 +72,45 @@ function NewDrinkInput({
   };
 
   const handleSubmit = () => {
-    fetchGQL(drinksMutation([drink]))
+    const alreadyThere = currentDrinks.find(({ name }) => drink.name === name);
+    if (alreadyThere) {
+      // Let user know this brewer already exists and return
+      setToast({
+        open: true,
+        severity: 'warning',
+        message: 'This drink already exists',
+      });
+      return;
+    }
+    writeGQL(drinksMutation, drink)
       .then(({ data }) => {
-        // TODO: Determine if write was successful, then change some state
-        console.log(data);
+        const { drink: newDrink } = data;
+        if (newDrink.drink_id) {
+          // Write was successful, let user know, update state and return
+          setToast({
+            open: true,
+            severity: 'success',
+            message: 'New Drink Added!',
+          });
+          setCurrentData({
+            ...currentData,
+            drinks: currentDrinks.concat([newDrink]),
+          });
+          return;
+        }
+        // Write was not successful, let user know and return
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
       })
       .catch((e) => {
-        // TODO: Show that the write was unsuccessful
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
         console.log(e);
       });
     return;
@@ -90,7 +125,7 @@ function NewDrinkInput({
       </Grid>
       <Grid item xs={12}>
         <Grid container align="center" justify="center" spacing={2}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <Typography variant="body1" align="center">
               Name
             </Typography>
@@ -104,7 +139,7 @@ function NewDrinkInput({
               />
             </form>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <Typography variant="body1" align="center">
               Method
             </Typography>
@@ -120,8 +155,8 @@ function NewDrinkInput({
                 }}
                 variant="outlined"
               >
-                {methodData.map(({ name, value }) => (
-                  <option value={value} key={name}>
+                {currentMethods.map(({ name, method_id }) => (
+                  <option value={method_id} key={name}>
                     {name}
                   </option>
                 ))}
@@ -149,11 +184,6 @@ function NewDrinkInput({
   );
 }
 
-NewDrinkInput.propTypes = {
-  dataEntry: PropTypes.object.isRequired,
-  setDataEntry: PropTypes.func.isRequired,
-  currentDrinks: PropTypes.array.isRequired,
-  currentMethods: PropTypes.array.isRequired,
-};
+NewDrinkInput.propTypes = newInputPropTypesShape;
 
 export default NewDrinkInput;

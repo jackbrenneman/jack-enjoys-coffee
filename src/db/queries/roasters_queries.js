@@ -10,4 +10,4 @@ export const selectRoastersByState = 'SELECT * FROM roasters WHERE state = $1';
 export const selectRoastersByCountry =
   'SELECT * FROM roasters WHERE country = $1';
 export const insertIntoRoasters =
-  'INSERT INTO roasters (name, city, state, country, website) VALUES $1';
+  'INSERT INTO roasters(name, city, state, country, website) VALUES ($1, $2, $3, $4, $5) RETURNING *';

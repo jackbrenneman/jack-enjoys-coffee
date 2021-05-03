@@ -7,7 +7,7 @@ import { insertIntoMethods } from '../../../db/queries/methods_queries.js';
 /**
  * Resolver mutation for all origins.
  */
-export const originsMutationResolver = (methodNames) => {
+export const methoodsMutationResolver = (methodNames) => {
   // methodNames should just be an array of names at this point, so no need to really do much manipulation.
   console.log(methodNames);
   return;

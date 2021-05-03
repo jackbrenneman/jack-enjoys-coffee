@@ -3,23 +3,11 @@
  */
 
 /**
- * The mutation to write new Brewers into the brewers table.
- *
- * @param {array} brewers an array of BrewerInput objects, with the shape:
- *   [
- *     {
- *       name: "Brewer 1 Name",
- *       website: "brewer1.com"
- *     },
- *     {
- *       ...
- *     },
- *     ...
- *   ]
+ * The mutation to write a new Brewer into the brewers table.
  */
-export const brewersMutation = (brewers) => `
-  mutation {
-    brewers(brewers:${brewers}) {
+export const brewersMutation = `
+  mutation CreateBrewer($input: BrewerInput) {
+    brewer(brewer: $input) {
       brewer_id
       name
       website

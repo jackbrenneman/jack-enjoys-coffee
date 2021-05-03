@@ -65,17 +65,17 @@ export const dataEntryDefault = {
   brewer: {
     name: '',
     website: '',
-    method_id: 0,
+    method_id: 1,
   },
   coffee: {
     name: '',
     roaster_id: '',
-    process_id: 0,
+    process_id: 1,
     origin_id: '',
   },
   drink: {
     name: '',
-    method_id: 0,
+    method_id: 1,
   },
   grinder: {
     name: '',
@@ -127,6 +127,15 @@ export const defaultCoffeeEntry = {
   },
   rating: 8,
   note: '',
+};
+
+// All the props for entering new data
+export const newInputPropTypesShape = {
+  currentData: PropTypes.object.isRequired,
+  dataEntry: PropTypes.object.isRequired,
+  setCurrentData: PropTypes.func.isRequired,
+  setDataEntry: PropTypes.func.isRequired,
+  setToast: PropTypes.func.isRequired,
 };
 
 // All the Coffee info for a coffee entry

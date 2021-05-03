@@ -3,22 +3,19 @@
  */
 import { query } from '../../../db/index.js';
 import { insertIntoCoffees } from '../../../db/queries/coffees_queries.js';
-import { normalizeCoffees } from '../../../db/normalizers/coffees_normalizers.js';
+import { normalizeCoffeesMutation } from '../../../db/normalizers/coffees_normalizers.js';
 
 /**
  * Resolver mutation for all coffees.
  */
-export const coffeesMutationResolver = (coffees) => {
+export const coffeesMutationResolver = (coffee) => {
   // First, get the coffees into an array of the value entries for queries
-  const coffeeData = coffees.map(
-    (coffee) => `(${Object.values(coffee).toString()})`
-  );
-  console.log(coffeeData);
-  return;
-  return query(insertIntoCoffees, coffees)
+  const coffeeData = Object.values(coffee);
+  return query(insertIntoCoffees, coffeeData)
     .then((result) => {
-      const data = result.rows;
-      return normalizeCoffees(data);
+      const data = result.rows[0];
+      // normalizeCoffees returns an array. Since we're only adding one at at time, we can safely return the first
+      return normalizeCoffeesMutation(data);
     })
     .catch((e) => console.error(e.stack));
 };

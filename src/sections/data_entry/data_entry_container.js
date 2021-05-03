@@ -18,9 +18,11 @@ import Grid from '@material-ui/core/Grid';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Typography from '@material-ui/core/Typography';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 // Queries and Fetching
 import { currentDataQuery } from '../../graphql/queries/data_entry_queries.js';
-import { fetchGQL } from '../../graphql/fetch.js';
+import { queryGQL } from '../../graphql/fetch.js';
 // Input Components
 import NewCoffeeInput from './new_coffee_input.js';
 import NewOriginInput from './new_origin_input.js';
@@ -49,11 +51,17 @@ function DataEntryContainer() {
   // State that basically contains all the current info
   const [currentData, setCurrentData] = useState(currentDataDefault);
 
+  // State used for popping toast message for when write is successful or not
+  const [toast, setToast] = useState({
+    open: false,
+    severity: 'success',
+    message: '',
+  });
+
   // When the component renders, we fetch all the current data
   useEffect(() => {
-    fetchGQL(currentDataQuery)
+    queryGQL(currentDataQuery)
       .then(({ data }) => {
-        console.log(data);
         if (data) {
           setCurrentData(data);
         }
@@ -71,79 +79,39 @@ function DataEntryContainer() {
     });
   };
 
+  const handleToastClose = () => {
+    setToast({
+      ...toast,
+      open: false,
+    });
+  };
+
   const { dataOption } = dataEntry;
-  const {
-    brewers,
-    coffees,
-    drinks,
-    grinders,
-    methods,
-    origins,
-    processes,
-    roasters,
-    waters,
-  } = currentData;
+  const { open, severity, message } = toast;
+  const dataEntryFormProps = {
+    currentData,
+    dataEntry,
+    setCurrentData,
+    setDataEntry,
+    setToast,
+  };
 
   const getDataEntryForm = () => {
     switch (dataOption) {
       case brewerEnum:
-        return (
-          <NewBrewerInput
-            dataEntry={dataEntry}
-            setDataEntry={setDataEntry}
-            currentBrewers={brewers}
-            currentMethods={methods}
-          />
-        );
+        return <NewBrewerInput {...dataEntryFormProps} />;
       case coffeeEnum:
-        return (
-          <NewCoffeeInput
-            dataEntry={dataEntry}
-            setDataEntry={setDataEntry}
-            currentCoffees={coffees}
-            currentProcesses={processes}
-          />
-        );
+        return <NewCoffeeInput {...dataEntryFormProps} />;
       case drinkEnum:
-        return (
-          <NewDrinkInput
-            dataEntry={dataEntry}
-            setDataEntry={setDataEntry}
-            currentDrinks={drinks}
-          />
-        );
+        return <NewDrinkInput {...dataEntryFormProps} />;
       case grinderEnum:
-        return (
-          <NewGrinderInput
-            dataEntry={dataEntry}
-            setDataEntry={setDataEntry}
-            currentGrinders={grinders}
-          />
-        );
+        return <NewGrinderInput {...dataEntryFormProps} />;
       case originEnum:
-        return (
-          <NewOriginInput
-            dataEntry={dataEntry}
-            setDataEntry={setDataEntry}
-            currentOrigins={origins}
-          />
-        );
+        return <NewOriginInput {...dataEntryFormProps} />;
       case roasterEnum:
-        return (
-          <NewRoasterInput
-            dataEntry={dataEntry}
-            setDataEntry={setDataEntry}
-            currentRoasters={roasters}
-          />
-        );
+        return <NewRoasterInput {...dataEntryFormProps} />;
       case waterEnum:
-        return (
-          <NewWaterInput
-            dataEntry={dataEntry}
-            setDataEntry={setDataEntry}
-            currentWaters={waters}
-          />
-        );
+        return <NewWaterInput {...dataEntryFormProps} />;
       default:
         return <div />;
     }
@@ -227,6 +195,11 @@ function DataEntryContainer() {
           {getDataEntryForm()}
         </Grid>
       </Grid>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleToastClose}>
+        <Alert onClose={handleToastClose} severity={severity}>
+          <Typography variant="body1">{message}</Typography>
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

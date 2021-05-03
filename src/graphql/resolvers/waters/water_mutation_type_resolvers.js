@@ -7,17 +7,12 @@ import { insertIntoWaters } from '../../../db/queries/waters_queries.js';
 /**
  * Resolver mutation for all waters.
  */
-export const watersMutationResolver = (waters) => {
+export const watersMutationResolver = (water) => {
   // First, get the waters into an array of the value entries for queries
-  const waterData = waters.map(
-    (water) => `(${Object.values(water).toString()})`
-  );
-  console.log(waterData);
-  return;
-  return query(insertIntoWaters, [waters[0]])
+  const waterData = Object.values(water);
+  return query(insertIntoWaters, waterData)
     .then((result) => {
       const data = result.rows[0];
-      console.log(data);
       return data;
     })
     .catch((e) => console.error(e.stack));

@@ -22,7 +22,7 @@ export const drinksQuery = `
  */
 export const drinksByIdQuery = (drink_id) => `
   query {
-    drinks(drink_id=${drink_id}) {
+    drinks(drink_id:${drink_id}) {
       drink_id
       name
       method_id
@@ -37,7 +37,7 @@ export const drinksByIdQuery = (drink_id) => `
  */
 export const drinksByNameQuery = (name) => `
   query {
-    drink(name=${name}) {
+    drink(name:${name}) {
       drink_id
       name
       method_id
@@ -52,7 +52,7 @@ export const drinksByNameQuery = (name) => `
  */
 export const drinksByMethodIdQuery = (method_id) => `
   query {
-    drink(method_id=${method_id}) {
+    drink(method_id:${method_id}) {
       drink_id
       name
       method_id

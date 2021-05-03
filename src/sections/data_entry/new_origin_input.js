@@ -2,7 +2,6 @@
  * A new origin input, allowing the user to write to the DB
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -12,11 +11,19 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
 import { originsMutation } from '../../graphql/mutations/origin_gql_mutations.js';
-import { fetchGQL } from '../../graphql/fetch.js';
+import { writeGQL } from '../../graphql/fetch.js';
 // Logo
 import logo from '../../media/icons/coffee-icon.png';
+// Constants
+import { newInputPropTypesShape } from '../../consts.js';
 
-function NewOriginInput({ dataEntry, setDataEntry, currentOrigins }) {
+function NewOriginInput({
+  currentData,
+  dataEntry,
+  setCurrentData,
+  setDataEntry,
+  setToast,
+}) {
   const { origin } = dataEntry;
   const useStyles = makeStyles(() => ({
     form: {
@@ -40,6 +47,8 @@ function NewOriginInput({ dataEntry, setDataEntry, currentOrigins }) {
 
   const classes = useStyles();
 
+  const { origins: currentOrigins } = currentData;
+
   const handleNameChange = (e) => {
     setDataEntry({
       ...dataEntry,
@@ -55,18 +64,44 @@ function NewOriginInput({ dataEntry, setDataEntry, currentOrigins }) {
     const alreadyThere = currentOrigins.find(
       ({ name }) => origin.name === name
     );
-    console.log(alreadyThere);
     if (alreadyThere) {
-      console.log('already there');
+      // Let user know this brewer already exists and return
+      setToast({
+        open: true,
+        severity: 'warning',
+        message: 'This origin already exists',
+      });
       return;
     }
-    fetchGQL(originsMutation([origin]))
+    writeGQL(originsMutation, origin.name)
       .then(({ data }) => {
-        // TODO: Determine if write was successful, then change some state
-        console.log(data);
+        const { origin: newOrigin } = data;
+        if (newOrigin.origin_id) {
+          // Write was successful, let user know, update state and return
+          setToast({
+            open: true,
+            severity: 'success',
+            message: 'New Origin Added!',
+          });
+          setCurrentData({
+            ...currentData,
+            origins: currentOrigins.concat([newOrigin]),
+          });
+          return;
+        }
+        // Write was not successful, let user know and return
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
       })
       .catch((e) => {
-        // TODO: Show that the write was unsuccessful
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
         console.log(e);
       });
     return;
@@ -111,10 +146,6 @@ function NewOriginInput({ dataEntry, setDataEntry, currentOrigins }) {
   );
 }
 
-NewOriginInput.propTypes = {
-  dataEntry: PropTypes.object.isRequired,
-  setDataEntry: PropTypes.func.isRequired,
-  currentOrigins: PropTypes.array.isRequired,
-};
+NewOriginInput.propTypes = newInputPropTypesShape;
 
 export default NewOriginInput;

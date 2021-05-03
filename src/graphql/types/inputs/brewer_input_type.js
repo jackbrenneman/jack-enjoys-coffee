@@ -9,7 +9,7 @@ export const BrewerInputType = new GraphQLInputObjectType({
   description: 'Contains all the info needed to add brewer info in a mutation',
   fields: {
     name: { type: GraphQLString },
-    website: { type: GraphQLInt },
+    website: { type: GraphQLString },
     method_id: { type: GraphQLInt },
   },
 });

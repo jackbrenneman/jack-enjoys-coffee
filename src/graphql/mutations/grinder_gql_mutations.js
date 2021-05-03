@@ -3,23 +3,11 @@
  */
 
 /**
- * The mutation to write new Grinders into the grinders table.
- *
- * @param {array} grinder an array of GrinderInput objects, with the shape:
- *   [
- *     {
- *       name: "Grinder 1 Name",
- *       website: "grinder1.com"
- *     },
- *     {
- *       ...
- *     },
- *     ...
- *   ]
+ * The mutation to write a new Grinder into the grinders table.
  */
-export const grindersMutation = (grinders) => `
-  mutation {
-    grinders(grinders:${grinders}) {
+export const grindersMutation = `
+  mutation CreateGrinder($input: GrinderInput) {
+    grinder(grinder: $input) {
       grinder_id
       name
       website

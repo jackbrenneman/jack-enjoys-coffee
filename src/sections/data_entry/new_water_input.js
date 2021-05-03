@@ -2,7 +2,6 @@
  * A new brewer input, allowing the user to write to the DB
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -12,11 +11,19 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
 import { watersMutation } from '../../graphql/mutations/water_gql_mutations.js';
-import { fetchGQL } from '../../graphql/fetch.js';
+import { writeGQL } from '../../graphql/fetch.js';
 // Logo
 import logo from '../../media/icons/coffee-icon.png';
+// Constants
+import { newInputPropTypesShape } from '../../consts.js';
 
-function NewWaterInput({ dataEntry, setDataEntry }) {
+function NewWaterInput({
+  currentData,
+  dataEntry,
+  setCurrentData,
+  setDataEntry,
+  setToast,
+}) {
   const { water } = dataEntry;
   const useStyles = makeStyles(() => ({
     form: {
@@ -40,6 +47,8 @@ function NewWaterInput({ dataEntry, setDataEntry }) {
 
   const classes = useStyles();
 
+  const { waters: currentWaters } = currentData;
+
   const handleNameChange = (e) => {
     setDataEntry({
       ...dataEntry,
@@ -61,13 +70,45 @@ function NewWaterInput({ dataEntry, setDataEntry }) {
   };
 
   const handleSubmit = () => {
-    fetchGQL(watersMutation([water]))
+    const alreadyThere = currentWaters.find(({ name }) => water.name === name);
+    if (alreadyThere) {
+      // Let user know this brewer already exists and return
+      setToast({
+        open: true,
+        severity: 'warning',
+        message: 'This water name already exists',
+      });
+      return;
+    }
+    writeGQL(watersMutation, water)
       .then(({ data }) => {
-        // TODO: Determine if write was successful, then change some state
-        console.log(data);
+        const { water: newWater } = data;
+        if (newWater.water_id) {
+          // Write was successful, let user know, update state and return
+          setToast({
+            open: true,
+            severity: 'success',
+            message: 'New Water Added!',
+          });
+          setCurrentData({
+            ...currentData,
+            waters: currentWaters.concat([newWater]),
+          });
+          return;
+        }
+        // Write was not successful, let user know and return
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
       })
       .catch((e) => {
-        // TODO: Show that the write was unsuccessful
+        setToast({
+          open: true,
+          severity: 'error',
+          message: 'Something went wrong...please try again',
+        });
         console.log(e);
       });
     return;
@@ -106,7 +147,7 @@ function NewWaterInput({ dataEntry, setDataEntry }) {
               className={classes.form}
               onChange={handleDescriptionChange}
               id="outlined-textarea"
-              label="Short description"
+              label="Water Description"
               placeholder="Placeholder"
               multiline
               variant="outlined"
@@ -132,10 +173,6 @@ function NewWaterInput({ dataEntry, setDataEntry }) {
   );
 }
 
-NewWaterInput.propTypes = {
-  dataEntry: PropTypes.object.isRequired,
-  setDataEntry: PropTypes.func.isRequired,
-  currentWaters: PropTypes.array.isRequired,
-};
+NewWaterInput.propTypes = newInputPropTypesShape;
 
 export default NewWaterInput;
