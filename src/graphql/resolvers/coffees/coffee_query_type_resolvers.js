@@ -34,7 +34,7 @@ export const coffeesResolver = () => {
 /**
  * Resolver for coffee by id.
  *
- * @param {int} roaster_id the coffee_id of the coffee
+ * @param {int} coffee_id the coffee_id of the coffee
  */
 export const coffeeByIdResolver = (coffee_id) => {
   return query(selectCoffeeById, [coffee_id])
@@ -92,8 +92,8 @@ export const coffeesByOriginIdResolver = (origin_id) => {
  *
  * @param {string} process_id the id of the process
  */
-export const coffeesByProcessIdResolver = (origin_id) => {
-  return query(selectCoffeesByProcessId, [origin_id])
+export const coffeesByProcessIdResolver = (process_id) => {
+  return query(selectCoffeesByProcessId, [process_id])
     .then((result) => {
       const data = result.rows;
       return normalizeCoffeesByProcessId(data);

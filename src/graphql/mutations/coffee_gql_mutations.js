@@ -21,6 +21,10 @@ export const coffeesMutation = `
       roaster {
         roaster_id
         name
+        city
+        state
+        country
+        website
       }
     }
   }

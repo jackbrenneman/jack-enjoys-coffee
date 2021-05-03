@@ -112,10 +112,10 @@ function NewCoffeeInput({
       });
       return;
     }
-    writeGQL(coffeesMutation, [coffee])
+    writeGQL(coffeesMutation, coffee)
       .then(({ data }) => {
-        const { coffees } = data;
-        if (coffees.length > currentCoffees.length) {
+        const { coffee: newCoffee } = data;
+        if (newCoffee.coffee_id) {
           // Write was successful, let user know, update state and return
           setToast({
             open: true,
@@ -124,7 +124,7 @@ function NewCoffeeInput({
           });
           setCurrentData({
             ...currentData,
-            coffees: coffees,
+            coffees: currentCoffees.concat([newCoffee]),
           });
           return;
         }

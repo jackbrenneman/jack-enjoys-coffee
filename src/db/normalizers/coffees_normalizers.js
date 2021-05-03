@@ -1,26 +1,259 @@
 /**
  * Normalizers for any queries regarding coffees.
  */
-export const normalizeCoffees = (data) => {
-  return data;
+export const normalizeCoffees = (coffees) => {
+  const normalizedCoffees = coffees.map((coffee) => {
+    const {
+      coffee_id,
+      coffee_name,
+      roaster_id,
+      roaster_name,
+      roaster_city,
+      roaster_state,
+      roaster_country,
+      roaster_website,
+      origin_id,
+      origin_name,
+      process_id,
+      process_name,
+    } = coffee;
+    return {
+      coffee_id,
+      name: coffee_name,
+      roaster: {
+        roaster_id,
+        name: roaster_name,
+        city: roaster_city,
+        state: roaster_state,
+        country: roaster_country,
+        website: roaster_website,
+      },
+      origin: {
+        origin_id,
+        name: origin_name,
+      },
+      process: {
+        process_id,
+        name: process_name,
+      },
+    };
+  });
+  return normalizedCoffees;
 };
 
-export const normalizeCoffeeById = (data) => {
-  return data;
+export const normalizeCoffeesMutation = (coffee) => {
+  const { coffee_id, name, roaster_id, origin_id, process_id } = coffee;
+  return {
+    coffee_id,
+    name,
+    roaster: {
+      roaster_id,
+    },
+    origin: {
+      origin_id,
+    },
+    process: {
+      process_id,
+    },
+  };
 };
 
-export const normalizeCoffeesByName = (data) => {
-  return data;
+export const normalizeCoffeeById = (coffees) => {
+  const normalizedCoffees = coffees.map((coffee) => {
+    const {
+      coffee_id,
+      coffee_name,
+      roaster_id,
+      roaster_name,
+      roaster_city,
+      roaster_state,
+      roaster_country,
+      roaster_website,
+      origin_id,
+      origin_name,
+      process_id,
+      process_name,
+    } = coffee;
+    return {
+      coffee_id,
+      name: coffee_name,
+      roaster: {
+        roaster_id,
+        name: roaster_name,
+        city: roaster_city,
+        state: roaster_state,
+        country: roaster_country,
+        website: roaster_website,
+      },
+      origin: {
+        origin_id,
+        name: origin_name,
+      },
+      process: {
+        process_id,
+        name: process_name,
+      },
+    };
+  });
+  return normalizedCoffees;
 };
 
-export const normalizeCoffeesByRoasterId = (data) => {
-  return data;
+export const normalizeCoffeesByName = (coffees) => {
+  const normalizedCoffees = coffees.map((coffee) => {
+    const {
+      coffee_id,
+      coffee_name,
+      roaster_id,
+      roaster_name,
+      roaster_city,
+      roaster_state,
+      roaster_country,
+      roaster_website,
+      origin_id,
+      origin_name,
+      process_id,
+      process_name,
+    } = coffee;
+    return {
+      coffee_id,
+      name: coffee_name,
+      roaster: {
+        roaster_id,
+        name: roaster_name,
+        city: roaster_city,
+        state: roaster_state,
+        country: roaster_country,
+        website: roaster_website,
+      },
+      origin: {
+        origin_id,
+        name: origin_name,
+      },
+      process: {
+        process_id,
+        name: process_name,
+      },
+    };
+  });
+  return normalizedCoffees;
 };
 
-export const normalizeCoffeesByOriginId = (data) => {
-  return data;
+export const normalizeCoffeesByRoasterId = (coffees) => {
+  const normalizedCoffees = coffees.map((coffee) => {
+    const {
+      coffee_id,
+      coffee_name,
+      roaster_id,
+      roaster_name,
+      roaster_city,
+      roaster_state,
+      roaster_country,
+      roaster_website,
+      origin_id,
+      origin_name,
+      process_id,
+      process_name,
+    } = coffee;
+    return {
+      coffee_id,
+      name: coffee_name,
+      roaster: {
+        roaster_id,
+        name: roaster_name,
+        city: roaster_city,
+        state: roaster_state,
+        country: roaster_country,
+        website: roaster_website,
+      },
+      origin: {
+        origin_id,
+        name: origin_name,
+      },
+      process: {
+        process_id,
+        name: process_name,
+      },
+    };
+  });
+  return normalizedCoffees;
 };
 
-export const normalizeCoffeesByProcessId = (data) => {
-  return data;
+export const normalizeCoffeesByOriginId = (coffees) => {
+  const normalizedCoffees = coffees.map((coffee) => {
+    const {
+      coffee_id,
+      coffee_name,
+      roaster_id,
+      roaster_name,
+      roaster_city,
+      roaster_state,
+      roaster_country,
+      roaster_website,
+      origin_id,
+      origin_name,
+      process_id,
+      process_name,
+    } = coffee;
+    return {
+      coffee_id,
+      name: coffee_name,
+      roaster: {
+        roaster_id,
+        name: roaster_name,
+        city: roaster_city,
+        state: roaster_state,
+        country: roaster_country,
+        website: roaster_website,
+      },
+      origin: {
+        origin_id,
+        name: origin_name,
+      },
+      process: {
+        process_id,
+        name: process_name,
+      },
+    };
+  });
+  return normalizedCoffees;
+};
+
+export const normalizeCoffeesByProcessId = (coffees) => {
+  const normalizedCoffees = coffees.map((coffee) => {
+    const {
+      coffee_id,
+      coffee_name,
+      roaster_id,
+      roaster_name,
+      roaster_city,
+      roaster_state,
+      roaster_country,
+      roaster_website,
+      origin_id,
+      origin_name,
+      process_id,
+      process_name,
+    } = coffee;
+    return {
+      coffee_id,
+      name: coffee_name,
+      roaster: {
+        roaster_id,
+        name: roaster_name,
+        city: roaster_city,
+        state: roaster_state,
+        country: roaster_country,
+        website: roaster_website,
+      },
+      origin: {
+        origin_id,
+        name: origin_name,
+      },
+      process: {
+        process_id,
+        name: process_name,
+      },
+    };
+  });
+  return normalizedCoffees;
 };
