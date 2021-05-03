@@ -7,17 +7,12 @@ import { insertIntoGrinders } from '../../../db/queries/grinders_queries.js';
 /**
  * Resolver mutation for all grinders.
  */
-export const grindersMutationResolver = (grinders) => {
+export const grindersMutationResolver = (grinder) => {
   // First, get the grinders into an array of the value entries for queries
-  const grinderData = grinders.map(
-    (grinder) => `(${Object.values(grinder).toString()})`
-  );
-  console.log(grinderData);
-  return;
-  return query(insertIntoGrinders, [grinders])
+  const grinderData = Object.values(grinder);
+  return query(insertIntoGrinders, grinderData)
     .then((result) => {
       const data = result.rows[0];
-      console.log(data);
       return data;
     })
     .catch((e) => console.error(e.stack));

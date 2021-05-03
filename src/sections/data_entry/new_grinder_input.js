@@ -82,19 +82,19 @@ function NewGrinderInput({
       });
       return;
     }
-    writeGQL(grindersMutation, [grinder])
+    writeGQL(grindersMutation, grinder)
       .then(({ data }) => {
-        const { grinders } = data;
-        if (grinders.length > currentGrinders.length) {
+        const { grinder: newGrinder } = data;
+        if (newGrinder.grinder_id) {
           // Write was successful, let user know, update state and return
           setToast({
             open: true,
             severity: 'success',
-            message: 'New Brewer Added!',
+            message: 'New Grinder Added!',
           });
           setCurrentData({
             ...currentData,
-            grinders: grinders,
+            grinders: currentGrinders.concat([newGrinder]),
           });
           return;
         }

@@ -61,6 +61,7 @@ function NewDrinkInput({
   };
 
   const handleMethodIdChange = (e) => {
+    console.log(e.target.value);
     setDataEntry({
       ...dataEntry,
       drink: {
@@ -81,10 +82,10 @@ function NewDrinkInput({
       });
       return;
     }
-    writeGQL(drinksMutation, [drink])
+    writeGQL(drinksMutation, drink)
       .then(({ data }) => {
-        const { drinks } = data;
-        if (drinks.length > currentDrinks.length) {
+        const { drink: newDrink } = data;
+        if (newDrink.drink_id) {
           // Write was successful, let user know, update state and return
           setToast({
             open: true,
@@ -93,7 +94,7 @@ function NewDrinkInput({
           });
           setCurrentData({
             ...currentData,
-            drinks: drinks,
+            drinks: currentDrinks.concat([newDrink]),
           });
           return;
         }
@@ -154,8 +155,8 @@ function NewDrinkInput({
                 }}
                 variant="outlined"
               >
-                {currentMethods.map(({ name, value }) => (
-                  <option value={value} key={name}>
+                {currentMethods.map(({ name, method_id }) => (
+                  <option value={method_id} key={name}>
                     {name}
                   </option>
                 ))}

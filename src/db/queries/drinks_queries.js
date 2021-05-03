@@ -8,4 +8,4 @@ export const selectDrinksByMethodId =
 export const selectDrinksByName =
   'SELECT * FROM drinks WHERE LOWER(name) LIKE LOWER($1)';
 export const insertIntoDrinks =
-  'INSERT INTO drinks (name, method_id) VALUES ($1) RETURNING drink_id, name, method_id';
+  'INSERT INTO drinks (name, method_id) VALUES ($1, $2) RETURNING *';
