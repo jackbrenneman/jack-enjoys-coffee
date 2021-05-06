@@ -25,7 +25,7 @@ function Data() {
         <Grid item xs={12}>
           <Box p={4}>
             <Typography variant="body1" align="center">
-              Click on the button below to input a Coffee Journal Entry
+              Click on the button below to input a new Coffee Journal Entry
             </Typography>
             <Box p={2}>
               <NavLink
@@ -43,8 +43,8 @@ function Data() {
         <Grid item xs={12}>
           <Box p={4}>
             <Typography variant="body1" align="center">
-              Click on the button below to input a new Roaster, Coffee, or
-              Origin
+              Click on the button below to input a new Roaster, Coffee, Brewer,
+              Origin, Drink, Grinder, or Water!
             </Typography>
             <Box p={2}>
               <NavLink
@@ -57,14 +57,6 @@ function Data() {
                 </Box>
               </NavLink>
             </Box>
-          </Box>
-        </Grid>
-        <Grid item xs={12}>
-          <Box p={4}>
-            <Typography variant="body1" align="center">
-              Here is where your data will be when you put in some journal
-              entries!
-            </Typography>
           </Box>
         </Grid>
       </Grid>

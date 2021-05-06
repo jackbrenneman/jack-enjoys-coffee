@@ -7,9 +7,6 @@ import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import TopNav from './nav/topnav.js';
 import Home from './sections/home.js';
-import Blog from './sections/blog.js';
-// import Coffee from './sections/coffee.js';
-import Equipment from './sections/equipment.js';
 import Data from './sections/data.js';
 import CoffeeEntryContainer from './sections/coffee_entry/coffee_entry_container.js';
 import CurrentCoffeeEntriesContainer from './sections/current_coffee/current_coffee_entries_container.js';
@@ -47,12 +44,6 @@ function App() {
           </Route>
           <Route exact path="/data">
             <Data />
-          </Route>
-          <Route exact path="/equipment">
-            <Equipment />
-          </Route>
-          <Route exact path="/blog">
-            <Blog />
           </Route>
           <Route exact path="/data/coffee_entry">
             <CoffeeEntryContainer />
