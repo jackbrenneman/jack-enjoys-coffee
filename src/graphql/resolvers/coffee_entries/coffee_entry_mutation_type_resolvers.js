@@ -11,7 +11,6 @@ export const coffeeEntriesMutationResolver = (coffeeEntry) => {
   // First, get the coffee entry into an array of the value entries for queries
   const coffeeEntryData = Object.values(coffeeEntry);
   console.log(coffeeEntryData);
-  return;
   return query(insertIntoCoffeeEntries, coffeeEntryData)
     .then((result) => {
       const data = result.rows[0];

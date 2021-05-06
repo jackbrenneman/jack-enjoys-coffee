@@ -8,7 +8,7 @@
 export const coffeeEntryMutation = `
  mutation CreateCoffeeEntry($input: CoffeeEntryInput) {
    coffeeEntry(coffeeEntry: $input) {
-     entry_id
+     coffee_entry_id
    }
  }
 `;
