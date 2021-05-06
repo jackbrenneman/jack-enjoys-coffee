@@ -1,16 +1,20 @@
 /**
  * The Rating for a Coffee Entry.
  */
-import React from 'react';
+import React, { useState } from 'react';
+// Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import { coffeeEntryPropTypesShape } from '../../../consts.js';
+import MenuItem from '@material-ui/core/MenuItem';
+// Constants
+import { coffeeEntryPropTypesShape, naRating } from '../../../consts.js';
 import { ratingsInputData } from '../../../temp_db.js';
 
 function RatingInput({ coffeeEntry, setCoffeeEntry }) {
-  const { rating } = coffeeEntry;
+  // State used for rating
+  const [rating, setRating] = useState(naRating);
+
   const useStyles = makeStyles(() => ({
     form: {
       width: '100px',
@@ -20,43 +24,37 @@ function RatingInput({ coffeeEntry, setCoffeeEntry }) {
   const classes = useStyles();
 
   const handleRatingChange = (e) => {
+    if (e.target.value === naRating) {
+      setRating(naRating);
+      return;
+    }
+    setRating(e.target.value);
     setCoffeeEntry({
       ...coffeeEntry,
-      rating: parseInt(e.target.value),
+      rating: parseFloat(e.target.value),
     });
   };
 
   return (
-    <Grid container justify="center">
+    <Grid container align="center" spacing={2}>
       <Grid item xs={12}>
-        <Typography variant="h6" align="center">
-          Rating
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Grid container align="center" spacing={2}>
-          <Grid item xs={12}>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="outlined-select-rating-native"
-                select
-                value={rating}
-                onChange={handleRatingChange}
-                SelectProps={{
-                  native: true,
-                }}
-                variant="outlined"
-              >
-                {ratingsInputData.map(({ name, value }) => (
-                  <option value={value} key={name}>
-                    {name}
-                  </option>
-                ))}
-              </TextField>
-            </form>
-          </Grid>
-        </Grid>
+        <form autoComplete="off">
+          <TextField
+            className={classes.form}
+            id="outlined-select-rating-native"
+            label="Rating"
+            select
+            value={rating}
+            onChange={handleRatingChange}
+            variant="outlined"
+          >
+            {ratingsInputData.map(({ name, value }) => (
+              <MenuItem value={value} key={value}>
+                {name}
+              </MenuItem>
+            ))}
+          </TextField>
+        </form>
       </Grid>
     </Grid>
   );

@@ -12,8 +12,6 @@ import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
 import { grindersMutation } from '../../graphql/mutations/grinder_gql_mutations.js';
 import { writeGQL } from '../../graphql/fetch.js';
-// Logo
-import logo from '../../media/icons/coffee-icon.png';
 // Constants
 import { newInputPropTypesShape } from '../../consts.js';
 
@@ -29,21 +27,7 @@ function NewGrinderInput({
     form: {
       width: '200px',
     },
-    submitButton: {
-      background: 'linear-gradient(45deg, grey 30%, #DC7633 90%)',
-      color: 'black',
-      '&:hover': {
-        color: 'white',
-        background: 'linear-gradient(45deg, #DC7633 30%, grey 90%)',
-      },
-    },
   }));
-
-  const coffeeIcon = (
-    <Box p={1} display="flex" justifyContent="center">
-      <img width={30} src={logo} alt="Coffee Logo" />
-    </Box>
-  );
 
   const classes = useStyles();
 
@@ -155,15 +139,9 @@ function NewGrinderInput({
           </Grid>
         </Grid>
       </Grid>
-
       <Grid item xs={12}>
-        <Box p={4}>
-          <Button
-            startIcon={coffeeIcon}
-            endIcon={coffeeIcon}
-            className={classes.submitButton}
-            onClick={handleSubmit}
-          >
+        <Box pt={4} pb={8}>
+          <Button variant="contained" size="large" onClick={handleSubmit}>
             <Typography variant="body1" align="center">
               Submit
             </Typography>

@@ -11,14 +11,10 @@ import { currentCoffeeEntriesQuery } from '../../graphql/queries/current_coffee_
 import { queryGQL } from '../../graphql/fetch.js';
 // Custom Components
 import CurrentCoffeeEntries from './current_coffee_entries.js';
-// Constants
-import { currentCoffeeEntriesDefault } from '../../consts.js';
 
 function CurrentCoffeeEntriesContainer() {
   // State that basically contains all the current info
-  const [currentCoffeeEntries, setCurrentCoffeeEntries] = useState(
-    currentCoffeeEntriesDefault
-  );
+  const [currentCoffeeEntries, setCurrentCoffeeEntries] = useState([]);
 
   // When the component renders, we fetch all the current data
   useEffect(() => {

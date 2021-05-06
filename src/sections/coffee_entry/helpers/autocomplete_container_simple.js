@@ -7,7 +7,12 @@ import Autocomplete, {
   createFilterOptions,
 } from '@material-ui/lab/Autocomplete';
 
-function AutocompleteWrapperSimple({ onChange, options, textField }) {
+function AutocompleteWrapperSimple({
+  fieldName,
+  onChange,
+  options,
+  textField,
+}) {
   const [value, setValue] = useState(null);
   const filter = createFilterOptions();
 
@@ -19,7 +24,6 @@ function AutocompleteWrapperSimple({ onChange, options, textField }) {
       });
     } else {
       // The user chose something that was already an option
-      // setValue will literally just update the autocomplete component itself
       setValue(newValue);
       // onChange is the function supplied that will update state
       onChange(newValue ? newValue : '');
@@ -39,7 +43,7 @@ function AutocompleteWrapperSimple({ onChange, options, textField }) {
       selectOnFocus
       clearOnBlur
       handleHomeEndKeys
-      id="autcomplete-with-add-option"
+      id="autcomplete-simple"
       options={options}
       getOptionLabel={(option) => {
         // Value selected with enter, right from the input

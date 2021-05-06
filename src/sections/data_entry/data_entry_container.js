@@ -11,7 +11,6 @@
 import React, { useState, useEffect } from 'react';
 // Material UI
 import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
@@ -188,8 +187,6 @@ function DataEntryContainer() {
           </Grid>
         </Grid>
       </Box>
-
-      <Divider variant="middle" />
       <Grid>
         <Grid item xs={12}>
           {getDataEntryForm()}
