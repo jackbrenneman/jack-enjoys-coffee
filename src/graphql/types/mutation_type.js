@@ -13,6 +13,7 @@ import { WaterType } from './water_type.js';
 // Input Types
 import { BrewerInputType } from './inputs/brewer_input_type.js';
 import { CoffeeInputType } from './inputs/coffee_input_type.js';
+import { CoffeeEntryInputType } from './inputs/coffee_entry_input_type.js';
 import { DrinkInputType } from './inputs/drink_input_type.js';
 import { GrinderInputType } from './inputs/grinder_input_type.js';
 import { RoasterInputType } from './inputs/roaster_input_type.js';
@@ -20,15 +21,26 @@ import { WaterInputType } from './inputs/water_input_type.js';
 // Resolvers
 import { brewersMutationResolver } from '../resolvers/brewers/brewer_mutation_type_resolvers.js';
 import { coffeesMutationResolver } from '../resolvers/coffees/coffee_mutation_type_resolvers.js';
+import { coffeeEntriesMutationResolver } from '../resolvers/coffee_entries/coffee_entry_mutation_type_resolvers.js';
 import { drinksMutationResolver } from '../resolvers/drinks/drink_mutation_type_resolvers.js';
 import { grindersMutationResolver } from '../resolvers/grinders/grinder_mutation_type_resolvers.js';
 import { originsMutationResolver } from '../resolvers/origins/origin_mutation_type_resolvers.js';
 import { roastersMutationResolver } from '../resolvers/roasters/roaster_mutation_type_resolvers.js';
 import { watersMutationResolver } from '../resolvers/waters/water_mutation_type_resolvers.js';
+import { CoffeeEntryType } from './coffee_entry_type.js';
 
 const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
+    coffeeEntry: {
+      type: CoffeeEntryType,
+      args: {
+        coffeeEntry: { type: CoffeeEntryInputType },
+      },
+      resolve(parentValue, { coffeeEntry }) {
+        return coffeeEntriesMutationResolver(coffeeEntry);
+      },
+    },
     brewer: {
       type: BrewerType,
       args: {

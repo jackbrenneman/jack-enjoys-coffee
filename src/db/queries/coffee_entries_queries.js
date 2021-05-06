@@ -45,3 +45,25 @@ export const selectCoffeeEntriesByUserId = `
   INNER JOIN waters ON coffee_entries.water_id = waters.water_id
   WHERE coffee_entries.user_id = $1
 `;
+export const insertIntoCoffeeEntries = `
+  INSERT INTO coffee_entries
+    (
+      user_id,
+      date,
+      coffee_id,
+      method_id,
+      brewer_id,
+      drink_id,
+      grinder_id,
+      grinder_setting,
+      water_id,
+      coffee_in,
+      liquid_out,
+      water_in,
+      steep_time,
+      notes,
+      rating
+    )
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+  RETURNING *
+`;

@@ -32,7 +32,7 @@ function CurrentCoffeeEntries({ coffeeEntries }) {
           <Table
             className={classes.table}
             size="small"
-            aria-label="a dense table"
+            aria-label="current_coffee_entries"
           >
             <TableHead>
               <TableRow>
@@ -50,7 +50,7 @@ function CurrentCoffeeEntries({ coffeeEntries }) {
             <TableBody>
               {coffeeEntries.map((coffeeEntry) => (
                 <CoffeeEntry
-                  key={coffeeEntry.entry_id}
+                  key={coffeeEntry.coffee_entry_id}
                   coffeeEntry={coffeeEntry}
                 />
               ))}

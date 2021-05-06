@@ -13,7 +13,6 @@ export const brewersMutationResolver = (brewer) => {
   return query(insertIntoBrewers, brewerData)
     .then((result) => {
       const data = result.rows[0];
-      console.log(data);
       return data;
     })
     .catch((e) => console.error(e.stack));

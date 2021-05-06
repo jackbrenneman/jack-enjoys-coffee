@@ -8,7 +8,8 @@
 export const currentCoffeeEntriesQuery = `
  query {
   coffeeEntries(user_id: 1) {
-    entry_id
+    coffee_entry_id
+    user_id
     date
     coffee {
       coffee_id

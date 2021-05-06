@@ -6,8 +6,6 @@ import PropTypes from 'prop-types';
 import HomeIcon from '@material-ui/icons/Home';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import LocalCafeIcon from '@material-ui/icons/LocalCafe';
-import BuildIcon from '@material-ui/icons/Build';
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 
 export const drawerPages = [
   {
@@ -25,18 +23,9 @@ export const drawerPages = [
     icon: <LocalCafeIcon />,
     path: '/coffee',
   },
-  {
-    name: 'Equipment',
-    icon: <BuildIcon />,
-    path: '/equipment',
-  },
-  {
-    name: 'Blog',
-    icon: <LibraryBooksIcon />,
-    path: '/blog',
-  },
 ];
 
+// Used so we know what kind of data the user is trying to input
 export const drinkEnum = 'DRINK';
 export const grinderEnum = 'GRINDER';
 export const roasterEnum = 'ROASTER';
@@ -45,7 +34,28 @@ export const originEnum = 'ORIGIN';
 export const brewerEnum = 'BREWER';
 export const waterEnum = 'WATER';
 
-export const currentCoffeeEntriesDefault = [];
+// Only for when no rating has been inputted yet by the user
+export const naRating = 'NA';
+
+// Steep Time Constants
+export const hoursEnum = 'HOURS';
+export const minutesEnum = 'MINUTES';
+export const secondsEnum = 'SECONDS';
+export const defaultSteepTimeState = {
+  [hoursEnum]: 0,
+  [minutesEnum]: 0,
+  [secondsEnum]: 0,
+};
+
+// Method Constants
+export const espressoEnum = 'ESPRESSO';
+export const pouroverEnum = 'POUROVER';
+export const immersionEnum = 'IMMERSION';
+export const methodIdToMethodEnum = {
+  1: espressoEnum,
+  2: pouroverEnum,
+  3: immersionEnum,
+};
 
 export const currentDataDefault = {
   brewers: [],
@@ -102,31 +112,32 @@ const currentDate = new Date();
 const year = currentDate.getFullYear();
 const month = currentDate.getMonth() + 1;
 const day = currentDate.getDate();
-const defaultDate = `${year}-${month > 9 ? month : `0${month}`}-${day}`;
+const defaultDate = `${year}-${month > 9 ? month : `0${month}`}-${
+  day > 9 ? day : `0${day}`
+}`;
 
 // Default state for a coffee entry
 export const defaultCoffeeEntry = {
+  // General Info
   date: defaultDate,
-  coffee: {
-    name: '',
-    roaster: '',
-    origin: '',
-    process: 0,
-  },
+  // Coffee Info
+  coffee_id: null,
+  // Brew Info
   brew: {
-    method: 0,
-    brewer: 0,
-    drink: 0,
-    grind: {
-      grinder: '',
-      setting: null,
-    },
-    water: '',
+    method_id: 1,
+    brewer_id: null,
+    drink_id: null,
+    water_id: null,
+    grinder_id: null,
+    grinder_setting: null,
     coffee_in: null,
-    out: null,
+    liquid_out: null,
+    water_in: null,
+    steep_time: null,
   },
-  rating: 8,
-  note: '',
+  // Notes and Rating
+  notes: '',
+  rating: null,
 };
 
 // All the props for entering new data
@@ -138,38 +149,27 @@ export const newInputPropTypesShape = {
   setToast: PropTypes.func.isRequired,
 };
 
-// All the Coffee info for a coffee entry
-const coffeePropTypesShape = {
-  name: PropTypes.string,
-  roaster: PropTypes.string,
-  origin: PropTypes.string,
-  process: PropTypes.number,
-};
-
-// All the Grind info for a coffee entry
-const grindPropTypesShape = {
-  grinder: PropTypes.string,
-  setting: PropTypes.number,
-};
-
 // All the Brew Info for a coffee entry
 const brewPropTypesShape = {
-  method: PropTypes.number,
-  brewer: PropTypes.number,
-  drink: PropTypes.number,
-  grind: PropTypes.shape(grindPropTypesShape),
-  water: PropTypes.string,
+  method_id: PropTypes.number,
+  brewer_id: PropTypes.number,
+  drink_id: PropTypes.number,
+  water_id: PropTypes.number,
+  grinder_id: PropTypes.number,
+  grinder_setting: PropTypes.number,
   coffee_in: PropTypes.number,
-  out: PropTypes.number,
+  liquid_out: PropTypes.number,
+  water_in: PropTypes.number,
+  steep_time: PropTypes.number,
 };
 
 export const coffeeEntryPropTypesShape = {
   coffeeEntry: PropTypes.shape({
     date: PropTypes.string,
-    coffee: PropTypes.shape(coffeePropTypesShape),
+    coffee_id: PropTypes.number,
     brew: PropTypes.shape(brewPropTypesShape),
+    notes: PropTypes.string,
     rating: PropTypes.number,
-    note: PropTypes.string,
   }).isRequired,
   setCoffeeEntry: PropTypes.func.isRequired,
 };

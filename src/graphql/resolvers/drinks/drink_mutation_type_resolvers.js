@@ -13,7 +13,6 @@ export const drinksMutationResolver = (drink) => {
   return query(insertIntoDrinks, drinkData)
     .then((result) => {
       const data = result.rows[0];
-      console.log(data);
       return data;
     })
     .catch((e) => console.error(e.stack));

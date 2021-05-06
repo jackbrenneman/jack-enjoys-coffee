@@ -11,7 +11,6 @@ export const originsMutationResolver = (origin) => {
   return query(insertIntoOrigins, [origin])
     .then((result) => {
       const data = result.rows[0];
-      console.log(data);
       return data;
     })
     .catch((e) => console.error(e.stack));

@@ -58,7 +58,7 @@ export const normalizeCoffeeEntries = (data) => {
       water,
     };
     const normalizedCoffeeEntry = {
-      entry_id: coffee_entry_id,
+      coffee_entry_id,
       date,
       coffee,
       brew,
