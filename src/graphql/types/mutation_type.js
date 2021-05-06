@@ -38,7 +38,6 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
         coffeeEntry: { type: CoffeeEntryInputType },
       },
       resolve(parentValue, { coffeeEntry }) {
-        console.log(coffeeEntry);
         return coffeeEntriesMutationResolver(coffeeEntry);
       },
     },

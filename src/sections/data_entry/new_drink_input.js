@@ -45,7 +45,6 @@ function NewDrinkInput({
   };
 
   const handleMethodIdChange = (e) => {
-    console.log(e.target.value);
     setDataEntry({
       ...dataEntry,
       drink: {
