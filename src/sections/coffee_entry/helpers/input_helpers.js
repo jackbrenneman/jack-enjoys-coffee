@@ -1,21 +1,6 @@
 /**
  * Helpers for the coffee entry input page.
  */
-import { methodToBrewerMap, methodToDrinkMap } from '../../../temp_db.js';
-
-/**
- * Gets the correct brewers based on the method selected
- */
-export const getBrewerOptions = (methodValue) => {
-  return methodToBrewerMap[methodValue];
-};
-
-/**
- * Gets the correct drink types based on the method selected
- */
-export const getDrinkOptions = (methodValue) => {
-  return methodToDrinkMap[methodValue];
-};
 
 /**
  * Creates a mapping of roaster_ids to coffees so users can filter coffees by roaster when selecting a coffee for a coffee entry
@@ -135,6 +120,47 @@ export const createMethodIdToDrinksMap = (drinks) => {
   return methodToDrinksMap;
 };
 
+/**
+ * Normalizes a coffeeEntry to be in the shape we expect when we want to add it to the DB.
+ * @param {object} coffeeEntry in the form:
+ *   {
+ *      date,
+ *      coffee_id,
+ *      brew: {
+ *        method_id,
+ *        brewer_id,
+ *        drink_id,
+ *        grinder_id,
+ *        grinder_setting,
+ *        water_id,
+ *        coffee_in,
+ *        liquid_out,
+ *        water_in,
+ *        steep_time,
+ *      }
+ *      notes,
+ *      rating,
+ *   }
+ * @returns {object} in the form:
+ *   {
+ *      user_id: 1,
+ *      date,
+ *      coffee_id,
+ *      method_id,
+ *      brewer_id,
+ *      drink_id,
+ *      grinder_id,
+ *      grinder_setting,
+ *      water_id,
+ *      coffee_in,
+ *      liquid_out,
+ *      water_in,
+ *      steep_time,
+ *      notes,
+ *      rating,
+ *   }
+ *
+ */
 export const normalizeCoffeeEntryInput = (coffeeEntry) => {
   const { date, coffee_id, brew, notes, rating } = coffeeEntry;
   const {
