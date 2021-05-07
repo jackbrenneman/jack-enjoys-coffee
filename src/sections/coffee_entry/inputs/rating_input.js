@@ -8,8 +8,11 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 // Constants
-import { coffeeEntryPropTypesShape, naRating } from '../../../consts.js';
-import { ratingsInputData } from '../../../temp_db.js';
+import {
+  coffeeEntryPropTypesShape,
+  naRating,
+  ratingsInputData,
+} from '../../../consts.js';
 
 function RatingInput({ coffeeEntry, setCoffeeEntry }) {
   // State used for rating
