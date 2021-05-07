@@ -120,6 +120,47 @@ export const createMethodIdToDrinksMap = (drinks) => {
   return methodToDrinksMap;
 };
 
+/**
+ * Normalizes a coffeeEntry to be in the shape we expect when we want to add it to the DB.
+ * @param {object} coffeeEntry in the form:
+ *   {
+ *      date,
+ *      coffee_id,
+ *      brew: {
+ *        method_id,
+ *        brewer_id,
+ *        drink_id,
+ *        grinder_id,
+ *        grinder_setting,
+ *        water_id,
+ *        coffee_in,
+ *        liquid_out,
+ *        water_in,
+ *        steep_time,
+ *      }
+ *      notes,
+ *      rating,
+ *   }
+ * @returns {object} in the form:
+ *   {
+ *      user_id: 1,
+ *      date,
+ *      coffee_id,
+ *      method_id,
+ *      brewer_id,
+ *      drink_id,
+ *      grinder_id,
+ *      grinder_setting,
+ *      water_id,
+ *      coffee_in,
+ *      liquid_out,
+ *      water_in,
+ *      steep_time,
+ *      notes,
+ *      rating,
+ *   }
+ *
+ */
 export const normalizeCoffeeEntryInput = (coffeeEntry) => {
   const { date, coffee_id, brew, notes, rating } = coffeeEntry;
   const {
