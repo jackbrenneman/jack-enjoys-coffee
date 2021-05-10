@@ -30,6 +30,7 @@ export const currentCoffeeEntriesQuery = `
     brew {
       method {
         __typename
+        name
         ... on Espresso {
           liquid_out
         }

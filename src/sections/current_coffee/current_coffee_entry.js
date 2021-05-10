@@ -16,7 +16,7 @@ function CurrentCoffeeEntry({ coffeeEntry }) {
   const { name: origin_name } = origin;
   const { name: process_name } = process;
   const { method } = brew;
-  const { __typename: method_name, coffee_in, liquid_out } = method;
+  const { name: method_name, coffee_in, liquid_out } = method;
   return (
     <TableRow>
       <TableCell align="right">{localeDate}</TableCell>

@@ -56,5 +56,6 @@
   "engines": {
     "node": "14.x"
   },
+  "proxy": "http://localhost:3001",
   "type": "module"
 }
