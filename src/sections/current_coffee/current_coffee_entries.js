@@ -32,19 +32,16 @@ function CurrentCoffeeEntries({ coffeeEntries }) {
           <Table
             className={classes.table}
             size="small"
+            stickyHeader
             aria-label="current_coffee_entries"
           >
             <TableHead>
               <TableRow>
+                <TableCell />
                 <TableCell align="right">Date</TableCell>
                 <TableCell align="right">Roaster</TableCell>
                 <TableCell align="right">Rating</TableCell>
                 <TableCell align="right">Method</TableCell>
-                <TableCell align="right">Coffee Name</TableCell>
-                <TableCell align="right">Process</TableCell>
-                <TableCell align="right">Origin</TableCell>
-                <TableCell align="right">Coffee In</TableCell>
-                <TableCell align="right">Liquid Out</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
