@@ -135,80 +135,88 @@ function NewCoffeeInput({
       <Grid item xs={12} className={classes.inputSection}>
         <Grid container align="center" justify="center">
           <Grid item xs={12} sm={6}>
-            <Typography variant="body1" align="center">
-              Name
-            </Typography>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="outlined-basic"
-                label="Coffee Name"
-                variant="outlined"
-                onChange={handleNameChange}
+            <Box pt={2}>
+              <Typography variant="body1" align="center">
+                Name
+              </Typography>
+              <form autoComplete="off">
+                <TextField
+                  className={classes.form}
+                  id="outlined-basic"
+                  label="Coffee Name"
+                  variant="outlined"
+                  onChange={handleNameChange}
+                />
+              </form>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Box pt={2}>
+              <Typography variant="body1" align="center">
+                Roaster
+              </Typography>
+              <AutocompleteWrapperSimple
+                fieldName="name"
+                options={currentRoasters}
+                onChange={handleRoasterIdChange}
+                textField={(params) => (
+                  <TextField
+                    {...params}
+                    className={classes.form}
+                    id="outlined-text-field-name"
+                    label="Coffee Roaster"
+                    variant="outlined"
+                  />
+                )}
               />
-            </form>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Typography variant="body1" align="center">
-              Roaster
-            </Typography>
-            <AutocompleteWrapperSimple
-              fieldName="name"
-              options={currentRoasters}
-              onChange={handleRoasterIdChange}
-              textField={(params) => (
+            <Box pt={2}>
+              <Typography variant="body1" align="center">
+                Origin
+              </Typography>
+              <AutocompleteWrapperSimple
+                fieldName="name"
+                options={currentOrigins}
+                onChange={handleOriginIdChange}
+                textField={(params) => (
+                  <TextField
+                    {...params}
+                    className={classes.form}
+                    id="outlined-text-field-name"
+                    label="Coffee Origin"
+                    variant="outlined"
+                  />
+                )}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Box pt={2}>
+              <Typography variant="body1" align="center">
+                Process
+              </Typography>
+              <form autoComplete="off">
                 <TextField
-                  {...params}
                   className={classes.form}
-                  id="outlined-text-field-name"
-                  label="Coffee Roaster"
+                  id="outlined-select-process-native"
+                  select
+                  value={process_id}
+                  onChange={handleProcessIdChange}
+                  SelectProps={{
+                    native: true,
+                  }}
                   variant="outlined"
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body1" align="center">
-              Origin
-            </Typography>
-            <AutocompleteWrapperSimple
-              fieldName="name"
-              options={currentOrigins}
-              onChange={handleOriginIdChange}
-              textField={(params) => (
-                <TextField
-                  {...params}
-                  className={classes.form}
-                  id="outlined-text-field-name"
-                  label="Coffee Origin"
-                  variant="outlined"
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body1" align="center">
-              Process
-            </Typography>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="outlined-select-process-native"
-                select
-                value={process_id}
-                onChange={handleProcessIdChange}
-                SelectProps={{
-                  native: true,
-                }}
-                variant="outlined"
-              >
-                {currentProcesses.map(({ name, process_id }) => (
-                  <option value={process_id} key={name}>
-                    {name}
-                  </option>
-                ))}
-              </TextField>
-            </form>
+                >
+                  {currentProcesses.map(({ name, process_id }) => (
+                    <option value={process_id} key={name}>
+                      {name}
+                    </option>
+                  ))}
+                </TextField>
+              </form>
+            </Box>
           </Grid>
         </Grid>
       </Grid>
