@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 // Custom Components
@@ -84,7 +85,7 @@ function BrewInput({
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <Grid container align="center" justify="center" spacing={2}>
+        <Grid container align="center" justify="center">
           <Grid item xs={12}>
             <MethodAndMethodStuffInput
               coffeeEntry={coffeeEntry}
@@ -97,42 +98,51 @@ function BrewInput({
             />
           </Grid>
           <Grid item xs={12}>
-            <Divider variant="middle" />
+            <Box pt={2}>
+              <Divider variant="middle" />
+            </Box>
           </Grid>
           <Grid item xs={12}>
-            <AutocompleteWrapperSimple
-              fieldName="name"
-              options={grinders}
-              onChange={handleGrinderChange}
-              textField={(params) => (
-                <TextField
-                  {...params}
-                  className={classes.form}
-                  id="grinder"
-                  label="Grinder"
-                  variant="outlined"
-                  InputLabelProps={{ style: { textAlign: 'center' } }}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <form autoComplete="off">
-              <TextField
-                className={classes.formSmall}
-                id="grinder_setting"
-                variant="outlined"
-                label="Grind Setting"
-                size="small"
-                InputLabelProps={{ shrink: true }}
-                onChange={handleGrindSettingChange}
+            <Box pt={2}>
+              <AutocompleteWrapperSimple
+                fieldName="name"
+                options={grinders}
+                onChange={handleGrinderChange}
+                textField={(params) => (
+                  <TextField
+                    {...params}
+                    className={classes.form}
+                    id="grinder"
+                    label="Grinder"
+                    variant="outlined"
+                    InputLabelProps={{ style: { textAlign: 'center' } }}
+                  />
+                )}
               />
-            </form>
+            </Box>
           </Grid>
           <Grid item xs={12}>
-            <Divider variant="middle" />
+            <Box pt={2}>
+              <form autoComplete="off">
+                <TextField
+                  className={classes.formSmall}
+                  id="grinder_setting"
+                  variant="outlined"
+                  label="Grind Setting"
+                  size="small"
+                  InputLabelProps={{ shrink: true }}
+                  onChange={handleGrindSettingChange}
+                />
+              </form>
+            </Box>
           </Grid>
           <Grid item xs={12}>
+            <Box pt={2}>
+              <Divider variant="middle" />
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box pt={2}></Box>
             <AutocompleteWrapperSimple
               fieldName="water"
               options={waters}
@@ -149,7 +159,9 @@ function BrewInput({
             />
           </Grid>
           <Grid item xs={12}>
-            <Divider variant="middle" />
+            <Box pt={2}>
+              <Divider variant="middle" />
+            </Box>
           </Grid>
         </Grid>
       </Grid>

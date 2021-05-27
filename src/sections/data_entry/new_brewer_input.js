@@ -116,13 +116,8 @@ function NewBrewerInput({
 
   return (
     <Grid container direction="column" alignItems="center">
-      <Grid item xs={12}>
-        <Box p={4}>
-          <Typography variant="h6">New Brewer</Typography>
-        </Box>
-      </Grid>
       <Grid item xs={12} className={classes.inputSection}>
-        <Grid container align="center" justify="center" spacing={2}>
+        <Grid container align="center" justify="center">
           <Grid item xs={12} sm={6}>
             <Typography variant="body1" align="center">
               Name

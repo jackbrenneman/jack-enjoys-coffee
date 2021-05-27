@@ -94,11 +94,6 @@ function NewOriginInput({
   return (
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
-        <Box p={4}>
-          <Typography variant="h6">New Origin</Typography>
-        </Box>
-      </Grid>
-      <Grid item xs={12}>
         <Typography variant="body1" align="center">
           Name
         </Typography>

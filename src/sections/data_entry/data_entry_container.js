@@ -10,6 +10,7 @@
  */
 import React, { useState, useEffect } from 'react';
 // Material UI
+import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -19,6 +20,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Typography from '@material-ui/core/Typography';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import Divider from '@material-ui/core/Divider';
 // Queries and Fetching
 import { currentDataQuery } from '../../graphql/queries/data_entry_queries.js';
 import { queryGQL } from '../../graphql/fetch.js';
@@ -56,6 +58,14 @@ function DataEntryContainer() {
     severity: 'success',
     message: '',
   });
+
+  const useStyles = makeStyles((theme) => ({
+    radio: {
+      padding: '2px',
+    },
+  }));
+
+  const classes = useStyles();
 
   // When the component renders, we fetch all the current data
   useEffect(() => {
@@ -121,11 +131,6 @@ function DataEntryContainer() {
       <Box py={4}>
         <Grid container direction="column" alignItems="center">
           <Grid item xs={12}>
-            <Box p={4}>
-              <Typography variant="h4">Enter Data</Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
             <FormControl component="fieldset">
               <RadioGroup
                 row
@@ -134,50 +139,78 @@ function DataEntryContainer() {
                 value={dataOption}
                 onChange={handleDataOptionChange}
               >
-                <Grid container align="center" justify="center" spacing={2}>
+                <Grid container align="center" justify="center">
                   <Grid item xs={12}>
                     <FormControlLabel
                       value={brewerEnum}
-                      control={<Radio />}
-                      label="Brewer"
+                      control={<Radio className={classes.radio} />}
+                      label={
+                        <Typography variant="caption" align="center">
+                          Brewer
+                        </Typography>
+                      }
                       labelPlacement="bottom"
                     />
                     <FormControlLabel
                       value={coffeeEnum}
-                      control={<Radio />}
-                      label="Coffee"
+                      control={<Radio className={classes.radio} />}
+                      label={
+                        <Typography variant="caption" align="center">
+                          Coffee
+                        </Typography>
+                      }
                       labelPlacement="bottom"
                     />
                     <FormControlLabel
                       value={drinkEnum}
-                      control={<Radio />}
-                      label="Drink"
+                      control={<Radio className={classes.radio} />}
+                      label={
+                        <Typography variant="caption" align="center">
+                          Drink
+                        </Typography>
+                      }
                       labelPlacement="bottom"
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <FormControlLabel
                       value={grinderEnum}
-                      control={<Radio />}
-                      label="Grinder"
+                      control={<Radio className={classes.radio} />}
+                      label={
+                        <Typography variant="caption" align="center">
+                          Grinder
+                        </Typography>
+                      }
                       labelPlacement="bottom"
                     />
                     <FormControlLabel
                       value={originEnum}
-                      control={<Radio />}
-                      label="Origin"
+                      control={<Radio className={classes.radio} />}
+                      label={
+                        <Typography variant="caption" align="center">
+                          Origin
+                        </Typography>
+                      }
                       labelPlacement="bottom"
                     />
                     <FormControlLabel
                       value={roasterEnum}
-                      control={<Radio />}
-                      label="Roaster"
+                      control={<Radio className={classes.radio} />}
+                      label={
+                        <Typography variant="caption" align="center">
+                          Roaster
+                        </Typography>
+                      }
                       labelPlacement="bottom"
                     />
                     <FormControlLabel
                       value={waterEnum}
-                      control={<Radio />}
-                      label="Water"
+                      control={<Radio className={classes.radio} />}
+                      label={
+                        <Typography variant="caption" align="center">
+                          Water
+                        </Typography>
+                      }
                       labelPlacement="bottom"
                     />
                   </Grid>
@@ -187,6 +220,11 @@ function DataEntryContainer() {
           </Grid>
         </Grid>
       </Box>
+      <Grid>
+        <Grid item xs={12}>
+          <Divider variant="middle" />
+        </Grid>
+      </Grid>
       <Grid>
         <Grid item xs={12}>
           {getDataEntryForm()}

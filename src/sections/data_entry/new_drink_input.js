@@ -102,12 +102,7 @@ function NewDrinkInput({
   return (
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
-        <Box p={4}>
-          <Typography variant="h6">New Drink</Typography>
-        </Box>
-      </Grid>
-      <Grid item xs={12}>
-        <Grid container align="center" justify="center" spacing={2}>
+        <Grid container align="center" justify="center">
           <Grid item xs={12}>
             <Typography variant="body1" align="center">
               Name

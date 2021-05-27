@@ -26,7 +26,7 @@ function NotesInput({ coffeeEntry, setCoffeeEntry }) {
   };
 
   return (
-    <Grid container align="center" spacing={2}>
+    <Grid container align="center">
       <Grid item xs={12}>
         <TextField
           className={classes.form}

@@ -29,7 +29,7 @@ function GeneralInfoInput({ coffeeEntry, setCoffeeEntry }) {
   return (
     <Grid container justify="center">
       <Grid item xs={12}>
-        <Grid container align="center" justify="center" spacing={2}>
+        <Grid container align="center" justify="center">
           <Grid item xs={12}>
             <form autoComplete="off">
               <TextField
