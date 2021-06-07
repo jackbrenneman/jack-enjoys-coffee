@@ -29,6 +29,7 @@ export const normalizeCoffeeEntries = (data) => {
       roaster_id,
       roaster_name,
       steep_time,
+      user_id,
       water_in,
       water_id,
       water_name,
@@ -66,6 +67,7 @@ export const normalizeCoffeeEntries = (data) => {
       brew,
       notes,
       rating,
+      user_id,
     };
     return normalizedCoffeeEntry;
   });
