@@ -7,13 +7,6 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -26,6 +19,9 @@ function CurrentCoffeeEntries({ coffeeEntries, onDateChange }) {
   const useStyles = makeStyles({
     table: {
       minWidth: 650,
+    },
+    dateSection: {
+      maxWidth: 500,
     },
   });
 
@@ -54,13 +50,14 @@ function CurrentCoffeeEntries({ coffeeEntries, onDateChange }) {
     });
   };
 
-  const handleDateChangeEntry = () => {
+  const handleUpdateDate = () => {
+    // TODO: Make sure startDate is before or equal to endDate
     onDateChange(startDate, endDate);
   };
 
   return (
     <Grid container align="center" justify="center">
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={12} sm={3}>
         <Box py={1}>
           <form autoComplete="off">
             <TextField
@@ -78,7 +75,7 @@ function CurrentCoffeeEntries({ coffeeEntries, onDateChange }) {
           </form>
         </Box>
       </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={12} sm={3}>
         <Box py={1}>
           <form autoComplete="off">
             <TextField
@@ -97,12 +94,8 @@ function CurrentCoffeeEntries({ coffeeEntries, onDateChange }) {
         </Box>
       </Grid>
       <Grid item xs={12}>
-        <Box py={2}>
-          <Button
-            variant="contained"
-            size="large"
-            onClick={handleDateChangeEntry}
-          >
+        <Box py={1}>
+          <Button variant="contained" size="large" onClick={handleUpdateDate}>
             <Typography variant="body1" align="center">
               Update
             </Typography>
@@ -110,34 +103,13 @@ function CurrentCoffeeEntries({ coffeeEntries, onDateChange }) {
         </Box>
       </Grid>
       <Grid item xs={12}>
-        <Box p={1}>
-          <TableContainer component={Paper}>
-            <Table
-              className={classes.table}
-              size="small"
-              stickyHeader
-              aria-label="current_coffee_entries"
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell />
-                  <TableCell align="right">Date</TableCell>
-                  <TableCell align="right">Roaster</TableCell>
-                  <TableCell align="right">Rating</TableCell>
-                  <TableCell align="right">Method</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {coffeeEntries.map((coffeeEntry) => (
-                  <CoffeeEntry
-                    key={coffeeEntry.coffee_entry_id}
-                    coffeeEntry={coffeeEntry}
-                  />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
+        <Grid container align="center" justify="center">
+          {coffeeEntries.map((coffeeEntry) => (
+            <Grid item xs={10} sm={3} lg={2} key={coffeeEntry.coffee_entry_id}>
+              <CoffeeEntry coffeeEntry={coffeeEntry} />
+            </Grid>
+          ))}
+        </Grid>
       </Grid>
     </Grid>
   );

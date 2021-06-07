@@ -4,21 +4,24 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // Material UI
+import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Collapse from '@material-ui/core/Collapse';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import TableHead from '@material-ui/core/TableHead';
+import CardHeader from '@material-ui/core/CardHeader';
+import Card from '@material-ui/core/Card';
+import Grid from '@material-ui/core/Grid';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import IconButton from '@material-ui/core/IconButton';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+// Custom Components
+import EspressoDetails from './entry_details/espresso_details.js';
+import PouroverDetails from './entry_details/pourover_details.js';
+import ImmersionDetails from './entry_details/immersion_details.js';
 // Constants
 import { espressoEnum, pouroverEnum, immersionEnum } from '../../consts.js';
 
 function CurrentCoffeeEntry({ coffeeEntry }) {
-  const { coffee, date, brew, rating } = coffeeEntry;
+  const { coffee, date, brew, rating, notes } = coffeeEntry;
   const realDate = new Date(date);
   const localeDate = realDate.toLocaleDateString();
   const { name: coffee_name, roaster, origin, process } = coffee;
@@ -26,97 +29,151 @@ function CurrentCoffeeEntry({ coffeeEntry }) {
   const { name: origin_name } = origin;
   const { name: process_name } = process;
   const { method } = brew;
+
   const {
     name: method_name,
+    brewer,
     category,
     coffee_in,
+    drink,
     liquid_out,
     water_in,
     steep_time,
   } = method;
+  const { name: drink_name } = drink;
+  const { name: brewer_name } = brewer;
 
   const [open, setOpen] = useState(false);
 
+  const handleMoreDetailsClick = (e) => {
+    setOpen(!open);
+  };
+
+  const useStyles = makeStyles(() => ({
+    card: {
+      padding: '0',
+    },
+    header: {
+      padding: '0',
+      paddingTop: '10px',
+    },
+    content: {
+      padding: '0',
+      '&:last-child': {
+        padding: 0,
+      },
+    },
+    ratingBad: {
+      color: 'red',
+      fontWeight: 'bold',
+    },
+    ratingMeh: {
+      color: '#e3b129',
+      fontWeight: 'bold',
+    },
+    ratingGood: {
+      color: 'green',
+      fontWeight: 'bold',
+    },
+  }));
+
+  const classes = useStyles();
+
+  const getRatingStyle = () => {
+    if (rating >= 6) {
+      return classes.ratingGood;
+    }
+    if (rating >= 4) {
+      return classes.ratingMeh;
+    }
+    return classes.ratingBad;
+  };
+
+  const generalDetails = {
+    brewer_name: brewer_name,
+    coffee_name: coffee_name,
+    origin_name: origin_name,
+    process_name: process_name,
+    notes: notes,
+  };
+
+  const getMoreDetailsView = () => {
+    switch (category) {
+      case espressoEnum:
+        return (
+          <EspressoDetails
+            coffee_in={coffee_in}
+            liquid_out={liquid_out}
+            generalDetails={generalDetails}
+          />
+        );
+      case pouroverEnum:
+        return (
+          <PouroverDetails
+            coffee_in={coffee_in}
+            water_in={water_in}
+            generalDetails={generalDetails}
+          />
+        );
+      case immersionEnum:
+        return (
+          <ImmersionDetails
+            coffee_in={coffee_in}
+            water_in={water_in}
+            steep_time={steep_time}
+            generalDetails={generalDetails}
+          />
+        );
+      default:
+        return <div />;
+    }
+  };
+
   return (
-    <>
-      <TableRow>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
+    <Box p={1}>
+      <Card raised className={classes.card}>
+        <CardContent className={classes.content}>
+          <CardHeader
+            className={classes.header}
+            titleTypographyProps={{ variant: 'caption' }}
+            subheaderTypographyProps={{ variant: 'caption' }}
+            title={roaster_name}
+            subheader={`${method_name} | ${drink_name}`}
+          />
+          <Grid
+            direction="row"
+            container
+            justify="space-between"
+            alignItems="center"
           >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell align="right">{localeDate}</TableCell>
-        <TableCell align="right">{roaster_name}</TableCell>
-        <TableCell align="right">{rating}</TableCell>
-        <TableCell align="right">{method_name}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1}>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Origin</TableCell>
-                    <TableCell>Process</TableCell>
-                    <TableCell>Coffee Name</TableCell>
-                    {category === espressoEnum && (
-                      <>
-                        <TableCell align="right">Coffee In (g)</TableCell>
-                        <TableCell align="right">Liquid Out (g)</TableCell>
-                      </>
-                    )}
-                    {category === pouroverEnum && (
-                      <>
-                        <TableCell align="right">Coffee In (g)</TableCell>
-                        <TableCell align="right">Water In (g)</TableCell>
-                      </>
-                    )}
-                    {category === immersionEnum && (
-                      <>
-                        <TableCell align="right">Coffee In (g)</TableCell>
-                        <TableCell align="right">Water In (g)</TableCell>
-                        <TableCell align="right">Steep Time (s)</TableCell>
-                      </>
-                    )}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell align="right">{origin_name}</TableCell>
-                    <TableCell align="right">{process_name}</TableCell>
-                    <TableCell align="right">{coffee_name}</TableCell>
-                    {category === espressoEnum && (
-                      <>
-                        <TableCell align="right">{coffee_in}</TableCell>
-                        <TableCell align="right">{liquid_out}</TableCell>
-                      </>
-                    )}
-                    {category === pouroverEnum && (
-                      <>
-                        <TableCell align="right">{coffee_in}</TableCell>
-                        <TableCell align="right">{water_in}</TableCell>
-                      </>
-                    )}
-                    {category === immersionEnum && (
-                      <>
-                        <TableCell align="right">{coffee_in}</TableCell>
-                        <TableCell align="right">{water_in}</TableCell>
-                        <TableCell align="right">{steep_time}</TableCell>
-                      </>
-                    )}
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </>
+            <Grid item>
+              <Box px={2}>
+                <Typography className={getRatingStyle()} variant="caption">
+                  {rating}
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box px={1}>
+                <Typography variant="caption">{localeDate}</Typography>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box px={1}>
+                <IconButton
+                  aria-label="more"
+                  onClick={handleMoreDetailsClick}
+                  size="small"
+                >
+                  <MoreHorizIcon />
+                </IconButton>
+              </Box>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+      {open && getMoreDetailsView()}
+    </Box>
   );
 }
 
