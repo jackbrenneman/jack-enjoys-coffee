@@ -11,7 +11,7 @@ export const signinMutationResolver = (user) => {
   const signinData = Object.values(user);
   return query(signinUser, signinData)
     .then((result) => {
-      // This will get us the user_name. If it's not there, the user did not get signed up
+      // This will get us the user_name. If it's not there, the user is not signed in
       const data = result.rows[0];
       return data;
     })

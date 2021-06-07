@@ -5,9 +5,9 @@
 /**
  * Gets all the current coffee entries for a specified user.
  */
-export const currentCoffeeEntriesQuery = `
+export const currentCoffeeEntriesQuery = (user_id, date_start, date_end) => `
  query {
-  coffeeEntries(user_id: 1) {
+  coffeeEntries(user_id:${user_id}, date_start:"${date_start}", date_end:"${date_end}" ) {
     coffee_entry_id
     user_id
     date

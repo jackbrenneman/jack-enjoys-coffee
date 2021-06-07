@@ -186,19 +186,26 @@ export const ratingsInputData = [
   },
 ];
 
+const getDateString = (daysAgo = 0) => {
+  const date = new Date();
+  date.setDate(date.getDate() - daysAgo);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year}-${month > 9 ? month : `0${month}`}-${
+    day > 9 ? day : `0${day}`
+  }`;
+};
+
 // Used for the default time. Defaults to current day.
-const currentDate = new Date();
-const year = currentDate.getFullYear();
-const month = currentDate.getMonth() + 1;
-const day = currentDate.getDate();
-const defaultDate = `${year}-${month > 9 ? month : `0${month}`}-${
-  day > 9 ? day : `0${day}`
-}`;
+export const today = getDateString();
+// Last week
+export const sevenDaysAgo = getDateString(7);
 
 // Default state for a coffee entry
 export const defaultCoffeeEntry = {
   // General Info
-  date: defaultDate,
+  date: today,
   // Coffee Info
   coffee_id: null,
   // Brew Info

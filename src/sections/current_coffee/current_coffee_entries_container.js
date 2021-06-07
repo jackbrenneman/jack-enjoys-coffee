@@ -11,14 +11,16 @@ import { currentCoffeeEntriesQuery } from '../../graphql/queries/current_coffee_
 import { queryGQL } from '../../graphql/fetch.js';
 // Custom Components
 import CurrentCoffeeEntries from './current_coffee_entries.js';
+// Constants
+import { today, sevenDaysAgo } from '../../consts.js';
 
 function CurrentCoffeeEntriesContainer() {
   // State that basically contains all the current info
   const [currentCoffeeEntries, setCurrentCoffeeEntries] = useState([]);
 
-  // When the component renders, we fetch all the current data
+  // When the component renders, we fetch all the current data of the past week
   useEffect(() => {
-    queryGQL(currentCoffeeEntriesQuery)
+    queryGQL(currentCoffeeEntriesQuery(1, sevenDaysAgo, today))
       .then(({ data }) => {
         const { coffeeEntries } = data;
         if (coffeeEntries) {
@@ -31,19 +33,36 @@ function CurrentCoffeeEntriesContainer() {
       });
   }, []);
 
+  // Updates the date range, and fetches the coffee entry data for that given range
+  const updateDateRange = (startDate, endDate) => {
+    queryGQL(currentCoffeeEntriesQuery(1, startDate, endDate))
+      .then(({ data }) => {
+        const { coffeeEntries } = data;
+        if (coffeeEntries) {
+          setCurrentCoffeeEntries(coffeeEntries);
+        }
+      })
+      .catch((e) => {
+        // TODO: Determine what to do if fetch is unsuccessful
+        console.log(e);
+      });
+  };
+
   return (
-    <Box>
-      <Box py={4}>
-        <Grid container direction="column" alignItems="center">
-          <Grid item xs={12}>
-            <Box p={4}>
-              <Typography variant="h2">Coffee Entries</Typography>
-              <CurrentCoffeeEntries coffeeEntries={currentCoffeeEntries} />
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
-    </Box>
+    <Grid container align="center" justify="center">
+      <Grid item xs={12}>
+        <Box py={2}>
+          <Box py={2}>
+            <Typography variant="h2">Coffee Entries</Typography>
+          </Box>
+
+          <CurrentCoffeeEntries
+            coffeeEntries={currentCoffeeEntries}
+            onDateChange={updateDateRange}
+          />
+        </Box>
+      </Grid>
+    </Grid>
   );
 }
 
