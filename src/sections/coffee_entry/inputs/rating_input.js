@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@material-ui/core/Typography';
 // Constants
 import {
   coffeeEntryPropTypesShape,
@@ -41,11 +42,13 @@ function RatingInput({ coffeeEntry, setCoffeeEntry }) {
   return (
     <Grid container align="center">
       <Grid item xs={12}>
+        <Typography variant="caption" align="center">
+          Rating
+        </Typography>
         <form autoComplete="off">
           <TextField
             className={classes.form}
             id="outlined-select-rating-native"
-            label="Rating"
             select
             value={rating}
             onChange={handleRatingChange}

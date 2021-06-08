@@ -231,6 +231,7 @@ function MethodAndMethodStuffInput({
             id="outlined-basic"
             variant="outlined"
             onChange={handleCoffeeInChange}
+            size="small"
           />
         </form>
       </Box>
@@ -249,6 +250,7 @@ function MethodAndMethodStuffInput({
             id="outlined-basic"
             variant="outlined"
             onChange={handleLiquidInChange}
+            size="small"
           />
         </form>
       </Box>
@@ -267,6 +269,7 @@ function MethodAndMethodStuffInput({
             id="liquid_out"
             variant="outlined"
             onChange={handleLiquidOutChange}
+            size="small"
           />
         </form>
       </Box>
@@ -288,6 +291,7 @@ function MethodAndMethodStuffInput({
                 variant="outlined"
                 label="Hours"
                 onChange={handleSteepTimeChange}
+                size="small"
               />
             </form>
           </Box>
@@ -301,6 +305,7 @@ function MethodAndMethodStuffInput({
                 variant="outlined"
                 label="Minutes"
                 onChange={handleSteepTimeChange}
+                size="small"
               />
             </form>
           </Box>
@@ -314,6 +319,7 @@ function MethodAndMethodStuffInput({
                 variant="outlined"
                 label="Seconds"
                 onChange={handleSteepTimeChange}
+                size="small"
               />
             </form>
           </Box>
@@ -364,63 +370,63 @@ function MethodAndMethodStuffInput({
   return (
     <Grid container justify="center">
       <Grid item xs={12}>
-        <Box pt={2}>
-          <form autoComplete="off">
+        <Typography variant="caption" align="center">
+          Method
+        </Typography>
+        <form autoComplete="off">
+          <TextField
+            className={classes.form}
+            id="method"
+            value={selectedMethodId}
+            select
+            onChange={handleMethodChange}
+            variant="outlined"
+          >
+            {methods.map(({ method_id, name }) => (
+              <MenuItem value={method_id} key={method_id}>
+                {name}
+              </MenuItem>
+            ))}
+          </TextField>
+        </form>
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <Typography variant="caption" align="center">
+          Brewer
+        </Typography>
+        <AutocompleteWrapperSimple
+          fieldName="brewer"
+          options={getBrewerOptions()}
+          onChange={handleBrewerChange}
+          key={key}
+          textField={(params) => (
             <TextField
+              {...params}
               className={classes.form}
-              id="method"
-              label="Method"
-              value={selectedMethodId}
-              select
-              onChange={handleMethodChange}
+              id="brewer"
               variant="outlined"
-            >
-              {methods.map(({ method_id, name }) => (
-                <MenuItem value={method_id} key={method_id}>
-                  {name}
-                </MenuItem>
-              ))}
-            </TextField>
-          </form>
-        </Box>
+            />
+          )}
+        />
       </Grid>
       <Grid item xs={12} sm={4}>
-        <Box pt={2}>
-          <AutocompleteWrapperSimple
-            fieldName="brewer"
-            options={getBrewerOptions()}
-            onChange={handleBrewerChange}
-            key={key}
-            textField={(params) => (
-              <TextField
-                {...params}
-                className={classes.form}
-                id="brewer"
-                label="Brewer"
-                variant="outlined"
-              />
-            )}
-          />
-        </Box>
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <Box pt={2}>
-          <AutocompleteWrapperSimple
-            fieldName="drink"
-            options={getDrinkOptions()}
-            onChange={handleDrinkChange}
-            key={key}
-            textField={(params) => (
-              <TextField
-                {...params}
-                className={classes.form}
-                id="drink"
-                label="Drink"
-                variant="outlined"
-              />
-            )}
-          />
-        </Box>
+        <Typography variant="caption" align="center">
+          Drink
+        </Typography>
+        <AutocompleteWrapperSimple
+          fieldName="drink"
+          options={getDrinkOptions()}
+          onChange={handleDrinkChange}
+          key={key}
+          textField={(params) => (
+            <TextField
+              {...params}
+              className={classes.form}
+              id="drink"
+              variant="outlined"
+            />
+          )}
+        />
       </Grid>
       <Grid item xs={12}>
         <Box pt={2}>

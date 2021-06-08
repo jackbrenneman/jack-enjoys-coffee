@@ -206,7 +206,7 @@ function CoffeeEntryContainer() {
         </Box>
       </Grid>
       {sections.map(({ component, name }) => (
-        <Box px={2} py={1} className={classes.section} key={name}>
+        <Box px={2} className={classes.section} key={name}>
           <Grid item xs={12}>
             {component}
           </Grid>
