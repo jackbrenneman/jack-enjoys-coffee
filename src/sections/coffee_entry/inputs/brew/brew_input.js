@@ -98,23 +98,25 @@ function BrewInput({
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="caption" align="center">
-              Grinder
-            </Typography>
-            <AutocompleteWrapperSimple
-              fieldName="name"
-              options={grinders}
-              onChange={handleGrinderChange}
-              textField={(params) => (
-                <TextField
-                  {...params}
-                  className={classes.form}
-                  id="grinder"
-                  variant="outlined"
-                  InputLabelProps={{ style: { textAlign: 'center' } }}
-                />
-              )}
-            />
+            <Box pt={1}>
+              <Typography variant="caption" align="center">
+                Grinder
+              </Typography>
+              <AutocompleteWrapperSimple
+                fieldName="name"
+                options={grinders}
+                onChange={handleGrinderChange}
+                textField={(params) => (
+                  <TextField
+                    {...params}
+                    className={classes.form}
+                    id="grinder"
+                    variant="outlined"
+                    InputLabelProps={{ style: { textAlign: 'center' } }}
+                  />
+                )}
+              />
+            </Box>
           </Grid>
           <Grid item xs={12}>
             <Typography variant="caption" align="center">
@@ -137,22 +139,24 @@ function BrewInput({
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="caption" align="center">
-              Water
-            </Typography>
-            <AutocompleteWrapperSimple
-              fieldName="water"
-              options={waters}
-              onChange={handleWaterChange}
-              textField={(params) => (
-                <TextField
-                  {...params}
-                  className={classes.form}
-                  id="water"
-                  variant="outlined"
-                />
-              )}
-            />
+            <Box pt={1}>
+              <Typography variant="caption" align="center">
+                Water
+              </Typography>
+              <AutocompleteWrapperSimple
+                fieldName="water"
+                options={waters}
+                onChange={handleWaterChange}
+                textField={(params) => (
+                  <TextField
+                    {...params}
+                    className={classes.form}
+                    id="water"
+                    variant="outlined"
+                  />
+                )}
+              />
+            </Box>
           </Grid>
           <Grid item xs={12}>
             <Box pt={2}>

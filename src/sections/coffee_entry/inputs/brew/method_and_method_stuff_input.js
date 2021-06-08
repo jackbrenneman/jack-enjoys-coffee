@@ -434,7 +434,7 @@ function MethodAndMethodStuffInput({
         </Box>
       </Grid>
       <Grid item xs={12}>
-        <Box pt={2}>
+        <Box pt={1}>
           <Grid container justify="center">
             {getCoffeeAndWaterInputs()}
           </Grid>
