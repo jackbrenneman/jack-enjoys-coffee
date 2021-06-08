@@ -198,6 +198,20 @@ function CoffeeInfoInput({
                   >
                     <Grid item>
                       <Box px={2}>
+                        <Typography variant="caption" className={classes.name}>
+                          {selectedCoffee?.name}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    direction="row"
+                    container
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <Box px={2}>
                         <Typography variant="caption" color="textSecondary">
                           {selectedCoffee?.process?.name}
                         </Typography>
