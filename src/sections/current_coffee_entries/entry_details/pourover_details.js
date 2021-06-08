@@ -1,5 +1,5 @@
 /**
- * Details on an Espresso drink for an entry
+ * Details on a Pour Over drink for an entry
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import GeneralDetails from './general_details.js';
 import { Divider } from '@material-ui/core';
 
-function EspressoDetails({ coffee_in, liquid_out, generalDetails }) {
+function PouroverDetails({ coffee_in, water_in, generalDetails }) {
   const useStyles = makeStyles(() => ({
     card: {
       padding: '0',
@@ -28,9 +28,6 @@ function EspressoDetails({ coffee_in, liquid_out, generalDetails }) {
       '&:last-child': {
         padding: 0,
       },
-    },
-    ratio: {
-      fontWeight: 'bold',
     },
     ratingBad: {
       color: 'red',
@@ -49,50 +46,55 @@ function EspressoDetails({ coffee_in, liquid_out, generalDetails }) {
       fontSize: '10px',
     },
   }));
-  const { notes, brewer_name } = generalDetails;
 
   const classes = useStyles();
+
+  const { notes, brewer_name } = generalDetails;
 
   return (
     <Box p={1}>
       <Card raised className={classes.card}>
         <CardContent className={classes.content}>
           <GeneralDetails {...generalDetails} />
-          <Grid direction="row" container justify="center" alignItems="center">
-            <Grid item>
-              <Box px={2}>
-                <Typography
-                  variant="caption"
-                  className={classes.ratio}
-                  color="textSecondary"
-                >
-                  {brewer_name}
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box px={2}>
-                <Typography
-                  variant="caption"
-                  className={classes.ratio}
-                  color="textSecondary"
-                >
-                  {coffee_in} : {liquid_out}
-                </Typography>
-              </Box>
-            </Grid>
+          <Grid
+            direction="row"
+            container
+            justify="space-around"
+            alignItems="center"
+          >
+            {brewer_name && (
+              <Grid item>
+                <Box px={2}>
+                  <Typography
+                    variant="caption"
+                    className={classes.ratio}
+                    color="textSecondary"
+                  >
+                    {brewer_name}
+                  </Typography>
+                </Box>
+              </Grid>
+            )}
+            {coffee_in && (
+              <Grid item>
+                <Box px={2}>
+                  <Typography
+                    variant="caption"
+                    className={classes.ratio}
+                    color="textSecondary"
+                  >
+                    {coffee_in} : {water_in}
+                  </Typography>
+                </Box>
+              </Grid>
+            )}
           </Grid>
           <Grid container justify="center" alignItems="center">
             <Grid xs={12} item>
               <Divider variant="middle" />
             </Grid>
           </Grid>
-          <Grid
-            direction="row"
-            container
-            justify="space-between"
-            alignItems="center"
-          >
+          <Grid container justify="center" alignItems="center">
             <Grid item>
               <Box px={1} pb={1}>
                 <Typography variant="caption" className={classes.notes}>
@@ -107,10 +109,10 @@ function EspressoDetails({ coffee_in, liquid_out, generalDetails }) {
   );
 }
 
-EspressoDetails.propTypes = {
+PouroverDetails.propTypes = {
   coffee_in: PropTypes.number,
-  liquid_out: PropTypes.number,
+  water_in: PropTypes.number,
   generalDetails: PropTypes.object,
 };
 
-export default EspressoDetails;
+export default PouroverDetails;

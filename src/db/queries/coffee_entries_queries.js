@@ -87,7 +87,7 @@ export const selectCoffeeEntriesByUserIdAndDateRange = `
   LEFT JOIN grinders ON coffee_entries.grinder_id = grinders.grinder_id
   LEFT JOIN waters ON coffee_entries.water_id = waters.water_id
   WHERE coffee_entries.user_id = $1 AND coffee_entries.date >= $2 AND coffee_entries.date <= $3
-  ORDER BY coffee_entries.date ASC;
+  ORDER BY coffee_entries.date DESC;
 `;
 export const insertIntoCoffeeEntries = `
   INSERT INTO coffee_entries

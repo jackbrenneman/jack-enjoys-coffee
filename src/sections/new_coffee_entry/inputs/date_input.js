@@ -6,6 +6,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 // Constants
 import { coffeeEntryPropTypesShape } from '../../../consts.js';
 
@@ -31,18 +32,21 @@ function GeneralInfoInput({ coffeeEntry, setCoffeeEntry }) {
       <Grid item xs={12}>
         <Grid container align="center" justify="center">
           <Grid item xs={12}>
+            <Typography variant="caption" align="center">
+              Date
+            </Typography>
             <form autoComplete="off">
               <TextField
                 className={classes.form}
                 id="date"
                 type="date"
-                label="Date"
                 defaultValue={date}
                 onChange={handleDateChange}
                 SelectProps={{
                   native: true,
                 }}
                 variant="outlined"
+                size="small"
               />
             </form>
           </Grid>

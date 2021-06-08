@@ -206,14 +206,14 @@ function CoffeeEntryContainer() {
         </Box>
       </Grid>
       {sections.map(({ component, name }) => (
-        <Box px={2} py={1} className={classes.section} key={name}>
+        <Box px={2} className={classes.section} key={name}>
           <Grid item xs={12}>
             {component}
           </Grid>
         </Box>
       ))}
       <Grid item xs={12}>
-        <Box pt={2} pb={8}>
+        <Box pt={4} pb={8}>
           <Button variant="contained" size="large" onClick={handleSubmit}>
             <Typography variant="body1" align="center">
               Submit

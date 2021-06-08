@@ -69,7 +69,8 @@ export const createRoasterIdToCoffeesMap = (coffees) => {
  */
 export const createMethodIdToBrewersMap = (brewers) => {
   const methodToBrewersMap = brewers.reduce((acc, brewer) => {
-    const { method_id } = brewer;
+    const { method } = brewer;
+    const { method_id } = method;
     // method_id has already been initialized
     if (acc[method_id]) {
       acc[method_id].push(brewer);
@@ -107,7 +108,8 @@ export const createMethodIdToBrewersMap = (brewers) => {
  */
 export const createMethodIdToDrinksMap = (drinks) => {
   const methodToDrinksMap = drinks.reduce((acc, drink) => {
-    const { method_id } = drink;
+    const { method } = drink;
+    const { method_id } = method;
     // method_id has already been initialized
     if (acc[method_id]) {
       acc[method_id].push(drink);

@@ -1,29 +1,7 @@
 /**
  * Constants and such.
  */
-import React from 'react';
 import PropTypes from 'prop-types';
-import HomeIcon from '@material-ui/icons/Home';
-import AssessmentIcon from '@material-ui/icons/Assessment';
-import LocalCafeIcon from '@material-ui/icons/LocalCafe';
-
-export const drawerPages = [
-  {
-    name: 'Home',
-    icon: <HomeIcon />,
-    path: '/home',
-  },
-  {
-    name: 'Data',
-    icon: <AssessmentIcon />,
-    path: '/data',
-  },
-  {
-    name: 'Coffee',
-    icon: <LocalCafeIcon />,
-    path: '/coffee',
-  },
-];
 
 // Used so we know what kind of data the user is trying to input
 export const drinkEnum = 'DRINK';

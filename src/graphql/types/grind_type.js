@@ -1,13 +1,14 @@
 /**
  * The Grind Type. Contains all information on a grind.
  */
-import { GraphQLString, GraphQLID, GraphQLObjectType } from 'graphql';
+import { GraphQLString, GraphQLObjectType } from 'graphql';
+import { GrinderType } from './grinder_type.js';
 
 export const GrindType = new GraphQLObjectType({
   name: 'Grind',
   description: 'Contains information on a grind',
   fields: {
-    grinder: { type: GraphQLID },
+    grinder: { type: GrinderType },
     setting: { type: GraphQLString },
   },
 });

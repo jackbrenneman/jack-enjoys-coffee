@@ -6,6 +6,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 // Constants
 import { coffeeEntryPropTypesShape } from '../../../consts.js';
 
@@ -28,15 +29,18 @@ function NotesInput({ coffeeEntry, setCoffeeEntry }) {
   return (
     <Grid container align="center">
       <Grid item xs={12}>
-        <TextField
-          className={classes.form}
-          onChange={handleNoteChange}
-          id="outlined-textarea"
-          label="Notes"
-          placeholder="Placeholder"
-          multiline
-          variant="outlined"
-        />
+        <Typography variant="caption" align="center">
+          Notes
+        </Typography>
+        <form autoComplete="off">
+          <TextField
+            className={classes.form}
+            onChange={handleNoteChange}
+            id="notes"
+            multiline
+            variant="outlined"
+          />
+        </form>
       </Grid>
     </Grid>
   );
