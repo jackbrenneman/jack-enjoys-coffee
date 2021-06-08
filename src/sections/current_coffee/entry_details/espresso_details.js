@@ -12,6 +12,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 // Custom Components
 import GeneralDetails from './general_details.js';
+import { Divider } from '@material-ui/core';
 
 function EspressoDetails({ coffee_in, liquid_out, generalDetails }) {
   const useStyles = makeStyles(() => ({
@@ -28,6 +29,9 @@ function EspressoDetails({ coffee_in, liquid_out, generalDetails }) {
         padding: 0,
       },
     },
+    ratio: {
+      fontWeight: 'bold',
+    },
     ratingBad: {
       color: 'red',
       fontWeight: 'bold',
@@ -40,7 +44,12 @@ function EspressoDetails({ coffee_in, liquid_out, generalDetails }) {
       color: 'green',
       fontWeight: 'bold',
     },
+    notes: {
+      lineHeight: 1,
+      fontSize: '10px',
+    },
   }));
+  const { notes, brewer_name } = generalDetails;
 
   const classes = useStyles();
 
@@ -49,6 +58,35 @@ function EspressoDetails({ coffee_in, liquid_out, generalDetails }) {
       <Card raised className={classes.card}>
         <CardContent className={classes.content}>
           <GeneralDetails {...generalDetails} />
+          <Grid direction="row" container justify="center" alignItems="center">
+            <Grid item>
+              <Box px={2}>
+                <Typography
+                  variant="caption"
+                  className={classes.ratio}
+                  color="textSecondary"
+                >
+                  {brewer_name}
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box px={2}>
+                <Typography
+                  variant="caption"
+                  className={classes.ratio}
+                  color="textSecondary"
+                >
+                  {coffee_in} : {liquid_out}
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid container justify="center" alignItems="center">
+            <Grid xs={12} item>
+              <Divider variant="middle" />
+            </Grid>
+          </Grid>
           <Grid
             direction="row"
             container
@@ -56,16 +94,9 @@ function EspressoDetails({ coffee_in, liquid_out, generalDetails }) {
             alignItems="center"
           >
             <Grid item>
-              <Box px={2}>
-                <Typography variant="caption">
-                  Coffee In: {coffee_in}
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box px={2}>
-                <Typography variant="caption">
-                  Liquid Out: {liquid_out}
+              <Box px={1} pb={1}>
+                <Typography variant="caption" className={classes.notes}>
+                  {notes}
                 </Typography>
               </Box>
             </Grid>

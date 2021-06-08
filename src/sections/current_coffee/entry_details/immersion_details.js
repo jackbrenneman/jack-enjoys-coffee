@@ -10,6 +10,7 @@ import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 // Custom Components
 import GeneralDetails from './general_details.js';
 
@@ -28,6 +29,9 @@ function ImmersionDetails({ coffee_in, water_in, generalDetails }) {
         padding: 0,
       },
     },
+    ratio: {
+      fontWeight: 'bold',
+    },
     ratingBad: {
       color: 'red',
       fontWeight: 'bold',
@@ -40,9 +44,15 @@ function ImmersionDetails({ coffee_in, water_in, generalDetails }) {
       color: 'green',
       fontWeight: 'bold',
     },
+    notes: {
+      lineHeight: 1,
+      fontSize: '10px',
+    },
   }));
 
   const classes = useStyles();
+
+  const { notes, brewer_name } = generalDetails;
 
   return (
     <Box p={1}>
@@ -52,19 +62,43 @@ function ImmersionDetails({ coffee_in, water_in, generalDetails }) {
           <Grid
             direction="row"
             container
-            justify="space-between"
+            justify="space-around"
             alignItems="center"
           >
             <Grid item>
-              <Box px={2}>
-                <Typography variant="caption">
-                  Coffee In: {coffee_in}
+              <Box px={1}>
+                <Typography
+                  variant="caption"
+                  className={classes.ratio}
+                  color="textSecondary"
+                >
+                  {brewer_name}
                 </Typography>
               </Box>
             </Grid>
             <Grid item>
-              <Box px={2}>
-                <Typography variant="caption">Water In: {water_in}</Typography>
+              <Box px={1}>
+                <Typography
+                  variant="caption"
+                  className={classes.ratio}
+                  color="textSecondary"
+                >
+                  {coffee_in} : {water_in}
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid container justify="center" alignItems="center">
+            <Grid xs={12} item>
+              <Divider variant="middle" />
+            </Grid>
+          </Grid>
+          <Grid container justify="center" alignItems="center">
+            <Grid item>
+              <Box px={1} pb={1}>
+                <Typography variant="caption" className={classes.notes}>
+                  {notes}
+                </Typography>
               </Box>
             </Grid>
           </Grid>
