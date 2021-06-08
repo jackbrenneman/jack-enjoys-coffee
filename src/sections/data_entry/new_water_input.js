@@ -101,12 +101,7 @@ function NewWaterInput({
   return (
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
-        <Box p={4}>
-          <Typography variant="h6">New Water</Typography>
-        </Box>
-      </Grid>
-      <Grid item xs={12}>
-        <Box pb={1}>
+        <Box pt={2}>
           <Typography variant="body1" align="center">
             Name
           </Typography>
@@ -122,7 +117,7 @@ function NewWaterInput({
         </Box>
       </Grid>
       <Grid item xs={12}>
-        <Box pt={1}>
+        <Box pt={2}>
           <Typography variant="body1" align="center">
             Description
           </Typography>

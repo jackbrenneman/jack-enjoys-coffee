@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import AutocompleteWrapperSimple from '../helpers/autocomplete_container_simple.js';
@@ -105,87 +106,93 @@ function CoffeeInfoInput({
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <Grid container align="center" justify="center" spacing={2}>
+        <Grid container align="center" justify="center">
           <Grid item xs={12}>
-            <AutocompleteWrapperSimple
-              fieldName="roaster"
-              options={roasters}
-              onChange={handleRoasterChange}
-              textField={(params) => (
-                <TextField
-                  {...params}
-                  className={classes.form}
-                  id="roaster"
-                  label="Roaster"
-                  size="small"
-                  variant="outlined"
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <AutocompleteWrapperSimple
-              fieldName="name"
-              options={getCoffeeOptions()}
-              onChange={handleCoffeeChange}
-              key={key}
-              textField={(params) => (
-                <TextField
-                  {...params}
-                  className={classes.form}
-                  id="coffee"
-                  label="Coffee Name"
-                  variant="outlined"
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Accordion className={classes.accordion}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="caption" display="block">
-                  Coffee Info
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                {selectedCoffee ? (
-                  <Grid container spacing={2} justify="center">
-                    <Grid item xs={12}>
-                      <Paper className={classes.paper}>
-                        <Typography variant="caption" display="block">
-                          Name: {selectedCoffee?.name}
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Paper className={classes.paper}>
-                        <Typography variant="caption" display="block">
-                          Roaster: {selectedCoffee?.roaster?.name}
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Paper className={classes.paper}>
-                        <Typography variant="caption" display="block">
-                          Origin: {selectedCoffee?.origin?.name}
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Paper className={classes.paper}>
-                        <Typography variant="caption" display="block">
-                          Process: {selectedCoffee?.process?.name}
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                  </Grid>
-                ) : (
-                  <Typography variant="caption" display="block">
-                    Select a Coffee above to see info
-                  </Typography>
+            <Box pt={2}>
+              <AutocompleteWrapperSimple
+                fieldName="roaster"
+                options={roasters}
+                onChange={handleRoasterChange}
+                textField={(params) => (
+                  <TextField
+                    {...params}
+                    className={classes.form}
+                    id="roaster"
+                    label="Roaster"
+                    size="small"
+                    variant="outlined"
+                  />
                 )}
-              </AccordionDetails>
-            </Accordion>
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box pt={2}>
+              <AutocompleteWrapperSimple
+                fieldName="name"
+                options={getCoffeeOptions()}
+                onChange={handleCoffeeChange}
+                key={key}
+                textField={(params) => (
+                  <TextField
+                    {...params}
+                    className={classes.form}
+                    id="coffee"
+                    label="Coffee Name"
+                    variant="outlined"
+                  />
+                )}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box pt={2}>
+              <Accordion className={classes.accordion}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography variant="caption" display="block">
+                    Coffee Info
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  {selectedCoffee ? (
+                    <Grid container justify="center">
+                      <Grid item xs={12}>
+                        <Paper className={classes.paper}>
+                          <Typography variant="caption" display="block">
+                            Name: {selectedCoffee?.name}
+                          </Typography>
+                        </Paper>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Paper className={classes.paper}>
+                          <Typography variant="caption" display="block">
+                            Roaster: {selectedCoffee?.roaster?.name}
+                          </Typography>
+                        </Paper>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Paper className={classes.paper}>
+                          <Typography variant="caption" display="block">
+                            Origin: {selectedCoffee?.origin?.name}
+                          </Typography>
+                        </Paper>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Paper className={classes.paper}>
+                          <Typography variant="caption" display="block">
+                            Process: {selectedCoffee?.process?.name}
+                          </Typography>
+                        </Paper>
+                      </Grid>
+                    </Grid>
+                  ) : (
+                    <Typography variant="caption" display="block">
+                      Select a Coffee above to see info
+                    </Typography>
+                  )}
+                </AccordionDetails>
+              </Accordion>
+            </Box>
           </Grid>
         </Grid>
       </Grid>

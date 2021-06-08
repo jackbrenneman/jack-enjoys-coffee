@@ -135,82 +135,87 @@ function NewRoasterInput({
 
   return (
     <Grid container direction="column" alignItems="center">
-      <Grid item xs={12}>
-        <Box p={4}>
-          <Typography variant="h6">New Roaster</Typography>
-        </Box>
-      </Grid>
       <Grid item xs={12} className={classes.inputSection}>
-        <Grid container align="center" justify="center" spacing={2}>
+        <Grid container align="center" justify="center">
           <Grid item xs={12} sm={6}>
-            <Typography variant="body1" align="center">
-              Name
-            </Typography>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="outlined-basic"
-                label="Roaster Name"
-                variant="outlined"
-                onChange={handleNameChange}
-              />
-            </form>
+            <Box pt={2}>
+              <Typography variant="body1" align="center">
+                Name
+              </Typography>
+              <form autoComplete="off">
+                <TextField
+                  className={classes.form}
+                  id="outlined-basic"
+                  label="Roaster Name"
+                  variant="outlined"
+                  onChange={handleNameChange}
+                />
+              </form>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Typography variant="body1" align="center">
-              City
-            </Typography>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="outlined-basic"
-                label="Roaster City"
-                variant="outlined"
-                onChange={handleCityChange}
-              />
-            </form>
+            <Box pt={2}>
+              <Typography variant="body1" align="center">
+                City
+              </Typography>
+              <form autoComplete="off">
+                <TextField
+                  className={classes.form}
+                  id="outlined-basic"
+                  label="Roaster City"
+                  variant="outlined"
+                  onChange={handleCityChange}
+                />
+              </form>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Typography variant="body1" align="center">
-              State
-            </Typography>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="outlined-basic"
-                label="Roaster State"
-                variant="outlined"
-                onChange={handleStateChange}
-              />
-            </form>
+            <Box pt={2}>
+              <Typography variant="body1" align="center">
+                State
+              </Typography>
+              <form autoComplete="off">
+                <TextField
+                  className={classes.form}
+                  id="outlined-basic"
+                  label="Roaster State"
+                  variant="outlined"
+                  onChange={handleStateChange}
+                />
+              </form>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Typography variant="body1" align="center">
-              Country
-            </Typography>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="outlined-basic"
-                label="Roaster Contry"
-                variant="outlined"
-                onChange={handleCountryChange}
-              />
-            </form>
+            <Box pt={2}>
+              <Typography variant="body1" align="center">
+                Country
+              </Typography>
+              <form autoComplete="off">
+                <TextField
+                  className={classes.form}
+                  id="outlined-basic"
+                  label="Roaster Contry"
+                  variant="outlined"
+                  onChange={handleCountryChange}
+                />
+              </form>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Typography variant="body1" align="center">
-              Website
-            </Typography>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="outlined-basic"
-                label="Roaster Website"
-                variant="outlined"
-                onChange={handleWebsiteChange}
-              />
-            </form>
+            <Box pt={2}>
+              <Typography variant="body1" align="center">
+                Website
+              </Typography>
+              <form autoComplete="off">
+                <TextField
+                  className={classes.form}
+                  id="outlined-basic"
+                  label="Roaster Website"
+                  variant="outlined"
+                  onChange={handleWebsiteChange}
+                />
+              </form>
+            </Box>
           </Grid>
         </Grid>
       </Grid>

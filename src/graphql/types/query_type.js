@@ -15,7 +15,10 @@ import {
   brewersByMethodIdResolver,
   brewersByNameResolver,
 } from '../resolvers/brewers/brewer_query_type_resolvers.js';
-import { coffeeEntriesByUserIdResolver } from '../resolvers/coffee_entries/coffee_entry_query_type_resolvers.js';
+import {
+  coffeeEntriesByUserIdResolver,
+  coffeeEntriesByUserIdAndDataRangeResolver,
+} from '../resolvers/coffee_entries/coffee_entry_query_type_resolvers.js';
 import {
   coffeeByIdResolver,
   coffeesResolver,
@@ -77,6 +80,15 @@ import { RoasterType } from './roaster_type.js';
 import { UserType } from './user_type.js';
 import { WaterType } from './water_type.js';
 
+// Used for the default end time on date ranges
+const currentDate = new Date();
+const year = currentDate.getFullYear();
+const month = currentDate.getMonth() + 1;
+const day = currentDate.getDate();
+const defaultDate = `${year}-${month > 9 ? month : `0${month}`}-${
+  day > 9 ? day : `0${day}`
+}`;
+
 export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
   name: 'Query',
   fields: {
@@ -101,11 +113,22 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
     },
     coffeeEntries: {
       type: new GraphQLList(CoffeeEntryType),
-      args: { user_id: { type: GraphQLInt } },
-      resolve(parentValue, { user_id }) {
+      args: {
+        user_id: { type: GraphQLInt },
+        date_start: { type: GraphQLString },
+        date_end: { type: GraphQLString },
+      },
+      resolve(parentValue, { user_id, date_start, date_end }) {
         if (user_id) {
-          const test = coffeeEntriesByUserIdResolver(user_id);
-          return test;
+          if (date_start) {
+            return coffeeEntriesByUserIdAndDataRangeResolver(
+              user_id,
+              date_start,
+              date_end ? date_end : defaultDate
+            );
+          }
+          // If no date given, get all coffeeEntries
+          return coffeeEntriesByUserIdResolver(user_id);
         }
         // If no args inputted, don't do anything
         return;

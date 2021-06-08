@@ -3,12 +3,13 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+// Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import logo from '../media/icons/coffee-icon.png';
-import { NavLink } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
+// React Router
+import { Link } from 'react-router-dom';
 
 function Data() {
   const useStyles = makeStyles((theme) => ({
@@ -16,48 +17,35 @@ function Data() {
       backgroundColor: '#EEEEEE',
       minHeight: '100vh',
     },
+    link: {
+      textDecoration: 'none',
+    },
   }));
   const classes = useStyles();
 
   return (
-    <Box className={classes.data} p={4} display="flex" justifyContent="center">
+    <Box className={classes.data} p={4} justifyContent="center">
       <Grid container align="center">
         <Grid item xs={12}>
-          <Box p={4}>
+          <Link to={'/data/coffee_entry'} className={classes.link}>
             <Typography variant="body1" align="center">
-              Click on the button below to input a new Coffee Journal Entry
+              New Coffee Entry
             </Typography>
-            <Box p={2}>
-              <NavLink
-                className={classes.navLink}
-                to={'/data/coffee_entry'}
-                activeClassName={classes.activeNavLink}
-              >
-                <Box p={1}>
-                  <img src={logo} alt="Coffee Logo" />
-                </Box>
-              </NavLink>
-            </Box>
-          </Box>
+          </Link>
         </Grid>
         <Grid item xs={12}>
-          <Box p={4}>
+          <Link to={'/data/entry'} className={classes.link}>
             <Typography variant="body1" align="center">
-              Click on the button below to input a new Roaster, Coffee, Brewer,
-              Origin, Drink, Grinder, or Water!
+              New Data Entry
             </Typography>
-            <Box p={2}>
-              <NavLink
-                className={classes.navLink}
-                to={'/data/entry'}
-                activeClassName={classes.activeNavLink}
-              >
-                <Box p={1}>
-                  <img src={logo} alt="Coffee Logo" />
-                </Box>
-              </NavLink>
-            </Box>
-          </Box>
+          </Link>
+        </Grid>
+        <Grid item xs={12}>
+          <Link to={'/data/current'} className={classes.link}>
+            <Typography variant="body1" align="center">
+              Current Data
+            </Typography>
+          </Link>
         </Grid>
       </Grid>
     </Box>

@@ -11,14 +11,17 @@ export const currentDataQuery = `
       brewer_id
       name
       website
-      method_id
+      method {
+        method_id
+        name
+      }
     }
     coffees {
       coffee_id
       name
       roaster {
-        name
         roaster_id
+        name
       }
       origin {
         origin_id
@@ -32,7 +35,10 @@ export const currentDataQuery = `
     drinks {
       drink_id
       name
-      method_id
+      method {
+        method_id
+        name
+      }
     }
     grinders {
       grinder_id

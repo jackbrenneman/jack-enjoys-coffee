@@ -28,10 +28,33 @@ import { originsMutationResolver } from '../resolvers/origins/origin_mutation_ty
 import { roastersMutationResolver } from '../resolvers/roasters/roaster_mutation_type_resolvers.js';
 import { watersMutationResolver } from '../resolvers/waters/water_mutation_type_resolvers.js';
 import { CoffeeEntryType } from './coffee_entry_type.js';
+import { SigninInputType } from './inputs/signin_input_type.js';
+import { SignupInputType } from './inputs/signup_input_type.js';
+import { AuthType } from './auth_type.js';
+import { signupMutationResolver } from '../resolvers/signup/signup_mutation_type_resolvers.js';
+import { signinMutationResolver } from '../resolvers/signin/signin_mutation_type_resolver.js';
 
 const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
+    signup: {
+      type: AuthType,
+      args: {
+        signup: { type: SignupInputType },
+      },
+      resolve(parentValue, { signup }) {
+        return signupMutationResolver(signup);
+      },
+    },
+    signin: {
+      type: AuthType,
+      args: {
+        signin: { type: SigninInputType },
+      },
+      resolve(parentValue, { signin }) {
+        return signinMutationResolver(signin);
+      },
+    },
     coffeeEntry: {
       type: CoffeeEntryType,
       args: {

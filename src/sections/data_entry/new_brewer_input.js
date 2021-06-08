@@ -116,64 +116,65 @@ function NewBrewerInput({
 
   return (
     <Grid container direction="column" alignItems="center">
-      <Grid item xs={12}>
-        <Box p={4}>
-          <Typography variant="h6">New Brewer</Typography>
-        </Box>
-      </Grid>
       <Grid item xs={12} className={classes.inputSection}>
-        <Grid container align="center" justify="center" spacing={2}>
+        <Grid container align="center" justify="center">
           <Grid item xs={12} sm={6}>
-            <Typography variant="body1" align="center">
-              Name
-            </Typography>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="outlined-basic"
-                label="Brewer Name"
-                variant="outlined"
-                onChange={handleNameChange}
-              />
-            </form>
+            <Box pt={2}>
+              <Typography variant="body1" align="center">
+                Name
+              </Typography>
+              <form autoComplete="off">
+                <TextField
+                  className={classes.form}
+                  id="outlined-basic"
+                  label="Brewer Name"
+                  variant="outlined"
+                  onChange={handleNameChange}
+                />
+              </form>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Typography variant="body1" align="center">
-              Website
-            </Typography>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="outlined-basic"
-                label="Brewer Website"
-                variant="outlined"
-                onChange={handleWebsiteChange}
-              />
-            </form>
+            <Box pt={2}>
+              <Typography variant="body1" align="center">
+                Website
+              </Typography>
+              <form autoComplete="off">
+                <TextField
+                  className={classes.form}
+                  id="outlined-basic"
+                  label="Brewer Website"
+                  variant="outlined"
+                  onChange={handleWebsiteChange}
+                />
+              </form>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Typography variant="body1" align="center">
-              Method
-            </Typography>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="outlined-select-process-native"
-                select
-                value={method_id}
-                onChange={handleMethodIdChange}
-                SelectProps={{
-                  native: true,
-                }}
-                variant="outlined"
-              >
-                {currentMethods.map(({ name, method_id }) => (
-                  <option value={method_id} key={name}>
-                    {name}
-                  </option>
-                ))}
-              </TextField>
-            </form>
+            <Box pt={2}>
+              <Typography variant="body1" align="center">
+                Method
+              </Typography>
+              <form autoComplete="off">
+                <TextField
+                  className={classes.form}
+                  id="outlined-select-process-native"
+                  select
+                  value={method_id}
+                  onChange={handleMethodIdChange}
+                  SelectProps={{
+                    native: true,
+                  }}
+                  variant="outlined"
+                >
+                  {currentMethods.map(({ name, method_id }) => (
+                    <option value={method_id} key={name}>
+                      {name}
+                    </option>
+                  ))}
+                </TextField>
+              </form>
+            </Box>
           </Grid>
         </Grid>
       </Grid>

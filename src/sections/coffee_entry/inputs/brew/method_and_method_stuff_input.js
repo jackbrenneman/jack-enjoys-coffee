@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 // Material UI
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -219,50 +220,56 @@ function MethodAndMethodStuffInput({
 
   const coffeeInInput = (
     <Grid item xs={4}>
-      <Typography variant="caption" align="center">
-        Coffee In (g)
-      </Typography>
-      <form autoComplete="off">
-        <TextField
-          key={key}
-          className={classes.formInOut}
-          id="outlined-basic"
-          variant="outlined"
-          onChange={handleCoffeeInChange}
-        />
-      </form>
+      <Box px={1}>
+        <Typography variant="caption" align="center">
+          Coffee In (g)
+        </Typography>
+        <form autoComplete="off">
+          <TextField
+            key={key}
+            className={classes.formInOut}
+            id="outlined-basic"
+            variant="outlined"
+            onChange={handleCoffeeInChange}
+          />
+        </form>
+      </Box>
     </Grid>
   );
 
   const waterInInput = (
     <Grid item xs={4}>
-      <Typography variant="caption" align="center">
-        Water In (g)
-      </Typography>
-      <form autoComplete="off">
-        <TextField
-          key={key}
-          id="outlined-basic"
-          variant="outlined"
-          onChange={handleLiquidInChange}
-        />
-      </form>
+      <Box px={1}>
+        <Typography variant="caption" align="center">
+          Water In (g)
+        </Typography>
+        <form autoComplete="off">
+          <TextField
+            key={key}
+            id="outlined-basic"
+            variant="outlined"
+            onChange={handleLiquidInChange}
+          />
+        </form>
+      </Box>
     </Grid>
   );
 
   const liquidOutInput = (
     <Grid item xs={4}>
-      <Typography variant="caption" align="center">
-        Liquid Out (g)
-      </Typography>
-      <form autoComplete="off">
-        <TextField
-          key={key}
-          id="liquid_out"
-          variant="outlined"
-          onChange={handleLiquidOutChange}
-        />
-      </form>
+      <Box px={1}>
+        <Typography variant="caption" align="center">
+          Liquid Out (g)
+        </Typography>
+        <form autoComplete="off">
+          <TextField
+            key={key}
+            id="liquid_out"
+            variant="outlined"
+            onChange={handleLiquidOutChange}
+          />
+        </form>
+      </Box>
     </Grid>
   );
 
@@ -271,39 +278,45 @@ function MethodAndMethodStuffInput({
       <Typography variant="caption" align="center">
         Steep Time
       </Typography>
-      <Grid container justify="center" spacing={1}>
+      <Grid container justify="center">
         <Grid item xs={4} sm={2}>
-          <form autoComplete="off">
-            <TextField
-              key={key}
-              id={hoursEnum}
-              variant="outlined"
-              label="Hours"
-              onChange={handleSteepTimeChange}
-            />
-          </form>
+          <Box px={1}>
+            <form autoComplete="off">
+              <TextField
+                key={key}
+                id={hoursEnum}
+                variant="outlined"
+                label="Hours"
+                onChange={handleSteepTimeChange}
+              />
+            </form>
+          </Box>
         </Grid>
         <Grid item xs={4} sm={2}>
-          <form autoComplete="off">
-            <TextField
-              key={key}
-              id={minutesEnum}
-              variant="outlined"
-              label="Minutes"
-              onChange={handleSteepTimeChange}
-            />
-          </form>
+          <Box px={1}>
+            <form autoComplete="off">
+              <TextField
+                key={key}
+                id={minutesEnum}
+                variant="outlined"
+                label="Minutes"
+                onChange={handleSteepTimeChange}
+              />
+            </form>
+          </Box>
         </Grid>
         <Grid item xs={4} sm={2}>
-          <form autoComplete="off">
-            <TextField
-              key={key}
-              id={secondsEnum}
-              variant="outlined"
-              label="Seconds"
-              onChange={handleSteepTimeChange}
-            />
-          </form>
+          <Box px={1}>
+            <form autoComplete="off">
+              <TextField
+                key={key}
+                id={secondsEnum}
+                variant="outlined"
+                label="Seconds"
+                onChange={handleSteepTimeChange}
+              />
+            </form>
+          </Box>
         </Grid>
       </Grid>
     </Grid>
@@ -349,67 +362,77 @@ function MethodAndMethodStuffInput({
   };
 
   return (
-    <Grid container justify="center" spacing={2}>
+    <Grid container justify="center">
       <Grid item xs={12}>
-        <form autoComplete="off">
-          <TextField
-            className={classes.form}
-            id="method"
-            label="Method"
-            value={selectedMethodId}
-            select
-            onChange={handleMethodChange}
-            variant="outlined"
-          >
-            {methods.map(({ method_id, name }) => (
-              <MenuItem value={method_id} key={method_id}>
-                {name}
-              </MenuItem>
-            ))}
-          </TextField>
-        </form>
+        <Box pt={2}>
+          <form autoComplete="off">
+            <TextField
+              className={classes.form}
+              id="method"
+              label="Method"
+              value={selectedMethodId}
+              select
+              onChange={handleMethodChange}
+              variant="outlined"
+            >
+              {methods.map(({ method_id, name }) => (
+                <MenuItem value={method_id} key={method_id}>
+                  {name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </form>
+        </Box>
       </Grid>
       <Grid item xs={12} sm={4}>
-        <AutocompleteWrapperSimple
-          fieldName="brewer"
-          options={getBrewerOptions()}
-          onChange={handleBrewerChange}
-          key={key}
-          textField={(params) => (
-            <TextField
-              {...params}
-              className={classes.form}
-              id="brewer"
-              label="Brewer"
-              variant="outlined"
-            />
-          )}
-        />
+        <Box pt={2}>
+          <AutocompleteWrapperSimple
+            fieldName="brewer"
+            options={getBrewerOptions()}
+            onChange={handleBrewerChange}
+            key={key}
+            textField={(params) => (
+              <TextField
+                {...params}
+                className={classes.form}
+                id="brewer"
+                label="Brewer"
+                variant="outlined"
+              />
+            )}
+          />
+        </Box>
       </Grid>
       <Grid item xs={12} sm={4}>
-        <AutocompleteWrapperSimple
-          fieldName="drink"
-          options={getDrinkOptions()}
-          onChange={handleDrinkChange}
-          key={key}
-          textField={(params) => (
-            <TextField
-              {...params}
-              className={classes.form}
-              id="drink"
-              label="Drink"
-              variant="outlined"
-            />
-          )}
-        />
+        <Box pt={2}>
+          <AutocompleteWrapperSimple
+            fieldName="drink"
+            options={getDrinkOptions()}
+            onChange={handleDrinkChange}
+            key={key}
+            textField={(params) => (
+              <TextField
+                {...params}
+                className={classes.form}
+                id="drink"
+                label="Drink"
+                variant="outlined"
+              />
+            )}
+          />
+        </Box>
       </Grid>
       <Grid item xs={12}>
-        <Divider variant="middle" />
+        <Box pt={2}>
+          <Divider variant="middle" />
+        </Box>
       </Grid>
       <Grid item xs={12}>
-        <Grid container justify="center" spacing={1}>
-          {getCoffeeAndWaterInputs()}
-        </Grid>
+        <Box pt={2}>
+          <Grid container justify="center">
+            {getCoffeeAndWaterInputs()}
+          </Grid>
+        </Box>
       </Grid>
     </Grid>
   );

@@ -1,7 +1,8 @@
 /**
  * All queries related to the "users" table.
  */
-export const selectAllUsers = 'SELECT * FROM users';
-export const selectUserById = 'SELECT * FROM users WHERE user_id = $1';
-export const insertIntoUsers =
-  'INSERT INTO users (first_name, last_name) VALUES $1';
+export const signinUser =
+  'SELECT user_id, user_name, email FROM users WHERE password = crypt($1, password)';
+export const signupUser = `
+  INSERT INTO users (user_name, password, email) VALUES ($1, crypt($2, gen_salt('md5')), $3) RETURNING user_name, user_id, email
+`;

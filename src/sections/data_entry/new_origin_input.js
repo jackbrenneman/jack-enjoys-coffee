@@ -94,23 +94,20 @@ function NewOriginInput({
   return (
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
-        <Box p={4}>
-          <Typography variant="h6">New Origin</Typography>
+        <Box pt={2}>
+          <Typography variant="body1" align="center">
+            Name
+          </Typography>
+          <form autoComplete="off">
+            <TextField
+              className={classes.form}
+              id="outlined-basic"
+              label="Origin Name"
+              variant="outlined"
+              onChange={handleNameChange}
+            />
+          </form>
         </Box>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="body1" align="center">
-          Name
-        </Typography>
-        <form autoComplete="off">
-          <TextField
-            className={classes.form}
-            id="outlined-basic"
-            label="Origin Name"
-            variant="outlined"
-            onChange={handleNameChange}
-          />
-        </form>
       </Grid>
       <Grid item xs={12}>
         <Box pt={4} pb={8}>

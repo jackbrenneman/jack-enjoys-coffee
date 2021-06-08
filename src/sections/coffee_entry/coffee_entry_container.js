@@ -2,8 +2,8 @@
  * The form to input a new Coffee Entry.
  */
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 // Material UI
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -201,19 +201,19 @@ function CoffeeEntryContainer() {
       className={classes.page}
     >
       <Grid item xs={12}>
-        <Box pt={4}>
+        <Box py={2}>
           <Typography variant="h2">New Coffee Entry</Typography>
         </Box>
       </Grid>
       {sections.map(({ component, name }) => (
-        <Box p={2} className={classes.section} key={name}>
+        <Box px={2} py={1} className={classes.section} key={name}>
           <Grid item xs={12}>
             {component}
           </Grid>
         </Box>
       ))}
       <Grid item xs={12}>
-        <Box pt={4} pb={8}>
+        <Box pt={2} pb={8}>
           <Button variant="contained" size="large" onClick={handleSubmit}>
             <Typography variant="body1" align="center">
               Submit

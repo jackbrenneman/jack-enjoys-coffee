@@ -10,14 +10,15 @@
  */
 import React, { useState, useEffect } from 'react';
 // Material UI
+import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 // Queries and Fetching
 import { currentDataQuery } from '../../graphql/queries/data_entry_queries.js';
 import { queryGQL } from '../../graphql/fetch.js';
@@ -49,6 +50,14 @@ function CurrentDataContainer() {
   // State that basically contains all the current info
   const [currentData, setCurrentData] = useState(currentDataDefault);
 
+  const useStyles = makeStyles((theme) => ({
+    radio: {
+      padding: '2px',
+    },
+  }));
+
+  const classes = useStyles();
+
   // When the component renders, we fetch all the current data
   useEffect(() => {
     queryGQL(currentDataQuery)
@@ -76,9 +85,7 @@ function CurrentDataContainer() {
     coffees,
     drinks,
     grinders,
-    methods,
     origins,
-    processes,
     roasters,
     waters,
   } = currentData;
@@ -86,21 +93,19 @@ function CurrentDataContainer() {
   const getDataComponent = () => {
     switch (dataOption) {
       case brewerEnum:
-        return <BrewerData currentBrewers={brewers} currentMethods={methods} />;
+        return <BrewerData brewers={brewers} />;
       case coffeeEnum:
-        return (
-          <CoffeeData currentCoffees={coffees} currentProcesses={processes} />
-        );
+        return <CoffeeData coffees={coffees} />;
       case drinkEnum:
-        return <DrinkData currentDrinks={drinks} />;
+        return <DrinkData drinks={drinks} />;
       case grinderEnum:
-        return <GrinderData currentGrinders={grinders} />;
+        return <GrinderData grinders={grinders} />;
       case originEnum:
-        return <OriginData currentOrigins={origins} />;
+        return <OriginData origins={origins} />;
       case roasterEnum:
-        return <RoasterData currentRoasters={roasters} />;
+        return <RoasterData roasters={roasters} />;
       case waterEnum:
-        return <WaterData currentWaters={waters} />;
+        return <WaterData waters={waters} />;
       default:
         return <div />;
     }
@@ -111,11 +116,6 @@ function CurrentDataContainer() {
       <Box py={4}>
         <Grid container direction="column" alignItems="center">
           <Grid item xs={12}>
-            <Box p={4}>
-              <Typography variant="h4">View Current Data</Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
             <FormControl component="fieldset">
               <RadioGroup
                 row
@@ -124,50 +124,78 @@ function CurrentDataContainer() {
                 value={dataOption}
                 onChange={handleDataOptionChange}
               >
-                <Grid container align="center" justify="center" spacing={2}>
+                <Grid container align="center" justify="center">
                   <Grid item xs={12}>
                     <FormControlLabel
                       value={brewerEnum}
-                      control={<Radio />}
-                      label="Brewers"
+                      control={<Radio className={classes.radio} />}
+                      label={
+                        <Typography variant="caption" align="center">
+                          Brewers
+                        </Typography>
+                      }
                       labelPlacement="bottom"
                     />
                     <FormControlLabel
                       value={coffeeEnum}
-                      control={<Radio />}
-                      label="Coffees"
+                      control={<Radio className={classes.radio} />}
+                      label={
+                        <Typography variant="caption" align="center">
+                          Coffees
+                        </Typography>
+                      }
                       labelPlacement="bottom"
                     />
                     <FormControlLabel
                       value={drinkEnum}
-                      control={<Radio />}
-                      label="Drinks"
+                      control={<Radio className={classes.radio} />}
+                      label={
+                        <Typography variant="caption" align="center">
+                          Drinks
+                        </Typography>
+                      }
                       labelPlacement="bottom"
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <FormControlLabel
                       value={grinderEnum}
-                      control={<Radio />}
-                      label="Grinders"
+                      control={<Radio className={classes.radio} />}
+                      label={
+                        <Typography variant="caption" align="center">
+                          Grinders
+                        </Typography>
+                      }
                       labelPlacement="bottom"
                     />
                     <FormControlLabel
                       value={originEnum}
-                      control={<Radio />}
-                      label="Origins"
+                      control={<Radio className={classes.radio} />}
+                      label={
+                        <Typography variant="caption" align="center">
+                          Origins
+                        </Typography>
+                      }
                       labelPlacement="bottom"
                     />
                     <FormControlLabel
                       value={roasterEnum}
-                      control={<Radio />}
-                      label="Roasters"
+                      control={<Radio className={classes.radio} />}
+                      label={
+                        <Typography variant="caption" align="center">
+                          Roasters
+                        </Typography>
+                      }
                       labelPlacement="bottom"
                     />
                     <FormControlLabel
                       value={waterEnum}
-                      control={<Radio />}
-                      label="Waters"
+                      control={<Radio className={classes.radio} />}
+                      label={
+                        <Typography variant="caption" align="center">
+                          Waters
+                        </Typography>
+                      }
                       labelPlacement="bottom"
                     />
                   </Grid>
@@ -177,8 +205,11 @@ function CurrentDataContainer() {
           </Grid>
         </Grid>
       </Box>
-
-      <Divider variant="middle" />
+      <Grid>
+        <Grid item xs={12}>
+          <Divider variant="middle" />
+        </Grid>
+      </Grid>
       <Grid>
         <Grid item xs={12}>
           {getDataComponent()}
