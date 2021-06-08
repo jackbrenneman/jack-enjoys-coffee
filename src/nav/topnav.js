@@ -2,7 +2,9 @@
  * The top navigation bar.
  */
 import React, { useState } from 'react';
+// React Router
 import { NavLink } from 'react-router-dom';
+// Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
@@ -13,10 +15,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Drawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from '@material-ui/icons/Home';
+import CreateTwoToneIcon from '@material-ui/icons/CreateTwoTone';
+import LocalCafeIcon from '@material-ui/icons/LocalCafe';
+// Custom Components
 import logo from '../media/icons/coffee-icon.png';
-import { drawerPages } from '../consts.js';
 
 function TopNav() {
   const useStyles = makeStyles((theme) => ({
@@ -86,22 +92,81 @@ function TopNav() {
           }}
         >
           <List>
-            {drawerPages.map(({ name, icon, path }) => (
-              <NavLink
-                className={classes.navLink}
-                key={name}
-                to={path}
-                onClick={handleDrawerToggle}
-                activeClassName={classes.activeNavLink}
-              >
-                <Box pr={2}>
-                  <ListItem button>
-                    <ListItemIcon>{icon}</ListItemIcon>
-                    <ListItemText primary={name} />
-                  </ListItem>
-                </Box>
-              </NavLink>
-            ))}
+            <NavLink
+              className={classes.navLink}
+              to={'/home'}
+              onClick={handleDrawerToggle}
+              activeClassName={classes.activeNavLink}
+            >
+              <Box pr={2}>
+                <ListItem button>
+                  <ListItemIcon>
+                    <HomeIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={<Typography variant="caption">Home</Typography>}
+                  />
+                </ListItem>
+              </Box>
+            </NavLink>
+            <NavLink
+              className={classes.navLink}
+              to={'/current_entries'}
+              onClick={handleDrawerToggle}
+              activeClassName={classes.activeNavLink}
+            >
+              <Box pr={2}>
+                <ListItem button>
+                  <ListItemIcon>
+                    <LocalCafeIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography variant="caption">Current Entries</Typography>
+                    }
+                  />
+                </ListItem>
+              </Box>
+            </NavLink>
+            <Divider />
+            <NavLink
+              className={classes.navLink}
+              to={'/new_entry'}
+              onClick={handleDrawerToggle}
+              activeClassName={classes.activeNavLink}
+            >
+              <Box pr={2}>
+                <ListItem button>
+                  <ListItemIcon>
+                    <CreateTwoToneIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography variant="caption">New Entry</Typography>
+                    }
+                  />
+                </ListItem>
+              </Box>
+            </NavLink>
+            <NavLink
+              className={classes.navLink}
+              to={'/new_data'}
+              onClick={handleDrawerToggle}
+              activeClassName={classes.activeNavLink}
+            >
+              <Box pr={2}>
+                <ListItem button>
+                  <ListItemIcon>
+                    <CreateTwoToneIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography variant="caption">Add Data</Typography>
+                    }
+                  />
+                </ListItem>
+              </Box>
+            </NavLink>
           </List>
         </Drawer>
       </nav>

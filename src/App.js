@@ -8,10 +8,10 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import TopNav from './nav/topnav.js';
 import Home from './sections/home.js';
 import Data from './sections/data.js';
-import CoffeeEntryContainer from './sections/coffee_entry/coffee_entry_container.js';
-import CurrentCoffeeEntriesContainer from './sections/current_coffee/current_coffee_entries_container.js';
+import CoffeeEntryContainer from './sections/new_coffee_entry/coffee_entry_container.js';
+import CurrentCoffeeEntriesContainer from './sections/current_coffee_entries/current_coffee_entries_container.js';
 import CurrentDataContainer from './sections/current_data/current_data_container.js';
-import DataEntryContainer from './sections/data_entry/data_entry_container.js';
+import DataEntryContainer from './sections/new_data/new_data_container.js';
 
 const history = createBrowserHistory();
 
@@ -42,17 +42,20 @@ function App() {
           <Route exact path="/coffee">
             <CurrentCoffeeEntriesContainer />
           </Route>
+          <Route exact path="/current_entries">
+            <CurrentCoffeeEntriesContainer />
+          </Route>
+          <Route exact path="/new_entry">
+            <CoffeeEntryContainer />
+          </Route>
           <Route exact path="/data">
             <Data />
           </Route>
-          <Route exact path="/data/coffee_entry">
-            <CoffeeEntryContainer />
-          </Route>
-          <Route exact path="/data/entry">
-            <DataEntryContainer />
-          </Route>
-          <Route exact path="/data/current">
+          <Route exact path="/current_data">
             <CurrentDataContainer />
+          </Route>
+          <Route exact path="/new_data">
+            <DataEntryContainer />
           </Route>
           <Route path="/">
             <Home />
