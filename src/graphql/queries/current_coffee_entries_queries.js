@@ -52,6 +52,17 @@ export const currentCoffeeEntriesQuery = (user_id, date_start, date_end) => `
           name
         }
       }
+      water {
+        water_id
+        name
+      }
+      grind {
+        grinder {
+          grinder_id
+          name
+        }
+        setting
+      }
     }
     rating
     notes

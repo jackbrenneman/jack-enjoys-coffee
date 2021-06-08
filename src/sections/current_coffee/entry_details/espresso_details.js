@@ -29,9 +29,6 @@ function EspressoDetails({ coffee_in, liquid_out, generalDetails }) {
         padding: 0,
       },
     },
-    ratio: {
-      fontWeight: 'bold',
-    },
     ratingBad: {
       color: 'red',
       fontWeight: 'bold',
@@ -59,28 +56,32 @@ function EspressoDetails({ coffee_in, liquid_out, generalDetails }) {
         <CardContent className={classes.content}>
           <GeneralDetails {...generalDetails} />
           <Grid direction="row" container justify="center" alignItems="center">
-            <Grid item>
-              <Box px={2}>
-                <Typography
-                  variant="caption"
-                  className={classes.ratio}
-                  color="textSecondary"
-                >
-                  {brewer_name}
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box px={2}>
-                <Typography
-                  variant="caption"
-                  className={classes.ratio}
-                  color="textSecondary"
-                >
-                  {coffee_in} : {liquid_out}
-                </Typography>
-              </Box>
-            </Grid>
+            {brewer_name && (
+              <Grid item>
+                <Box px={2}>
+                  <Typography
+                    variant="caption"
+                    className={classes.ratio}
+                    color="textSecondary"
+                  >
+                    {brewer_name}
+                  </Typography>
+                </Box>
+              </Grid>
+            )}
+            {coffee_in && (
+              <Grid item>
+                <Box px={2}>
+                  <Typography
+                    variant="caption"
+                    className={classes.ratio}
+                    color="textSecondary"
+                  >
+                    {coffee_in} : {liquid_out}
+                  </Typography>
+                </Box>
+              </Grid>
+            )}
           </Grid>
           <Grid container justify="center" alignItems="center">
             <Grid xs={12} item>

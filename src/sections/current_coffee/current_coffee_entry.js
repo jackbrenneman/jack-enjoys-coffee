@@ -28,7 +28,7 @@ function CurrentCoffeeEntry({ coffeeEntry }) {
   const { name: roaster_name } = roaster;
   const { name: origin_name } = origin;
   const { name: process_name } = process;
-  const { method } = brew;
+  const { method, grind, water } = brew;
 
   const {
     name: method_name,
@@ -42,6 +42,9 @@ function CurrentCoffeeEntry({ coffeeEntry }) {
   } = method;
   const { name: drink_name } = drink;
   const { name: brewer_name } = brewer;
+  const { name: water_name } = water;
+  const { grinder, setting } = grind;
+  const { name: grinder_name } = grinder;
 
   const [open, setOpen] = useState(false);
 
@@ -94,6 +97,9 @@ function CurrentCoffeeEntry({ coffeeEntry }) {
     coffee_name: coffee_name,
     origin_name: origin_name,
     process_name: process_name,
+    grinder_name: grinder_name,
+    grinder_setting: parseInt(setting),
+    water_name: water_name,
     notes: notes,
   };
 

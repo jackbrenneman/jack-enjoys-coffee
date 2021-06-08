@@ -29,9 +29,6 @@ function ImmersionDetails({ coffee_in, water_in, generalDetails }) {
         padding: 0,
       },
     },
-    ratio: {
-      fontWeight: 'bold',
-    },
     ratingBad: {
       color: 'red',
       fontWeight: 'bold',
@@ -65,43 +62,49 @@ function ImmersionDetails({ coffee_in, water_in, generalDetails }) {
             justify="space-around"
             alignItems="center"
           >
-            <Grid item>
-              <Box px={1}>
-                <Typography
-                  variant="caption"
-                  className={classes.ratio}
-                  color="textSecondary"
-                >
-                  {brewer_name}
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box px={1}>
-                <Typography
-                  variant="caption"
-                  className={classes.ratio}
-                  color="textSecondary"
-                >
-                  {coffee_in} : {water_in}
-                </Typography>
-              </Box>
-            </Grid>
+            {brewer_name && (
+              <Grid item>
+                <Box px={1}>
+                  <Typography
+                    variant="caption"
+                    className={classes.ratio}
+                    color="textSecondary"
+                  >
+                    {brewer_name}
+                  </Typography>
+                </Box>
+              </Grid>
+            )}
+            {coffee_in && (
+              <Grid item>
+                <Box px={1}>
+                  <Typography
+                    variant="caption"
+                    className={classes.ratio}
+                    color="textSecondary"
+                  >
+                    {coffee_in} : {water_in}
+                  </Typography>
+                </Box>
+              </Grid>
+            )}
           </Grid>
           <Grid container justify="center" alignItems="center">
             <Grid xs={12} item>
               <Divider variant="middle" />
             </Grid>
           </Grid>
-          <Grid container justify="center" alignItems="center">
-            <Grid item>
-              <Box px={1} pb={1}>
-                <Typography variant="caption" className={classes.notes}>
-                  {notes}
-                </Typography>
-              </Box>
+          {notes && (
+            <Grid container justify="center" alignItems="center">
+              <Grid item>
+                <Box px={1} pb={1}>
+                  <Typography variant="caption" className={classes.notes}>
+                    {notes}
+                  </Typography>
+                </Box>
+              </Grid>
             </Grid>
-          </Grid>
+          )}
         </CardContent>
       </Card>
     </Box>
