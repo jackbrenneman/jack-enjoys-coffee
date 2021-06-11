@@ -29,6 +29,8 @@ import {
   createMethodIdToDrinksMap,
   normalizeCoffeeEntryInput,
 } from './helpers/input_helpers.js';
+// Context
+import { UserContext } from '../../contexts/user_context.js';
 
 function CoffeeEntryContainer() {
   const useStyles = makeStyles((theme) => ({
@@ -194,39 +196,47 @@ function CoffeeEntryContainer() {
   };
 
   return (
-    <Grid
-      container
-      direction="column"
-      alignItems="center"
-      className={classes.page}
-    >
-      <Grid item xs={12}>
-        <Box py={2}>
-          <Typography variant="h2">New Coffee Entry</Typography>
-        </Box>
-      </Grid>
-      {sections.map(({ component, name }) => (
-        <Box px={2} className={classes.section} key={name}>
+    <UserContext.Consumer>
+      {(value) => (
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          className={classes.page}
+        >
           <Grid item xs={12}>
-            {component}
+            <Box py={2}>
+              <Typography variant="h2">New Coffee Entry</Typography>
+            </Box>
           </Grid>
-        </Box>
-      ))}
-      <Grid item xs={12}>
-        <Box pt={4} pb={8}>
-          <Button variant="contained" size="large" onClick={handleSubmit}>
-            <Typography variant="body1" align="center">
-              Submit
-            </Typography>
-          </Button>
-        </Box>
-      </Grid>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleToastClose}>
-        <Alert onClose={handleToastClose} severity={severity}>
-          <Typography variant="body1">{message}</Typography>
-        </Alert>
-      </Snackbar>
-    </Grid>
+          {sections.map(({ component, name }) => (
+            <Box px={2} className={classes.section} key={name}>
+              <Grid item xs={12}>
+                {component}
+              </Grid>
+            </Box>
+          ))}
+          <Grid item xs={12}>
+            <Box pt={4} pb={8}>
+              <Button variant="contained" size="large" onClick={handleSubmit}>
+                <Typography variant="body1" align="center">
+                  Submit
+                </Typography>
+              </Button>
+            </Box>
+          </Grid>
+          <Snackbar
+            open={open}
+            autoHideDuration={3000}
+            onClose={handleToastClose}
+          >
+            <Alert onClose={handleToastClose} severity={severity}>
+              <Typography variant="body1">{message}</Typography>
+            </Alert>
+          </Snackbar>
+        </Grid>
+      )}
+    </UserContext.Consumer>
   );
 }
 

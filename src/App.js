@@ -4,16 +4,26 @@
 import React from 'react';
 import { Router, Switch, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
+// Material UI
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+// Custom Components and Sections
 import TopNav from './nav/topnav.js';
 import Home from './sections/home.js';
 import Data from './sections/data.js';
+import Login from './sections/login/login.js';
+import Signup from './sections/signup/signup.js';
 import CoffeeEntryContainer from './sections/new_coffee_entry/coffee_entry_container.js';
 import CurrentCoffeeEntriesContainer from './sections/current_coffee_entries/current_coffee_entries_container.js';
 import CurrentDataContainer from './sections/current_data/current_data_container.js';
 import DataEntryContainer from './sections/new_data/new_data_container.js';
+// Context
+import { UserContext } from './contexts/user_context.js';
+// Cookies
+import Cookies from 'universal-cookie';
+import Profile from './sections/profile/profile.js';
 
 const history = createBrowserHistory();
+const cookies = new Cookies();
 
 function App() {
   const theme = createMuiTheme({
@@ -34,34 +44,45 @@ function App() {
     letterSpacing: '-0.00833em',
   };
 
+  // Get user info from cookies so the user gets the right info
+  const user = cookies.get('user') || null;
+
   return (
     <Router history={history}>
-      <ThemeProvider theme={theme}>
-        <TopNav />
-        <Switch>
-          <Route exact path="/coffee">
-            <CurrentCoffeeEntriesContainer />
-          </Route>
-          <Route exact path="/current_entries">
-            <CurrentCoffeeEntriesContainer />
-          </Route>
-          <Route exact path="/new_entry">
-            <CoffeeEntryContainer />
-          </Route>
-          <Route exact path="/data">
-            <Data />
-          </Route>
-          <Route exact path="/current_data">
-            <CurrentDataContainer />
-          </Route>
-          <Route exact path="/new_data">
-            <DataEntryContainer />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </ThemeProvider>
+      <UserContext.Provider user={user}>
+        <ThemeProvider theme={theme}>
+          <TopNav user={user} />
+          <Switch>
+            <Route exact path="/login">
+              {user?.user_id ? <Profile user={user} /> : <Login user={user} />}
+            </Route>
+            <Route exact path="/profile">
+              {user?.user_id ? <Profile user={user} /> : <Login user={user} />}
+            </Route>
+            <Route exact path="/signup">
+              <Signup />
+            </Route>
+            <Route exact path="/entries">
+              <CurrentCoffeeEntriesContainer user={user} />
+            </Route>
+            <Route exact path="/new_entry">
+              <CoffeeEntryContainer />
+            </Route>
+            <Route exact path="/data">
+              <Data />
+            </Route>
+            <Route exact path="/current_data">
+              <CurrentDataContainer />
+            </Route>
+            <Route exact path="/new_data">
+              <DataEntryContainer />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </ThemeProvider>
+      </UserContext.Provider>
     </Router>
   );
 }

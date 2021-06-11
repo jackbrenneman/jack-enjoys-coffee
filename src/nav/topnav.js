@@ -17,6 +17,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import PersonOutlineTwoToneIcon from '@material-ui/icons/PersonOutlineTwoTone';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import CreateTwoToneIcon from '@material-ui/icons/CreateTwoTone';
@@ -26,6 +27,9 @@ import logo from '../media/icons/coffee-icon.png';
 
 function TopNav() {
   const useStyles = makeStyles((theme) => ({
+    grow: {
+      flexGrow: 1,
+    },
     root: {
       background: 'grey',
     },
@@ -78,6 +82,12 @@ function TopNav() {
               <img src={logo} alt="Coffee Logo" width="30px" height="30px" />
             </NavLink>
           </Box>
+          <div className={classes.grow} />
+          <Box p={1} display="flex" justifyContent="center">
+            <NavLink className={classes.navLink} to="/login">
+              <PersonOutlineTwoToneIcon />
+            </NavLink>
+          </Box>
         </Toolbar>
       </AppBar>
       <nav className="Drawer" aria-label="side drawer">
@@ -111,7 +121,7 @@ function TopNav() {
             </NavLink>
             <NavLink
               className={classes.navLink}
-              to={'/current_entries'}
+              to={'/entries'}
               onClick={handleDrawerToggle}
               activeClassName={classes.activeNavLink}
             >
