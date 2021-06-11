@@ -4,11 +4,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 // React Router
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 // Material UI
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 // Queries and Fetching
 import { currentCoffeeEntriesQuery } from '../../graphql/queries/current_coffee_entries_queries.js';
 import { queryGQL } from '../../graphql/fetch.js';
@@ -20,6 +22,15 @@ import { today, sevenDaysAgo } from '../../consts.js';
 function CurrentCoffeeEntriesContainer({ user }) {
   // State that basically contains all the current info
   const [currentCoffeeEntries, setCurrentCoffeeEntries] = useState([]);
+
+  const queryParams = new URLSearchParams(useLocation().search);
+  const containsNewEntry = queryParams.get('new_entry');
+  // State used for popping toast message for when write is successful
+  const [toastOpen, setToastOpen] = useState(!!containsNewEntry);
+
+  const handleToastClose = () => {
+    setToastOpen(false);
+  };
 
   // When the component renders, we fetch all the current data of the past week
   useEffect(() => {
@@ -77,6 +88,15 @@ function CurrentCoffeeEntriesContainer({ user }) {
           onDateChange={updateDateRange}
         />
       </Grid>
+      <Snackbar
+        open={toastOpen}
+        autoHideDuration={3000}
+        onClose={handleToastClose}
+      >
+        <Alert onClose={handleToastClose}>
+          <Typography variant="body1">New Entry Added Successfully!</Typography>
+        </Alert>
+      </Snackbar>
     </Grid>
   );
 }

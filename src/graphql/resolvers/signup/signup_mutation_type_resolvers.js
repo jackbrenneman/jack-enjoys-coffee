@@ -14,7 +14,6 @@ export const signupMutationResolver = (user) => {
     .then((result) => {
       // This will get us the user data. If it's not there, the user did not get signed up
       const user = result.rows[0];
-      console.log(user);
       return normalizeSignupMutation(user);
     })
     .catch((e) => console.error(e.stack));

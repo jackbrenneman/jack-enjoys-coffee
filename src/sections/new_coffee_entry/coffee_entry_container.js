@@ -76,7 +76,6 @@ function CoffeeEntryContainer() {
 
   // When the component renders, we fetch all the current data
   useEffect(() => {
-    // TODO: also fetch most recent coffee Entry to use as default inputs
     queryGQL(currentDataQuery)
       .then(({ data }) => {
         if (data) {
@@ -169,12 +168,8 @@ function CoffeeEntryContainer() {
       .then(({ data }) => {
         const { coffeeEntry: newCoffeeEntry } = data;
         if (newCoffeeEntry.coffee_entry_id) {
-          // Write was successful, let user know, update state and return
-          setToast({
-            open: true,
-            severity: 'success',
-            message: 'New Coffee Entry Added!',
-          });
+          // Write was successful
+          window.location.replace('/entries?new_entry=1');
           return;
         }
         // Write was not successful, let user know and return
