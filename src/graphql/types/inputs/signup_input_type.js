@@ -9,7 +9,7 @@ export const SignupInputType = new GraphQLInputObjectType({
   description: 'Contains all the info needed to sign a user in',
   fields: {
     user_name: { type: GraphQLString },
-    password: { type: GraphQLString },
     email: { type: GraphQLString },
+    password: { type: GraphQLString },
   },
 });

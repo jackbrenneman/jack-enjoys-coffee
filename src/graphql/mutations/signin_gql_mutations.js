@@ -1,13 +1,13 @@
 /**
- * All GraphQL mutations regarding signing users up.
+ * All GraphQL mutations regarding signing users in.
  */
 
 /**
  * The mutation to write a new User into the users table.
  */
-export const signupMutation = `
- mutation CreateUser($input: SignupInput) {
-   signup(signup: $input) {
+export const signinMutation = `
+ mutation LoginUser($input: SigninInput) {
+   signin(signin: $input) {
      user {
        user_id
        user_name

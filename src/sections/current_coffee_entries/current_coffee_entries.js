@@ -9,7 +9,9 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import IconButton from '@material-ui/core/IconButton';
+import Divider from '@material-ui/core/Divider';
 // Custom Components
 import CoffeeEntry from './current_coffee_entry.js';
 // Constants
@@ -59,47 +61,60 @@ function CurrentCoffeeEntries({ coffeeEntries, onDateChange }) {
     <Grid container align="center" justify="center">
       <Grid item xs={12} sm={3}>
         <Box py={1}>
+          <Typography variant="caption" align="center">
+            Start
+          </Typography>
           <form autoComplete="off">
             <TextField
               className={classes.form}
-              id="date"
+              id="start_date"
               type="date"
-              label="Start"
               defaultValue={startDate}
               onChange={handleStartDateChange}
               SelectProps={{
                 native: true,
               }}
               variant="outlined"
+              size="small"
             />
           </form>
         </Box>
       </Grid>
       <Grid item xs={12} sm={3}>
         <Box py={1}>
+          <Typography variant="caption" align="center">
+            End
+          </Typography>
           <form autoComplete="off">
             <TextField
               className={classes.form}
-              id="date"
+              id="end_date"
               type="date"
-              label="End"
               defaultValue={endDate}
               onChange={handleEndDateChange}
               SelectProps={{
                 native: true,
               }}
               variant="outlined"
+              size="small"
             />
           </form>
         </Box>
       </Grid>
       <Grid item xs={12}>
         <Box py={1}>
-          <Button variant="contained" size="large" onClick={handleUpdateDate}>
-            <Typography variant="body1" align="center">
-              Update
-            </Typography>
-          </Button>
+          <IconButton
+            aria-label="refresh"
+            onClick={handleUpdateDate}
+            size="small"
+          >
+            <RefreshIcon />
+          </IconButton>
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
+        <Box py={2}>
+          <Divider variant="middle" />
         </Box>
       </Grid>
       <Grid item xs={12}>

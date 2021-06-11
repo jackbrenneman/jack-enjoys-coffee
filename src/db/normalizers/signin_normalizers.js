@@ -1,9 +1,9 @@
 /**
- * Normalizers for any queries regarding signing up users.
+ * Normalizers for any queries regarding signing in users.
  */
 import jwt from 'jsonwebtoken';
 
-export const normalizeSignupMutation = (user) => {
+export const normalizeSigninMutation = (user) => {
   const { user_id, user_name, email } = user;
   return {
     user: {

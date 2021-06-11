@@ -4,9 +4,11 @@
 import express from 'express';
 import path from 'path';
 import { graphqlHTTP } from 'express-graphql';
+import jwt from 'jsonwebtoken';
 import { JackEnjoysCoffeeSchema } from './src/graphql/schema/schema.js';
 import { fileURLToPath } from 'url';
 import { config } from 'dotenv';
+import Cookies from 'universal-cookie';
 
 config();
 const __filename = fileURLToPath(import.meta.url);
@@ -25,9 +27,18 @@ app.listen(process.env.PORT || 3001, async () => {
 
 app.use(
   '/graphql',
-  graphqlHTTP({
-    schema: JackEnjoysCoffeeSchema,
-    graphiql: true,
+  graphqlHTTP((req) => {
+    const cookies = new Cookies(req.headers.cookie);
+    const token = cookies.get('user_token');
+    const user = token ? jwt.verify(token, process.env.JWT_SECRET) : null;
+    return {
+      schema: JackEnjoysCoffeeSchema,
+      graphiql: process.env.NODE_ENV === 'development',
+      context: {
+        user: user || null,
+        ...req,
+      },
+    };
   })
 );
 

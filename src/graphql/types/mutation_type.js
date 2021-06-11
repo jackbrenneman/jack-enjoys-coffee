@@ -51,7 +51,7 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       args: {
         signin: { type: SigninInputType },
       },
-      resolve(parentValue, { signin }) {
+      resolve(parentValue, { signin }, context) {
         return signinMutationResolver(signin);
       },
     },
