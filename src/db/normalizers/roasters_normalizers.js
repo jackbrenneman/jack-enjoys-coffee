@@ -5,6 +5,10 @@ export const normalizeRoasters = (data) => {
   return data;
 };
 
+export const normalizeRoastersByUserId = (data) => {
+  return data;
+};
+
 export const normalizeRoasterById = (data) => {
   return data;
 };

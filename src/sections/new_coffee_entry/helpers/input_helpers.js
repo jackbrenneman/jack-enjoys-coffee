@@ -178,7 +178,6 @@ export const normalizeCoffeeEntryInput = (coffeeEntry) => {
     steep_time,
   } = brew;
   return {
-    user_id: 1,
     date,
     coffee_id,
     method_id,

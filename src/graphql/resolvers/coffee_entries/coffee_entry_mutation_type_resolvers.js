@@ -7,9 +7,9 @@ import { insertIntoCoffeeEntries } from '../../../db/queries/coffee_entries_quer
 /**
  * Resolver mutation for a coffee entry.
  */
-export const coffeeEntriesMutationResolver = (coffeeEntry) => {
-  // First, get the coffee entry into an array of the value entries for queries
-  const coffeeEntryData = Object.values(coffeeEntry);
+export const coffeeEntriesMutationResolver = (coffeeEntry, user_id) => {
+  // Add user_id, then get the coffee entry into an array of the value entries for queries
+  const coffeeEntryData = Object.values({ user_id, ...coffeeEntry });
   return query(insertIntoCoffeeEntries, coffeeEntryData)
     .then((result) => {
       const data = result.rows[0];

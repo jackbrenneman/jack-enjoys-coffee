@@ -7,8 +7,8 @@ import { insertIntoOrigins } from '../../../db/queries/origins_queries.js';
 /**
  * Resolver mutation for all origins.
  */
-export const originsMutationResolver = (origin) => {
-  return query(insertIntoOrigins, [origin])
+export const originsMutationResolver = (origin, user_id) => {
+  return query(insertIntoOrigins, [origin, user_id])
     .then((result) => {
       const data = result.rows[0];
       return data;

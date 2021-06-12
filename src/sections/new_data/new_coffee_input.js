@@ -142,8 +142,7 @@ function NewCoffeeInput({
               <form autoComplete="off">
                 <TextField
                   className={classes.form}
-                  id="outlined-basic"
-                  label="Coffee Name"
+                  id="coffee-name"
                   variant="outlined"
                   onChange={handleNameChange}
                 />
@@ -163,8 +162,7 @@ function NewCoffeeInput({
                   <TextField
                     {...params}
                     className={classes.form}
-                    id="outlined-text-field-name"
-                    label="Coffee Roaster"
+                    id="coffee-roaster"
                     variant="outlined"
                   />
                 )}
@@ -184,8 +182,7 @@ function NewCoffeeInput({
                   <TextField
                     {...params}
                     className={classes.form}
-                    id="outlined-text-field-name"
-                    label="Coffee Origin"
+                    id="coffee-origin"
                     variant="outlined"
                   />
                 )}
@@ -200,7 +197,7 @@ function NewCoffeeInput({
               <form autoComplete="off">
                 <TextField
                   className={classes.form}
-                  id="outlined-select-process-native"
+                  id="coffee-process"
                   select
                   value={process_id}
                   onChange={handleProcessIdChange}

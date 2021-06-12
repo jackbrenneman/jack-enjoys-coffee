@@ -48,8 +48,7 @@ function Signup() {
       { user_id: user_id, user_name: user_name },
       { path: '/' }
     );
-    console.log('success!!');
-    console.log('success!!');
+    window.location.replace('/profile');
     return;
   };
 
@@ -75,7 +74,7 @@ function Signup() {
       .then(({ data }) => {
         const { signup } = data;
         const { user, token } = signup;
-        if (user.user_id) {
+        if (user?.user_id) {
           // Signup was successful
           const { user_name, user_id } = user;
           onSignupSuccess(token, user_id, user_name);

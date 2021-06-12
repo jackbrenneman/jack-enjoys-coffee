@@ -4,12 +4,14 @@
 import { query } from '../../../db/index.js';
 import {
   selectAllDrinks,
+  selectDrinksByUserId,
   selectDrinkById,
   selectDrinksByName,
   selectDrinksByMethodId,
 } from '../../../db/queries/drinks_queries.js';
 import {
   normalizeDrinks,
+  normalizeDrinksByUserId,
   normalizeDrinkById,
   normalizeDrinksByName,
   normalizeDrinksByMethodId,
@@ -23,6 +25,20 @@ export const drinksResolver = () => {
     .then((result) => {
       const data = result.rows;
       return normalizeDrinks(data);
+    })
+    .catch((e) => console.error(e.stack));
+};
+
+/**
+ * Resolver for drinks by user_id.
+ *
+ * @param {int} user_id the user_id of the user
+ */
+export const drinksByUserIdResolver = (user_id) => {
+  return query(selectDrinksByUserId, [user_id])
+    .then((result) => {
+      const data = result.rows;
+      return normalizeDrinksByUserId(data);
     })
     .catch((e) => console.error(e.stack));
 };

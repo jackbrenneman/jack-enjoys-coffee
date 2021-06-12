@@ -11,6 +11,7 @@ import {
 // Resolvers
 import {
   brewerByIdResolver,
+  brewersByUserIdResolver,
   brewersResolver,
   brewersByMethodIdResolver,
   brewersByNameResolver,
@@ -26,17 +27,20 @@ import {
   coffeesByRoasterIdResolver,
   coffeesByOriginIdResolver,
   coffeesByProcessIdResolver,
+  coffeesByUserIdResolver,
 } from '../resolvers/coffees/coffee_query_type_resolvers.js';
 import {
   drinkByIdResolver,
   drinksResolver,
   drinksByMethodIdResolver,
   drinksByNameResolver,
+  drinksByUserIdResolver,
 } from '../resolvers/drinks/drink_query_type_resolvers.js';
 import {
   grinderByIdResolver,
   grindersResolver,
   grindersByNameResolver,
+  grindersByUserIdResolver,
 } from '../resolvers/grinders/grinder_query_type_resolvers.js';
 import {
   methodByIdResolver,
@@ -45,6 +49,7 @@ import {
 } from '../resolvers/methods/method_query_type_resolvers.js';
 import {
   originByIdResolver,
+  originsByUserIdResolver,
   originsResolver,
   originsByNameResolver,
 } from '../resolvers/origins/origin_query_type_resolvers.js';
@@ -54,6 +59,7 @@ import {
   processesByNameResolver,
 } from '../resolvers/processes/process_query_type_resolvers.js';
 import {
+  roastersByUserIdResolver,
   roasterByIdResolver,
   roastersResolver,
   roastersByNameResolver,
@@ -63,8 +69,9 @@ import {
 } from '../resolvers/roasters/roaster_query_type_resolvers.js';
 import { userTypeResolver } from '../resolvers/users/user_query_type_resolvers.js';
 import {
+  watersByUserIdResolver,
   waterByIdResolver,
-  watersResolvers,
+  watersResolver,
   watersByNameResolver,
 } from '../resolvers/waters/water_query_type_resolvers.js';
 // Types
@@ -79,6 +86,8 @@ import { ProcessType } from './process_type.js';
 import { RoasterType } from './roaster_type.js';
 import { UserType } from './user_type.js';
 import { WaterType } from './water_type.js';
+// Validation
+import { getUserId } from '../validate/validate.js';
 
 // Used for the default end time on date ranges
 const currentDate = new Date();
@@ -99,7 +108,12 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         method_id: { type: GraphQLInt },
         name: { type: GraphQLString },
       },
-      resolve(parentValue, { brewer_id, method_id, name }) {
+      resolve(parentValue, { user_id, brewer_id, method_id, name }, context) {
+        // Err on the side of the user_id from arguments. Then fallback on logged in user.
+        const userId = user_id ? user_id : getUserId(context);
+        if (userId) {
+          return brewersByUserIdResolver(userId);
+        }
         if (brewer_id) {
           return brewerByIdResolver(brewer_id);
         } else if (method_id) {
@@ -137,6 +151,7 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
     coffees: {
       type: new GraphQLList(CoffeeType),
       args: {
+        user_id: { type: GraphQLID },
         coffee_id: { type: GraphQLInt },
         name: { type: GraphQLString },
         roaster_id: { type: GraphQLInt },
@@ -145,8 +160,14 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
       },
       resolve(
         parentValue,
-        { coffee_id, name, roaster_id, origin_id, process_id }
+        { user_id, coffee_id, name, roaster_id, origin_id, process_id },
+        context
       ) {
+        // Err on the side of the user_id from arguments. Then fallback on logged in user.
+        const userId = user_id ? user_id : getUserId(context);
+        if (userId) {
+          return coffeesByUserIdResolver(userId);
+        }
         if (coffee_id) {
           return coffeeByIdResolver(coffee_id);
         } else if (name) {
@@ -169,11 +190,17 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
     drinks: {
       type: new GraphQLList(DrinkType),
       args: {
+        user_id: { type: GraphQLID },
         drink_id: { type: GraphQLID },
         name: { type: GraphQLString },
         method_id: { type: GraphQLID },
       },
-      resolve(parentValue, { drink_id, method_id, name }) {
+      resolve(parentValue, { user_id, drink_id, method_id, name }, context) {
+        // Err on the side of the user_id from arguments. Then fallback on logged in user.
+        const userId = user_id ? user_id : getUserId(context);
+        if (userId) {
+          return drinksByUserIdResolver(userId);
+        }
         if (drink_id) {
           return drinkByIdResolver(drink_id);
         } else if (method_id) {
@@ -188,10 +215,16 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
     grinders: {
       type: new GraphQLList(GrinderType),
       args: {
+        user_id: { type: GraphQLID },
         grinder_id: { type: GraphQLID },
         name: { type: GraphQLString },
       },
-      resolve(parentValue, { grinder_id, name }) {
+      resolve(parentValue, { user_id, grinder_id, name }, context) {
+        // Err on the side of the user_id from arguments. Then fallback on logged in user.
+        const userId = user_id ? user_id : getUserId(context);
+        if (userId) {
+          return grindersByUserIdResolver(userId);
+        }
         if (grinder_id) {
           return grinderByIdResolver(grinder_id);
         } else if (name) {
@@ -220,10 +253,16 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
     origins: {
       type: new GraphQLList(OriginType),
       args: {
+        user_id: { type: GraphQLID },
         origin_id: { type: GraphQLInt },
         name: { type: GraphQLString },
       },
-      resolve(parentValue, { origin_id, name }) {
+      resolve(parentValue, { user_id, origin_id, name }, context) {
+        // Err on the side of the user_id from arguments. Then fallback on logged in user.
+        const userId = user_id ? user_id : getUserId(context);
+        if (userId) {
+          return originsByUserIdResolver(userId);
+        }
         if (origin_id) {
           return originByIdResolver(origin_id);
         } else if (name) {
@@ -252,11 +291,21 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
     roasters: {
       type: new GraphQLList(RoasterType),
       args: {
+        user_id: { type: GraphQLID },
         roaster_id: { type: GraphQLInt },
         name: { type: GraphQLString },
         state: { type: GraphQLString },
       },
-      resolve(parentValue, { roaster_id, name, city, state, country }) {
+      resolve(
+        parentValue,
+        { user_id, roaster_id, name, city, state, country },
+        context
+      ) {
+        // Err on the side of the user_id from arguments. Then fallback on logged in user.
+        const userId = user_id ? user_id : getUserId(context);
+        if (userId) {
+          return roastersByUserIdResolver(userId);
+        }
         if (roaster_id) {
           return roasterByIdResolver(roaster_id);
         } else if (name) {
@@ -284,17 +333,23 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
     waters: {
       type: new GraphQLList(WaterType),
       args: {
+        user_id: { type: GraphQLID },
         water_id: { type: GraphQLInt },
         name: { type: GraphQLString },
       },
-      resolve(parentValue, { water_id, name }) {
+      resolve(parentValue, { user_id, water_id, name }, context) {
+        // Err on the side of the user_id from arguments. Then fallback on logged in user.
+        const userId = user_id ? user_id : getUserId(context);
+        if (userId) {
+          return watersByUserIdResolver(userId);
+        }
         if (water_id) {
           return waterByIdResolver(water_id);
         } else if (name) {
           return watersByNameResolver(name);
         }
         // If no args inputted, get all waters.
-        return watersResolvers();
+        return watersResolver();
       },
     },
   },

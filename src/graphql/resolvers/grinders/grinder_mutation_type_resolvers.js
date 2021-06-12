@@ -7,9 +7,9 @@ import { insertIntoGrinders } from '../../../db/queries/grinders_queries.js';
 /**
  * Resolver mutation for all grinders.
  */
-export const grindersMutationResolver = (grinder) => {
+export const grindersMutationResolver = (grinder, user_id) => {
   // First, get the grinders into an array of the value entries for queries
-  const grinderData = Object.values(grinder);
+  const grinderData = Object.values({ ...grinder, user_id });
   return query(insertIntoGrinders, grinderData)
     .then((result) => {
       const data = result.rows[0];

@@ -4,6 +4,7 @@
 import { query } from '../../../db/index.js';
 import {
   selectAllCoffees,
+  selectCoffeesByUserId,
   selectCoffeeById,
   selectCoffeesByName,
   selectCoffeesByRoasterId,
@@ -12,6 +13,7 @@ import {
 } from '../../../db/queries/coffees_queries.js';
 import {
   normalizeCoffees,
+  normalizeCoffeesByUserId,
   normalizeCoffeeById,
   normalizeCoffeesByName,
   normalizeCoffeesByRoasterId,
@@ -27,6 +29,20 @@ export const coffeesResolver = () => {
     .then((result) => {
       const data = result.rows;
       return normalizeCoffees(data);
+    })
+    .catch((e) => console.error(e.stack));
+};
+
+/**
+ * Resolver for coffees by user_id.
+ *
+ * @param {int} user_id the coffee_id of the coffee
+ */
+export const coffeesByUserIdResolver = (user_id) => {
+  return query(selectCoffeesByUserId, [user_id])
+    .then((result) => {
+      const data = result.rows;
+      return normalizeCoffeesByUserId(data);
     })
     .catch((e) => console.error(e.stack));
 };

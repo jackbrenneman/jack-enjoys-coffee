@@ -4,6 +4,7 @@
 import { query } from '../../../db/index.js';
 import {
   selectAllRoasters,
+  selectRoastersByUserId,
   selectRoasterById,
   selectRoastersByName,
   selectRoastersByCity,
@@ -24,6 +25,20 @@ import {
  */
 export const roastersResolver = () => {
   return query(selectAllRoasters)
+    .then((result) => {
+      const data = result.rows;
+      return normalizeRoasters(data);
+    })
+    .catch((e) => console.error(e.stack));
+};
+
+/**
+ * Resolver for roaster by user_id.
+ *
+ * @param {int} user_id the user_id of the user
+ */
+export const roastersByUserIdResolver = (user_id) => {
+  return query(selectRoastersByUserId, [user_id])
     .then((result) => {
       const data = result.rows;
       return normalizeRoasters(data);

@@ -107,13 +107,12 @@ function NewGrinderInput({
           <Grid item xs={12}>
             <Box pt={2}>
               <Typography variant="body1" align="center">
-                Name
+                Grinder Name
               </Typography>
               <form autoComplete="off">
                 <TextField
                   className={classes.form}
-                  id="outlined-basic"
-                  label="Grinder Name"
+                  id="grinder-name"
                   variant="outlined"
                   onChange={handleNameChange}
                 />
@@ -128,8 +127,7 @@ function NewGrinderInput({
               <form autoComplete="off">
                 <TextField
                   className={classes.form}
-                  id="outlined-basic"
-                  label="Grinder Website"
+                  id="grinder-website"
                   variant="outlined"
                   onChange={handleWebsiteChange}
                 />

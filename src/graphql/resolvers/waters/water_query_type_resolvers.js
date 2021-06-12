@@ -4,11 +4,13 @@
 import { query } from '../../../db/index.js';
 import {
   selectAllWaters,
+  selectAllWatersByUserId,
   selectWaterById,
   selectWatersByName,
 } from '../../../db/queries/waters_queries.js';
 import {
   normalizeWaters,
+  normalizeWatersByUserId,
   normalizeWaterById,
   normalizeWatersByName,
 } from '../../../db/normalizers/waters_normalizers.js';
@@ -16,11 +18,23 @@ import {
 /**
  * Resolver for all waters.
  */
-export const watersResolvers = () => {
+export const watersResolver = () => {
   return query(selectAllWaters)
     .then((result) => {
       const data = result.rows;
       return normalizeWaters(data);
+    })
+    .catch((e) => console.error(e.stack));
+};
+
+/**
+ * Resolver for all waters of a user.
+ */
+export const watersByUserIdResolver = (user_id) => {
+  return query(selectAllWatersByUserId, [user_id])
+    .then((result) => {
+      const data = result.rows;
+      return normalizeWatersByUserId(data);
     })
     .catch((e) => console.error(e.stack));
 };

@@ -41,6 +41,46 @@ export const normalizeCoffees = (coffees) => {
   return normalizedCoffees;
 };
 
+export const normalizeCoffeesByUserId = (coffees) => {
+  const normalizedCoffees = coffees.map((coffee) => {
+    const {
+      coffee_id,
+      coffee_name,
+      roaster_id,
+      roaster_name,
+      roaster_city,
+      roaster_state,
+      roaster_country,
+      roaster_website,
+      origin_id,
+      origin_name,
+      process_id,
+      process_name,
+    } = coffee;
+    return {
+      coffee_id,
+      name: coffee_name,
+      roaster: {
+        roaster_id,
+        name: roaster_name,
+        city: roaster_city,
+        state: roaster_state,
+        country: roaster_country,
+        website: roaster_website,
+      },
+      origin: {
+        origin_id,
+        name: origin_name,
+      },
+      process: {
+        process_id,
+        name: process_name,
+      },
+    };
+  });
+  return normalizedCoffees;
+};
+
 export const normalizeCoffeesMutation = (coffee) => {
   const { coffee_id, name, roaster_id, origin_id, process_id } = coffee;
   return {

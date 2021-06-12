@@ -4,11 +4,13 @@
 import { query } from '../../../db/index.js';
 import {
   selectAllOrigins,
+  selectOriginsByUserId,
   selectOriginById,
   selectOriginsByName,
 } from '../../../db/queries/origins_queries.js';
 import {
   normalizeOrigins,
+  normalizeOriginsByUserId,
   normalizeOriginById,
   normalizeOriginsByName,
 } from '../../../db/normalizers/origins_normalizers.js';
@@ -21,6 +23,20 @@ export const originsResolver = () => {
     .then((result) => {
       const data = result.rows;
       return normalizeOrigins(data);
+    })
+    .catch((e) => console.error(e.stack));
+};
+
+/**
+ * Resolver for origin by user_id
+ *
+ * @param {int} user_id
+ */
+export const originsByUserIdResolver = (user_id) => {
+  return query(selectOriginsByUserId, [user_id])
+    .then((result) => {
+      const data = result.rows;
+      return normalizeOriginsByUserId(data);
     })
     .catch((e) => console.error(e.stack));
 };

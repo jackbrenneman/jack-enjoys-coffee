@@ -5,6 +5,10 @@ export const normalizeWaters = (data) => {
   return data;
 };
 
+export const normalizeWatersByUserId = (data) => {
+  return data;
+};
+
 export const normalizeWaterById = (data) => {
   return data;
 };

@@ -121,13 +121,12 @@ function NewBrewerInput({
           <Grid item xs={12} sm={6}>
             <Box pt={2}>
               <Typography variant="body1" align="center">
-                Name
+                Brewer Name
               </Typography>
               <form autoComplete="off">
                 <TextField
                   className={classes.form}
-                  id="outlined-basic"
-                  label="Brewer Name"
+                  id="brewer-name"
                   variant="outlined"
                   onChange={handleNameChange}
                 />
@@ -142,8 +141,7 @@ function NewBrewerInput({
               <form autoComplete="off">
                 <TextField
                   className={classes.form}
-                  id="outlined-basic"
-                  label="Brewer Website"
+                  id="brewer-website"
                   variant="outlined"
                   onChange={handleWebsiteChange}
                 />

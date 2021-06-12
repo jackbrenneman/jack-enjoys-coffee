@@ -96,13 +96,12 @@ function NewOriginInput({
       <Grid item xs={12}>
         <Box pt={2}>
           <Typography variant="body1" align="center">
-            Name
+            Origin Name
           </Typography>
           <form autoComplete="off">
             <TextField
               className={classes.form}
-              id="outlined-basic"
-              label="Origin Name"
+              id="origin-name"
               variant="outlined"
               onChange={handleNameChange}
             />

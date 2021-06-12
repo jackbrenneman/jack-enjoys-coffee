@@ -14,8 +14,6 @@ export const CoffeeEntryInputType = new GraphQLInputObjectType({
   description:
     'Contains all the info needed to add a coffee entry in a mutation',
   fields: {
-    // User Id
-    user_id: { type: GraphQLInt },
     // Date
     date: { type: GraphQLString },
     // Coffee Info

@@ -103,13 +103,12 @@ function NewWaterInput({
       <Grid item xs={12}>
         <Box pt={2}>
           <Typography variant="body1" align="center">
-            Name
+            Water Name
           </Typography>
           <form autoComplete="off">
             <TextField
               className={classes.form}
-              id="outlined-basic"
-              label="Water Name"
+              id="water-name"
               variant="outlined"
               onChange={handleNameChange}
             />
@@ -125,9 +124,8 @@ function NewWaterInput({
             <TextField
               className={classes.form}
               onChange={handleDescriptionChange}
-              id="outlined-textarea"
-              label="Water Description"
-              placeholder="Placeholder"
+              id="water-description"
+              placeholder="Enter Description on Water"
               multiline
               variant="outlined"
             />

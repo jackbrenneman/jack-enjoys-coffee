@@ -33,6 +33,8 @@ import { SignupInputType } from './inputs/signup_input_type.js';
 import { AuthType } from './auth_type.js';
 import { signupMutationResolver } from '../resolvers/signup/signup_mutation_type_resolvers.js';
 import { signinMutationResolver } from '../resolvers/signin/signin_mutation_type_resolver.js';
+// Validation
+import { getUserId } from '../validate/validate.js';
 
 const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
   name: 'Mutation',
@@ -51,7 +53,7 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       args: {
         signin: { type: SigninInputType },
       },
-      resolve(parentValue, { signin }, context) {
+      resolve(parentValue, { signin }) {
         return signinMutationResolver(signin);
       },
     },
@@ -60,8 +62,13 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       args: {
         coffeeEntry: { type: CoffeeEntryInputType },
       },
-      resolve(parentValue, { coffeeEntry }) {
-        return coffeeEntriesMutationResolver(coffeeEntry);
+      resolve(parentValue, { coffeeEntry }, context) {
+        const user_id = getUserId(context);
+        // If there's a user_id, then the user is logged in. Add in the entry for that user.
+        if (user_id) {
+          return coffeeEntriesMutationResolver(coffeeEntry, user_id);
+        }
+        throw new Error('401: Unauthorized');
       },
     },
     brewer: {
@@ -69,8 +76,12 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       args: {
         brewer: { type: BrewerInputType },
       },
-      resolve(parentValue, { brewer }) {
-        return brewersMutationResolver(brewer);
+      resolve(parentValue, { brewer }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return brewersMutationResolver(brewer, user_id);
+        }
+        throw new Error('401: Unauthorized');
       },
     },
     coffee: {
@@ -78,8 +89,12 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       args: {
         coffee: { type: CoffeeInputType },
       },
-      resolve(parentValue, { coffee }) {
-        return coffeesMutationResolver(coffee);
+      resolve(parentValue, { coffee }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return coffeesMutationResolver(coffee, user_id);
+        }
+        throw new Error('401: Unauthorized');
       },
     },
     drink: {
@@ -87,8 +102,12 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       args: {
         drink: { type: DrinkInputType },
       },
-      resolve(parentValue, { drink }) {
-        return drinksMutationResolver(drink);
+      resolve(parentValue, { drink }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return drinksMutationResolver(drink, user_id);
+        }
+        throw new Error('401: Unauthorized');
       },
     },
     grinder: {
@@ -96,8 +115,12 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       args: {
         grinder: { type: GrinderInputType },
       },
-      resolve(parentValue, { grinder }) {
-        return grindersMutationResolver(grinder);
+      resolve(parentValue, { grinder }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return grindersMutationResolver(grinder, user_id);
+        }
+        throw new Error('401: Unauthorized');
       },
     },
     origin: {
@@ -105,8 +128,12 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       args: {
         name: { type: GraphQLString },
       },
-      resolve(parentValue, { name }) {
-        return originsMutationResolver(name);
+      resolve(parentValue, { name }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return originsMutationResolver(name, user_id);
+        }
+        throw new Error('401: Unauthorized');
       },
     },
     roaster: {
@@ -114,8 +141,12 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       args: {
         roaster: { type: RoasterInputType },
       },
-      resolve(parentValue, { roaster }) {
-        return roastersMutationResolver(roaster);
+      resolve(parentValue, { roaster }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return roastersMutationResolver(roaster, user_id);
+        }
+        throw new Error('401: Unauthorized');
       },
     },
     water: {
@@ -123,8 +154,12 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       args: {
         water: { type: WaterInputType },
       },
-      resolve(parentValue, { water }) {
-        return watersMutationResolver(water);
+      resolve(parentValue, { water }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return watersMutationResolver(water, user_id);
+        }
+        throw new Error('401: Unauthorized');
       },
     },
   },

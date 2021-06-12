@@ -4,12 +4,14 @@
 import { query } from '../../../db/index.js';
 import {
   selectAllBrewers,
+  selectBrewersByUserId,
   selectBrewerById,
   selectBrewersByName,
   selectBrewersByMethodId,
 } from '../../../db/queries/brewers_queries.js';
 import {
   normalizeBrewers,
+  normalizeBrewersByUserId,
   normalizeBrewerById,
   normalizeBrewersByName,
   normalizeBrewersByMethodId,
@@ -23,6 +25,20 @@ export const brewersResolver = () => {
     .then((result) => {
       const data = result.rows;
       return normalizeBrewers(data);
+    })
+    .catch((e) => console.error(e.stack));
+};
+
+/**
+ * Resolver for brewers by user_id.
+ *
+ * @param {int} user_id the user_id of the user
+ */
+export const brewersByUserIdResolver = (user_id) => {
+  return query(selectBrewersByUserId, [user_id])
+    .then((result) => {
+      const data = result.rows;
+      return normalizeBrewersByUserId(data);
     })
     .catch((e) => console.error(e.stack));
 };
