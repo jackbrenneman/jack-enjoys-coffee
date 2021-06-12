@@ -51,17 +51,19 @@ function CurrentCoffeeEntriesContainer({ user }) {
 
   // Updates the date range, and fetches the coffee entry data for that given range
   const updateDateRange = (startDate, endDate) => {
-    queryGQL(currentCoffeeEntriesQuery(1, startDate, endDate))
-      .then(({ data }) => {
-        const { coffeeEntries } = data;
-        if (coffeeEntries) {
-          setCurrentCoffeeEntries(coffeeEntries);
-        }
-      })
-      .catch((e) => {
-        // TODO: Determine what to do if fetch is unsuccessful
-        console.log(e);
-      });
+    if (user?.user_id) {
+      queryGQL(currentCoffeeEntriesQuery(user.user_id, startDate, endDate))
+        .then(({ data }) => {
+          const { coffeeEntries } = data;
+          if (coffeeEntries) {
+            setCurrentCoffeeEntries(coffeeEntries);
+          }
+        })
+        .catch((e) => {
+          // TODO: Determine what to do if fetch is unsuccessful
+          console.log(e);
+        });
+    }
   };
 
   return (

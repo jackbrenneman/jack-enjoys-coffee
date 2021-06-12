@@ -140,13 +140,12 @@ function NewRoasterInput({
           <Grid item xs={12} sm={6}>
             <Box pt={2}>
               <Typography variant="body1" align="center">
-                Name
+                Roaster Name
               </Typography>
               <form autoComplete="off">
                 <TextField
                   className={classes.form}
-                  id="outlined-basic"
-                  label="Roaster Name"
+                  id="roaster-name"
                   variant="outlined"
                   onChange={handleNameChange}
                 />
@@ -161,8 +160,7 @@ function NewRoasterInput({
               <form autoComplete="off">
                 <TextField
                   className={classes.form}
-                  id="outlined-basic"
-                  label="Roaster City"
+                  id="roaster-city"
                   variant="outlined"
                   onChange={handleCityChange}
                 />
@@ -177,8 +175,7 @@ function NewRoasterInput({
               <form autoComplete="off">
                 <TextField
                   className={classes.form}
-                  id="outlined-basic"
-                  label="Roaster State"
+                  id="roaster-state"
                   variant="outlined"
                   onChange={handleStateChange}
                 />
@@ -193,8 +190,7 @@ function NewRoasterInput({
               <form autoComplete="off">
                 <TextField
                   className={classes.form}
-                  id="outlined-basic"
-                  label="Roaster Contry"
+                  id="roaster-country"
                   variant="outlined"
                   onChange={handleCountryChange}
                 />
@@ -209,8 +205,7 @@ function NewRoasterInput({
               <form autoComplete="off">
                 <TextField
                   className={classes.form}
-                  id="outlined-basic"
-                  label="Roaster Website"
+                  id="roaster-website"
                   variant="outlined"
                   onChange={handleWebsiteChange}
                 />

@@ -3,6 +3,15 @@
  */
 import PropTypes from 'prop-types';
 
+// Valid paths
+export const homePath = '/home';
+export const entriesPath = '/entries';
+export const loginPath = '/login';
+export const profilePath = '/profile';
+export const signupPath = '/signup';
+export const newDataPath = '/new_data';
+export const newEntryPath = '/new_entry';
+
 // Used so we know what kind of data the user is trying to input
 export const drinkEnum = 'DRINK';
 export const grinderEnum = 'GRINDER';

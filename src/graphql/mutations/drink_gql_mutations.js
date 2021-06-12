@@ -10,7 +10,6 @@ export const drinksMutation = `
     drink(drink: $input) {
       drink_id
       name
-      method_id
     }
   }
 `;

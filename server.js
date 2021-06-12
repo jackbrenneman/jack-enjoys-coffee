@@ -30,12 +30,12 @@ app.use(
   graphqlHTTP((req) => {
     const cookies = new Cookies(req.headers.cookie);
     const token = cookies.get('user_token');
-    const user = token ? jwt.verify(token, process.env.JWT_SECRET) : null;
+    const user = token ? jwt.verify(token, process.env.JWT_SECRET) : {};
     return {
       schema: JackEnjoysCoffeeSchema,
       graphiql: process.env.NODE_ENV === 'development',
       context: {
-        user: user || null,
+        user: user || {},
         ...req,
       },
     };

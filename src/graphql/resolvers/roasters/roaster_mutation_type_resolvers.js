@@ -8,9 +8,9 @@ import { normalizeRoasters } from '../../../db/normalizers/roasters_normalizers.
 /**
  * Resolver mutation for all roasters.
  */
-export const roastersMutationResolver = (roaster) => {
+export const roastersMutationResolver = (roaster, user_id) => {
   // First, get the roasters into an array of the value entries for queries
-  const roasterData = Object.values(roaster);
+  const roasterData = Object.values({ ...roaster, user_id });
   return query(insertIntoRoasters, roasterData)
     .then((result) => {
       const data = result.rows[0];

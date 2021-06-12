@@ -106,13 +106,12 @@ function NewDrinkInput({
           <Grid item xs={12}>
             <Box pt={2}>
               <Typography variant="body1" align="center">
-                Name
+                Drink Name
               </Typography>
               <form autoComplete="off">
                 <TextField
                   className={classes.form}
-                  id="outlined-basic"
-                  label="Drink Name"
+                  id="drink-name"
                   variant="outlined"
                   onChange={handleNameChange}
                 />
@@ -127,7 +126,7 @@ function NewDrinkInput({
               <form autoComplete="off">
                 <TextField
                   className={classes.form}
-                  id="outlined-select-method-native"
+                  id="drink-method"
                   select
                   value={method_id}
                   onChange={handleMethodIdChange}

@@ -5,6 +5,10 @@ export const normalizeGrinders = (data) => {
   return data;
 };
 
+export const normalizeGrindersByUserId = (data) => {
+  return data;
+};
+
 export const normalizeGrinderById = (data) => {
   return data;
 };

@@ -4,11 +4,13 @@
 import { query } from '../../../db/index.js';
 import {
   selectAllGrinders,
+  selectGrindersByUserId,
   selectGrinderById,
   selectGrindersByName,
 } from '../../../db/queries/grinders_queries.js';
 import {
   normalizeGrinders,
+  normalizeGrindersByUserId,
   normalizeGrinderById,
   normalizeGrindersByName,
 } from '../../../db/normalizers/grinders_normalizers.js';
@@ -21,6 +23,20 @@ export const grindersResolver = () => {
     .then((result) => {
       const data = result.rows;
       return normalizeGrinders(data);
+    })
+    .catch((e) => console.error(e.stack));
+};
+
+/**
+ * Resolver for grinder by user_id.
+ *
+ * @param {int} user_id the user_id of the user
+ */
+export const grindersByUserIdResolver = (user_id) => {
+  return query(selectGrindersByUserId, [user_id])
+    .then((result) => {
+      const data = result.rows;
+      return normalizeGrindersByUserId(data);
     })
     .catch((e) => console.error(e.stack));
 };

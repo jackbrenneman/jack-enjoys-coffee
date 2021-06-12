@@ -8,9 +8,9 @@ import { normalizeCoffeesMutation } from '../../../db/normalizers/coffees_normal
 /**
  * Resolver mutation for all coffees.
  */
-export const coffeesMutationResolver = (coffee) => {
+export const coffeesMutationResolver = (coffee, user_id) => {
   // First, get the coffees into an array of the value entries for queries
-  const coffeeData = Object.values(coffee);
+  const coffeeData = Object.values({ ...coffee, user_id });
   return query(insertIntoCoffees, coffeeData)
     .then((result) => {
       const data = result.rows[0];
