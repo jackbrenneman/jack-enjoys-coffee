@@ -12,8 +12,9 @@ function AutocompleteWrapperSimple({
   onChange,
   options,
   textField,
+  initialValue,
 }) {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState({ name: initialValue });
   const filter = createFilterOptions();
 
   const handleOnChange = (event, newValue) => {
@@ -65,6 +66,11 @@ AutocompleteWrapperSimple.propTypes = {
   onChange: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
   textField: PropTypes.func.isRequired,
+  initialValue: PropTypes.string,
+};
+
+AutocompleteWrapperSimple.defaultProps = {
+  initialValue: '',
 };
 
 export default AutocompleteWrapperSimple;

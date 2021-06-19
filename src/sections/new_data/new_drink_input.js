@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
-import { drinksMutation } from '../../graphql/mutations/drink_gql_mutations.js';
+import { drinkMutation } from '../../graphql/mutations/drink_gql_mutations.js';
 import { writeGQL } from '../../graphql/fetch.js';
 // Constants
 import { newInputPropTypesShape } from '../../consts.js';
@@ -65,7 +65,7 @@ function NewDrinkInput({
       });
       return;
     }
-    writeGQL(drinksMutation, drink)
+    writeGQL(drinkMutation, { drink: drink })
       .then(({ data }) => {
         const { drink: newDrink } = data;
         if (newDrink.drink_id) {

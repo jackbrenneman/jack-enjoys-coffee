@@ -10,9 +10,9 @@ import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 // Custom Components
 import GeneralDetails from './general_details.js';
-import { Divider } from '@material-ui/core';
 
 function EspressoDetails({ coffee_in, liquid_out, generalDetails }) {
   const useStyles = makeStyles(() => ({

@@ -7,6 +7,7 @@ export const normalizeBrewers = (brewers) => {
       brewer_id,
       brewer_name,
       brewer_website,
+      is_active,
       method_id,
       method_name,
     } = brewer;
@@ -14,6 +15,7 @@ export const normalizeBrewers = (brewers) => {
       brewer_id,
       name: brewer_name,
       website: brewer_website,
+      is_active,
       method: {
         method_id,
         name: method_name,
@@ -29,6 +31,7 @@ export const normalizeBrewersByUserId = (brewers) => {
       brewer_id,
       brewer_name,
       brewer_website,
+      is_active,
       method_id,
       method_name,
     } = brewer;
@@ -36,6 +39,7 @@ export const normalizeBrewersByUserId = (brewers) => {
       brewer_id,
       name: brewer_name,
       website: brewer_website,
+      is_active,
       method: {
         method_id,
         name: method_name,
@@ -51,6 +55,7 @@ export const normalizeBrewerById = (brewers) => {
       brewer_id,
       brewer_name,
       brewer_website,
+      is_active,
       method_id,
       method_name,
     } = brewer;
@@ -58,6 +63,7 @@ export const normalizeBrewerById = (brewers) => {
       brewer_id,
       name: brewer_name,
       website: brewer_website,
+      is_active,
       method: {
         method_id,
         name: method_name,
@@ -73,6 +79,7 @@ export const normalizeBrewersByName = (brewers) => {
       brewer_id,
       brewer_name,
       brewer_website,
+      is_active,
       method_id,
       method_name,
     } = brewer;
@@ -80,6 +87,7 @@ export const normalizeBrewersByName = (brewers) => {
       brewer_id,
       name: brewer_name,
       website: brewer_website,
+      is_active,
       method: {
         method_id,
         name: method_name,
@@ -95,6 +103,7 @@ export const normalizeBrewersByMethodId = (brewers) => {
       brewer_id,
       brewer_name,
       brewer_website,
+      is_active,
       method_id,
       method_name,
     } = brewer;
@@ -102,6 +111,7 @@ export const normalizeBrewersByMethodId = (brewers) => {
       brewer_id,
       name: brewer_name,
       website: brewer_website,
+      is_active,
       method: {
         method_id,
         name: method_name,

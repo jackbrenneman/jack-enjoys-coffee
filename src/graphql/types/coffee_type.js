@@ -1,7 +1,12 @@
 /**
  * Coffee Type. Holds all information specific to coffee.
  */
-import { GraphQLID, GraphQLObjectType, GraphQLString } from 'graphql';
+import {
+  GraphQLBoolean,
+  GraphQLID,
+  GraphQLObjectType,
+  GraphQLString,
+} from 'graphql';
 import { OriginType } from './origin_type.js';
 import { ProcessType } from './process_type.js';
 import { RoasterType } from './roaster_type.js';
@@ -14,5 +19,6 @@ export const CoffeeType = new GraphQLObjectType({
     roaster: { type: RoasterType },
     origin: { type: OriginType },
     process: { type: ProcessType },
+    is_active: { type: GraphQLBoolean },
   },
 });

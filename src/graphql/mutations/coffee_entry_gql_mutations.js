@@ -6,9 +6,29 @@
  * The mutation to write a new Coffee Entry into the coffee_entries table.
  */
 export const coffeeEntryMutation = `
- mutation CreateCoffeeEntry($input: CoffeeEntryInput) {
-   coffeeEntry(coffeeEntry: $input) {
+ mutation CreateCoffeeEntry($coffeeEntry: CoffeeEntryInput) {
+   coffeeEntry(coffeeEntry: $coffeeEntry) {
      coffee_entry_id
    }
+ }
+`;
+
+/**
+ * The mutation to edit an existing coffee entry from the coffee_entries table.
+ */
+export const updateCoffeeEntryMutation = `
+ mutation UpdateCoffeeEntry($coffeeEntry: CoffeeEntryInput, $coffee_entry_id: ID!) {
+   updateCoffee(coffeeEntry: $coffeeEntry, coffee_entry_id: $coffee_entry_id) {
+     coffee_entry_id
+   }
+ }
+`;
+
+/**
+ * The mutation to delete an existing coffee entry from the coffee_entries table.
+ */
+export const deleteCoffeeEntryMutation = `
+ mutation DeleteCoffeeEntry($coffee_entry_id: ID!) {
+   deleteCoffeeEntry(coffee_entry_id: $coffee_entry_id)
  }
 `;

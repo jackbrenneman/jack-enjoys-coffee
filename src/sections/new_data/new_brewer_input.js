@@ -10,7 +10,7 @@ import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 // Queries and Fetching
-import { brewersMutation } from '../../graphql/mutations/brewer_gql_mutations.js';
+import { brewerMutation } from '../../graphql/mutations/brewer_gql_mutations.js';
 import { writeGQL } from '../../graphql/fetch.js';
 // Constants
 import { newInputPropTypesShape } from '../../consts.js';
@@ -80,7 +80,7 @@ function NewBrewerInput({
       });
       return;
     }
-    writeGQL(brewersMutation, brewer)
+    writeGQL(brewerMutation, { brewer: brewer })
       .then(({ data }) => {
         const { brewer: newBrewer } = data;
         if (newBrewer.brewer_id) {

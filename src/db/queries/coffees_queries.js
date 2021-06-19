@@ -6,6 +6,7 @@ export const selectAllCoffees = `
   coffees.coffee_id AS coffee_id,
   coffees.name AS coffee_name,
   coffees.roaster_id AS roaster_id,
+  coffees.is_active AS is_active,
   roasters.name AS roaster_name,
   roasters.city AS roaster_city,
   roasters.state AS roaster_state,
@@ -25,6 +26,7 @@ export const selectCoffeesByUserId = `
   coffees.coffee_id AS coffee_id,
   coffees.name AS coffee_name,
   coffees.roaster_id AS roaster_id,
+  coffees.is_active AS is_active,
   roasters.name AS roaster_name,
   roasters.city AS roaster_city,
   roasters.state AS roaster_state,
@@ -45,6 +47,7 @@ export const selectCoffeeById = `
   coffees.coffee_id AS coffee_id,
   coffees.name AS coffee_name,
   coffees.roaster_id AS roaster_id,
+  coffees.is_active AS is_active,
   roasters.name AS roaster_name,
   roasters.city AS roaster_city,
   roasters.state AS roaster_state,
@@ -65,6 +68,7 @@ export const selectCoffeesByName = `
   coffees.coffee_id AS coffee_id,
   coffees.name AS coffee_name,
   coffees.roaster_id AS roaster_id,
+  coffees.is_active AS is_active,
   roasters.name AS roaster_name,
   roasters.city AS roaster_city,
   roasters.state AS roaster_state,
@@ -85,6 +89,7 @@ export const selectCoffeesByRoasterId = `
   coffees.coffee_id AS coffee_id,
   coffees.name AS coffee_name,
   coffees.roaster_id AS roaster_id,
+  coffees.is_active AS is_active,
   roasters.name AS roaster_name,
   roasters.city AS roaster_city,
   roasters.state AS roaster_state,
@@ -105,6 +110,7 @@ export const selectCoffeesByOriginId = `
   coffees.coffee_id AS coffee_id,
   coffees.name AS coffee_name,
   coffees.roaster_id AS roaster_id,
+  coffees.is_active AS is_active,
   roasters.name AS roaster_name,
   roasters.city AS roaster_city,
   roasters.state AS roaster_state,
@@ -125,6 +131,7 @@ export const selectCoffeesByProcessId = `
   coffees.coffee_id AS coffee_id,
   coffees.name AS coffee_name,
   coffees.roaster_id AS roaster_id,
+  coffees.is_active AS is_active,
   roasters.name AS roaster_name,
   roasters.city AS roaster_city,
   roasters.state AS roaster_state,
@@ -141,4 +148,8 @@ export const selectCoffeesByProcessId = `
   WHERE coffees.process_id = $1
 `;
 export const insertIntoCoffees =
-  'INSERT INTO coffees (name, roaster_id, origin_id, process_id, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+  'INSERT INTO coffees (name, roaster_id, origin_id, process_id, is_active, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+export const deleteCoffee =
+  'DELETE FROM coffees WHERE coffee_id = $1 AND user_id = $2';
+export const updateCoffee =
+  'UPDATE coffees SET name = $1, roaster_id = $2, origin_id = $3, process_id = $4, is_active = $5 WHERE coffee_id = $6 AND user_id = $7 RETURNING *';

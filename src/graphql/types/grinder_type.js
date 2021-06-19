@@ -1,7 +1,12 @@
 /**
  * The Grinder Type. Contains all information on a grinder.
  */
-import { GraphQLString, GraphQLID, GraphQLObjectType } from 'graphql';
+import {
+  GraphQLString,
+  GraphQLID,
+  GraphQLObjectType,
+  GraphQLBoolean,
+} from 'graphql';
 
 export const GrinderType = new GraphQLObjectType({
   name: 'Grinder',
@@ -10,5 +15,6 @@ export const GrinderType = new GraphQLObjectType({
     grinder_id: { type: GraphQLID },
     name: { type: GraphQLString },
     website: { type: GraphQLString },
+    is_active: { type: GraphQLBoolean },
   },
 });

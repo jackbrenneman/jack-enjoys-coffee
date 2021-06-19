@@ -2,7 +2,7 @@
  * Grinder input type. Used for mutations.
  */
 
-import { GraphQLString, GraphQLInputObjectType } from 'graphql';
+import { GraphQLString, GraphQLInputObjectType, GraphQLBoolean } from 'graphql';
 
 export const GrinderInputType = new GraphQLInputObjectType({
   name: 'GrinderInput',
@@ -10,5 +10,6 @@ export const GrinderInputType = new GraphQLInputObjectType({
   fields: {
     name: { type: GraphQLString },
     website: { type: GraphQLString },
+    is_active: { type: GraphQLBoolean, defaultValue: true },
   },
 });

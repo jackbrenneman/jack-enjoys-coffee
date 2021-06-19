@@ -18,7 +18,7 @@ import Divider from '@material-ui/core/Divider';
 // Constants
 import { coffeeEntryPropTypesShape } from '../../../consts.js';
 
-function CoffeeInfoInput({
+function CoffeeInput({
   coffeeEntry,
   setCoffeeEntry,
   coffees,
@@ -240,11 +240,11 @@ function CoffeeInfoInput({
   );
 }
 
-CoffeeInfoInput.propTypes = {
+CoffeeInput.propTypes = {
   ...coffeeEntryPropTypesShape,
   coffees: PropTypes.array.isRequired,
   roasters: PropTypes.array.isRequired,
   roasterIdToCoffeesMap: PropTypes.object.isRequired,
 };
 
-export default CoffeeInfoInput;
+export default CoffeeInput;

@@ -9,11 +9,10 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 // Custom Components and Sections
 import TopNav from './nav/topnav.js';
 import Home from './sections/home.js';
-import Data from './sections/data.js';
 import Login from './sections/login/login.js';
 import Signup from './sections/signup/signup.js';
 import CoffeeEntryContainer from './sections/new_coffee_entry/coffee_entry_container.js';
-import CurrentCoffeeEntriesContainer from './sections/current_coffee_entries/current_coffee_entries_container.js';
+import CurrentCoffeeEntriesContainer from './sections/coffee_entries/coffee_entries_container.js';
 import CurrentDataContainer from './sections/current_data/current_data_container.js';
 import DataEntryContainer from './sections/new_data/new_data_container.js';
 // Context
@@ -28,10 +27,10 @@ const cookies = new Cookies();
 function App() {
   const theme = createMuiTheme({
     typography: {
-      fontFamily: ['Roboto Condensed'].join(','),
+      fontFamily: ['PT Sans Narrow'].join(','),
     },
   });
-  // And this is more specific to what I like
+
   theme.typography.h2 = {
     fontSize: '3.75rem',
     '@media (max-width:750px)': {
@@ -40,7 +39,7 @@ function App() {
     },
     fontWeight: '300',
     lineHeight: '1.2',
-    fontFamily: ['Roboto Condensed'].join(','),
+    fontFamily: ['PT Sans Narrow'].join(','),
     letterSpacing: '-0.00833em',
   };
 
@@ -69,9 +68,6 @@ function App() {
               <CoffeeEntryContainer />
             </Route>
             <Route exact path="/data">
-              <Data />
-            </Route>
-            <Route exact path="/current_data">
               <CurrentDataContainer />
             </Route>
             <Route exact path="/new_data">

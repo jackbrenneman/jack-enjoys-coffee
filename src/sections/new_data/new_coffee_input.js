@@ -11,7 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import AutocompleteWrapperSimple from '../new_coffee_entry/helpers/autocomplete_container_simple.js';
 // Queries and Fetching
-import { coffeesMutation } from '../../graphql/mutations/coffee_gql_mutations.js';
+import { coffeeMutation } from '../../graphql/mutations/coffee_gql_mutations.js';
 import { writeGQL } from '../../graphql/fetch.js';
 // Constants
 import { newInputPropTypesShape } from '../../consts.js';
@@ -96,7 +96,7 @@ function NewCoffeeInput({
       });
       return;
     }
-    writeGQL(coffeesMutation, coffee)
+    writeGQL(coffeeMutation, { coffee: coffee })
       .then(({ data }) => {
         const { coffee: newCoffee } = data;
         if (newCoffee.coffee_id) {

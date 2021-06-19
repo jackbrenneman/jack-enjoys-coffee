@@ -11,6 +11,7 @@ export const currentDataQuery = `
       brewer_id
       name
       website
+      is_active
       method {
         method_id
         name
@@ -19,6 +20,7 @@ export const currentDataQuery = `
     coffees {
       coffee_id
       name
+      is_active
       roaster {
         roaster_id
         name
@@ -44,6 +46,7 @@ export const currentDataQuery = `
       grinder_id
       name
       website
+      is_active
     }
     methods {
       method_id
@@ -64,11 +67,13 @@ export const currentDataQuery = `
       state
       country
       website
+      is_active
     }
     waters {
       water_id
       name
       description
+      is_active
     }
   }
 `;
