@@ -2,7 +2,12 @@
  * Coffee input type. Used for mutations.
  */
 
-import { GraphQLString, GraphQLInputObjectType, GraphQLInt } from 'graphql';
+import {
+  GraphQLString,
+  GraphQLInputObjectType,
+  GraphQLInt,
+  GraphQLBoolean,
+} from 'graphql';
 
 export const CoffeeInputType = new GraphQLInputObjectType({
   name: 'CoffeeInput',
@@ -12,5 +17,6 @@ export const CoffeeInputType = new GraphQLInputObjectType({
     roaster_id: { type: GraphQLInt },
     origin_id: { type: GraphQLInt },
     process_id: { type: GraphQLInt },
+    is_active: { type: GraphQLBoolean, defaultValue: true },
   },
 });

@@ -111,3 +111,25 @@ export const insertIntoCoffeeEntries = `
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
   RETURNING *
 `;
+export const deleteCoffeeEntry =
+  'DELETE FROM coffee_entries WHERE coffee_entry_id = $1 AND user_id = $2';
+export const updateCoffeeEntry = `
+  UPDATE coffee_entries
+  SET
+    date = $1,
+    coffee_id = $2,
+    method_id = $3,
+    brewer_id = $4,
+    drink_id = $5,
+    grinder_id = $6,
+    grinder_setting = $7,
+    water_id = $8,
+    coffee_in = $9,
+    liquid_out = $10,
+    water_in = $11,
+    steep_time = $12,
+    notes = $13,
+    rating = $14
+  WHERE coffee_entry_id = $15 AND user_id = $16
+  RETURNING *
+`;

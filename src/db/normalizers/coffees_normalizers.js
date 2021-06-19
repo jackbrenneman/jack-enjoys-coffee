@@ -6,6 +6,7 @@ export const normalizeCoffees = (coffees) => {
     const {
       coffee_id,
       coffee_name,
+      is_active,
       roaster_id,
       roaster_name,
       roaster_city,
@@ -20,6 +21,7 @@ export const normalizeCoffees = (coffees) => {
     return {
       coffee_id,
       name: coffee_name,
+      is_active,
       roaster: {
         roaster_id,
         name: roaster_name,
@@ -46,6 +48,7 @@ export const normalizeCoffeesByUserId = (coffees) => {
     const {
       coffee_id,
       coffee_name,
+      is_active,
       roaster_id,
       roaster_name,
       roaster_city,
@@ -60,6 +63,7 @@ export const normalizeCoffeesByUserId = (coffees) => {
     return {
       coffee_id,
       name: coffee_name,
+      is_active,
       roaster: {
         roaster_id,
         name: roaster_name,
@@ -81,11 +85,44 @@ export const normalizeCoffeesByUserId = (coffees) => {
   return normalizedCoffees;
 };
 
-export const normalizeCoffeesMutation = (coffee) => {
-  const { coffee_id, name, roaster_id, origin_id, process_id } = coffee;
+export const normalizeCreateCoffeeMutation = (coffee) => {
+  const {
+    coffee_id,
+    name,
+    roaster_id,
+    origin_id,
+    process_id,
+    is_active,
+  } = coffee;
   return {
     coffee_id,
     name,
+    is_active,
+    roaster: {
+      roaster_id,
+    },
+    origin: {
+      origin_id,
+    },
+    process: {
+      process_id,
+    },
+  };
+};
+
+export const normalizeUpdateCoffeeMutation = (coffee) => {
+  const {
+    coffee_id,
+    name,
+    roaster_id,
+    origin_id,
+    process_id,
+    is_active,
+  } = coffee;
+  return {
+    coffee_id,
+    name,
+    is_active,
     roaster: {
       roaster_id,
     },
@@ -103,6 +140,7 @@ export const normalizeCoffeeById = (coffees) => {
     const {
       coffee_id,
       coffee_name,
+      is_active,
       roaster_id,
       roaster_name,
       roaster_city,
@@ -117,6 +155,7 @@ export const normalizeCoffeeById = (coffees) => {
     return {
       coffee_id,
       name: coffee_name,
+      is_active,
       roaster: {
         roaster_id,
         name: roaster_name,
@@ -143,6 +182,7 @@ export const normalizeCoffeesByName = (coffees) => {
     const {
       coffee_id,
       coffee_name,
+      is_active,
       roaster_id,
       roaster_name,
       roaster_city,
@@ -157,6 +197,7 @@ export const normalizeCoffeesByName = (coffees) => {
     return {
       coffee_id,
       name: coffee_name,
+      is_active,
       roaster: {
         roaster_id,
         name: roaster_name,
@@ -183,6 +224,7 @@ export const normalizeCoffeesByRoasterId = (coffees) => {
     const {
       coffee_id,
       coffee_name,
+      is_active,
       roaster_id,
       roaster_name,
       roaster_city,
@@ -197,6 +239,7 @@ export const normalizeCoffeesByRoasterId = (coffees) => {
     return {
       coffee_id,
       name: coffee_name,
+      is_active,
       roaster: {
         roaster_id,
         name: roaster_name,
@@ -223,6 +266,7 @@ export const normalizeCoffeesByOriginId = (coffees) => {
     const {
       coffee_id,
       coffee_name,
+      is_active,
       roaster_id,
       roaster_name,
       roaster_city,
@@ -237,6 +281,7 @@ export const normalizeCoffeesByOriginId = (coffees) => {
     return {
       coffee_id,
       name: coffee_name,
+      is_active,
       roaster: {
         roaster_id,
         name: roaster_name,
@@ -263,6 +308,7 @@ export const normalizeCoffeesByProcessId = (coffees) => {
     const {
       coffee_id,
       coffee_name,
+      is_active,
       roaster_id,
       roaster_name,
       roaster_city,
@@ -277,6 +323,7 @@ export const normalizeCoffeesByProcessId = (coffees) => {
     return {
       coffee_id,
       name: coffee_name,
+      is_active,
       roaster: {
         roaster_id,
         name: roaster_name,

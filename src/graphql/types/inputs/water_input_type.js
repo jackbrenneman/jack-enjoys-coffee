@@ -2,7 +2,7 @@
  * Water input type. Used for mutations.
  */
 
-import { GraphQLString, GraphQLInputObjectType } from 'graphql';
+import { GraphQLString, GraphQLInputObjectType, GraphQLBoolean } from 'graphql';
 
 export const WaterInputType = new GraphQLInputObjectType({
   name: 'WaterInput',
@@ -10,5 +10,6 @@ export const WaterInputType = new GraphQLInputObjectType({
   fields: {
     name: { type: GraphQLString },
     description: { type: GraphQLString },
+    is_active: { type: GraphQLBoolean, defaultValue: true },
   },
 });

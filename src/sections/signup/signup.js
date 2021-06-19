@@ -11,6 +11,11 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import TextField from '@material-ui/core/TextField';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton';
 // Queries and Fetching
 import { signupMutation } from '../../graphql/mutations/signup_gql_mutations.js';
 import { writeGQL } from '../../graphql/fetch.js';
@@ -23,6 +28,9 @@ function Signup() {
       backgroundColor: '#EEEEEE',
       minHeight: '100vh',
     },
+    form: {
+      width: '225px',
+    },
     section: {
       maxWidth: '800px',
     },
@@ -34,6 +42,12 @@ function Signup() {
   // State used for the username and password feels
   const [confirmPassword, setConfirmPassword] = useState();
 
+  // State used for showing password field
+  const [showPassword, setShowPassword] = useState(false);
+
+  // State used for showing confirm password field
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const onSignupFailure = () => {
     // TODO: surface to the user that login failed for some reason.
     console.log('failure :(');
@@ -42,14 +56,25 @@ function Signup() {
 
   const onSignupSuccess = (token, user_id, user_name) => {
     const cookies = new Cookies();
-    cookies.set('user_token', token, { path: '/' });
+    cookies.set('user_token', token, {
+      path: '/',
+      expires: new Date(Date.now() + 3600000),
+    });
     cookies.set(
       'user',
       { user_id: user_id, user_name: user_name },
-      { path: '/' }
+      { path: '/', expires: new Date(Date.now() + 3600000) }
     );
     window.location.replace('/profile');
     return;
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleClickShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   const handleSignupClick = () => {
@@ -70,7 +95,7 @@ function Signup() {
       console.log('Passwords do not match');
       return;
     }
-    writeGQL(signupMutation, signup)
+    writeGQL(signupMutation, { signup: signup })
       .then(({ data }) => {
         const { signup } = data;
         const { user, token } = signup;
@@ -157,7 +182,7 @@ function Signup() {
       </Grid>
       <Grid item xs={12}>
         <Box pt={2}>
-          <Typography variant="caption" align="center">
+          <Typography variant="body2" align="center">
             Username
           </Typography>
           <form autoComplete="off">
@@ -172,7 +197,7 @@ function Signup() {
       </Grid>
       <Grid item xs={12}>
         <Box pt={2}>
-          <Typography variant="caption" align="center">
+          <Typography variant="body2" align="center">
             Email
           </Typography>
           <form autoComplete="off">
@@ -187,30 +212,52 @@ function Signup() {
       </Grid>
       <Grid item xs={12}>
         <Box pt={2}>
-          <Typography variant="caption" align="center">
+          <Typography variant="body2" align="center">
             Password
           </Typography>
           <form autoComplete="off">
-            <TextField
+            <OutlinedInput
+              type={showPassword ? 'text' : 'password'}
               className={classes.form}
               id="password"
-              variant="outlined"
               onChange={handlePasswordChange}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    size="small"
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
           </form>
         </Box>
       </Grid>
       <Grid item xs={12}>
         <Box pt={2}>
-          <Typography variant="caption" align="center">
+          <Typography variant="body2" align="center">
             Confirm Password
           </Typography>
           <form autoComplete="off">
-            <TextField
+            <OutlinedInput
+              type={showConfirmPassword ? 'text' : 'password'}
               className={classes.form}
-              id="confirm_password"
-              variant="outlined"
+              id="confirm-password"
               onChange={handleConfirmPasswordChange}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle confirm password visibility"
+                    onClick={handleClickShowConfirmPassword}
+                    size="small"
+                  >
+                    {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
           </form>
         </Box>

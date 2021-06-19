@@ -5,7 +5,7 @@
 /**
  * Query to get all origins from the origins table.
  */
-export const originssQuery = `
+export const originsQuery = `
   query {
     origins {
       origin_id
@@ -19,7 +19,7 @@ export const originssQuery = `
  *
  * @param {int} origin_id the id of the origin to get info for
  */
-export const originssByIdQuery = (origin_id) => `
+export const originsByIdQuery = (origin_id) => `
   query {
     origins(origin_id:${origin_id}) {
       origin_id

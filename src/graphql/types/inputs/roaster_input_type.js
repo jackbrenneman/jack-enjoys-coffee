@@ -2,7 +2,7 @@
  * Roaster input type. Used for mutations.
  */
 
-import { GraphQLString, GraphQLInputObjectType } from 'graphql';
+import { GraphQLString, GraphQLInputObjectType, GraphQLBoolean } from 'graphql';
 
 export const RoasterInputType = new GraphQLInputObjectType({
   name: 'RoasterInput',
@@ -13,5 +13,6 @@ export const RoasterInputType = new GraphQLInputObjectType({
     state: { type: GraphQLString },
     country: { type: GraphQLString },
     website: { type: GraphQLString },
+    is_active: { type: GraphQLBoolean, defaultValue: true },
   },
 });

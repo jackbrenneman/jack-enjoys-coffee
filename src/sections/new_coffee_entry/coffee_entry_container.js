@@ -164,7 +164,7 @@ function CoffeeEntryContainer() {
 
   const handleSubmit = () => {
     const normalizedCoffeeEntry = normalizeCoffeeEntryInput(coffeeEntry);
-    writeGQL(coffeeEntryMutation, normalizedCoffeeEntry)
+    writeGQL(coffeeEntryMutation, { coffeeEntry: normalizedCoffeeEntry })
       .then(({ data }) => {
         const { coffeeEntry: newCoffeeEntry } = data;
         if (newCoffeeEntry.coffee_entry_id) {

@@ -63,6 +63,15 @@ function Profile({ user }) {
         </Box>
       </Grid>
       <Grid item xs={12}>
+        <Box>
+          <NavLink to={'/data'}>
+            <Typography variant="caption" align="center">
+              Your Roasters, Coffees, Equipment, and other Data
+            </Typography>
+          </NavLink>
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
         <Box pt={4} pb={8}>
           <Button variant="contained" size="large" onClick={handleLogoutClick}>
             <Typography variant="body1" align="center">

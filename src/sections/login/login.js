@@ -14,6 +14,11 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import TextField from '@material-ui/core/TextField';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton';
 // Queries and Fetching
 import { signinMutation } from '../../graphql/mutations/signin_gql_mutations.js';
 import { writeGQL } from '../../graphql/fetch.js';
@@ -26,13 +31,19 @@ function Login() {
       backgroundColor: '#EEEEEE',
       minHeight: '100vh',
     },
+    form: {
+      width: '225px',
+    },
     section: {
       maxWidth: '800px',
     },
   }));
 
-  // State used for the username and password feels
+  // State used for the username and password fields
   const [signin, setSignin] = useState({});
+
+  // State used for the username and password fields
+  const [showPassword, setShowPassword] = useState(false);
 
   const onLoginFailure = () => {
     // TODO: surface to the user that login failed for some reason.
@@ -40,13 +51,20 @@ function Login() {
     return;
   };
 
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   const onLoginSuccess = (token, user_id, user_name) => {
     const cookies = new Cookies();
-    cookies.set('user_token', token, { path: '/' });
+    cookies.set('user_token', token, {
+      path: '/',
+      expires: new Date(Date.now() + 3600000),
+    });
     cookies.set(
       'user',
       { user_id: user_id, user_name: user_name },
-      { path: '/' }
+      { path: '/', expires: new Date(Date.now() + 3600000) }
     );
     window.location.replace('/home');
     return;
@@ -54,7 +72,7 @@ function Login() {
 
   const handleLoginClick = () => {
     // TODO: Login the user.
-    writeGQL(signinMutation, signin)
+    writeGQL(signinMutation, { signin: signin })
       .then(({ data }) => {
         const { signin } = data;
         const { user, token } = signin;
@@ -130,7 +148,7 @@ function Login() {
       </Grid>
       <Grid item xs={12}>
         <Box pt={2}>
-          <Typography variant="caption" align="center">
+          <Typography variant="body2" align="center">
             Username
           </Typography>
           <form autoComplete="off">
@@ -145,15 +163,26 @@ function Login() {
       </Grid>
       <Grid item xs={12}>
         <Box pt={2}>
-          <Typography variant="caption" align="center">
+          <Typography variant="body2" align="center">
             Password
           </Typography>
           <form autoComplete="off">
-            <TextField
+            <OutlinedInput
+              type={showPassword ? 'text' : 'password'}
               className={classes.form}
-              id="outlined-basic"
-              variant="outlined"
+              id="password"
               onChange={handlePasswordChange}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    size="small"
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
           </form>
         </Box>

@@ -1,7 +1,12 @@
 /**
  * Roaster Type. Stores all information on a roaster.
  */
-import { GraphQLObjectType, GraphQLID, GraphQLString } from 'graphql';
+import {
+  GraphQLObjectType,
+  GraphQLID,
+  GraphQLString,
+  GraphQLBoolean,
+} from 'graphql';
 
 export const RoasterType = new GraphQLObjectType({
   name: 'Roaster',
@@ -12,5 +17,6 @@ export const RoasterType = new GraphQLObjectType({
     state: { type: GraphQLString },
     country: { type: GraphQLString },
     website: { type: GraphQLString },
+    is_active: { type: GraphQLBoolean },
   },
 });

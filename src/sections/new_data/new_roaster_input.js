@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
-import { roastersMutation } from '../../graphql/mutations/roaster_gql_mutations.js';
+import { roasterMutation } from '../../graphql/mutations/roaster_gql_mutations.js';
 import { writeGQL } from '../../graphql/fetch.js';
 // Constants
 import { newInputPropTypesShape } from '../../consts.js';
@@ -99,7 +99,7 @@ function NewRoasterInput({
       });
       return;
     }
-    writeGQL(roastersMutation, roaster)
+    writeGQL(roasterMutation, { roaster: roaster })
       .then(({ data }) => {
         const { roaster: newRoaster } = data;
         if (newRoaster.roaster_id) {

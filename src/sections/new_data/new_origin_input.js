@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
-import { originsMutation } from '../../graphql/mutations/origin_gql_mutations.js';
+import { originMutation } from '../../graphql/mutations/origin_gql_mutations.js';
 import { writeGQL } from '../../graphql/fetch.js';
 // Constants
 import { newInputPropTypesShape } from '../../consts.js';
@@ -57,7 +57,7 @@ function NewOriginInput({
       });
       return;
     }
-    writeGQL(originsMutation, origin.name)
+    writeGQL(originMutation, { originName: origin.name })
       .then(({ data }) => {
         const { origin: newOrigin } = data;
         if (newOrigin.origin_id) {

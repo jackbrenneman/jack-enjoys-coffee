@@ -1,7 +1,12 @@
 /**
  * The Water Type. Contains all information on a water.
  */
-import { GraphQLString, GraphQLID, GraphQLObjectType } from 'graphql';
+import {
+  GraphQLString,
+  GraphQLID,
+  GraphQLObjectType,
+  GraphQLBoolean,
+} from 'graphql';
 
 export const WaterType = new GraphQLObjectType({
   name: 'Water',
@@ -10,5 +15,6 @@ export const WaterType = new GraphQLObjectType({
     water_id: { type: GraphQLID },
     name: { type: GraphQLString },
     description: { type: GraphQLString },
+    is_active: { type: GraphQLBoolean },
   },
 });

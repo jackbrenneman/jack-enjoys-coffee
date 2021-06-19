@@ -15,7 +15,7 @@ import Alert from '@material-ui/lab/Alert';
 import { currentCoffeeEntriesQuery } from '../../graphql/queries/current_coffee_entries_queries.js';
 import { queryGQL } from '../../graphql/fetch.js';
 // Custom Components
-import CurrentCoffeeEntries from './current_coffee_entries.js';
+import CurrentCoffeeEntries from './coffee_entries.js';
 // Constants
 import { today, sevenDaysAgo } from '../../consts.js';
 

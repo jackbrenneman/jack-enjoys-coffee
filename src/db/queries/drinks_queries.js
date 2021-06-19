@@ -52,3 +52,7 @@ export const selectDrinksByName = `
 `;
 export const insertIntoDrinks =
   'INSERT INTO drinks (name, method_id, user_id) VALUES ($1, $2, $3) RETURNING *';
+export const deleteDrink =
+  'DELETE FROM drinks WHERE drink_id = $1 AND user_id = $2';
+export const updateDrink =
+  'UPDATE drinks SET name = $1, method_id = $2 WHERE drink_id = $3 AND user_id = $4 RETURNING *';

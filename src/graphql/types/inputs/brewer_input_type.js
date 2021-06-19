@@ -2,7 +2,12 @@
  * Brewer input type. Used for mutations.
  */
 
-import { GraphQLString, GraphQLInputObjectType, GraphQLInt } from 'graphql';
+import {
+  GraphQLString,
+  GraphQLInputObjectType,
+  GraphQLInt,
+  GraphQLBoolean,
+} from 'graphql';
 
 export const BrewerInputType = new GraphQLInputObjectType({
   name: 'BrewerInput',
@@ -11,5 +16,6 @@ export const BrewerInputType = new GraphQLInputObjectType({
     name: { type: GraphQLString },
     website: { type: GraphQLString },
     method_id: { type: GraphQLInt },
+    is_active: { type: GraphQLBoolean, defaultValue: true },
   },
 });

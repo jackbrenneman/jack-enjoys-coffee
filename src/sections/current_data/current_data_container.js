@@ -85,27 +85,137 @@ function CurrentDataContainer() {
     coffees,
     drinks,
     grinders,
+    methods,
     origins,
+    processes,
     roasters,
     waters,
   } = currentData;
 
+  const handleCoffeeDeletion = (deleted_coffee_id) => {
+    const coffeesMinusDeletedOne = coffees.filter(
+      ({ coffee_id }) => deleted_coffee_id !== coffee_id
+    );
+    setCurrentData({
+      ...currentData,
+      coffees: coffeesMinusDeletedOne,
+    });
+  };
+
+  const handleBrewerDeletion = (deleted_brewer_id) => {
+    const brewersMinusDeletedOne = brewers.filter(
+      ({ brewer_id }) => deleted_brewer_id !== brewer_id
+    );
+    setCurrentData({
+      ...currentData,
+      brewers: brewersMinusDeletedOne,
+    });
+  };
+
+  const handleDrinkDeletion = (deleted_drink_id) => {
+    const drinksMinusDeletedOne = drinks.filter(
+      ({ drink_id }) => deleted_drink_id !== drink_id
+    );
+    setCurrentData({
+      ...currentData,
+      drinks: drinksMinusDeletedOne,
+    });
+  };
+
+  const handleGrinderDeletion = (deleted_grinder_id) => {
+    const grindersMinusDeletedOne = grinders.filter(
+      ({ grinder_id }) => deleted_grinder_id !== grinder_id
+    );
+    setCurrentData({
+      ...currentData,
+      grinders: grindersMinusDeletedOne,
+    });
+  };
+
+  const handleOriginDeletion = (deleted_origin_id) => {
+    const originsMinusDeletedOne = origins.filter(
+      ({ origin_id }) => deleted_origin_id !== origin_id
+    );
+    setCurrentData({
+      ...currentData,
+      origins: originsMinusDeletedOne,
+    });
+  };
+
+  const handleRoasterDeletion = (deleted_roaster_id) => {
+    const roastersMinusDeletedOne = roasters.filter(
+      ({ roaster_id }) => deleted_roaster_id !== roaster_id
+    );
+    setCurrentData({
+      ...currentData,
+      roasters: roastersMinusDeletedOne,
+    });
+  };
+
+  const handleWaterDeletion = (deleted_water_id) => {
+    const watersMinusDeletedOne = waters.filter(
+      ({ water_id }) => deleted_water_id !== water_id
+    );
+    setCurrentData({
+      ...currentData,
+      waters: watersMinusDeletedOne,
+    });
+  };
+
   const getDataComponent = () => {
     switch (dataOption) {
       case brewerEnum:
-        return <BrewerData brewers={brewers} />;
+        return (
+          <BrewerData
+            brewers={brewers}
+            methods={methods}
+            onBrewerDeletion={handleBrewerDeletion}
+          />
+        );
       case coffeeEnum:
-        return <CoffeeData coffees={coffees} />;
+        return (
+          <CoffeeData
+            coffees={coffees}
+            origins={origins}
+            processes={processes}
+            roasters={roasters}
+            onCoffeeDeletion={handleCoffeeDeletion}
+          />
+        );
       case drinkEnum:
-        return <DrinkData drinks={drinks} />;
+        return (
+          <DrinkData
+            drinks={drinks}
+            methods={methods}
+            onDrinkDeletion={handleDrinkDeletion}
+          />
+        );
       case grinderEnum:
-        return <GrinderData grinders={grinders} />;
+        return (
+          <GrinderData
+            grinders={grinders}
+            onGrinderDeletion={handleGrinderDeletion}
+          />
+        );
       case originEnum:
-        return <OriginData origins={origins} />;
+        return (
+          <OriginData
+            origins={origins}
+            onOriginDeletion={handleOriginDeletion}
+          />
+        );
       case roasterEnum:
-        return <RoasterData roasters={roasters} />;
+        return (
+          <RoasterData
+            roasters={roasters}
+            coffees={coffees}
+            onRoasterDeletion={handleRoasterDeletion}
+          />
+        );
       case waterEnum:
-        return <WaterData waters={waters} />;
+        return (
+          <WaterData waters={waters} onWaterDeletion={handleWaterDeletion} />
+        );
       default:
         return <div />;
     }

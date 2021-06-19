@@ -15,11 +15,11 @@ import {
   brewersResolver,
   brewersByMethodIdResolver,
   brewersByNameResolver,
-} from '../resolvers/brewers/brewer_query_type_resolvers.js';
+} from '../resolvers/queries/brewer_query_type_resolvers.js';
 import {
   coffeeEntriesByUserIdResolver,
   coffeeEntriesByUserIdAndDataRangeResolver,
-} from '../resolvers/coffee_entries/coffee_entry_query_type_resolvers.js';
+} from '../resolvers/queries/coffee_entry_query_type_resolvers.js';
 import {
   coffeeByIdResolver,
   coffeesResolver,
@@ -28,36 +28,36 @@ import {
   coffeesByOriginIdResolver,
   coffeesByProcessIdResolver,
   coffeesByUserIdResolver,
-} from '../resolvers/coffees/coffee_query_type_resolvers.js';
+} from '../resolvers/queries/coffee_query_type_resolvers.js';
 import {
   drinkByIdResolver,
   drinksResolver,
   drinksByMethodIdResolver,
   drinksByNameResolver,
   drinksByUserIdResolver,
-} from '../resolvers/drinks/drink_query_type_resolvers.js';
+} from '../resolvers/queries/drink_query_type_resolvers.js';
 import {
   grinderByIdResolver,
   grindersResolver,
   grindersByNameResolver,
   grindersByUserIdResolver,
-} from '../resolvers/grinders/grinder_query_type_resolvers.js';
+} from '../resolvers/queries/grinder_query_type_resolvers.js';
 import {
   methodByIdResolver,
   methodsResolver,
   methodsByNameResolver,
-} from '../resolvers/methods/method_query_type_resolvers.js';
+} from '../resolvers/queries/method_query_type_resolvers.js';
 import {
   originByIdResolver,
   originsByUserIdResolver,
   originsResolver,
   originsByNameResolver,
-} from '../resolvers/origins/origin_query_type_resolvers.js';
+} from '../resolvers/queries/origin_query_type_resolvers.js';
 import {
   processByIdResolver,
   processesResolver,
   processesByNameResolver,
-} from '../resolvers/processes/process_query_type_resolvers.js';
+} from '../resolvers/queries/process_query_type_resolvers.js';
 import {
   roastersByUserIdResolver,
   roasterByIdResolver,
@@ -66,14 +66,14 @@ import {
   roastersByCityResolver,
   roastersByStateResolver,
   roastersByCountryResolver,
-} from '../resolvers/roasters/roaster_query_type_resolvers.js';
-import { userTypeResolver } from '../resolvers/users/user_query_type_resolvers.js';
+} from '../resolvers/queries/roaster_query_type_resolvers.js';
+import { userTypeResolver } from '../resolvers/queries/user_query_type_resolvers.js';
 import {
   watersByUserIdResolver,
   waterByIdResolver,
   watersResolver,
   watersByNameResolver,
-} from '../resolvers/waters/water_query_type_resolvers.js';
+} from '../resolvers/queries/water_query_type_resolvers.js';
 // Types
 import { BrewerType } from './brewer_type.js';
 import { CoffeeEntryType } from './coffee_entry_type.js';

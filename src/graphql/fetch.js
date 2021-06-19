@@ -25,7 +25,7 @@ export const writeGQL = (queryString, inputs) => {
     body: JSON.stringify({
       query: queryString,
       variables: {
-        input: inputs,
+        ...inputs,
       },
     }),
   }).then((r) => r.json());

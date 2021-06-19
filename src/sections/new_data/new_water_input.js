@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
-import { watersMutation } from '../../graphql/mutations/water_gql_mutations.js';
+import { waterMutation } from '../../graphql/mutations/water_gql_mutations.js';
 import { writeGQL } from '../../graphql/fetch.js';
 // Constants
 import { newInputPropTypesShape } from '../../consts.js';
@@ -64,7 +64,7 @@ function NewWaterInput({
       });
       return;
     }
-    writeGQL(watersMutation, water)
+    writeGQL(waterMutation, { water: water })
       .then(({ data }) => {
         const { water: newWater } = data;
         if (newWater.water_id) {

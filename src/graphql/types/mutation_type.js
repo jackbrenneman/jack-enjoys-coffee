@@ -1,9 +1,16 @@
 /**
  * The top level Mutation Type for the jack-enjoys-coffee app.
  */
-import { GraphQLObjectType, GraphQLString } from 'graphql';
+import {
+  GraphQLID,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLString,
+} from 'graphql';
 // Types
+import { AuthType } from './auth_type.js';
 import { BrewerType } from './brewer_type.js';
+import { CoffeeEntryType } from './coffee_entry_type.js';
 import { CoffeeType } from './coffee_type.js';
 import { DrinkType } from './drink_type.js';
 import { GrinderType } from './grinder_type.js';
@@ -12,27 +19,57 @@ import { RoasterType } from './roaster_type.js';
 import { WaterType } from './water_type.js';
 // Input Types
 import { BrewerInputType } from './inputs/brewer_input_type.js';
-import { CoffeeInputType } from './inputs/coffee_input_type.js';
 import { CoffeeEntryInputType } from './inputs/coffee_entry_input_type.js';
+import { CoffeeInputType } from './inputs/coffee_input_type.js';
 import { DrinkInputType } from './inputs/drink_input_type.js';
 import { GrinderInputType } from './inputs/grinder_input_type.js';
 import { RoasterInputType } from './inputs/roaster_input_type.js';
 import { WaterInputType } from './inputs/water_input_type.js';
-// Resolvers
-import { brewersMutationResolver } from '../resolvers/brewers/brewer_mutation_type_resolvers.js';
-import { coffeesMutationResolver } from '../resolvers/coffees/coffee_mutation_type_resolvers.js';
-import { coffeeEntriesMutationResolver } from '../resolvers/coffee_entries/coffee_entry_mutation_type_resolvers.js';
-import { drinksMutationResolver } from '../resolvers/drinks/drink_mutation_type_resolvers.js';
-import { grindersMutationResolver } from '../resolvers/grinders/grinder_mutation_type_resolvers.js';
-import { originsMutationResolver } from '../resolvers/origins/origin_mutation_type_resolvers.js';
-import { roastersMutationResolver } from '../resolvers/roasters/roaster_mutation_type_resolvers.js';
-import { watersMutationResolver } from '../resolvers/waters/water_mutation_type_resolvers.js';
-import { CoffeeEntryType } from './coffee_entry_type.js';
 import { SigninInputType } from './inputs/signin_input_type.js';
 import { SignupInputType } from './inputs/signup_input_type.js';
-import { AuthType } from './auth_type.js';
-import { signupMutationResolver } from '../resolvers/signup/signup_mutation_type_resolvers.js';
-import { signinMutationResolver } from '../resolvers/signin/signin_mutation_type_resolver.js';
+// Resolvers
+import {
+  createBrewerMutationResolver,
+  deleteBrewerMutationResolver,
+  updateBrewerMutationResolver,
+} from '../resolvers/mutations/brewer_mutation_type_resolvers.js';
+import {
+  createCoffeeEntryMutationResolver,
+  deleteCoffeeEntryMutationResolver,
+  updateCoffeeEntryMutationResolver,
+} from '../resolvers/mutations/coffee_entry_mutation_type_resolvers.js';
+import {
+  createCoffeeMutationResolver,
+  deleteCoffeeMutationResolver,
+  updateCoffeeMutationResolver,
+} from '../resolvers/mutations/coffee_mutation_type_resolvers.js';
+import {
+  createDrinkMutationResolver,
+  deleteDrinkMutationResolver,
+  updateDrinkMutationResolver,
+} from '../resolvers/mutations/drink_mutation_type_resolvers.js';
+import {
+  createGrinderMutationResolver,
+  deleteGrinderMutationResolver,
+  updateGrinderMutationResolver,
+} from '../resolvers/mutations/grinder_mutation_type_resolvers.js';
+import {
+  createOriginMutationResolver,
+  deleteOriginMutationResolver,
+  updateOriginMutationResolver,
+} from '../resolvers/mutations/origin_mutation_type_resolvers.js';
+import {
+  createRoasterMutationResolver,
+  deleteRoasterMutationResolver,
+  updateRoasterMutationResolver,
+} from '../resolvers/mutations/roaster_mutation_type_resolvers.js';
+import {
+  createWaterMutationResolver,
+  deleteWaterMutationResolver,
+  updateWaterMutationResolver,
+} from '../resolvers/mutations/water_mutation_type_resolvers.js';
+import { signupMutationResolver } from '../resolvers/mutations/signup_mutation_type_resolvers.js';
+import { signinMutationResolver } from '../resolvers/mutations/signin_mutation_type_resolver.js';
 // Validation
 import { getUserId } from '../validate/validate.js';
 
@@ -66,7 +103,43 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
         const user_id = getUserId(context);
         // If there's a user_id, then the user is logged in. Add in the entry for that user.
         if (user_id) {
-          return coffeeEntriesMutationResolver(coffeeEntry, user_id);
+          return createCoffeeEntryMutationResolver(coffeeEntry, user_id);
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    deleteCoffeeEntry: {
+      type: GraphQLID,
+      args: {
+        coffee_entry_id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parentValue, { coffee_entry_id }, context) {
+        if (!coffee_entry_id) {
+          throw new Error('coffee_entry_id is required');
+        }
+        const user_id = getUserId(context);
+        if (user_id) {
+          return deleteCoffeeEntryMutationResolver(coffee_entry_id, user_id)
+            ? coffee_entry_id
+            : 0;
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    updateCoffeeEntry: {
+      type: CoffeeEntryType,
+      args: {
+        coffee_entry_id: { type: new GraphQLNonNull(GraphQLID) },
+        coffee_entry: { type: CoffeeEntryInputType },
+      },
+      resolve(parentValue, { coffee_entry_id, coffee_entry }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return updateCoffeeEntryMutationResolver(
+            coffee_entry,
+            coffee_entry_id,
+            user_id
+          );
         }
         throw new Error('401: Unauthorized');
       },
@@ -79,7 +152,36 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       resolve(parentValue, { brewer }, context) {
         const user_id = getUserId(context);
         if (user_id) {
-          return brewersMutationResolver(brewer, user_id);
+          return createBrewerMutationResolver(brewer, user_id);
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    deleteBrewer: {
+      type: GraphQLID,
+      args: {
+        brewer_id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parentValue, { brewer_id }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return deleteBrewerMutationResolver(brewer_id, user_id)
+            ? brewer_id
+            : 0;
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    updateBrewer: {
+      type: BrewerType,
+      args: {
+        brewer_id: { type: new GraphQLNonNull(GraphQLID) },
+        brewer: { type: BrewerInputType },
+      },
+      resolve(parentValue, { brewer_id, brewer }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return updateBrewerMutationResolver(brewer, brewer_id, user_id);
         }
         throw new Error('401: Unauthorized');
       },
@@ -92,7 +194,36 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       resolve(parentValue, { coffee }, context) {
         const user_id = getUserId(context);
         if (user_id) {
-          return coffeesMutationResolver(coffee, user_id);
+          return createCoffeeMutationResolver(coffee, user_id);
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    deleteCoffee: {
+      type: GraphQLID,
+      args: {
+        coffee_id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parentValue, { coffee_id }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return deleteCoffeeMutationResolver(coffee_id, user_id)
+            ? coffee_id
+            : 0;
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    updateCoffee: {
+      type: CoffeeType,
+      args: {
+        coffee_id: { type: new GraphQLNonNull(GraphQLID) },
+        coffee: { type: CoffeeInputType },
+      },
+      resolve(parentValue, { coffee_id, coffee }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return updateCoffeeMutationResolver(coffee, coffee_id, user_id);
         }
         throw new Error('401: Unauthorized');
       },
@@ -105,7 +236,34 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       resolve(parentValue, { drink }, context) {
         const user_id = getUserId(context);
         if (user_id) {
-          return drinksMutationResolver(drink, user_id);
+          return createDrinkMutationResolver(drink, user_id);
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    deleteDrink: {
+      type: GraphQLID,
+      args: {
+        drink_id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parentValue, { drink_id }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return deleteDrinkMutationResolver(drink_id, user_id) ? drink_id : 0;
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    updateDrink: {
+      type: DrinkType,
+      args: {
+        drink_id: { type: new GraphQLNonNull(GraphQLID) },
+        drink: { type: DrinkInputType },
+      },
+      resolve(parentValue, { drink_id, drink }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return updateDrinkMutationResolver(drink, drink_id, user_id);
         }
         throw new Error('401: Unauthorized');
       },
@@ -118,7 +276,36 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       resolve(parentValue, { grinder }, context) {
         const user_id = getUserId(context);
         if (user_id) {
-          return grindersMutationResolver(grinder, user_id);
+          return createGrinderMutationResolver(grinder, user_id);
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    deleteGrinder: {
+      type: GraphQLID,
+      args: {
+        grinder_id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parentValue, { grinder_id }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return deleteGrinderMutationResolver(grinder_id, user_id)
+            ? grinder_id
+            : 0;
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    updateGrinder: {
+      type: GrinderType,
+      args: {
+        grinder_id: { type: new GraphQLNonNull(GraphQLID) },
+        grinder: { type: GrinderInputType },
+      },
+      resolve(parentValue, { grinder_id, grinder }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return updateGrinderMutationResolver(grinder, grinder_id, user_id);
         }
         throw new Error('401: Unauthorized');
       },
@@ -131,7 +318,36 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       resolve(parentValue, { name }, context) {
         const user_id = getUserId(context);
         if (user_id) {
-          return originsMutationResolver(name, user_id);
+          return createOriginMutationResolver(name, user_id);
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    deleteOrigin: {
+      type: GraphQLID,
+      args: {
+        origin_id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parentValue, { origin_id }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return deleteOriginMutationResolver(origin_id, user_id)
+            ? origin_id
+            : 0;
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    updateOrigin: {
+      type: OriginType,
+      args: {
+        origin_id: { type: new GraphQLNonNull(GraphQLID) },
+        name: { type: GraphQLString },
+      },
+      resolve(parentValue, { origin_id, name }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return updateOriginMutationResolver(name, origin_id, user_id);
         }
         throw new Error('401: Unauthorized');
       },
@@ -144,7 +360,36 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       resolve(parentValue, { roaster }, context) {
         const user_id = getUserId(context);
         if (user_id) {
-          return roastersMutationResolver(roaster, user_id);
+          return createRoasterMutationResolver(roaster, user_id);
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    deleteRoaster: {
+      type: GraphQLID,
+      args: {
+        roaster_id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parentValue, { roaster_id }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return deleteRoasterMutationResolver(roaster_id, user_id)
+            ? roaster_id
+            : 0;
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    updateRoaster: {
+      type: RoasterType,
+      args: {
+        roaster_id: { type: new GraphQLNonNull(GraphQLID) },
+        roaster: { type: RoasterInputType },
+      },
+      resolve(parentValue, { roaster_id, roaster }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return updateRoasterMutationResolver(roaster, roaster_id, user_id);
         }
         throw new Error('401: Unauthorized');
       },
@@ -157,7 +402,34 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       resolve(parentValue, { water }, context) {
         const user_id = getUserId(context);
         if (user_id) {
-          return watersMutationResolver(water, user_id);
+          return createWaterMutationResolver(water, user_id);
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    deleteWater: {
+      type: GraphQLID,
+      args: {
+        water_id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parentValue, { water_id }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return deleteWaterMutationResolver(water_id, user_id) ? water_id : 0;
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    updateWater: {
+      type: WaterType,
+      args: {
+        water_id: { type: new GraphQLNonNull(GraphQLID) },
+        water: { type: WaterInputType },
+      },
+      resolve(parentValue, { water_id, water }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return updateWaterMutationResolver(water, water_id, user_id);
         }
         throw new Error('401: Unauthorized');
       },

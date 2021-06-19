@@ -13,7 +13,7 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 // Custom Components
-import CoffeeEntry from './current_coffee_entry.js';
+import CoffeeEntry from './coffee_entry.js';
 // Constants
 import { today, sevenDaysAgo } from '../../consts.js';
 

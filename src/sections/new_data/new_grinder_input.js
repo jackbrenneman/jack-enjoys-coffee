@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
-import { grindersMutation } from '../../graphql/mutations/grinder_gql_mutations.js';
+import { grinderMutation } from '../../graphql/mutations/grinder_gql_mutations.js';
 import { writeGQL } from '../../graphql/fetch.js';
 // Constants
 import { newInputPropTypesShape } from '../../consts.js';
@@ -66,7 +66,7 @@ function NewGrinderInput({
       });
       return;
     }
-    writeGQL(grindersMutation, grinder)
+    writeGQL(grinderMutation, { grinder: grinder })
       .then(({ data }) => {
         const { grinder: newGrinder } = data;
         if (newGrinder.grinder_id) {

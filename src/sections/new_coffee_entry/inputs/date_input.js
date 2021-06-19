@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 // Constants
 import { coffeeEntryPropTypesShape } from '../../../consts.js';
 
-function GeneralInfoInput({ coffeeEntry, setCoffeeEntry }) {
+function DateInput({ coffeeEntry, setCoffeeEntry }) {
   const { date } = coffeeEntry;
   const useStyles = makeStyles(() => ({
     form: {
@@ -56,6 +56,6 @@ function GeneralInfoInput({ coffeeEntry, setCoffeeEntry }) {
   );
 }
 
-GeneralInfoInput.propTypes = coffeeEntryPropTypesShape;
+DateInput.propTypes = coffeeEntryPropTypesShape;
 
-export default GeneralInfoInput;
+export default DateInput;
