@@ -2,8 +2,9 @@
  * All queries related to the "waters" table.
  */
 export const selectAllWaters = 'SELECT * FROM waters';
-export const selectAllWatersByUserId =
-  'SELECT * FROM waters WHERE user_id = $1';
+export const selectWatersByUserId = 'SELECT * FROM waters WHERE user_id = $1';
+export const selectActiveWatersByUserId =
+  'SELECT * FROM waters WHERE user_id = $1 AND is_active = true';
 export const selectWaterById = 'SELECT * FROM waters WHERE water_id = $1';
 export const selectWatersByName =
   'SELECT * FROM waters WHERE LOWER(name) LIKE LOWER($1)';

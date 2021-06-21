@@ -4,6 +4,8 @@
 export const selectAllRoasters = 'SELECT * FROM roasters';
 export const selectRoastersByUserId =
   'SELECT * FROM roasters WHERE user_id = $1';
+export const selectActiveRoastersByUserId =
+  'SELECT * FROM roasters WHERE user_id = $1 AND is_active = true';
 export const selectRoasterById = 'SELECT * FROM roasters WHERE roaster_id = $1';
 export const selectRoastersByName =
   'SELECT * FROM roasters WHERE LOWER(name) LIKE LOWER($1)';

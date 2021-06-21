@@ -24,6 +24,19 @@ export const selectBrewersByUserId = `
   INNER JOIN methods ON brewers.method_id = methods.method_id
   WHERE brewers.user_id = $1
 `;
+export const selectActiveBrewersByUserId = `
+  SELECT
+  brewers.brewer_id AS brewer_id,
+  brewers.name AS brewer_name,
+  brewers.website AS brewer_website,
+  brewers.method_id AS method_id,
+  brewers.is_active AS is_active,
+  methods.name AS method_name
+  FROM brewers
+  INNER JOIN methods ON brewers.method_id = methods.method_id
+  WHERE brewers.user_id = $1
+  AND is_active = true
+`;
 export const selectBrewerById = `
   SELECT
   brewers.brewer_id AS brewer_id,

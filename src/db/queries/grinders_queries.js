@@ -4,6 +4,8 @@
 export const selectAllGrinders = 'SELECT * FROM grinders';
 export const selectGrindersByUserId =
   'SELECT * FROM grinders WHERE user_id = $1';
+export const selectActiveGrindersByUserId =
+  'SELECT * FROM grinders WHERE user_id = $1 AND is_active = true';
 export const selectGrinderById = 'SELECT * FROM grinders WHERE grinder_id = $1';
 export const selectGrindersByName =
   'SELECT * FROM grinders WHERE LOWER(name) LIKE LOWER($1)';

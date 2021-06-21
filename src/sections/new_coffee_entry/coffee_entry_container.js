@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 // Queries and Fetching
-import { currentDataQuery } from '../../graphql/queries/data_entry_queries.js';
+import { activeCurrentDataQuery } from '../../graphql/queries/data_entry_queries.js';
 import { coffeeEntryMutation } from '../../graphql/mutations/coffee_entry_gql_mutations';
 import { queryGQL, writeGQL } from '../../graphql/fetch.js';
 // Components
@@ -76,7 +76,7 @@ function CoffeeEntryContainer() {
 
   // When the component renders, we fetch all the current data
   useEffect(() => {
-    queryGQL(currentDataQuery)
+    queryGQL(activeCurrentDataQuery)
       .then(({ data }) => {
         if (data) {
           const { coffees, brewers, drinks } = data;
