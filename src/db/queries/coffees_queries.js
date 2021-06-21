@@ -41,6 +41,7 @@ export const selectCoffeesByUserId = `
   INNER JOIN origins ON coffees.origin_id = origins.origin_id
   INNER JOIN processes ON coffees.process_id = processes.process_id
   WHERE coffees.user_id = $1
+  ORDER BY is_active DESC
 `;
 export const selectActiveCoffeesByUserId = `
   SELECT

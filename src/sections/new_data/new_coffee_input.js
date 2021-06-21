@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import AutocompleteWrapperSimple from '../new_coffee_entry/helpers/autocomplete_container_simple.js';
+import AutocompleteWrapperSimple from '../coffee_entry/helpers/autocomplete_container_simple.js';
 // Queries and Fetching
 import { coffeeMutation } from '../../graphql/mutations/coffee_gql_mutations.js';
 import { writeGQL } from '../../graphql/fetch.js';

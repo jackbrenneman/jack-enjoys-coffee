@@ -62,7 +62,6 @@ import {
 import {
   roastersByUserIdResolver,
   roasterByIdResolver,
-  roastersResolver,
   roastersByNameResolver,
   roastersByCityResolver,
   roastersByStateResolver,
@@ -127,8 +126,8 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         } else if (name) {
           return brewersByNameResolver(name);
         }
-        // If no args inputted, get all brewers.
-        return brewersResolver();
+        // If not signed in or no args inputted, return nothing.
+        return [];
       },
     },
     coffeeEntries: {
@@ -150,8 +149,8 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
           // If no date given, get all coffeeEntries
           return coffeeEntriesByUserIdResolver(user_id);
         }
-        // If no args inputted, don't do anything
-        return;
+        // If not signed in and no args inputted, return nothing.
+        return [];
       },
     },
     coffees: {
@@ -198,8 +197,8 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
           // If there's a process_id, get those coffees.
           return coffeesByProcessIdResolver(process_id);
         }
-        // Otherwise, return all coffees.
-        return coffeesResolver();
+        // If not signed in and no args inputted, return nothing.
+        return [];
       },
     },
     drinks: {
@@ -223,8 +222,8 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         } else if (name) {
           return drinksByNameResolver(name);
         }
-        // If no args inputted, get all drinks.
-        return drinksResolver();
+        // If not signed in and no args inputted, return nothing.
+        return [];
       },
     },
     grinders: {
@@ -250,8 +249,8 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         } else if (name) {
           return grindersByNameResolver(name);
         }
-        // If no args inputted, get all grinders.
-        return grindersResolver();
+        // If not signed in and no args inputted, return nothing.
+        return [];
       },
     },
     methods: {
@@ -338,8 +337,8 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         } else if (country) {
           return roastersByCountryResolver(country);
         }
-        // If no args inputted, get all roasters.
-        return roastersResolver();
+        // If not signed in and no args inputted, return nothing.
+        return [];
       },
     },
     user: {
@@ -370,8 +369,8 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         } else if (name) {
           return watersByNameResolver(name);
         }
-        // If no args inputted, get all waters.
-        return watersResolver();
+        // If not signed in and no args inputted, return nothing.
+        return [];
       },
     },
   },

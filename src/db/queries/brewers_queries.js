@@ -23,6 +23,7 @@ export const selectBrewersByUserId = `
   FROM brewers
   INNER JOIN methods ON brewers.method_id = methods.method_id
   WHERE brewers.user_id = $1
+  ORDER BY is_active DESC
 `;
 export const selectActiveBrewersByUserId = `
   SELECT

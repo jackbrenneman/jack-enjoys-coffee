@@ -3,7 +3,7 @@
  */
 export const selectAllGrinders = 'SELECT * FROM grinders';
 export const selectGrindersByUserId =
-  'SELECT * FROM grinders WHERE user_id = $1';
+  'SELECT * FROM grinders WHERE user_id = $1 ORDER BY is_active DESC';
 export const selectActiveGrindersByUserId =
   'SELECT * FROM grinders WHERE user_id = $1 AND is_active = true';
 export const selectGrinderById = 'SELECT * FROM grinders WHERE grinder_id = $1';
