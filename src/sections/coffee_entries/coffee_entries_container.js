@@ -21,6 +21,10 @@ import CurrentCoffeeEntries from './coffee_entries.js';
 import { today, sevenDaysAgo } from '../../consts.js';
 
 const useStyles = makeStyles((theme) => ({
+  page: {
+    backgroundColor: '#EEEEEE',
+    minHeight: '100vh',
+  },
   navLink: {
     textDecoration: 'none',
   },
@@ -147,59 +151,61 @@ function CurrentCoffeeEntriesContainer({ user }) {
   };
 
   return (
-    <Grid container align="center" justify="center">
-      <Grid item xs={12}>
-        <Box pt={4}>{getPageTitle()}</Box>
-      </Grid>
-      {user?.user_id && (
+    <Box className={classes.page}>
+      <Grid container align="center" justify="center">
         <Grid item xs={12}>
-          <Box>
-            <NavLink to={'/new_entry'}>
-              <Typography variant="caption" align="center">
-                New Entry
-              </Typography>
-            </NavLink>
-          </Box>
+          <Box pt={4}>{getPageTitle()}</Box>
         </Grid>
-      )}
-      {user?.user_id || queryParamsUserId || jacksEntries ? (
-        <>
+        {user?.user_id && (
           <Grid item xs={12}>
-            <CurrentCoffeeEntries
-              coffeeEntries={currentCoffeeEntries}
-              onDateChange={updateDateRange}
-            />
-          </Grid>
-          <Snackbar
-            open={toastOpen}
-            autoHideDuration={3000}
-            onClose={handleToastClose}
-          >
-            <Alert onClose={handleToastClose}>
-              <Typography variant="body1">
-                New Entry Added Successfully!
-              </Typography>
-            </Alert>
-          </Snackbar>
-        </>
-      ) : (
-        <>
-          <Grid item xs={12}>
-            <Box py={4}>
-              <Typography variant="body1" align="center">
-                Please{' '}
-                {
-                  <NavLink className={classes.navLink} to={'/login'}>
-                    Login
-                  </NavLink>
-                }{' '}
-                in order to see your coffee entries.
-              </Typography>
+            <Box>
+              <NavLink to={'/new_entry'}>
+                <Typography variant="caption" align="center">
+                  New Entry
+                </Typography>
+              </NavLink>
             </Box>
           </Grid>
-        </>
-      )}
-    </Grid>
+        )}
+        {user?.user_id || queryParamsUserId || jacksEntries ? (
+          <>
+            <Grid item xs={12}>
+              <CurrentCoffeeEntries
+                coffeeEntries={currentCoffeeEntries}
+                onDateChange={updateDateRange}
+              />
+            </Grid>
+            <Snackbar
+              open={toastOpen}
+              autoHideDuration={3000}
+              onClose={handleToastClose}
+            >
+              <Alert onClose={handleToastClose}>
+                <Typography variant="body1">
+                  New Entry Added Successfully!
+                </Typography>
+              </Alert>
+            </Snackbar>
+          </>
+        ) : (
+          <>
+            <Grid item xs={12}>
+              <Box py={4}>
+                <Typography variant="body1" align="center">
+                  Please{' '}
+                  {
+                    <NavLink className={classes.navLink} to={'/login'}>
+                      Login
+                    </NavLink>
+                  }{' '}
+                  in order to see your coffee entries.
+                </Typography>
+              </Box>
+            </Grid>
+          </>
+        )}
+      </Grid>
+    </Box>
   );
 }
 CurrentCoffeeEntriesContainer.propTypes = {

@@ -61,6 +61,10 @@ function MethodAndMethodStuffInput({
     form: {
       width: '200px',
     },
+    resizeBigger: {
+      fontSize: 18,
+      textAlign: 'center',
+    },
     resize: {
       fontSize: 14,
       textAlign: 'center',
@@ -463,7 +467,7 @@ function MethodAndMethodStuffInput({
             variant="outlined"
             InputProps={{
               classes: {
-                input: classes.resize,
+                input: classes.resizeBigger,
               },
             }}
           >

@@ -54,6 +54,10 @@ function CurrentDataContainer({ user }) {
   const [currentData, setCurrentData] = useState(currentDataDefault);
 
   const useStyles = makeStyles((theme) => ({
+    page: {
+      backgroundColor: '#EEEEEE',
+      minHeight: '100vh',
+    },
     radio: {
       padding: '2px',
     },
@@ -225,7 +229,7 @@ function CurrentDataContainer({ user }) {
   };
 
   return (
-    <Box>
+    <Box className={classes.page}>
       {user?.user_id ? (
         <>
           <Box py={4}>

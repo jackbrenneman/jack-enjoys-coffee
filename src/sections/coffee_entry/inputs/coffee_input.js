@@ -12,7 +12,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
 import AutocompleteWrapperSimple from '../helpers/autocomplete_container_simple.js';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// Custom Components
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 // Constants
@@ -188,7 +190,7 @@ function CoffeeInput({
                 size="small"
                 disabled={!selectedCoffee}
               >
-                <MoreHorizIcon />
+                {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
               </IconButton>
             </Box>
           </Grid>
