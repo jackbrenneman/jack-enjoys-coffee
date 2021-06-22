@@ -27,6 +27,10 @@ function NewWaterInput({
     form: {
       width: '200px',
     },
+    resize: {
+      fontSize: 16,
+      textAlign: 'center',
+    },
   }));
 
   const classes = useStyles();
@@ -111,6 +115,11 @@ function NewWaterInput({
               id="water-name"
               variant="outlined"
               onChange={handleNameChange}
+              InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
             />
           </form>
         </Box>
@@ -128,6 +137,11 @@ function NewWaterInput({
               placeholder="Enter Description on Water"
               multiline
               variant="outlined"
+              InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
             />
           </form>
         </Box>

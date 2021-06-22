@@ -30,6 +30,10 @@ function NewRoasterInput({
     form: {
       width: '200px',
     },
+    resize: {
+      fontSize: 16,
+      textAlign: 'center',
+    },
   }));
 
   const classes = useStyles();
@@ -148,6 +152,11 @@ function NewRoasterInput({
                   id="roaster-name"
                   variant="outlined"
                   onChange={handleNameChange}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
                 />
               </form>
             </Box>
@@ -163,6 +172,11 @@ function NewRoasterInput({
                   id="roaster-city"
                   variant="outlined"
                   onChange={handleCityChange}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
                 />
               </form>
             </Box>
@@ -178,6 +192,11 @@ function NewRoasterInput({
                   id="roaster-state"
                   variant="outlined"
                   onChange={handleStateChange}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
                 />
               </form>
             </Box>
@@ -193,6 +212,11 @@ function NewRoasterInput({
                   id="roaster-country"
                   variant="outlined"
                   onChange={handleCountryChange}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
                 />
               </form>
             </Box>
@@ -208,6 +232,11 @@ function NewRoasterInput({
                   id="roaster-website"
                   variant="outlined"
                   onChange={handleWebsiteChange}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
                 />
               </form>
             </Box>

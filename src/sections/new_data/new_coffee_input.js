@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import AutocompleteWrapperSimple from '../coffee_entry/helpers/autocomplete_container_simple.js';
 // Queries and Fetching
@@ -31,6 +32,10 @@ function NewCoffeeInput({
     },
     form: {
       width: '200px',
+    },
+    resize: {
+      fontSize: 16,
+      textAlign: 'center',
     },
   }));
 
@@ -145,6 +150,11 @@ function NewCoffeeInput({
                   id="coffee-name"
                   variant="outlined"
                   onChange={handleNameChange}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
                 />
               </form>
             </Box>
@@ -161,6 +171,12 @@ function NewCoffeeInput({
                 textField={(params) => (
                   <TextField
                     {...params}
+                    ref={params.InputProps.ref}
+                    InputProps={{
+                      classes: {
+                        input: classes.resize,
+                      },
+                    }}
                     className={classes.form}
                     id="coffee-roaster"
                     variant="outlined"
@@ -181,6 +197,12 @@ function NewCoffeeInput({
                 textField={(params) => (
                   <TextField
                     {...params}
+                    ref={params.InputProps.ref}
+                    InputProps={{
+                      classes: {
+                        input: classes.resize,
+                      },
+                    }}
                     className={classes.form}
                     id="coffee-origin"
                     variant="outlined"
@@ -201,15 +223,17 @@ function NewCoffeeInput({
                   select
                   value={process_id}
                   onChange={handleProcessIdChange}
-                  SelectProps={{
-                    native: true,
-                  }}
                   variant="outlined"
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
                 >
                   {currentProcesses.map(({ name, process_id }) => (
-                    <option value={process_id} key={name}>
+                    <MenuItem value={process_id} key={name}>
                       {name}
-                    </option>
+                    </MenuItem>
                   ))}
                 </TextField>
               </form>

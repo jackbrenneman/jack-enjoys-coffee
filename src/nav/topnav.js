@@ -75,7 +75,24 @@ function TopNav({ user }) {
                 <LocalCafeIcon />
               </ListItemIcon>
               <ListItemText
-                primary={<Typography variant="caption">Entries</Typography>}
+                primary={<Typography variant="caption">My Entries</Typography>}
+              />
+            </ListItem>
+          </Box>
+        </NavLink>
+        <NavLink
+          className={classes.navLink}
+          to={'/data'}
+          onClick={handleDrawerToggle}
+          activeClassName={classes.activeNavLink}
+        >
+          <Box pr={2}>
+            <ListItem button>
+              <ListItemIcon>
+                <LocalCafeIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={<Typography variant="caption">My Data</Typography>}
               />
             </ListItem>
           </Box>
@@ -115,7 +132,7 @@ function TopNav({ user }) {
             </ListItem>
           </Box>
         </NavLink>
-
+        <Divider />
         <NavLink
           className={classes.navLink}
           to={'/jacks_entries'}
@@ -141,25 +158,28 @@ function TopNav({ user }) {
 
   const getLoggedOutDrawerLinks = () => {
     return (
-      <NavLink
-        className={classes.navLink}
-        to={'/entries?user_id=1'}
-        onClick={handleDrawerToggle}
-        activeClassName={classes.activeNavLink}
-      >
-        <Box pr={2}>
-          <ListItem button>
-            <ListItemIcon>
-              <LocalCafeIcon />
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <Typography variant="caption">Jack's Entries</Typography>
-              }
-            />
-          </ListItem>
-        </Box>
-      </NavLink>
+      <>
+        <Divider />
+        <NavLink
+          className={classes.navLink}
+          to={'/entries?jacks_entries=1'}
+          onClick={handleDrawerToggle}
+          activeClassName={classes.activeNavLink}
+        >
+          <Box pr={2}>
+            <ListItem button>
+              <ListItemIcon>
+                <LocalCafeIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <Typography variant="caption">Jack's Entries</Typography>
+                }
+              />
+            </ListItem>
+          </Box>
+        </NavLink>
+      </>
     );
   };
 
@@ -188,7 +208,10 @@ function TopNav({ user }) {
           </Box>
           <div className={classes.grow} />
           <Box p={1} display="flex" justifyContent="center">
-            <NavLink className={classes.navLink} to="/login">
+            <NavLink
+              className={classes.navLink}
+              to={user?.user_id ? '/profile' : '/login'}
+            >
               <PersonOutlineTwoToneIcon />
             </NavLink>
           </Box>
@@ -223,6 +246,7 @@ function TopNav({ user }) {
                 </ListItem>
               </Box>
             </NavLink>
+            <Divider />
             {user?.user_id
               ? getLoggedInDrawerLinks()
               : getLoggedOutDrawerLinks()}

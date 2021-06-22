@@ -66,7 +66,7 @@ function Login() {
       { user_id: user_id, user_name: user_name },
       { path: '/', expires: new Date(Date.now() + 3600000) }
     );
-    window.location.replace('/home');
+    window.location.replace('/profile');
     return;
   };
 

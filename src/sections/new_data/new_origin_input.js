@@ -27,6 +27,10 @@ function NewOriginInput({
     form: {
       width: '200px',
     },
+    resize: {
+      fontSize: 16,
+      textAlign: 'center',
+    },
   }));
 
   const classes = useStyles();
@@ -104,6 +108,11 @@ function NewOriginInput({
               id="origin-name"
               variant="outlined"
               onChange={handleNameChange}
+              InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
             />
           </form>
         </Box>
