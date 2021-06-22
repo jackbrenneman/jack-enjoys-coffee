@@ -23,7 +23,7 @@ import { espressoEnum, pouroverEnum, immersionEnum } from '../../consts.js';
 function CurrentCoffeeEntry({ coffeeEntry }) {
   const { coffee, date, brew, rating, notes } = coffeeEntry;
   const realDate = new Date(date);
-  const localeDate = realDate.toLocaleDateString();
+  const localeDate = realDate.toLocaleDateString('en-US', { timeZone: 'UTC' });
   const { name: coffee_name, roaster, origin, process } = coffee;
   const { name: roaster_name } = roaster;
   const { name: origin_name } = origin;

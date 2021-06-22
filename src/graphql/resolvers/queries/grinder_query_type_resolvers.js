@@ -5,6 +5,7 @@ import { query } from '../../../db/index.js';
 import {
   selectAllGrinders,
   selectGrindersByUserId,
+  selectActiveGrindersByUserId,
   selectGrinderById,
   selectGrindersByName,
 } from '../../../db/queries/grinders_queries.js';
@@ -31,9 +32,13 @@ export const grindersResolver = () => {
  * Resolver for grinder by user_id.
  *
  * @param {int} user_id the user_id of the user
+ * @param {boolean} only_active whether or not to grab ones that are labled as "is_active"
  */
-export const grindersByUserIdResolver = (user_id) => {
-  return query(selectGrindersByUserId, [user_id])
+export const grindersByUserIdResolver = (user_id, only_active) => {
+  return query(
+    only_active ? selectActiveGrindersByUserId : selectGrindersByUserId,
+    [user_id]
+  )
     .then((result) => {
       const data = result.rows;
       return normalizeGrindersByUserId(data);

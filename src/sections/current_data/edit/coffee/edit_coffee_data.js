@@ -18,7 +18,7 @@ import TextField from '@material-ui/core/TextField';
 import { updateCoffeeMutation } from '../../../../graphql/mutations/coffee_gql_mutations.js';
 import { writeGQL } from '../../../../graphql/fetch.js';
 // Custom Components
-import AutocompleteWrapperSimple from '../../../new_coffee_entry/helpers/autocomplete_container_simple.js';
+import AutocompleteWrapperSimple from '../../../coffee_entry/helpers/autocomplete_container_simple.js';
 
 const useStyles = makeStyles(() => ({
   form: {

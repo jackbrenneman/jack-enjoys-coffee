@@ -5,6 +5,7 @@ import { query } from '../../../db/index.js';
 import {
   selectAllBrewers,
   selectBrewersByUserId,
+  selectActiveBrewersByUserId,
   selectBrewerById,
   selectBrewersByName,
   selectBrewersByMethodId,
@@ -33,9 +34,13 @@ export const brewersResolver = () => {
  * Resolver for brewers by user_id.
  *
  * @param {int} user_id the user_id of the user
+ * @param {boolean} only_active whether or not to grab ones that are labled as "is_active"
  */
-export const brewersByUserIdResolver = (user_id) => {
-  return query(selectBrewersByUserId, [user_id])
+export const brewersByUserIdResolver = (user_id, only_active = false) => {
+  return query(
+    only_active ? selectActiveBrewersByUserId : selectBrewersByUserId,
+    [user_id]
+  )
     .then((result) => {
       const data = result.rows;
       return normalizeBrewersByUserId(data);

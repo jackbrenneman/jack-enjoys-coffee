@@ -16,6 +16,9 @@ function DateInput({ coffeeEntry, setCoffeeEntry }) {
     form: {
       width: '200px',
     },
+    resize: {
+      textAlign: 'center',
+    },
   }));
 
   const classes = useStyles();
@@ -38,6 +41,11 @@ function DateInput({ coffeeEntry, setCoffeeEntry }) {
             <form autoComplete="off">
               <TextField
                 className={classes.form}
+                InputProps={{
+                  classes: {
+                    input: classes.resize,
+                  },
+                }}
                 id="date"
                 type="date"
                 defaultValue={date}

@@ -4,12 +4,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import NumberFormat from 'react-number-format';
 // Material UI
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
 // Custom Components
 import AutocompleteWrapperSimple from '../../helpers/autocomplete_container_simple';
 // Constants
@@ -24,7 +26,25 @@ import {
   defaultSteepTimeState,
   methodIdToMethodEnum,
 } from '../../../../consts.js';
-import { Divider } from '@material-ui/core';
+
+const NumberFormatCustom = (props) => {
+  const { inputRef, onChange, ...other } = props;
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      isNumericString
+    />
+  );
+};
 
 function MethodAndMethodStuffInput({
   coffeeEntry,
@@ -40,6 +60,10 @@ function MethodAndMethodStuffInput({
   const useStyles = makeStyles(() => ({
     form: {
       width: '200px',
+    },
+    resize: {
+      fontSize: 14,
+      textAlign: 'center',
     },
   }));
 
@@ -99,7 +123,7 @@ function MethodAndMethodStuffInput({
       ...coffeeEntry,
       brew: {
         ...brew,
-        coffee_in: parseInt(e.target.value),
+        coffee_in: parseFloat(e.target.value),
       },
     });
   };
@@ -109,7 +133,7 @@ function MethodAndMethodStuffInput({
       ...coffeeEntry,
       brew: {
         ...brew,
-        liquid_out: parseInt(e.target.value),
+        liquid_out: parseFloat(e.target.value),
         water_in: null,
         steep_time: null,
       },
@@ -226,6 +250,16 @@ function MethodAndMethodStuffInput({
         </Typography>
         <form autoComplete="off">
           <TextField
+            InputProps={{
+              inputComponent: NumberFormatCustom,
+              classes: {
+                input: classes.resize,
+              },
+              inputProps: {
+                decimalScale: 1,
+                allowNegative: false,
+              },
+            }}
             key={key}
             className={classes.formInOut}
             id="outlined-basic"
@@ -246,6 +280,16 @@ function MethodAndMethodStuffInput({
         </Typography>
         <form autoComplete="off">
           <TextField
+            InputProps={{
+              inputComponent: NumberFormatCustom,
+              classes: {
+                input: classes.resize,
+              },
+              inputProps: {
+                decimalScale: 1,
+                allowNegative: false,
+              },
+            }}
             key={key}
             id="outlined-basic"
             variant="outlined"
@@ -265,6 +309,16 @@ function MethodAndMethodStuffInput({
         </Typography>
         <form autoComplete="off">
           <TextField
+            InputProps={{
+              inputComponent: NumberFormatCustom,
+              classes: {
+                input: classes.resize,
+              },
+              inputProps: {
+                decimalScale: 1,
+                allowNegative: false,
+              },
+            }}
             key={key}
             id="liquid_out"
             variant="outlined"
@@ -283,13 +337,25 @@ function MethodAndMethodStuffInput({
       </Typography>
       <Grid container justify="center">
         <Grid item xs={4} sm={2}>
+          <Typography variant="caption" align="center">
+            Hours
+          </Typography>
           <Box px={1}>
             <form autoComplete="off">
               <TextField
+                InputProps={{
+                  inputComponent: NumberFormatCustom,
+                  classes: {
+                    input: classes.resize,
+                  },
+                  inputProps: {
+                    decimalScale: 1,
+                    allowNegative: false,
+                  },
+                }}
                 key={key}
                 id={hoursEnum}
                 variant="outlined"
-                label="Hours"
                 onChange={handleSteepTimeChange}
                 size="small"
               />
@@ -297,13 +363,20 @@ function MethodAndMethodStuffInput({
           </Box>
         </Grid>
         <Grid item xs={4} sm={2}>
+          <Typography variant="caption" align="center">
+            Hours
+          </Typography>
           <Box px={1}>
             <form autoComplete="off">
               <TextField
+                InputProps={{
+                  classes: {
+                    input: classes.resize,
+                  },
+                }}
                 key={key}
                 id={minutesEnum}
                 variant="outlined"
-                label="Minutes"
                 onChange={handleSteepTimeChange}
                 size="small"
               />
@@ -311,13 +384,20 @@ function MethodAndMethodStuffInput({
           </Box>
         </Grid>
         <Grid item xs={4} sm={2}>
+          <Typography variant="caption" align="center">
+            Hours
+          </Typography>
           <Box px={1}>
             <form autoComplete="off">
               <TextField
+                InputProps={{
+                  classes: {
+                    input: classes.resize,
+                  },
+                }}
                 key={key}
                 id={secondsEnum}
                 variant="outlined"
-                label="Seconds"
                 onChange={handleSteepTimeChange}
                 size="small"
               />
@@ -381,6 +461,11 @@ function MethodAndMethodStuffInput({
             select
             onChange={handleMethodChange}
             variant="outlined"
+            InputProps={{
+              classes: {
+                input: classes.resize,
+              },
+            }}
           >
             {methods.map(({ method_id, name }) => (
               <MenuItem value={method_id} key={method_id}>
@@ -402,6 +487,12 @@ function MethodAndMethodStuffInput({
           textField={(params) => (
             <TextField
               {...params}
+              ref={params.InputProps.ref}
+              InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
               className={classes.form}
               id="brewer"
               variant="outlined"
@@ -421,6 +512,12 @@ function MethodAndMethodStuffInput({
           textField={(params) => (
             <TextField
               {...params}
+              ref={params.InputProps.ref}
+              InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
               className={classes.form}
               id="drink"
               variant="outlined"

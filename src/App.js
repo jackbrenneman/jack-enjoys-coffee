@@ -11,7 +11,7 @@ import TopNav from './nav/topnav.js';
 import Home from './sections/home.js';
 import Login from './sections/login/login.js';
 import Signup from './sections/signup/signup.js';
-import CoffeeEntryContainer from './sections/new_coffee_entry/coffee_entry_container.js';
+import CoffeeEntryContainer from './sections/coffee_entry/coffee_entry_container.js';
 import CurrentCoffeeEntriesContainer from './sections/coffee_entries/coffee_entries_container.js';
 import CurrentDataContainer from './sections/current_data/current_data_container.js';
 import DataEntryContainer from './sections/new_data/new_data_container.js';
@@ -61,17 +61,20 @@ function App() {
             <Route exact path="/signup">
               <Signup />
             </Route>
+            <Route exact path="/jacks_entries">
+              <CurrentCoffeeEntriesContainer user={user} />
+            </Route>
             <Route exact path="/entries">
               <CurrentCoffeeEntriesContainer user={user} />
             </Route>
-            <Route exact path="/new_entry">
+            <Route exact path="/new_entry" user={user}>
               <CoffeeEntryContainer />
             </Route>
             <Route exact path="/data">
               <CurrentDataContainer />
             </Route>
             <Route exact path="/new_data">
-              <DataEntryContainer />
+              <DataEntryContainer user={user} />
             </Route>
             <Route path="/">
               <Home />

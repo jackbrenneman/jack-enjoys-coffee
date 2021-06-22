@@ -15,6 +15,10 @@ function NotesInput({ coffeeEntry, setCoffeeEntry }) {
     form: {
       width: '250px',
     },
+    resize: {
+      fontSize: 14,
+      textAlign: 'center',
+    },
   }));
 
   const classes = useStyles();

@@ -7,6 +7,7 @@ import {
   GraphQLList,
   GraphQLID,
   GraphQLString,
+  GraphQLBoolean,
 } from 'graphql';
 // Resolvers
 import {
@@ -61,7 +62,6 @@ import {
 import {
   roastersByUserIdResolver,
   roasterByIdResolver,
-  roastersResolver,
   roastersByNameResolver,
   roastersByCityResolver,
   roastersByStateResolver,
@@ -104,15 +104,20 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
     brewers: {
       type: new GraphQLList(BrewerType),
       args: {
+        only_active: { type: GraphQLBoolean },
         brewer_id: { type: GraphQLInt },
         method_id: { type: GraphQLInt },
         name: { type: GraphQLString },
       },
-      resolve(parentValue, { user_id, brewer_id, method_id, name }, context) {
+      resolve(
+        parentValue,
+        { user_id, brewer_id, method_id, name, only_active },
+        context
+      ) {
         // Err on the side of the user_id from arguments. Then fallback on logged in user.
         const userId = user_id ? user_id : getUserId(context);
         if (userId) {
-          return brewersByUserIdResolver(userId);
+          return brewersByUserIdResolver(userId, only_active);
         }
         if (brewer_id) {
           return brewerByIdResolver(brewer_id);
@@ -121,8 +126,8 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         } else if (name) {
           return brewersByNameResolver(name);
         }
-        // If no args inputted, get all brewers.
-        return brewersResolver();
+        // If not signed in or no args inputted, return nothing.
+        return [];
       },
     },
     coffeeEntries: {
@@ -144,13 +149,14 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
           // If no date given, get all coffeeEntries
           return coffeeEntriesByUserIdResolver(user_id);
         }
-        // If no args inputted, don't do anything
-        return;
+        // If not signed in and no args inputted, return nothing.
+        return [];
       },
     },
     coffees: {
       type: new GraphQLList(CoffeeType),
       args: {
+        only_active: { type: GraphQLBoolean },
         user_id: { type: GraphQLID },
         coffee_id: { type: GraphQLInt },
         name: { type: GraphQLString },
@@ -160,13 +166,21 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
       },
       resolve(
         parentValue,
-        { user_id, coffee_id, name, roaster_id, origin_id, process_id },
+        {
+          user_id,
+          coffee_id,
+          name,
+          roaster_id,
+          origin_id,
+          process_id,
+          only_active,
+        },
         context
       ) {
         // Err on the side of the user_id from arguments. Then fallback on logged in user.
         const userId = user_id ? user_id : getUserId(context);
         if (userId) {
-          return coffeesByUserIdResolver(userId);
+          return coffeesByUserIdResolver(userId, only_active);
         }
         if (coffee_id) {
           return coffeeByIdResolver(coffee_id);
@@ -183,8 +197,8 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
           // If there's a process_id, get those coffees.
           return coffeesByProcessIdResolver(process_id);
         }
-        // Otherwise, return all coffees.
-        return coffeesResolver();
+        // If not signed in and no args inputted, return nothing.
+        return [];
       },
     },
     drinks: {
@@ -208,30 +222,35 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         } else if (name) {
           return drinksByNameResolver(name);
         }
-        // If no args inputted, get all drinks.
-        return drinksResolver();
+        // If not signed in and no args inputted, return nothing.
+        return [];
       },
     },
     grinders: {
       type: new GraphQLList(GrinderType),
       args: {
+        only_active: { type: GraphQLBoolean },
         user_id: { type: GraphQLID },
         grinder_id: { type: GraphQLID },
         name: { type: GraphQLString },
       },
-      resolve(parentValue, { user_id, grinder_id, name }, context) {
+      resolve(
+        parentValue,
+        { user_id, grinder_id, name, only_active },
+        context
+      ) {
         // Err on the side of the user_id from arguments. Then fallback on logged in user.
         const userId = user_id ? user_id : getUserId(context);
         if (userId) {
-          return grindersByUserIdResolver(userId);
+          return grindersByUserIdResolver(userId, only_active);
         }
         if (grinder_id) {
           return grinderByIdResolver(grinder_id);
         } else if (name) {
           return grindersByNameResolver(name);
         }
-        // If no args inputted, get all grinders.
-        return grindersResolver();
+        // If not signed in and no args inputted, return nothing.
+        return [];
       },
     },
     methods: {
@@ -291,6 +310,7 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
     roasters: {
       type: new GraphQLList(RoasterType),
       args: {
+        only_active: { type: GraphQLBoolean },
         user_id: { type: GraphQLID },
         roaster_id: { type: GraphQLInt },
         name: { type: GraphQLString },
@@ -298,13 +318,13 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
       },
       resolve(
         parentValue,
-        { user_id, roaster_id, name, city, state, country },
+        { user_id, roaster_id, name, city, state, country, only_active },
         context
       ) {
         // Err on the side of the user_id from arguments. Then fallback on logged in user.
         const userId = user_id ? user_id : getUserId(context);
         if (userId) {
-          return roastersByUserIdResolver(userId);
+          return roastersByUserIdResolver(userId, only_active);
         }
         if (roaster_id) {
           return roasterByIdResolver(roaster_id);
@@ -317,8 +337,8 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         } else if (country) {
           return roastersByCountryResolver(country);
         }
-        // If no args inputted, get all roasters.
-        return roastersResolver();
+        // If not signed in and no args inputted, return nothing.
+        return [];
       },
     },
     user: {
@@ -333,23 +353,24 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
     waters: {
       type: new GraphQLList(WaterType),
       args: {
+        only_active: { type: GraphQLBoolean },
         user_id: { type: GraphQLID },
         water_id: { type: GraphQLInt },
         name: { type: GraphQLString },
       },
-      resolve(parentValue, { user_id, water_id, name }, context) {
+      resolve(parentValue, { user_id, water_id, name, only_active }, context) {
         // Err on the side of the user_id from arguments. Then fallback on logged in user.
         const userId = user_id ? user_id : getUserId(context);
         if (userId) {
-          return watersByUserIdResolver(userId);
+          return watersByUserIdResolver(userId, only_active);
         }
         if (water_id) {
           return waterByIdResolver(water_id);
         } else if (name) {
           return watersByNameResolver(name);
         }
-        // If no args inputted, get all waters.
-        return watersResolver();
+        // If not signed in and no args inputted, return nothing.
+        return [];
       },
     },
   },

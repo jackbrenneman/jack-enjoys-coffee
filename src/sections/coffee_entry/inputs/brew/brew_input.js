@@ -41,6 +41,10 @@ function BrewInput({
     formSmall: {
       width: '130px',
     },
+    resize: {
+      fontSize: 14,
+      textAlign: 'center',
+    },
   }));
 
   const classes = useStyles();
@@ -109,6 +113,12 @@ function BrewInput({
                 textField={(params) => (
                   <TextField
                     {...params}
+                    ref={params.InputProps.ref}
+                    InputProps={{
+                      classes: {
+                        input: classes.resize,
+                      },
+                    }}
                     className={classes.form}
                     id="grinder"
                     variant="outlined"
@@ -125,6 +135,11 @@ function BrewInput({
             <form autoComplete="off">
               <TextField
                 className={classes.formSmall}
+                InputProps={{
+                  classes: {
+                    input: classes.resize,
+                  },
+                }}
                 id="grind_setting"
                 variant="outlined"
                 size="small"
@@ -150,6 +165,12 @@ function BrewInput({
                 textField={(params) => (
                   <TextField
                     {...params}
+                    ref={params.InputProps.ref}
+                    InputProps={{
+                      classes: {
+                        input: classes.resize,
+                      },
+                    }}
                     className={classes.form}
                     id="water"
                     variant="outlined"

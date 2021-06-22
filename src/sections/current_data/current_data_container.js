@@ -9,6 +9,7 @@
  *    - Waters
  */
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -43,7 +44,7 @@ import {
   dataEntryDefault,
 } from '../../consts.js';
 
-function CurrentDataContainer() {
+function CurrentDataContainer({ user }) {
   // State used for determining which data entry component to show.
   const [dataEntry, setDataEntry] = useState(dataEntryDefault);
 
@@ -223,110 +224,122 @@ function CurrentDataContainer() {
 
   return (
     <Box>
-      <Box py={4}>
-        <Grid container direction="column" alignItems="center">
-          <Grid item xs={12}>
-            <FormControl component="fieldset">
-              <RadioGroup
-                row
-                aria-label="dataOptions"
-                name="dataOptions"
-                value={dataOption}
-                onChange={handleDataOptionChange}
-              >
-                <Grid container align="center" justify="center">
-                  <Grid item xs={12}>
-                    <FormControlLabel
-                      value={brewerEnum}
-                      control={<Radio className={classes.radio} />}
-                      label={
-                        <Typography variant="caption" align="center">
-                          Brewers
-                        </Typography>
-                      }
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value={coffeeEnum}
-                      control={<Radio className={classes.radio} />}
-                      label={
-                        <Typography variant="caption" align="center">
-                          Coffees
-                        </Typography>
-                      }
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value={drinkEnum}
-                      control={<Radio className={classes.radio} />}
-                      label={
-                        <Typography variant="caption" align="center">
-                          Drinks
-                        </Typography>
-                      }
-                      labelPlacement="bottom"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <FormControlLabel
-                      value={grinderEnum}
-                      control={<Radio className={classes.radio} />}
-                      label={
-                        <Typography variant="caption" align="center">
-                          Grinders
-                        </Typography>
-                      }
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value={originEnum}
-                      control={<Radio className={classes.radio} />}
-                      label={
-                        <Typography variant="caption" align="center">
-                          Origins
-                        </Typography>
-                      }
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value={roasterEnum}
-                      control={<Radio className={classes.radio} />}
-                      label={
-                        <Typography variant="caption" align="center">
-                          Roasters
-                        </Typography>
-                      }
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value={waterEnum}
-                      control={<Radio className={classes.radio} />}
-                      label={
-                        <Typography variant="caption" align="center">
-                          Waters
-                        </Typography>
-                      }
-                      labelPlacement="bottom"
-                    />
-                  </Grid>
-                </Grid>
-              </RadioGroup>
-            </FormControl>
+      {user?.user_id && (
+        <>
+          <Box py={4}>
+            <Grid container direction="column" alignItems="center">
+              <Grid item xs={12}>
+                <FormControl component="fieldset">
+                  <RadioGroup
+                    row
+                    aria-label="dataOptions"
+                    name="dataOptions"
+                    value={dataOption}
+                    onChange={handleDataOptionChange}
+                  >
+                    <Grid container align="center" justify="center">
+                      <Grid item xs={12}>
+                        <FormControlLabel
+                          value={brewerEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Brewers
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                        <FormControlLabel
+                          value={coffeeEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Coffees
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                        <FormControlLabel
+                          value={drinkEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Drinks
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControlLabel
+                          value={grinderEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Grinders
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                        <FormControlLabel
+                          value={originEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Origins
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                        <FormControlLabel
+                          value={roasterEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Roasters
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                        <FormControlLabel
+                          value={waterEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Waters
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                      </Grid>
+                    </Grid>
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Box>
+          <Grid>
+            <Grid item xs={12}>
+              <Divider variant="middle" />
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
-      <Grid>
-        <Grid item xs={12}>
-          <Divider variant="middle" />
-        </Grid>
-      </Grid>
-      <Grid>
-        <Grid item xs={12}>
-          {getDataComponent()}
-        </Grid>
-      </Grid>
+          <Grid>
+            <Grid item xs={12}>
+              {getDataComponent()}
+            </Grid>
+          </Grid>
+        </>
+      )}
     </Box>
   );
 }
+
+CurrentDataContainer.propTypes = {
+  user: PropTypes.object,
+};
+
+CurrentDataContainer.defaultProps = {
+  user: {},
+};
 
 export default CurrentDataContainer;

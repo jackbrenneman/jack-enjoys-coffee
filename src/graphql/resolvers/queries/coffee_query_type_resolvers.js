@@ -5,6 +5,7 @@ import { query } from '../../../db/index.js';
 import {
   selectAllCoffees,
   selectCoffeesByUserId,
+  selectActiveCoffeesByUserId,
   selectCoffeeById,
   selectCoffeesByName,
   selectCoffeesByRoasterId,
@@ -37,9 +38,13 @@ export const coffeesResolver = () => {
  * Resolver for coffees by user_id.
  *
  * @param {int} user_id the coffee_id of the coffee
+ * @param {boolean} only_active whether or not to grab ones that are labled as "is_active"
  */
-export const coffeesByUserIdResolver = (user_id) => {
-  return query(selectCoffeesByUserId, [user_id])
+export const coffeesByUserIdResolver = (user_id, only_active) => {
+  return query(
+    only_active ? selectActiveCoffeesByUserId : selectCoffeesByUserId,
+    [user_id]
+  )
     .then((result) => {
       const data = result.rows;
       return normalizeCoffeesByUserId(data);

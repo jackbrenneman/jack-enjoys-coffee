@@ -4,7 +4,8 @@
 import { query } from '../../../db/index.js';
 import {
   selectAllWaters,
-  selectAllWatersByUserId,
+  selectWatersByUserId,
+  selectActiveWatersByUserId,
   selectWaterById,
   selectWatersByName,
 } from '../../../db/queries/waters_queries.js';
@@ -28,10 +29,16 @@ export const watersResolver = () => {
 };
 
 /**
- * Resolver for all waters of a user.
+ * Resolver for roaster by user_id.
+ *
+ * @param {int} user_id the user_id of the user
+ * @param {boolean} only_active whether or not to grab ones that are labled as "is_active"
  */
-export const watersByUserIdResolver = (user_id) => {
-  return query(selectAllWatersByUserId, [user_id])
+export const watersByUserIdResolver = (user_id, only_active) => {
+  return query(
+    only_active ? selectActiveWatersByUserId : selectWatersByUserId,
+    [user_id]
+  )
     .then((result) => {
       const data = result.rows;
       return normalizeWatersByUserId(data);

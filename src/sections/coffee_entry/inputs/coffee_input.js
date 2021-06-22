@@ -49,6 +49,14 @@ function CoffeeInput({
     name: {
       fontWeight: 'bold',
     },
+    resize: {
+      fontSize: 14,
+      textAlign: 'center',
+    },
+    resizeSmall: {
+      fontSize: 12,
+      textAlign: 'center',
+    },
   }));
 
   const classes = useStyles();
@@ -133,6 +141,12 @@ function CoffeeInput({
                   <TextField
                     {...params}
                     className={classes.form}
+                    ref={params.InputProps.ref}
+                    InputProps={{
+                      classes: {
+                        input: classes.resizeSmall,
+                      },
+                    }}
                     id="roaster"
                     size="small"
                     variant="outlined"
@@ -153,6 +167,12 @@ function CoffeeInput({
               textField={(params) => (
                 <TextField
                   {...params}
+                  ref={params.InputProps.ref}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
                   className={classes.form}
                   id="coffee"
                   variant="outlined"

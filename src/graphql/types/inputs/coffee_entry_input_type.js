@@ -25,8 +25,8 @@ export const CoffeeEntryInputType = new GraphQLInputObjectType({
     grinder_id: { type: GraphQLInt },
     grinder_setting: { type: GraphQLFloat },
     water_id: { type: GraphQLInt },
-    coffee_in: { type: GraphQLInt },
-    liquid_out: { type: GraphQLInt },
+    coffee_in: { type: GraphQLFloat },
+    liquid_out: { type: GraphQLFloat },
     water_in: { type: GraphQLInt },
     steep_time: { type: GraphQLInt },
     // Notes and Rating
