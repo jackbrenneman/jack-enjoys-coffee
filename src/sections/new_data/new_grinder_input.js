@@ -27,6 +27,10 @@ function NewGrinderInput({
     form: {
       width: '200px',
     },
+    resize: {
+      fontSize: 16,
+      textAlign: 'center',
+    },
   }));
 
   const classes = useStyles();
@@ -115,6 +119,11 @@ function NewGrinderInput({
                   id="grinder-name"
                   variant="outlined"
                   onChange={handleNameChange}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
                 />
               </form>
             </Box>
@@ -130,6 +139,11 @@ function NewGrinderInput({
                   id="grinder-website"
                   variant="outlined"
                   onChange={handleWebsiteChange}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
                 />
               </form>
             </Box>

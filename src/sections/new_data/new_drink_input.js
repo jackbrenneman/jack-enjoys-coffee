@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 // Queries and Fetching
 import { drinkMutation } from '../../graphql/mutations/drink_gql_mutations.js';
@@ -27,6 +28,10 @@ function NewDrinkInput({
   const useStyles = makeStyles(() => ({
     form: {
       width: '200px',
+    },
+    resize: {
+      fontSize: 16,
+      textAlign: 'center',
     },
   }));
 
@@ -114,6 +119,11 @@ function NewDrinkInput({
                   id="drink-name"
                   variant="outlined"
                   onChange={handleNameChange}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
                 />
               </form>
             </Box>
@@ -130,15 +140,17 @@ function NewDrinkInput({
                   select
                   value={method_id}
                   onChange={handleMethodIdChange}
-                  SelectProps={{
-                    native: true,
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
                   }}
                   variant="outlined"
                 >
                   {currentMethods.map(({ name, method_id }) => (
-                    <option value={method_id} key={name}>
+                    <MenuItem value={method_id} key={name}>
                       {name}
-                    </option>
+                    </MenuItem>
                   ))}
                 </TextField>
               </form>

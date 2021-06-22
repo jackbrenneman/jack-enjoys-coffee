@@ -15,7 +15,7 @@ import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
 
 function Profile({ user }) {
-  const { user_name } = user;
+  const { user_name, user_id } = user;
   const useStyles = makeStyles((theme) => ({
     page: {
       backgroundColor: '#EEEEEE',
@@ -44,17 +44,22 @@ function Profile({ user }) {
       className={classes.page}
     >
       <Grid item xs={12}>
-        <Box py={2}>
+        <Box pt={4} pb={2}>
           <Typography variant="h2">Profile</Typography>
         </Box>
       </Grid>
       <Grid item xs={12}>
-        <Box py={2}>
+        <Box pt={2}>
           <Typography variant="body1">Hello {user_name}</Typography>
         </Box>
       </Grid>
       <Grid item xs={12}>
         <Box>
+          <Typography variant="caption">User ID: {user_id}</Typography>
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
+        <Box pt={2}>
           <NavLink to={'/entries'}>
             <Typography variant="caption" align="center">
               Your Coffee Entries
@@ -66,7 +71,7 @@ function Profile({ user }) {
         <Box>
           <NavLink to={'/data'}>
             <Typography variant="caption" align="center">
-              Your Roasters, Coffees, Equipment, and other Data
+              Your Coffee Data
             </Typography>
           </NavLink>
         </Box>

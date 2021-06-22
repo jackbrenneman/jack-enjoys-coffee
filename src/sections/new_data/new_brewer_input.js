@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 // Queries and Fetching
 import { brewerMutation } from '../../graphql/mutations/brewer_gql_mutations.js';
@@ -30,6 +31,10 @@ function NewBrewerInput({
     },
     form: {
       width: '200px',
+    },
+    resize: {
+      fontSize: 16,
+      textAlign: 'center',
     },
   }));
 
@@ -129,6 +134,11 @@ function NewBrewerInput({
                   id="brewer-name"
                   variant="outlined"
                   onChange={handleNameChange}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
                 />
               </form>
             </Box>
@@ -144,6 +154,11 @@ function NewBrewerInput({
                   id="brewer-website"
                   variant="outlined"
                   onChange={handleWebsiteChange}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
                 />
               </form>
             </Box>
@@ -160,15 +175,17 @@ function NewBrewerInput({
                   select
                   value={method_id}
                   onChange={handleMethodIdChange}
-                  SelectProps={{
-                    native: true,
-                  }}
                   variant="outlined"
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
                 >
                   {currentMethods.map(({ name, method_id }) => (
-                    <option value={method_id} key={name}>
+                    <MenuItem value={method_id} key={name}>
                       {name}
-                    </option>
+                    </MenuItem>
                   ))}
                 </TextField>
               </form>

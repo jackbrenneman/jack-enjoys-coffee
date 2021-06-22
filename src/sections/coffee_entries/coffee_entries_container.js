@@ -21,6 +21,10 @@ import CurrentCoffeeEntries from './coffee_entries.js';
 import { today, sevenDaysAgo } from '../../consts.js';
 
 const useStyles = makeStyles((theme) => ({
+  page: {
+    backgroundColor: '#EEEEEE',
+    minHeight: '100vh',
+  },
   navLink: {
     textDecoration: 'none',
   },
@@ -31,10 +35,14 @@ function CurrentCoffeeEntriesContainer({ user }) {
   const [currentCoffeeEntries, setCurrentCoffeeEntries] = useState([]);
 
   const queryParams = new URLSearchParams(useLocation().search);
-  const containsNewEntry = queryParams.get('new_entry');
-  const queryParamUserId = queryParams.get('user_id');
+  const queryParamsObject = {
+    newEntry: queryParams.get('new_entry') ?? false,
+    queryParamsUserId: queryParams.get('user_id') ?? false,
+    jacksEntries: queryParams.get('jacks_entries') ?? false,
+  };
+  const { queryParamsUserId, jacksEntries, newEntry } = queryParamsObject;
   // State used for popping toast message for when write is successful
-  const [toastOpen, setToastOpen] = useState(!!containsNewEntry);
+  const [toastOpen, setToastOpen] = useState(!!newEntry);
 
   const handleToastClose = () => {
     setToastOpen(false);
@@ -44,8 +52,26 @@ function CurrentCoffeeEntriesContainer({ user }) {
 
   // When the component renders, we fetch all the current data of the past week
   useEffect(() => {
-    if (queryParamUserId) {
-      queryGQL(currentCoffeeEntriesQuery(queryParamUserId, sevenDaysAgo, today))
+    // Fetch the coffee entries for the correct user. Three scenarios:
+    // - Jack's specific coffee entries page -> Jack's entries
+    // - A user_id in query params -> user_id's entries
+    // - A signed in user's entries -> signed in user's entries
+    if (jacksEntries) {
+      queryGQL(currentCoffeeEntriesQuery(1, sevenDaysAgo, today))
+        .then(({ data }) => {
+          const { coffeeEntries } = data;
+          if (coffeeEntries) {
+            setCurrentCoffeeEntries(coffeeEntries);
+          }
+        })
+        .catch((e) => {
+          // TODO: Determine what to do if fetch is unsuccessful
+          console.log(e);
+        });
+    } else if (queryParamsUserId) {
+      queryGQL(
+        currentCoffeeEntriesQuery(queryParamsUserId, sevenDaysAgo, today)
+      )
         .then(({ data }) => {
           const { coffeeEntries } = data;
           if (coffeeEntries) {
@@ -69,11 +95,35 @@ function CurrentCoffeeEntriesContainer({ user }) {
           console.log(e);
         });
     }
-  }, [queryParamUserId, user]);
+  }, [queryParamsUserId, jacksEntries, user]);
 
   // Updates the date range, and fetches the coffee entry data for that given range
   const updateDateRange = (startDate, endDate) => {
-    if (user?.user_id) {
+    if (jacksEntries) {
+      queryGQL(currentCoffeeEntriesQuery(1, startDate, endDate))
+        .then(({ data }) => {
+          const { coffeeEntries } = data;
+          if (coffeeEntries) {
+            setCurrentCoffeeEntries(coffeeEntries);
+          }
+        })
+        .catch((e) => {
+          // TODO: Determine what to do if fetch is unsuccessful
+          console.log(e);
+        });
+    } else if (queryParamsUserId) {
+      queryGQL(currentCoffeeEntriesQuery(queryParamsUserId, startDate, endDate))
+        .then(({ data }) => {
+          const { coffeeEntries } = data;
+          if (coffeeEntries) {
+            setCurrentCoffeeEntries(coffeeEntries);
+          }
+        })
+        .catch((e) => {
+          // TODO: Determine what to do if fetch is unsuccessful
+          console.log(e);
+        });
+    } else if (user?.user_id) {
       queryGQL(currentCoffeeEntriesQuery(user.user_id, startDate, endDate))
         .then(({ data }) => {
           const { coffeeEntries } = data;
@@ -88,15 +138,25 @@ function CurrentCoffeeEntriesContainer({ user }) {
     }
   };
 
+  const getPageTitle = () => {
+    if (jacksEntries) {
+      // Viewing Jack's entries
+      return <Typography variant="h2">Jack's Coffee Entries</Typography>;
+    }
+    if (queryParamsUserId) {
+      // Viewing some user's entries
+      return <Typography variant="h2">Someone's Coffee Entries</Typography>;
+    }
+    return <Typography variant="h2">Coffee Entries</Typography>;
+  };
+
   return (
-    <Grid container align="center" justify="center">
-      <Grid item xs={12}>
-        <Box pt={4}>
-          <Typography variant="h2">Coffee Entries</Typography>
-        </Box>
-      </Grid>
-      {user?.user_id || queryParamUserId ? (
-        <>
+    <Box className={classes.page}>
+      <Grid container align="center" justify="center">
+        <Grid item xs={12}>
+          <Box pt={4}>{getPageTitle()}</Box>
+        </Grid>
+        {user?.user_id && (
           <Grid item xs={12}>
             <Box>
               <NavLink to={'/new_entry'}>
@@ -106,43 +166,46 @@ function CurrentCoffeeEntriesContainer({ user }) {
               </NavLink>
             </Box>
           </Grid>
-
-          <Grid item xs={12}>
-            <CurrentCoffeeEntries
-              coffeeEntries={currentCoffeeEntries}
-              onDateChange={updateDateRange}
-            />
-          </Grid>
-          <Snackbar
-            open={toastOpen}
-            autoHideDuration={3000}
-            onClose={handleToastClose}
-          >
-            <Alert onClose={handleToastClose}>
-              <Typography variant="body1">
-                New Entry Added Successfully!
-              </Typography>
-            </Alert>
-          </Snackbar>
-        </>
-      ) : (
-        <>
-          <Grid item xs={12}>
-            <Box py={4}>
-              <Typography variant="body1" align="center">
-                Please{' '}
-                {
-                  <NavLink className={classes.navLink} to={'/login'}>
-                    Login
-                  </NavLink>
-                }{' '}
-                in order to see your coffee entries.
-              </Typography>
-            </Box>
-          </Grid>
-        </>
-      )}
-    </Grid>
+        )}
+        {user?.user_id || queryParamsUserId || jacksEntries ? (
+          <>
+            <Grid item xs={12}>
+              <CurrentCoffeeEntries
+                coffeeEntries={currentCoffeeEntries}
+                onDateChange={updateDateRange}
+              />
+            </Grid>
+            <Snackbar
+              open={toastOpen}
+              autoHideDuration={3000}
+              onClose={handleToastClose}
+            >
+              <Alert onClose={handleToastClose}>
+                <Typography variant="body1">
+                  New Entry Added Successfully!
+                </Typography>
+              </Alert>
+            </Snackbar>
+          </>
+        ) : (
+          <>
+            <Grid item xs={12}>
+              <Box py={4}>
+                <Typography variant="body1" align="center">
+                  Please{' '}
+                  {
+                    <NavLink className={classes.navLink} to={'/login'}>
+                      Login
+                    </NavLink>
+                  }{' '}
+                  in order to see your coffee entries.
+                </Typography>
+              </Box>
+            </Grid>
+          </>
+        )}
+      </Grid>
+    </Box>
   );
 }
 CurrentCoffeeEntriesContainer.propTypes = {

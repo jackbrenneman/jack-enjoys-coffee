@@ -67,11 +67,11 @@ function App() {
             <Route exact path="/entries">
               <CurrentCoffeeEntriesContainer user={user} />
             </Route>
-            <Route exact path="/new_entry" user={user}>
-              <CoffeeEntryContainer />
+            <Route exact path="/new_entry">
+              <CoffeeEntryContainer user={user} />
             </Route>
             <Route exact path="/data">
-              <CurrentDataContainer />
+              <CurrentDataContainer user={user} />
             </Route>
             <Route exact path="/new_data">
               <DataEntryContainer user={user} />

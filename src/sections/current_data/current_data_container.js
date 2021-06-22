@@ -10,6 +10,8 @@
  */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+// React Router
+import { NavLink } from 'react-router-dom';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -52,6 +54,10 @@ function CurrentDataContainer({ user }) {
   const [currentData, setCurrentData] = useState(currentDataDefault);
 
   const useStyles = makeStyles((theme) => ({
+    page: {
+      backgroundColor: '#EEEEEE',
+      minHeight: '100vh',
+    },
     radio: {
       padding: '2px',
     },
@@ -223,8 +229,8 @@ function CurrentDataContainer({ user }) {
   };
 
   return (
-    <Box>
-      {user?.user_id && (
+    <Box className={classes.page}>
+      {user?.user_id ? (
         <>
           <Box py={4}>
             <Grid container direction="column" alignItems="center">
@@ -316,8 +322,18 @@ function CurrentDataContainer({ user }) {
                   </RadioGroup>
                 </FormControl>
               </Grid>
+              <Grid item xs={12}>
+                <Box pt={2}>
+                  <Typography variant="caption" align="center">
+                    <NavLink className={classes.navLink} to={'/new_data'}>
+                      Add New Data
+                    </NavLink>
+                  </Typography>
+                </Box>
+              </Grid>
             </Grid>
           </Box>
+
           <Grid>
             <Grid item xs={12}>
               <Divider variant="middle" />
@@ -329,6 +345,18 @@ function CurrentDataContainer({ user }) {
             </Grid>
           </Grid>
         </>
+      ) : (
+        <Box py={4}>
+          <Typography variant="body1" align="center">
+            You must{' '}
+            {
+              <NavLink className={classes.navLink} to={'/login'}>
+                Login
+              </NavLink>
+            }{' '}
+            to add new data
+          </Typography>
+        </Box>
       )}
     </Box>
   );
