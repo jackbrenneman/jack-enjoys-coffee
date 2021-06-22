@@ -61,17 +61,20 @@ function App() {
             <Route exact path="/signup">
               <Signup />
             </Route>
+            <Route exact path="/jacks_entries">
+              <CurrentCoffeeEntriesContainer user={user} />
+            </Route>
             <Route exact path="/entries">
               <CurrentCoffeeEntriesContainer user={user} />
             </Route>
-            <Route exact path="/new_entry">
+            <Route exact path="/new_entry" user={user}>
               <CoffeeEntryContainer />
             </Route>
             <Route exact path="/data">
               <CurrentDataContainer />
             </Route>
             <Route exact path="/new_data">
-              <DataEntryContainer />
+              <DataEntryContainer user={user} />
             </Route>
             <Route path="/">
               <Home />

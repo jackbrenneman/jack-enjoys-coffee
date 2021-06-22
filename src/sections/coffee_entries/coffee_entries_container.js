@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 // React Router
 import { NavLink, useLocation } from 'react-router-dom';
 // Material UI
+import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -19,12 +20,19 @@ import CurrentCoffeeEntries from './coffee_entries.js';
 // Constants
 import { today, sevenDaysAgo } from '../../consts.js';
 
+const useStyles = makeStyles((theme) => ({
+  navLink: {
+    textDecoration: 'none',
+  },
+}));
+
 function CurrentCoffeeEntriesContainer({ user }) {
   // State that basically contains all the current info
   const [currentCoffeeEntries, setCurrentCoffeeEntries] = useState([]);
 
   const queryParams = new URLSearchParams(useLocation().search);
   const containsNewEntry = queryParams.get('new_entry');
+  const queryParamUserId = queryParams.get('user_id');
   // State used for popping toast message for when write is successful
   const [toastOpen, setToastOpen] = useState(!!containsNewEntry);
 
@@ -32,9 +40,23 @@ function CurrentCoffeeEntriesContainer({ user }) {
     setToastOpen(false);
   };
 
+  const classes = useStyles();
+
   // When the component renders, we fetch all the current data of the past week
   useEffect(() => {
-    if (user?.user_id) {
+    if (queryParamUserId) {
+      queryGQL(currentCoffeeEntriesQuery(queryParamUserId, sevenDaysAgo, today))
+        .then(({ data }) => {
+          const { coffeeEntries } = data;
+          if (coffeeEntries) {
+            setCurrentCoffeeEntries(coffeeEntries);
+          }
+        })
+        .catch((e) => {
+          // TODO: Determine what to do if fetch is unsuccessful
+          console.log(e);
+        });
+    } else if (user?.user_id) {
       queryGQL(currentCoffeeEntriesQuery(user.user_id, sevenDaysAgo, today))
         .then(({ data }) => {
           const { coffeeEntries } = data;
@@ -47,7 +69,7 @@ function CurrentCoffeeEntriesContainer({ user }) {
           console.log(e);
         });
     }
-  }, [user]);
+  }, [queryParamUserId, user]);
 
   // Updates the date range, and fetches the coffee entry data for that given range
   const updateDateRange = (startDate, endDate) => {
@@ -73,32 +95,53 @@ function CurrentCoffeeEntriesContainer({ user }) {
           <Typography variant="h2">Coffee Entries</Typography>
         </Box>
       </Grid>
-      {user?.user_id && (
-        <Grid item xs={12}>
-          <Box>
-            <NavLink to={'/new_entry'}>
-              <Typography variant="caption" align="center">
-                New Entry
+      {user?.user_id || queryParamUserId ? (
+        <>
+          <Grid item xs={12}>
+            <Box>
+              <NavLink to={'/new_entry'}>
+                <Typography variant="caption" align="center">
+                  New Entry
+                </Typography>
+              </NavLink>
+            </Box>
+          </Grid>
+
+          <Grid item xs={12}>
+            <CurrentCoffeeEntries
+              coffeeEntries={currentCoffeeEntries}
+              onDateChange={updateDateRange}
+            />
+          </Grid>
+          <Snackbar
+            open={toastOpen}
+            autoHideDuration={3000}
+            onClose={handleToastClose}
+          >
+            <Alert onClose={handleToastClose}>
+              <Typography variant="body1">
+                New Entry Added Successfully!
               </Typography>
-            </NavLink>
-          </Box>
-        </Grid>
+            </Alert>
+          </Snackbar>
+        </>
+      ) : (
+        <>
+          <Grid item xs={12}>
+            <Box py={4}>
+              <Typography variant="body1" align="center">
+                Please{' '}
+                {
+                  <NavLink className={classes.navLink} to={'/login'}>
+                    Login
+                  </NavLink>
+                }{' '}
+                in order to see your coffee entries.
+              </Typography>
+            </Box>
+          </Grid>
+        </>
       )}
-      <Grid item xs={12}>
-        <CurrentCoffeeEntries
-          coffeeEntries={currentCoffeeEntries}
-          onDateChange={updateDateRange}
-        />
-      </Grid>
-      <Snackbar
-        open={toastOpen}
-        autoHideDuration={3000}
-        onClose={handleToastClose}
-      >
-        <Alert onClose={handleToastClose}>
-          <Typography variant="body1">New Entry Added Successfully!</Typography>
-        </Alert>
-      </Snackbar>
     </Grid>
   );
 }

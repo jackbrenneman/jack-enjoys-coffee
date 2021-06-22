@@ -9,6 +9,9 @@
  *    - Waters
  */
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+// React Router
+import { NavLink } from 'react-router-dom';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -45,7 +48,7 @@ import {
   dataEntryDefault,
 } from '../../consts.js';
 
-function DataEntryContainer() {
+function DataEntryContainer({ user }) {
   // State used for determining which data entry component to show.
   const [dataEntry, setDataEntry] = useState(dataEntryDefault);
 
@@ -60,8 +63,15 @@ function DataEntryContainer() {
   });
 
   const useStyles = makeStyles((theme) => ({
+    page: {
+      backgroundColor: '#EEEEEE',
+      minHeight: '100vh',
+    },
     radio: {
       padding: '2px',
+    },
+    navLink: {
+      textDecoration: 'none',
     },
   }));
 
@@ -69,17 +79,19 @@ function DataEntryContainer() {
 
   // When the component renders, we fetch all the current data
   useEffect(() => {
-    queryGQL(currentDataQuery)
-      .then(({ data }) => {
-        if (data) {
-          setCurrentData(data);
-        }
-      })
-      .catch((e) => {
-        // TODO: Determine what to do if fetch is unsuccessful
-        console.log(e);
-      });
-  }, []);
+    if (user?.user_id) {
+      queryGQL(currentDataQuery)
+        .then(({ data }) => {
+          if (data) {
+            setCurrentData(data);
+          }
+        })
+        .catch((e) => {
+          // TODO: Determine what to do if fetch is unsuccessful
+          console.log(e);
+        });
+    }
+  }, [user]);
 
   const handleDataOptionChange = (e) => {
     setDataEntry({
@@ -127,116 +139,144 @@ function DataEntryContainer() {
   };
 
   return (
-    <Box>
-      <Box py={4}>
-        <Grid container direction="column" alignItems="center">
-          <Grid item xs={12}>
-            <FormControl component="fieldset">
-              <RadioGroup
-                row
-                aria-label="dataOptions"
-                name="dataOptions"
-                value={dataOption}
-                onChange={handleDataOptionChange}
-              >
-                <Grid container align="center" justify="center">
-                  <Grid item xs={12}>
-                    <FormControlLabel
-                      value={brewerEnum}
-                      control={<Radio className={classes.radio} />}
-                      label={
-                        <Typography variant="caption" align="center">
-                          Brewer
-                        </Typography>
-                      }
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value={coffeeEnum}
-                      control={<Radio className={classes.radio} />}
-                      label={
-                        <Typography variant="caption" align="center">
-                          Coffee
-                        </Typography>
-                      }
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value={drinkEnum}
-                      control={<Radio className={classes.radio} />}
-                      label={
-                        <Typography variant="caption" align="center">
-                          Drink
-                        </Typography>
-                      }
-                      labelPlacement="bottom"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <FormControlLabel
-                      value={grinderEnum}
-                      control={<Radio className={classes.radio} />}
-                      label={
-                        <Typography variant="caption" align="center">
-                          Grinder
-                        </Typography>
-                      }
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value={originEnum}
-                      control={<Radio className={classes.radio} />}
-                      label={
-                        <Typography variant="caption" align="center">
-                          Origin
-                        </Typography>
-                      }
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value={roasterEnum}
-                      control={<Radio className={classes.radio} />}
-                      label={
-                        <Typography variant="caption" align="center">
-                          Roaster
-                        </Typography>
-                      }
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value={waterEnum}
-                      control={<Radio className={classes.radio} />}
-                      label={
-                        <Typography variant="caption" align="center">
-                          Water
-                        </Typography>
-                      }
-                      labelPlacement="bottom"
-                    />
-                  </Grid>
-                </Grid>
-              </RadioGroup>
-            </FormControl>
+    <Box className={classes.page}>
+      {user?.user_id ? (
+        <>
+          <Box py={4}>
+            <Grid container direction="column" alignItems="center">
+              <Grid item xs={12}>
+                <FormControl component="fieldset">
+                  <RadioGroup
+                    row
+                    aria-label="dataOptions"
+                    name="dataOptions"
+                    value={dataOption}
+                    onChange={handleDataOptionChange}
+                  >
+                    <Grid container align="center" justify="center">
+                      <Grid item xs={12}>
+                        <FormControlLabel
+                          value={brewerEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Brewer
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                        <FormControlLabel
+                          value={coffeeEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Coffee
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                        <FormControlLabel
+                          value={drinkEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Drink
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControlLabel
+                          value={grinderEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Grinder
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                        <FormControlLabel
+                          value={originEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Origin
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                        <FormControlLabel
+                          value={roasterEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Roaster
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                        <FormControlLabel
+                          value={waterEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Water
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                      </Grid>
+                    </Grid>
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Box>
+          <Grid>
+            <Grid item xs={12}>
+              <Divider variant="middle" />
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
-      <Grid>
-        <Grid item xs={12}>
-          <Divider variant="middle" />
-        </Grid>
-      </Grid>
-      <Grid>
-        <Grid item xs={12}>
-          {getDataEntryForm()}
-        </Grid>
-      </Grid>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleToastClose}>
-        <Alert onClose={handleToastClose} severity={severity}>
-          <Typography variant="body1">{message}</Typography>
-        </Alert>
-      </Snackbar>
+          <Grid>
+            <Grid item xs={12}>
+              {getDataEntryForm()}
+            </Grid>
+          </Grid>
+          <Snackbar
+            open={open}
+            autoHideDuration={3000}
+            onClose={handleToastClose}
+          >
+            <Alert onClose={handleToastClose} severity={severity}>
+              <Typography variant="body1">{message}</Typography>
+            </Alert>
+          </Snackbar>
+        </>
+      ) : (
+        <Box py={4}>
+          <Typography variant="body1" align="center">
+            You must{' '}
+            {
+              <NavLink className={classes.navLink} to={'/login'}>
+                Login
+              </NavLink>
+            }{' '}
+            to add new data
+          </Typography>
+        </Box>
+      )}
     </Box>
   );
 }
+
+DataEntryContainer.propTypes = {
+  user: PropTypes.object,
+};
+
+DataEntryContainer.defaultProps = {
+  user: {},
+};
 
 export default DataEntryContainer;

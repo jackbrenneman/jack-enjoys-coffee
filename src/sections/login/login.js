@@ -171,6 +171,12 @@ function Login() {
               type={showPassword ? 'text' : 'password'}
               className={classes.form}
               id="password"
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  handleLoginClick();
+                }
+              }}
               onChange={handlePasswordChange}
               endAdornment={
                 <InputAdornment position="end">
@@ -189,7 +195,12 @@ function Login() {
       </Grid>
       <Grid item xs={12}>
         <Box pt={4} pb={8}>
-          <Button variant="contained" size="large" onClick={handleLoginClick}>
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            onClick={handleLoginClick}
+          >
             <Typography variant="body1" align="center">
               Login
             </Typography>

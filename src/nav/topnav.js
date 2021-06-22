@@ -2,6 +2,7 @@
  * The top navigation bar.
  */
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 // React Router
 import { NavLink } from 'react-router-dom';
 // Material UI
@@ -25,7 +26,7 @@ import LocalCafeIcon from '@material-ui/icons/LocalCafe';
 // Custom Components
 import logo from '../media/icons/coffee-icon.png';
 
-function TopNav() {
+function TopNav({ user }) {
   const useStyles = makeStyles((theme) => ({
     grow: {
       flexGrow: 1,
@@ -58,6 +59,109 @@ function TopNav() {
 
   const container =
     window !== undefined ? () => window.document.body : undefined;
+
+  const getLoggedInDrawerLinks = () => {
+    return (
+      <>
+        <NavLink
+          className={classes.navLink}
+          to={'/entries'}
+          onClick={handleDrawerToggle}
+          activeClassName={classes.activeNavLink}
+        >
+          <Box pr={2}>
+            <ListItem button>
+              <ListItemIcon>
+                <LocalCafeIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={<Typography variant="caption">Entries</Typography>}
+              />
+            </ListItem>
+          </Box>
+        </NavLink>
+        <Divider />
+        <NavLink
+          className={classes.navLink}
+          to={'/new_entry'}
+          onClick={handleDrawerToggle}
+          activeClassName={classes.activeNavLink}
+        >
+          <Box pr={2}>
+            <ListItem button>
+              <ListItemIcon>
+                <CreateTwoToneIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={<Typography variant="caption">New Entry</Typography>}
+              />
+            </ListItem>
+          </Box>
+        </NavLink>
+        <NavLink
+          className={classes.navLink}
+          to={'/new_data'}
+          onClick={handleDrawerToggle}
+          activeClassName={classes.activeNavLink}
+        >
+          <Box pr={2}>
+            <ListItem button>
+              <ListItemIcon>
+                <CreateTwoToneIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={<Typography variant="caption">Add Data</Typography>}
+              />
+            </ListItem>
+          </Box>
+        </NavLink>
+
+        <NavLink
+          className={classes.navLink}
+          to={'/jacks_entries'}
+          onClick={handleDrawerToggle}
+          activeClassName={classes.activeNavLink}
+        >
+          <Box pr={2}>
+            <ListItem button>
+              <ListItemIcon>
+                <LocalCafeIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <Typography variant="caption">Jack's Entries</Typography>
+                }
+              />
+            </ListItem>
+          </Box>
+        </NavLink>
+      </>
+    );
+  };
+
+  const getLoggedOutDrawerLinks = () => {
+    return (
+      <NavLink
+        className={classes.navLink}
+        to={'/entries?user_id=1'}
+        onClick={handleDrawerToggle}
+        activeClassName={classes.activeNavLink}
+      >
+        <Box pr={2}>
+          <ListItem button>
+            <ListItemIcon>
+              <LocalCafeIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                <Typography variant="caption">Jack's Entries</Typography>
+              }
+            />
+          </ListItem>
+        </Box>
+      </NavLink>
+    );
+  };
 
   return (
     <Box>
@@ -119,69 +223,22 @@ function TopNav() {
                 </ListItem>
               </Box>
             </NavLink>
-            <NavLink
-              className={classes.navLink}
-              to={'/entries'}
-              onClick={handleDrawerToggle}
-              activeClassName={classes.activeNavLink}
-            >
-              <Box pr={2}>
-                <ListItem button>
-                  <ListItemIcon>
-                    <LocalCafeIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <Typography variant="caption">Current Entries</Typography>
-                    }
-                  />
-                </ListItem>
-              </Box>
-            </NavLink>
-            <Divider />
-            <NavLink
-              className={classes.navLink}
-              to={'/new_entry'}
-              onClick={handleDrawerToggle}
-              activeClassName={classes.activeNavLink}
-            >
-              <Box pr={2}>
-                <ListItem button>
-                  <ListItemIcon>
-                    <CreateTwoToneIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <Typography variant="caption">New Entry</Typography>
-                    }
-                  />
-                </ListItem>
-              </Box>
-            </NavLink>
-            <NavLink
-              className={classes.navLink}
-              to={'/new_data'}
-              onClick={handleDrawerToggle}
-              activeClassName={classes.activeNavLink}
-            >
-              <Box pr={2}>
-                <ListItem button>
-                  <ListItemIcon>
-                    <CreateTwoToneIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <Typography variant="caption">Add Data</Typography>
-                    }
-                  />
-                </ListItem>
-              </Box>
-            </NavLink>
+            {user?.user_id
+              ? getLoggedInDrawerLinks()
+              : getLoggedOutDrawerLinks()}
           </List>
         </Drawer>
       </nav>
     </Box>
   );
 }
+
+TopNav.propTypes = {
+  user: PropTypes.object,
+};
+
+TopNav.defaultProps = {
+  user: {},
+};
 
 export default TopNav;

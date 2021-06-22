@@ -2,6 +2,9 @@
  * The form to input a new Coffee Entry.
  */
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+// React Router
+import { NavLink } from 'react-router-dom';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -29,10 +32,8 @@ import {
   createMethodIdToDrinksMap,
   normalizeCoffeeEntryInput,
 } from './helpers/input_helpers.js';
-// Context
-import { UserContext } from '../../contexts/user_context.js';
 
-function CoffeeEntryContainer() {
+function CoffeeEntryContainer({ user }) {
   const useStyles = makeStyles((theme) => ({
     page: {
       backgroundColor: '#EEEEEE',
@@ -40,6 +41,9 @@ function CoffeeEntryContainer() {
     },
     section: {
       maxWidth: '800px',
+    },
+    navLink: {
+      textDecoration: 'none',
     },
   }));
 
@@ -76,27 +80,29 @@ function CoffeeEntryContainer() {
 
   // When the component renders, we fetch all the current data
   useEffect(() => {
-    queryGQL(activeCurrentDataQuery)
-      .then(({ data }) => {
-        if (data) {
-          const { coffees, brewers, drinks } = data;
-          if (coffees.length) {
-            setRoasterToCoffees(createRoasterIdToCoffeesMap(coffees));
+    if (user?.user_id) {
+      queryGQL(activeCurrentDataQuery)
+        .then(({ data }) => {
+          if (data) {
+            const { coffees, brewers, drinks } = data;
+            if (coffees.length) {
+              setRoasterToCoffees(createRoasterIdToCoffeesMap(coffees));
+            }
+            if (brewers.length) {
+              setMethodToBrewers(createMethodIdToBrewersMap(brewers));
+            }
+            if (drinks.length) {
+              setMethodToDrinks(createMethodIdToDrinksMap(drinks));
+            }
+            setCurrentData(data);
           }
-          if (brewers.length) {
-            setMethodToBrewers(createMethodIdToBrewersMap(brewers));
-          }
-          if (drinks.length) {
-            setMethodToDrinks(createMethodIdToDrinksMap(drinks));
-          }
-          setCurrentData(data);
-        }
-      })
-      .catch((e) => {
-        // TODO: Determine what to do if fetch is unsuccessful
-        console.log(e);
-      });
-  }, []);
+        })
+        .catch((e) => {
+          // TODO: Determine what to do if fetch is unsuccessful
+          console.log(e);
+        });
+    }
+  }, [user]);
 
   const {
     brewers,
@@ -162,6 +168,16 @@ function CoffeeEntryContainer() {
     },
   ];
 
+  const getEntrySections = () => {
+    return sections.map(({ component, name }) => (
+      <Box px={2} className={classes.section} key={name}>
+        <Grid item xs={12}>
+          {component}
+        </Grid>
+      </Box>
+    ));
+  };
+
   const handleSubmit = () => {
     const normalizedCoffeeEntry = normalizeCoffeeEntryInput(coffeeEntry);
     writeGQL(coffeeEntryMutation, { coffeeEntry: normalizedCoffeeEntry })
@@ -191,26 +207,15 @@ function CoffeeEntryContainer() {
   };
 
   return (
-    <UserContext.Consumer>
-      {(value) => (
-        <Grid
-          container
-          direction="column"
-          alignItems="center"
-          className={classes.page}
-        >
+    <Box className={classes.page}>
+      {user?.user_id ? (
+        <Grid container direction="column" alignItems="center">
           <Grid item xs={12}>
             <Box py={2}>
               <Typography variant="h2">New Coffee Entry</Typography>
             </Box>
           </Grid>
-          {sections.map(({ component, name }) => (
-            <Box px={2} className={classes.section} key={name}>
-              <Grid item xs={12}>
-                {component}
-              </Grid>
-            </Box>
-          ))}
+          {getEntrySections()}
           <Grid item xs={12}>
             <Box pt={4} pb={8}>
               <Button variant="contained" size="large" onClick={handleSubmit}>
@@ -230,9 +235,29 @@ function CoffeeEntryContainer() {
             </Alert>
           </Snackbar>
         </Grid>
+      ) : (
+        <Box py={4}>
+          <Typography variant="body1" align="center">
+            You must{' '}
+            {
+              <NavLink className={classes.navLink} to={'/login'}>
+                Login
+              </NavLink>
+            }{' '}
+            to create a new entry
+          </Typography>
+        </Box>
       )}
-    </UserContext.Consumer>
+    </Box>
   );
 }
+
+CoffeeEntryContainer.propTypes = {
+  user: PropTypes.object,
+};
+
+CoffeeEntryContainer.defaultProps = {
+  user: {},
+};
 
 export default CoffeeEntryContainer;
