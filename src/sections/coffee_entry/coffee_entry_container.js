@@ -243,6 +243,11 @@ function CoffeeEntryContainer({ user }) {
     return;
   };
 
+  const handleClearFields = () => {
+    setMostRecentCoffeeEntry(normalizeMostRecentCoffeeEntry({}));
+    setCoffeeEntry(defaultCoffeeEntry);
+  };
+
   return (
     <Box className={classes.page}>
       {user?.user_id ? (
@@ -252,6 +257,9 @@ function CoffeeEntryContainer({ user }) {
               <Typography variant="h2">New Coffee Entry</Typography>
             </Box>
           </Grid>
+          <Button color="primary" onClick={handleClearFields}>
+            <Typography variant="caption">Reset All Fields</Typography>
+          </Button>
           {getEntrySections()}
           <Grid item xs={12}>
             <Box pt={4} pb={8}>

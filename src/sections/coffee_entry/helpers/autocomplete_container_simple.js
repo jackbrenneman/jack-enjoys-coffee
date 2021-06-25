@@ -8,13 +8,12 @@ import Autocomplete, {
 } from '@material-ui/lab/Autocomplete';
 
 function AutocompleteWrapperSimple({
-  fieldName,
   onChange,
   options,
   textField,
   initialValue,
 }) {
-  const [value, setValue] = useState({ name: initialValue });
+  const [value, setValue] = useState({ name: initialValue ?? '' });
   const filter = createFilterOptions();
 
   const handleOnChange = (event, newValue) => {
@@ -62,7 +61,6 @@ function AutocompleteWrapperSimple({
 }
 
 AutocompleteWrapperSimple.propTypes = {
-  fieldName: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
   textField: PropTypes.func.isRequired,

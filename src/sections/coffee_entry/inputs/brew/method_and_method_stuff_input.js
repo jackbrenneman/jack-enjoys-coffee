@@ -200,7 +200,7 @@ function MethodAndMethodStuffInput({
   };
 
   const handleSteepTimeChange = (e) => {
-    const timeEnum = e.target.id;
+    const timeEnum = e.target.name;
     const timeValue = parseInt(e.target.value) || 0;
     const steepTimeInSeconds = getSteepTimeInSeconds(
       timeEnum,
@@ -259,27 +259,39 @@ function MethodAndMethodStuffInput({
   };
 
   const getMostRecentCoffeeIn = () => {
-    return initialValues?.coffee_in;
+    return initialValues?.coffee_in ?? null;
   };
 
   const getMostRecentLiquidOut = () => {
-    return initialValues?.liquid_out;
+    return initialValues?.liquid_out ?? null;
   };
 
   const getMostRecentWaterIn = () => {
-    return initialValues?.water_in;
+    return initialValues?.water_in ?? null;
   };
 
   const getMostRecentSteepTime = () => {
-    return initialValues?.steep_time;
+    return initialValues?.steep_time ?? 0;
+  };
+
+  const getMostRecentSteepTimeHours = () => {
+    return Math.floor(getMostRecentSteepTime() / 3600) ?? null;
+  };
+
+  const getMostRecentSteepTimeMinutes = () => {
+    return Math.floor((getMostRecentSteepTime() % 3600) / 60) ?? null;
+  };
+
+  const getMostRecentSteepTimeSeconds = () => {
+    return (getMostRecentSteepTime() % 3600) % 60 ?? null;
   };
 
   const getMostRecentBrewerName = () => {
-    return initialValues?.brewer?.name;
+    return initialValues?.brewer?.name ?? null;
   };
 
   const getMostRecentDrinkName = () => {
-    return initialValues?.drink?.name;
+    return initialValues?.drink?.name ?? null;
   };
 
   const coffeeInInput = (
@@ -392,13 +404,14 @@ function MethodAndMethodStuffInput({
                     input: classes.resize,
                   },
                   inputProps: {
-                    decimalScale: 1,
+                    decimalScale: 0,
                     allowNegative: false,
+                    name: hoursEnum,
+                    isAllowed: ({ value }) => value < 1000,
                   },
                 }}
-                defaultValue={getMostRecentSteepTime()}
-                key={`${key}${getMostRecentSteepTime()}`}
-                id={hoursEnum}
+                defaultValue={getMostRecentSteepTimeHours()}
+                key={`${key}${getMostRecentSteepTimeHours()}`}
                 variant="outlined"
                 onChange={handleSteepTimeChange}
                 size="small"
@@ -414,12 +427,19 @@ function MethodAndMethodStuffInput({
             <form autoComplete="off">
               <TextField
                 InputProps={{
+                  inputComponent: NumberFormatCustom,
                   classes: {
                     input: classes.resize,
                   },
+                  inputProps: {
+                    decimalScale: 0,
+                    allowNegative: false,
+                    name: minutesEnum,
+                    isAllowed: ({ value }) => value < 60,
+                  },
                 }}
-                key={key}
-                id={minutesEnum}
+                defaultValue={getMostRecentSteepTimeMinutes()}
+                key={`${key}${getMostRecentSteepTimeMinutes()}`}
                 variant="outlined"
                 onChange={handleSteepTimeChange}
                 size="small"
@@ -435,12 +455,19 @@ function MethodAndMethodStuffInput({
             <form autoComplete="off">
               <TextField
                 InputProps={{
+                  inputComponent: NumberFormatCustom,
                   classes: {
                     input: classes.resize,
                   },
+                  inputProps: {
+                    decimalScale: 0,
+                    allowNegative: false,
+                    name: secondsEnum,
+                    isAllowed: ({ value }) => value < 60,
+                  },
                 }}
-                key={key}
-                id={secondsEnum}
+                defaultValue={getMostRecentSteepTimeSeconds()}
+                key={`${key}${getMostRecentSteepTimeSeconds()}`}
                 variant="outlined"
                 onChange={handleSteepTimeChange}
                 size="small"

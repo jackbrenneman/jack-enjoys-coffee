@@ -180,19 +180,19 @@ export const normalizeCoffeeEntryInput = (coffeeEntry) => {
   } = brew;
   return {
     date,
-    coffee_id,
-    method_id,
-    brewer_id,
-    drink_id,
-    grinder_id,
-    grinder_setting,
-    water_id,
-    coffee_in,
-    liquid_out,
-    water_in,
-    steep_time,
-    notes,
-    rating,
+    coffee_id: coffee_id ?? null,
+    method_id: method_id ?? null,
+    brewer_id: brewer_id ?? null,
+    drink_id: drink_id ?? null,
+    grinder_id: grinder_id ?? null,
+    grinder_setting: grinder_setting ?? null,
+    water_id: water_id ?? null,
+    coffee_in: coffee_in ?? null,
+    liquid_out: liquid_out ?? null,
+    water_in: water_in ?? null,
+    steep_time: steep_time ?? null,
+    notes: notes ?? null,
+    rating: rating ?? null,
   };
 };
 
@@ -340,8 +340,8 @@ export const normalizeMostRecentCoffeeEntryForInput = (
  *   }
  */
 export const normalizeMostRecentCoffeeEntry = (mostRecentCoffeeEntry) => {
-  const { coffee, brew } = mostRecentCoffeeEntry;
-  const { method, grind, water } = brew;
+  const { coffee = {}, brew = {} } = mostRecentCoffeeEntry;
+  const { method = {}, grind = {}, water = {} } = brew;
   return {
     mostRecentCoffee: {
       ...coffee,

@@ -84,8 +84,8 @@ function CoffeeInput({
 
   // When the component renders, check to see if mostRecentCoffee has updated
   useEffect(() => {
-    if (mostRecentCoffee?.name) {
-      setCoffeeName(mostRecentCoffee.name);
+    if (mostRecentCoffee) {
+      setCoffeeName(mostRecentCoffee?.name ?? '');
       setSelectedCoffee(mostRecentCoffee);
     }
   }, [mostRecentCoffee]);
