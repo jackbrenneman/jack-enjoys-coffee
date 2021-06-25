@@ -49,6 +49,7 @@ export const normalizeCoffeeEntries = (data) => {
     const brew = {
       method: {
         name: method_name,
+        method_id,
         category: method_id,
         coffee_in,
         drink,

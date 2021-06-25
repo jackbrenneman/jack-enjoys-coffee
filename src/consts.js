@@ -188,6 +188,8 @@ const getDateString = (daysAgo = 0) => {
 export const today = getDateString();
 // Last week
 export const sevenDaysAgo = getDateString(7);
+// Yesterday
+export const yesterday = getDateString(1);
 
 // Default state for a coffee entry
 export const defaultCoffeeEntry = {
@@ -211,6 +213,21 @@ export const defaultCoffeeEntry = {
   // Notes and Rating
   notes: '',
   rating: null,
+};
+
+// Default state for the most recent coffee entry
+export const defaultMostRecentCoffeeEntry = {
+  coffee_name: null,
+  method_name: null,
+  brewer_name: null,
+  drink_name: null,
+  water_name: null,
+  grinder_name: null,
+  grinder_setting: null,
+  coffee_in: null,
+  liquid_out: null,
+  water_in: null,
+  steep_time: null,
 };
 
 // All the props for entering new data

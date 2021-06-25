@@ -1,7 +1,7 @@
 /**
  * The Coffee Info for a Coffee Entry.
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,6 +26,7 @@ function CoffeeInput({
   coffees,
   roasters,
   roasterIdToCoffeesMap,
+  mostRecentCoffee,
 }) {
   const useStyles = makeStyles(() => ({
     card: {
@@ -75,8 +76,19 @@ function CoffeeInput({
   // State used for the selection of coffee so we can show the user info about it
   const [selectedCoffee, setSelectedCoffee] = useState(null);
 
+  // State used for the coffee name so we can have an initial coffee populated correctly
+  const [coffeeName, setCoffeeName] = useState('');
+
   // State used to reset inputs
   const [key, setKey] = useState(true);
+
+  // When the component renders, check to see if mostRecentCoffee has updated
+  useEffect(() => {
+    if (mostRecentCoffee?.name) {
+      setCoffeeName(mostRecentCoffee.name);
+      setSelectedCoffee(mostRecentCoffee);
+    }
+  }, [mostRecentCoffee]);
 
   // Only giving a roaster search to filter what coffees show up
   const handleRoasterChange = ({ roaster_id }) => {
@@ -91,6 +103,7 @@ function CoffeeInput({
         ...coffeeEntry,
         coffee_id: null,
       });
+      setCoffeeName('');
       setSelectedCoffee(null);
       setKey(!key);
     }
@@ -139,6 +152,8 @@ function CoffeeInput({
                 fieldName="roaster"
                 options={roasters}
                 onChange={handleRoasterChange}
+                initialValue={mostRecentCoffee?.roaster?.name}
+                key={`${mostRecentCoffee?.name}`}
                 textField={(params) => (
                   <TextField
                     {...params}
@@ -165,7 +180,8 @@ function CoffeeInput({
               fieldName="name"
               options={getCoffeeOptions()}
               onChange={handleCoffeeChange}
-              key={key}
+              initialValue={coffeeName}
+              key={`${key}${coffeeName}`}
               textField={(params) => (
                 <TextField
                   {...params}
@@ -267,6 +283,11 @@ CoffeeInput.propTypes = {
   coffees: PropTypes.array.isRequired,
   roasters: PropTypes.array.isRequired,
   roasterIdToCoffeesMap: PropTypes.object.isRequired,
+  mostRecentCoffee: PropTypes.object,
+};
+
+CoffeeInput.defaultProps = {
+  mostRecentCoffee: {},
 };
 
 export default CoffeeInput;

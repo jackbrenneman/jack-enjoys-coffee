@@ -2,7 +2,7 @@
  * The top level Mutation Type for the jack-enjoys-coffee app.
  */
 import {
-  GraphQLID,
+  GraphQLInt,
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLString,
@@ -109,9 +109,9 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       },
     },
     deleteCoffeeEntry: {
-      type: GraphQLID,
+      type: GraphQLInt,
       args: {
-        coffee_entry_id: { type: new GraphQLNonNull(GraphQLID) },
+        coffee_entry_id: { type: new GraphQLNonNull(GraphQLInt) },
       },
       resolve(parentValue, { coffee_entry_id }, context) {
         if (!coffee_entry_id) {
@@ -129,7 +129,7 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
     updateCoffeeEntry: {
       type: CoffeeEntryType,
       args: {
-        coffee_entry_id: { type: new GraphQLNonNull(GraphQLID) },
+        coffee_entry_id: { type: new GraphQLNonNull(GraphQLInt) },
         coffee_entry: { type: CoffeeEntryInputType },
       },
       resolve(parentValue, { coffee_entry_id, coffee_entry }, context) {
@@ -158,9 +158,9 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       },
     },
     deleteBrewer: {
-      type: GraphQLID,
+      type: GraphQLInt,
       args: {
-        brewer_id: { type: new GraphQLNonNull(GraphQLID) },
+        brewer_id: { type: new GraphQLNonNull(GraphQLInt) },
       },
       resolve(parentValue, { brewer_id }, context) {
         const user_id = getUserId(context);
@@ -175,7 +175,7 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
     updateBrewer: {
       type: BrewerType,
       args: {
-        brewer_id: { type: new GraphQLNonNull(GraphQLID) },
+        brewer_id: { type: new GraphQLNonNull(GraphQLInt) },
         brewer: { type: BrewerInputType },
       },
       resolve(parentValue, { brewer_id, brewer }, context) {
@@ -200,9 +200,9 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       },
     },
     deleteCoffee: {
-      type: GraphQLID,
+      type: GraphQLInt,
       args: {
-        coffee_id: { type: new GraphQLNonNull(GraphQLID) },
+        coffee_id: { type: new GraphQLNonNull(GraphQLInt) },
       },
       resolve(parentValue, { coffee_id }, context) {
         const user_id = getUserId(context);
@@ -217,7 +217,7 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
     updateCoffee: {
       type: CoffeeType,
       args: {
-        coffee_id: { type: new GraphQLNonNull(GraphQLID) },
+        coffee_id: { type: new GraphQLNonNull(GraphQLInt) },
         coffee: { type: CoffeeInputType },
       },
       resolve(parentValue, { coffee_id, coffee }, context) {
@@ -242,9 +242,9 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       },
     },
     deleteDrink: {
-      type: GraphQLID,
+      type: GraphQLInt,
       args: {
-        drink_id: { type: new GraphQLNonNull(GraphQLID) },
+        drink_id: { type: new GraphQLNonNull(GraphQLInt) },
       },
       resolve(parentValue, { drink_id }, context) {
         const user_id = getUserId(context);
@@ -257,7 +257,7 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
     updateDrink: {
       type: DrinkType,
       args: {
-        drink_id: { type: new GraphQLNonNull(GraphQLID) },
+        drink_id: { type: new GraphQLNonNull(GraphQLInt) },
         drink: { type: DrinkInputType },
       },
       resolve(parentValue, { drink_id, drink }, context) {
@@ -282,9 +282,9 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       },
     },
     deleteGrinder: {
-      type: GraphQLID,
+      type: GraphQLInt,
       args: {
-        grinder_id: { type: new GraphQLNonNull(GraphQLID) },
+        grinder_id: { type: new GraphQLNonNull(GraphQLInt) },
       },
       resolve(parentValue, { grinder_id }, context) {
         const user_id = getUserId(context);
@@ -299,7 +299,7 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
     updateGrinder: {
       type: GrinderType,
       args: {
-        grinder_id: { type: new GraphQLNonNull(GraphQLID) },
+        grinder_id: { type: new GraphQLNonNull(GraphQLInt) },
         grinder: { type: GrinderInputType },
       },
       resolve(parentValue, { grinder_id, grinder }, context) {
@@ -324,9 +324,9 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       },
     },
     deleteOrigin: {
-      type: GraphQLID,
+      type: GraphQLInt,
       args: {
-        origin_id: { type: new GraphQLNonNull(GraphQLID) },
+        origin_id: { type: new GraphQLNonNull(GraphQLInt) },
       },
       resolve(parentValue, { origin_id }, context) {
         const user_id = getUserId(context);
@@ -341,7 +341,7 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
     updateOrigin: {
       type: OriginType,
       args: {
-        origin_id: { type: new GraphQLNonNull(GraphQLID) },
+        origin_id: { type: new GraphQLNonNull(GraphQLInt) },
         name: { type: GraphQLString },
       },
       resolve(parentValue, { origin_id, name }, context) {
@@ -366,9 +366,9 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       },
     },
     deleteRoaster: {
-      type: GraphQLID,
+      type: GraphQLInt,
       args: {
-        roaster_id: { type: new GraphQLNonNull(GraphQLID) },
+        roaster_id: { type: new GraphQLNonNull(GraphQLInt) },
       },
       resolve(parentValue, { roaster_id }, context) {
         const user_id = getUserId(context);
@@ -383,7 +383,7 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
     updateRoaster: {
       type: RoasterType,
       args: {
-        roaster_id: { type: new GraphQLNonNull(GraphQLID) },
+        roaster_id: { type: new GraphQLNonNull(GraphQLInt) },
         roaster: { type: RoasterInputType },
       },
       resolve(parentValue, { roaster_id, roaster }, context) {
@@ -408,9 +408,9 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
       },
     },
     deleteWater: {
-      type: GraphQLID,
+      type: GraphQLInt,
       args: {
-        water_id: { type: new GraphQLNonNull(GraphQLID) },
+        water_id: { type: new GraphQLNonNull(GraphQLInt) },
       },
       resolve(parentValue, { water_id }, context) {
         const user_id = getUserId(context);
@@ -423,7 +423,7 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
     updateWater: {
       type: WaterType,
       args: {
-        water_id: { type: new GraphQLNonNull(GraphQLID) },
+        water_id: { type: new GraphQLNonNull(GraphQLInt) },
         water: { type: WaterInputType },
       },
       resolve(parentValue, { water_id, water }, context) {

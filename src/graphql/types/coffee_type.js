@@ -3,7 +3,7 @@
  */
 import {
   GraphQLBoolean,
-  GraphQLID,
+  GraphQLInt,
   GraphQLObjectType,
   GraphQLString,
 } from 'graphql';
@@ -14,7 +14,7 @@ import { RoasterType } from './roaster_type.js';
 export const CoffeeType = new GraphQLObjectType({
   name: 'Coffee',
   fields: {
-    coffee_id: { type: GraphQLID },
+    coffee_id: { type: GraphQLInt },
     name: { type: GraphQLString },
     roaster: { type: RoasterType },
     origin: { type: OriginType },

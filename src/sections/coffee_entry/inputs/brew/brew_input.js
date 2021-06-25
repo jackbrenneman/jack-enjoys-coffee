@@ -32,6 +32,7 @@ function BrewInput({
   waters,
   methodIdToBrewersMap,
   methodIdToDrinksMap,
+  mostRecentBrewData,
 }) {
   const { brew } = coffeeEntry;
   const useStyles = makeStyles(() => ({
@@ -81,6 +82,22 @@ function BrewInput({
     });
   };
 
+  const getInitialGrinderName = () => {
+    return mostRecentBrewData?.mostRecentGrind?.grinder?.name;
+  };
+
+  const getInitialGrinderSetting = () => {
+    return mostRecentBrewData?.mostRecentGrind?.setting;
+  };
+
+  const getInitialWaterName = () => {
+    return mostRecentBrewData?.mostRecentWater?.name;
+  };
+
+  const getMostRecentMethodData = () => {
+    return mostRecentBrewData?.mostRecentMethod ?? {};
+  };
+
   return (
     <Grid container justify="center">
       <Grid item xs={12}>
@@ -94,6 +111,7 @@ function BrewInput({
               methods={methods}
               methodIdToBrewersMap={methodIdToBrewersMap}
               methodIdToDrinksMap={methodIdToDrinksMap}
+              mostRecentMethodData={getMostRecentMethodData()}
             />
           </Grid>
           <Grid item xs={12}>
@@ -110,6 +128,8 @@ function BrewInput({
                 fieldName="name"
                 options={grinders}
                 onChange={handleGrinderChange}
+                key={getInitialGrinderName()}
+                initialValue={getInitialGrinderName()}
                 textField={(params) => (
                   <TextField
                     {...params}
@@ -135,6 +155,8 @@ function BrewInput({
             <form autoComplete="off">
               <TextField
                 className={classes.formSmall}
+                key={getInitialGrinderSetting()}
+                defaultValue={getInitialGrinderSetting()}
                 InputProps={{
                   classes: {
                     input: classes.resize,
@@ -162,6 +184,8 @@ function BrewInput({
                 fieldName="water"
                 options={waters}
                 onChange={handleWaterChange}
+                key={getInitialWaterName()}
+                initialValue={getInitialWaterName()}
                 textField={(params) => (
                   <TextField
                     {...params}
@@ -199,6 +223,11 @@ BrewInput.propTypes = {
   waters: PropTypes.array.isRequired,
   methodIdToBrewersMap: PropTypes.object.isRequired,
   methodIdToDrinksMap: PropTypes.object.isRequired,
+  mostRecentBrewData: PropTypes.object.isRequired,
+};
+
+BrewInput.defaultProps = {
+  mostRecentBrewData: {},
 };
 
 export default BrewInput;

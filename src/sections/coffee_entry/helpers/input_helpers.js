@@ -1,6 +1,7 @@
 /**
  * Helpers for the coffee entry input page.
  */
+import { today } from '../../../consts.js';
 
 /**
  * Creates a mapping of roaster_ids to coffees so users can filter coffees by roaster when selecting a coffee for a coffee entry
@@ -192,5 +193,169 @@ export const normalizeCoffeeEntryInput = (coffeeEntry) => {
     steep_time,
     notes,
     rating,
+  };
+};
+
+/**
+ * Takes the most recent coffee entry for a user and puts it into the shape of a coffee entry
+ *
+ * @param {object} mostRecentCoffeeEntry
+ *   {
+ *     coffee: {
+ *       coffee_id
+ *     }
+ *     brew: {
+ *       method: {
+ *         method_id,
+ *         brewer: {
+ *           brewer_id
+ *         },
+ *         drink: {
+ *           drink_id
+ *         },
+ *         coffee_in,
+ *         liquid_out,
+ *         water_in,
+ *         steep_time
+ *       }
+ *       grind: {
+ *         grinder: {
+ *           grinder_id
+ *         },
+ *         setting
+ *       }
+ *       water: {
+ *         water_id
+ *       }
+ *     }
+ *   }
+ *
+ * @returns {object} coffee entry in the shape needed for the state
+ *   {
+ *      date,
+ *      coffee_id,
+ *      brew: {
+ *        method_id,
+ *        brewer_id,
+ *        drink_id,
+ *        grinder_id,
+ *        grinder_setting,
+ *        water_id,
+ *        coffee_in,
+ *        liquid_out,
+ *        water_in,
+ *        steep_time,
+ *      }
+ *      notes,
+ *      rating,
+ *   }
+ */
+export const normalizeMostRecentCoffeeEntryForInput = (
+  mostRecentCoffeeEntry
+) => {
+  const { coffee, brew } = mostRecentCoffeeEntry;
+  const { coffee_id } = coffee;
+  const { method, grind, water } = brew;
+  const {
+    method_id,
+    brewer,
+    drink,
+    coffee_in,
+    liquid_out,
+    water_in,
+    steep_time,
+  } = method;
+  const { setting, grinder } = grind;
+  const { grinder_id } = grinder;
+  const { brewer_id } = brewer;
+  const { drink_id } = drink;
+  const { water_id } = water;
+  return {
+    date: today,
+    coffee_id: coffee_id,
+    brew: {
+      method_id,
+      brewer_id,
+      drink_id,
+      grinder_id,
+      grinder_setting: setting,
+      water_id,
+      coffee_in,
+      liquid_out,
+      water_in,
+      steep_time,
+    },
+    notes: null,
+    rating: null,
+  };
+};
+
+/**
+ * Takes the most recent coffee entry for a user and puts it into the shape to get the names better
+ *
+ * @param {object} mostRecentCoffeeEntry
+ *   {
+ *     coffee: {
+ *       coffee_id
+ *     }
+ *     brew: {
+ *       method: {
+ *         method_id,
+ *         brewer: {
+ *           brewer_id
+ *         },
+ *         drink: {
+ *           drink_id
+ *         },
+ *         coffee_in,
+ *         liquid_out,
+ *         water_in,
+ *         steep_time
+ *       }
+ *       grind: {
+ *         grinder: {
+ *           grinder_id
+ *         },
+ *         setting
+ *       }
+ *       water: {
+ *         water_id
+ *       }
+ *     }
+ *   }
+ *
+ * @returns {object} coffee entry in the shape needed for the state
+ *   {
+ *      coffee_name,
+ *      method_name,
+ *      brewer_name,
+ *      drink_name,
+ *      grinder_name,
+ *      grinder_setting,
+ *      water_name,
+ *      coffee_in,
+ *      liquid_out,
+ *      water_in,
+ *      steep_time,
+ *   }
+ */
+export const normalizeMostRecentCoffeeEntry = (mostRecentCoffeeEntry) => {
+  const { coffee, brew } = mostRecentCoffeeEntry;
+  const { method, grind, water } = brew;
+  return {
+    mostRecentCoffee: {
+      ...coffee,
+    },
+    mostRecentBrewData: {
+      mostRecentMethod: {
+        ...method,
+      },
+      mostRecentGrind: {
+        ...grind,
+      },
+      mostRecentWater: {
+        ...water,
+      },
+    },
   };
 };

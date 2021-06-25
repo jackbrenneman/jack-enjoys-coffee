@@ -1,7 +1,7 @@
 /**
  * The Brew Info for the method and drink type. When the user selects a method, the drink type should update to reflect the different drink types that can be made with that method.
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import NumberFormat from 'react-number-format';
@@ -54,6 +54,7 @@ function MethodAndMethodStuffInput({
   methods,
   methodIdToBrewersMap,
   methodIdToDrinksMap,
+  mostRecentMethodData,
 }) {
   const { brew } = coffeeEntry;
   const { method_id: selectedMethodId } = brew;
@@ -78,6 +79,16 @@ function MethodAndMethodStuffInput({
 
   // State used to reset inputs
   const [key, setKey] = useState(true);
+
+  // State used for the initial and default values
+  const [initialValues, setInitialValues] = useState(mostRecentMethodData);
+
+  // When the component renders, check to see if mostRecentMethodData has updated
+  useEffect(() => {
+    if (mostRecentMethodData) {
+      setInitialValues(mostRecentMethodData);
+    }
+  }, [mostRecentMethodData]);
 
   // Determines what brewer options there are after a user selects a method
   const getBrewerOptions = () => {
@@ -244,6 +255,31 @@ function MethodAndMethodStuffInput({
       },
     });
     setKey(!key);
+    setInitialValues({});
+  };
+
+  const getMostRecentCoffeeIn = () => {
+    return initialValues?.coffee_in;
+  };
+
+  const getMostRecentLiquidOut = () => {
+    return initialValues?.liquid_out;
+  };
+
+  const getMostRecentWaterIn = () => {
+    return initialValues?.water_in;
+  };
+
+  const getMostRecentSteepTime = () => {
+    return initialValues?.steep_time;
+  };
+
+  const getMostRecentBrewerName = () => {
+    return initialValues?.brewer?.name;
+  };
+
+  const getMostRecentDrinkName = () => {
+    return initialValues?.drink?.name;
   };
 
   const coffeeInInput = (
@@ -264,7 +300,8 @@ function MethodAndMethodStuffInput({
                 allowNegative: false,
               },
             }}
-            key={key}
+            defaultValue={getMostRecentCoffeeIn()}
+            key={`${key}${getMostRecentCoffeeIn()}`}
             className={classes.formInOut}
             id="outlined-basic"
             variant="outlined"
@@ -294,7 +331,8 @@ function MethodAndMethodStuffInput({
                 allowNegative: false,
               },
             }}
-            key={key}
+            defaultValue={getMostRecentWaterIn()}
+            key={`${key}${getMostRecentWaterIn()}`}
             id="outlined-basic"
             variant="outlined"
             onChange={handleLiquidInChange}
@@ -323,7 +361,8 @@ function MethodAndMethodStuffInput({
                 allowNegative: false,
               },
             }}
-            key={key}
+            defaultValue={getMostRecentLiquidOut()}
+            key={`${key}${getMostRecentLiquidOut()}`}
             id="liquid_out"
             variant="outlined"
             onChange={handleLiquidOutChange}
@@ -357,7 +396,8 @@ function MethodAndMethodStuffInput({
                     allowNegative: false,
                   },
                 }}
-                key={key}
+                defaultValue={getMostRecentSteepTime()}
+                key={`${key}${getMostRecentSteepTime()}`}
                 id={hoursEnum}
                 variant="outlined"
                 onChange={handleSteepTimeChange}
@@ -368,7 +408,7 @@ function MethodAndMethodStuffInput({
         </Grid>
         <Grid item xs={4} sm={2}>
           <Typography variant="caption" align="center">
-            Hours
+            Minutes
           </Typography>
           <Box px={1}>
             <form autoComplete="off">
@@ -389,7 +429,7 @@ function MethodAndMethodStuffInput({
         </Grid>
         <Grid item xs={4} sm={2}>
           <Typography variant="caption" align="center">
-            Hours
+            Seconds
           </Typography>
           <Box px={1}>
             <form autoComplete="off">
@@ -487,7 +527,8 @@ function MethodAndMethodStuffInput({
           fieldName="brewer"
           options={getBrewerOptions()}
           onChange={handleBrewerChange}
-          key={key}
+          initialValue={getMostRecentBrewerName()}
+          key={`${key}${getMostRecentBrewerName()}`}
           textField={(params) => (
             <TextField
               {...params}
@@ -512,7 +553,8 @@ function MethodAndMethodStuffInput({
           fieldName="drink"
           options={getDrinkOptions()}
           onChange={handleDrinkChange}
-          key={key}
+          initialValue={getMostRecentDrinkName()}
+          key={`${key}${getMostRecentDrinkName()}`}
           textField={(params) => (
             <TextField
               {...params}
@@ -552,6 +594,11 @@ MethodAndMethodStuffInput.propTypes = {
   methods: PropTypes.array.isRequired,
   methodIdToBrewersMap: PropTypes.object.isRequired,
   methodIdToDrinksMap: PropTypes.object.isRequired,
+  mostRecentMethodData: PropTypes.object,
+};
+
+MethodAndMethodStuffInput.defaultProps = {
+  mostRecentMethodData: {},
 };
 
 export default MethodAndMethodStuffInput;

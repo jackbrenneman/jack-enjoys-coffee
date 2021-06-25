@@ -81,7 +81,7 @@ export const currentDataQuery = `
 /**
  * Gets all the ACTIVE current info for all the stuff we can add data for.
  */
-export const activeCurrentDataQuery = `
+export const activeCurrentDataQuery = (user_id, date_start, date_end) => `
  query {
    brewers(only_active: true) {
      brewer_id
@@ -93,6 +93,67 @@ export const activeCurrentDataQuery = `
        name
      }
    }
+   coffeeEntries(user_id:${user_id}, date_start:"${date_start}", date_end:"${date_end}" ) {
+    coffee_entry_id
+    user_id
+    date
+    coffee {
+      coffee_id
+      name
+      roaster {
+        roaster_id
+        name
+      }
+      origin {
+        origin_id
+        name
+      }
+      process {
+        process_id
+        name
+      }
+    }
+    brew {
+      method {
+        __typename
+        method_id
+        name
+        ... on Espresso {
+          liquid_out
+        }
+        ... on PourOver {
+          water_in
+        }
+        ... on Immersion{
+          water_in
+          steep_time
+        }
+        category
+        coffee_in
+        drink {
+          drink_id
+          name
+        }
+        brewer {
+          brewer_id
+          name
+        }
+      }
+      water {
+        water_id
+        name
+      }
+      grind {
+        grinder {
+          grinder_id
+          name
+        }
+        setting
+      }
+    }
+    rating
+    notes
+  }
    coffees(only_active: true) {
      coffee_id
      name
