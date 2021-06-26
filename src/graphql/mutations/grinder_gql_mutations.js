@@ -20,7 +20,7 @@ export const grinderMutation = `
  * The mutation to edit an existing grinder from the grinders table.
  */
 export const updateGrinderMutation = `
- mutation UpdateGrinder($grinder: GrinderInput, $grinder_id: ID!) {
+ mutation UpdateGrinder($grinder: GrinderInput, $grinder_id: Int!) {
    updateGrinder(grinder: $grinder, grinder_id: $grinder_id) {
      grinder_id
      name
@@ -34,7 +34,7 @@ export const updateGrinderMutation = `
  * The mutation to delete an existing grinder from the grinders table.
  */
 export const deleteGrinderMutation = `
- mutation DeleteGrinder($grinder_id: ID!) {
+ mutation DeleteGrinder($grinder_id: Int!) {
    deleteGrinder(grinder_id: $grinder_id)
  }
 `;

@@ -24,13 +24,21 @@ import BrewInput from './inputs/brew/brew_input.js';
 import RatingInput from './inputs/rating_input.js';
 import NotesInput from './inputs/notes_input.js';
 // Consts
-import { currentDataDefault, defaultCoffeeEntry } from '../../consts.js';
+import {
+  currentDataDefault,
+  defaultCoffeeEntry,
+  defaultMostRecentCoffeeEntry,
+  yesterday,
+  today,
+} from '../../consts.js';
 // Helpers
 import {
   createRoasterIdToCoffeesMap,
   createMethodIdToBrewersMap,
   createMethodIdToDrinksMap,
   normalizeCoffeeEntryInput,
+  normalizeMostRecentCoffeeEntryForInput,
+  normalizeMostRecentCoffeeEntry,
 } from './helpers/input_helpers.js';
 
 function CoffeeEntryContainer({ user }) {
@@ -51,6 +59,11 @@ function CoffeeEntryContainer({ user }) {
 
   // State used for the entire entry form
   const [coffeeEntry, setCoffeeEntry] = useState(defaultCoffeeEntry);
+
+  // State used for the most recent coffee entry
+  const [mostRecentCoffeeEntry, setMostRecentCoffeeEntry] = useState(
+    defaultMostRecentCoffeeEntry
+  );
 
   // State used for the current data
   const [currentData, setCurrentData] = useState(currentDataDefault);
@@ -81,10 +94,10 @@ function CoffeeEntryContainer({ user }) {
   // When the component renders, we fetch all the current data
   useEffect(() => {
     if (user?.user_id) {
-      queryGQL(activeCurrentDataQuery)
+      queryGQL(activeCurrentDataQuery(user.user_id, yesterday, today))
         .then(({ data }) => {
           if (data) {
-            const { coffees, brewers, drinks } = data;
+            const { coffees, coffeeEntries, brewers, drinks } = data;
             if (coffees.length) {
               setRoasterToCoffees(createRoasterIdToCoffeesMap(coffees));
             }
@@ -93,6 +106,26 @@ function CoffeeEntryContainer({ user }) {
             }
             if (drinks.length) {
               setMethodToDrinks(createMethodIdToDrinksMap(drinks));
+            }
+            if (coffeeEntries.length) {
+              // Only care about the most recent entry, so we grab the entry with the highest coffee_entry_id from the array
+              let mostRecentEntry = coffeeEntries[0];
+              if (coffeeEntries.length > 1) {
+                coffeeEntries.forEach((coffeeEntry) => {
+                  if (
+                    coffeeEntry.coffee_entry_id >
+                    mostRecentEntry.coffee_entry_id
+                  ) {
+                    mostRecentEntry = coffeeEntry;
+                  }
+                });
+              }
+              setMostRecentCoffeeEntry(
+                normalizeMostRecentCoffeeEntry(mostRecentEntry)
+              );
+              setCoffeeEntry(
+                normalizeMostRecentCoffeeEntryForInput(mostRecentEntry)
+              );
             }
             setCurrentData(data);
           }
@@ -116,6 +149,8 @@ function CoffeeEntryContainer({ user }) {
 
   const { open, severity, message } = toast;
 
+  const { mostRecentCoffee, mostRecentBrewData } = mostRecentCoffeeEntry;
+
   const sections = [
     {
       component: (
@@ -131,6 +166,7 @@ function CoffeeEntryContainer({ user }) {
           coffees={coffees}
           roasters={roasters}
           roasterIdToCoffeesMap={roasterToCoffees}
+          mostRecentCoffee={mostRecentCoffee}
         />
       ),
       name: 'Coffee',
@@ -147,6 +183,7 @@ function CoffeeEntryContainer({ user }) {
           waters={waters}
           methodIdToBrewersMap={methodToBrewers}
           methodIdToDrinksMap={methodToDrinks}
+          mostRecentBrewData={mostRecentBrewData}
         />
       ),
       name: 'Brew',
@@ -206,6 +243,11 @@ function CoffeeEntryContainer({ user }) {
     return;
   };
 
+  const handleClearFields = () => {
+    setMostRecentCoffeeEntry(normalizeMostRecentCoffeeEntry({}));
+    setCoffeeEntry(defaultCoffeeEntry);
+  };
+
   return (
     <Box className={classes.page}>
       {user?.user_id ? (
@@ -215,6 +257,9 @@ function CoffeeEntryContainer({ user }) {
               <Typography variant="h2">New Coffee Entry</Typography>
             </Box>
           </Grid>
+          <Button color="primary" onClick={handleClearFields}>
+            <Typography variant="caption">Reset All Fields</Typography>
+          </Button>
           {getEntrySections()}
           <Grid item xs={12}>
             <Box pt={4} pb={8}>

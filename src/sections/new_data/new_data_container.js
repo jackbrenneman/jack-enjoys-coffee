@@ -80,7 +80,7 @@ function DataEntryContainer({ user }) {
   // When the component renders, we fetch all the current data
   useEffect(() => {
     if (user?.user_id) {
-      queryGQL(currentDataQuery)
+      queryGQL(currentDataQuery(user.user_id))
         .then(({ data }) => {
           if (data) {
             setCurrentData(data);

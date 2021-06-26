@@ -27,7 +27,7 @@ export const coffeeMutation = `
  * The mutation to edit an existing coffee from the coffees table.
  */
 export const updateCoffeeMutation = `
-  mutation UpdateCoffee($coffee: CoffeeInput, $coffee_id: ID!) {
+  mutation UpdateCoffee($coffee: CoffeeInput, $coffee_id: Int!) {
     updateCoffee(coffee: $coffee, coffee_id: $coffee_id) {
       coffee_id
       name
@@ -48,7 +48,7 @@ export const updateCoffeeMutation = `
  * The mutation to delete an existing coffee from the coffees table.
  */
 export const deleteCoffeeMutation = `
-  mutation DeleteCoffee($coffee_id: ID!) {
+  mutation DeleteCoffee($coffee_id: Int!) {
     deleteCoffee(coffee_id: $coffee_id)
   }
 `;

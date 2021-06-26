@@ -61,9 +61,6 @@ function App() {
             <Route exact path="/signup">
               <Signup />
             </Route>
-            <Route exact path="/jacks_entries">
-              <CurrentCoffeeEntriesContainer user={user} />
-            </Route>
             <Route exact path="/entries">
               <CurrentCoffeeEntriesContainer user={user} />
             </Route>

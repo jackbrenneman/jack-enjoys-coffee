@@ -32,9 +32,16 @@ const useStyles = makeStyles((theme) => ({
       padding: 0,
     },
   },
+  row: {
+    flexGrow: 1,
+  },
+  emptyBox: {
+    width: '36px', // Same width as icon to make things centered
+    height: '36px', // Same height as icon to make things centered
+  },
 }));
 
-function WaterRow({ water, onWaterDeletion }) {
+function WaterRow({ water, onWaterDeletion, isUserAuthorized }) {
   const classes = useStyles();
   const { water_id, name, description, is_active } = water;
 
@@ -102,7 +109,7 @@ function WaterRow({ water, onWaterDeletion }) {
   };
 
   return (
-    <Box p={1}>
+    <Box p={1} className={classes.row}>
       <Card raised className={classes.card}>
         <CardContent className={classes.content}>
           <CardHeader
@@ -110,7 +117,7 @@ function WaterRow({ water, onWaterDeletion }) {
             titleTypographyProps={{ variant: 'body2' }}
             title={getTitle()}
           />
-          <Grid item>
+          <Grid item xs={12}>
             <Box px={1}>
               <Typography variant="caption">{currentDescription}</Typography>
             </Box>
@@ -122,7 +129,7 @@ function WaterRow({ water, onWaterDeletion }) {
             alignItems="center"
           >
             <Grid item>
-              <Grid item>
+              {isUserAuthorized ? (
                 <IconButton
                   aria-label="more"
                   onClick={handleDelete}
@@ -130,16 +137,22 @@ function WaterRow({ water, onWaterDeletion }) {
                 >
                   <DeleteForeverIcon />
                 </IconButton>
-              </Grid>
+              ) : (
+                <div className={classes.emptyBox} />
+              )}
             </Grid>
             <Grid item>
-              <IconButton
-                aria-label="more"
-                onClick={handleEditWaterClick}
-                size="small"
-              >
-                {openEdit ? <ExpandLessIcon /> : <EditTwoToneIcon />}
-              </IconButton>
+              {isUserAuthorized ? (
+                <IconButton
+                  aria-label="more"
+                  onClick={handleEditWaterClick}
+                  size="small"
+                >
+                  {openEdit ? <ExpandLessIcon /> : <EditTwoToneIcon />}
+                </IconButton>
+              ) : (
+                <div className={classes.emptyBox} />
+              )}
             </Grid>
           </Grid>
         </CardContent>
@@ -163,22 +176,29 @@ WaterRow.propTypes = {
     is_active: PropTypes.bool,
   }).isRequired,
   onWaterDeletion: PropTypes.func.isRequired,
+  isUserAuthorized: PropTypes.bool.isRequired,
 };
 
-function WaterData({ waters, onWaterDeletion }) {
+function WaterData({ waters, onWaterDeletion, isUserAuthorized }) {
   return (
     <Box pb={2}>
-      <Grid container direction="column" alignItems="center">
+      <Grid container>
         <Grid item xs={12}>
           <Box p={2}>
-            <Typography variant="h6">Waters</Typography>
+            <Typography variant="h6" align="center">
+              Waters
+            </Typography>
           </Box>
         </Grid>
         <Grid item xs={12}>
           <Grid container align="center" justify="center">
             {waters.map((water) => (
               <Grid item xs={10} sm={3} lg={2} key={water.water_id}>
-                <WaterRow water={water} onWaterDeletion={onWaterDeletion} />
+                <WaterRow
+                  water={water}
+                  onWaterDeletion={onWaterDeletion}
+                  isUserAuthorized={isUserAuthorized}
+                />
               </Grid>
             ))}
           </Grid>
@@ -191,6 +211,11 @@ function WaterData({ waters, onWaterDeletion }) {
 WaterData.propTypes = {
   waters: PropTypes.array.isRequired,
   onWaterDeletion: PropTypes.func.isRequired,
+  isUserAuthorized: PropTypes.bool,
+};
+
+WaterData.defaultProps = {
+  isUserAuthorized: false,
 };
 
 export default WaterData;

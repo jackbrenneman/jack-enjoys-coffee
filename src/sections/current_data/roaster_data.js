@@ -37,9 +37,18 @@ const useStyles = makeStyles((theme) => ({
       padding: 0,
     },
   },
+  emptyBox: {
+    width: '36px', // Same width as icon to make things centered
+    height: '36px', // Same height as icon to make things centered
+  },
 }));
 
-function RoasterRow({ roaster, currentData, onRoasterDeletion }) {
+function RoasterRow({
+  roaster,
+  currentData,
+  onRoasterDeletion,
+  isUserAuthorized,
+}) {
   const classes = useStyles();
   const {
     roaster_id,
@@ -163,7 +172,7 @@ function RoasterRow({ roaster, currentData, onRoasterDeletion }) {
             alignItems="center"
           >
             <Grid item>
-              <Grid item>
+              {isUserAuthorized ? (
                 <IconButton
                   aria-label="more"
                   onClick={handleDelete}
@@ -171,7 +180,9 @@ function RoasterRow({ roaster, currentData, onRoasterDeletion }) {
                 >
                   <DeleteForeverIcon />
                 </IconButton>
-              </Grid>
+              ) : (
+                <div className={classes.emptyBox} />
+              )}
             </Grid>
             <Grid item>
               <Box px={1}>
@@ -181,13 +192,17 @@ function RoasterRow({ roaster, currentData, onRoasterDeletion }) {
               </Box>
             </Grid>
             <Grid item>
-              <IconButton
-                aria-label="more"
-                onClick={handleEditRoasterClick}
-                size="small"
-              >
-                {openEdit ? <ExpandLessIcon /> : <EditTwoToneIcon />}
-              </IconButton>
+              {isUserAuthorized ? (
+                <IconButton
+                  aria-label="more"
+                  onClick={handleEditRoasterClick}
+                  size="small"
+                >
+                  {openEdit ? <ExpandLessIcon /> : <EditTwoToneIcon />}
+                </IconButton>
+              ) : (
+                <div className={classes.emptyBox} />
+              )}
             </Grid>
           </Grid>
         </CardContent>
@@ -217,15 +232,23 @@ RoasterRow.propTypes = {
     coffees: PropTypes.array.isRequired,
   }),
   onRoasterDeletion: PropTypes.func.isRequired,
+  isUserAuthorized: PropTypes.bool.isRequired,
 };
 
-function RoasterData({ roasters, coffees, onRoasterDeletion }) {
+function RoasterData({
+  roasters,
+  coffees,
+  onRoasterDeletion,
+  isUserAuthorized,
+}) {
   return (
     <Box pb={2}>
-      <Grid container direction="column" alignItems="center">
+      <Grid container>
         <Grid item xs={12}>
           <Box p={2}>
-            <Typography variant="h6">Roasters</Typography>
+            <Typography variant="h6" align="center">
+              Roasters
+            </Typography>
           </Box>
         </Grid>
         <Grid item xs={12}>
@@ -236,6 +259,7 @@ function RoasterData({ roasters, coffees, onRoasterDeletion }) {
                   roaster={roaster}
                   currentData={{ coffees }}
                   onRoasterDeletion={onRoasterDeletion}
+                  isUserAuthorized={isUserAuthorized}
                 />
               </Grid>
             ))}
@@ -250,6 +274,11 @@ RoasterData.propTypes = {
   roasters: PropTypes.array.isRequired,
   coffees: PropTypes.array.isRequired,
   onRoasterDeletion: PropTypes.func.isRequired,
+  isUserAuthorized: PropTypes.bool,
+};
+
+RoasterData.defaultProps = {
+  isUserAuthorized: false,
 };
 
 export default RoasterData;

@@ -35,9 +35,13 @@ const useStyles = makeStyles((theme) => ({
       padding: 0,
     },
   },
+  emptyBox: {
+    width: '36px', // Same width as icon to make things centered
+    height: '36px', // Same height as icon to make things centered
+  },
 }));
 
-function DrinkRow({ drink, onDrinkDeletion, currentData }) {
+function DrinkRow({ drink, onDrinkDeletion, currentData, isUserAuthorized }) {
   const classes = useStyles();
   const { drink_id, name, method, is_active } = drink;
 
@@ -110,7 +114,7 @@ function DrinkRow({ drink, onDrinkDeletion, currentData }) {
             alignItems="center"
           >
             <Grid item>
-              <Grid item>
+              {isUserAuthorized ? (
                 <IconButton
                   aria-label="more"
                   onClick={handleDelete}
@@ -118,7 +122,9 @@ function DrinkRow({ drink, onDrinkDeletion, currentData }) {
                 >
                   <DeleteForeverIcon />
                 </IconButton>
-              </Grid>
+              ) : (
+                <div className={classes.emptyBox} />
+              )}
             </Grid>
             <Grid item>
               <Box px={1}>
@@ -126,13 +132,17 @@ function DrinkRow({ drink, onDrinkDeletion, currentData }) {
               </Box>
             </Grid>
             <Grid item>
-              <IconButton
-                aria-label="more"
-                onClick={handleEditBrewerClick}
-                size="small"
-              >
-                {openEdit ? <ExpandLessIcon /> : <EditTwoToneIcon />}
-              </IconButton>
+              {isUserAuthorized ? (
+                <IconButton
+                  aria-label="more"
+                  onClick={handleEditBrewerClick}
+                  size="small"
+                >
+                  {openEdit ? <ExpandLessIcon /> : <EditTwoToneIcon />}
+                </IconButton>
+              ) : (
+                <div className={classes.emptyBox} />
+              )}
             </Grid>
           </Grid>
         </CardContent>
@@ -159,9 +169,10 @@ DrinkRow.propTypes = {
     methods: PropTypes.array.isRequired,
   }),
   onDrinkDeletion: PropTypes.func.isRequired,
+  isUserAuthorized: PropTypes.bool.isRequired,
 };
 
-function DrinkData({ drinks, methods, onDrinkDeletion }) {
+function DrinkData({ drinks, methods, onDrinkDeletion, isUserAuthorized }) {
   return (
     <Box pb={2}>
       <Grid container direction="column" alignItems="center">
@@ -178,6 +189,7 @@ function DrinkData({ drinks, methods, onDrinkDeletion }) {
                   drink={drink}
                   currentData={{ methods }}
                   onDrinkDeletion={onDrinkDeletion}
+                  isUserAuthorized={isUserAuthorized}
                 />
               </Grid>
             ))}
@@ -192,6 +204,11 @@ DrinkData.propTypes = {
   drinks: PropTypes.array.isRequired,
   methods: PropTypes.array.isRequired,
   onDrinkDeletion: PropTypes.func.isRequired,
+  isUserAuthorized: PropTypes.bool,
+};
+
+DrinkData.defaultProps = {
+  isUserAuthorized: false,
 };
 
 export default DrinkData;

@@ -20,7 +20,7 @@ export const waterMutation = `
  * The mutation to edit an existing water from the waters table.
  */
 export const updateWaterMutation = `
- mutation UpdateWater($water: WaterInput, $water_id: ID!) {
+ mutation UpdateWater($water: WaterInput, $water_id: Int!) {
    updateWater(water: $water, water_id: $water_id) {
      water_id
      name
@@ -34,7 +34,7 @@ export const updateWaterMutation = `
  * The mutation to delete an existing water from the waters table.
  */
 export const deleteWaterMutation = `
- mutation DeleteWater($water_id: ID!) {
+ mutation DeleteWater($water_id: Int!) {
    deleteWater(water_id: $water_id)
  }
 `;

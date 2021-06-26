@@ -20,7 +20,7 @@ export const brewerMutation = `
  * The mutation to edit an existing brewer from the brewers table.
  */
 export const updateBrewerMutation = `
- mutation UpdateBrewer($brewer: BrewerInput, $brewer_id: ID!) {
+ mutation UpdateBrewer($brewer: BrewerInput, $brewer_id: Int!) {
    updateBrewer(brewer: $brewer, brewer_id: $brewer_id) {
      brewer_id
      name
@@ -34,7 +34,7 @@ export const updateBrewerMutation = `
  * The mutation to delete an existing brewer from the brewers table.
  */
 export const deleteBrewerMutation = `
- mutation DeleteBrewer($brewer_id: ID!) {
+ mutation DeleteBrewer($brewer_id: Int!) {
    deleteBrewer(brewer_id: $brewer_id)
  }
 `;

@@ -32,9 +32,13 @@ const useStyles = makeStyles((theme) => ({
       padding: 0,
     },
   },
+  emptyBox: {
+    width: '36px', // Same width as icon to make things centered
+    height: '36px', // Same height as icon to make things centered
+  },
 }));
 
-function GrinderRow({ grinder, onGrinderDeletion }) {
+function GrinderRow({ grinder, onGrinderDeletion, isUserAuthorized }) {
   const classes = useStyles();
   const { grinder_id, name, website, is_active } = grinder;
 
@@ -130,7 +134,7 @@ function GrinderRow({ grinder, onGrinderDeletion }) {
             alignItems="center"
           >
             <Grid item>
-              <Grid item>
+              {isUserAuthorized ? (
                 <IconButton
                   aria-label="more"
                   onClick={handleDelete}
@@ -138,19 +142,25 @@ function GrinderRow({ grinder, onGrinderDeletion }) {
                 >
                   <DeleteForeverIcon />
                 </IconButton>
-              </Grid>
+              ) : (
+                <div className={classes.emptyBox} />
+              )}
             </Grid>
             <Grid item>
               <Box px={1}>{getTitle()}</Box>
             </Grid>
             <Grid item>
-              <IconButton
-                aria-label="more"
-                onClick={handleEditGrinderClick}
-                size="small"
-              >
-                {openEdit ? <ExpandLessIcon /> : <EditTwoToneIcon />}
-              </IconButton>
+              {isUserAuthorized ? (
+                <IconButton
+                  aria-label="more"
+                  onClick={handleEditGrinderClick}
+                  size="small"
+                >
+                  {openEdit ? <ExpandLessIcon /> : <EditTwoToneIcon />}
+                </IconButton>
+              ) : (
+                <div className={classes.emptyBox} />
+              )}
             </Grid>
           </Grid>
         </CardContent>
@@ -174,15 +184,18 @@ GrinderRow.propTypes = {
     is_active: PropTypes.bool,
   }).isRequired,
   onGrinderDeletion: PropTypes.func.isRequired,
+  isUserAuthorized: PropTypes.bool.isRequired,
 };
 
-function GrinderData({ grinders, onGrinderDeletion }) {
+function GrinderData({ grinders, onGrinderDeletion, isUserAuthorized }) {
   return (
     <Box pb={2}>
-      <Grid container direction="column" alignItems="center">
+      <Grid container>
         <Grid item xs={12}>
           <Box p={2}>
-            <Typography variant="h6">Grinders</Typography>
+            <Typography variant="h6" align="center">
+              Grinders
+            </Typography>
           </Box>
         </Grid>
         <Grid item xs={12}>
@@ -192,6 +205,7 @@ function GrinderData({ grinders, onGrinderDeletion }) {
                 <GrinderRow
                   grinder={grinder}
                   onGrinderDeletion={onGrinderDeletion}
+                  isUserAuthorized={isUserAuthorized}
                 />
               </Grid>
             ))}
@@ -205,6 +219,11 @@ function GrinderData({ grinders, onGrinderDeletion }) {
 GrinderData.propTypes = {
   grinders: PropTypes.array.isRequired,
   onGrinderDeletion: PropTypes.func.isRequired,
+  isUserAuthorized: PropTypes.bool,
+};
+
+GrinderData.defaultProps = {
+  isUserAuthorized: false,
 };
 
 export default GrinderData;

@@ -1,7 +1,7 @@
 /**
  * The Brew Info for the method and drink type. When the user selects a method, the drink type should update to reflect the different drink types that can be made with that method.
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import NumberFormat from 'react-number-format';
@@ -54,6 +54,7 @@ function MethodAndMethodStuffInput({
   methods,
   methodIdToBrewersMap,
   methodIdToDrinksMap,
+  mostRecentMethodData,
 }) {
   const { brew } = coffeeEntry;
   const { method_id: selectedMethodId } = brew;
@@ -78,6 +79,16 @@ function MethodAndMethodStuffInput({
 
   // State used to reset inputs
   const [key, setKey] = useState(true);
+
+  // State used for the initial and default values
+  const [initialValues, setInitialValues] = useState(mostRecentMethodData);
+
+  // When the component renders, check to see if mostRecentMethodData has updated
+  useEffect(() => {
+    if (mostRecentMethodData) {
+      setInitialValues(mostRecentMethodData);
+    }
+  }, [mostRecentMethodData]);
 
   // Determines what brewer options there are after a user selects a method
   const getBrewerOptions = () => {
@@ -189,7 +200,7 @@ function MethodAndMethodStuffInput({
   };
 
   const handleSteepTimeChange = (e) => {
-    const timeEnum = e.target.id;
+    const timeEnum = e.target.name;
     const timeValue = parseInt(e.target.value) || 0;
     const steepTimeInSeconds = getSteepTimeInSeconds(
       timeEnum,
@@ -244,6 +255,43 @@ function MethodAndMethodStuffInput({
       },
     });
     setKey(!key);
+    setInitialValues({});
+  };
+
+  const getMostRecentCoffeeIn = () => {
+    return initialValues?.coffee_in ?? null;
+  };
+
+  const getMostRecentLiquidOut = () => {
+    return initialValues?.liquid_out ?? null;
+  };
+
+  const getMostRecentWaterIn = () => {
+    return initialValues?.water_in ?? null;
+  };
+
+  const getMostRecentSteepTime = () => {
+    return initialValues?.steep_time ?? 0;
+  };
+
+  const getMostRecentSteepTimeHours = () => {
+    return Math.floor(getMostRecentSteepTime() / 3600) ?? null;
+  };
+
+  const getMostRecentSteepTimeMinutes = () => {
+    return Math.floor((getMostRecentSteepTime() % 3600) / 60) ?? null;
+  };
+
+  const getMostRecentSteepTimeSeconds = () => {
+    return (getMostRecentSteepTime() % 3600) % 60 ?? null;
+  };
+
+  const getMostRecentBrewerName = () => {
+    return initialValues?.brewer?.name ?? null;
+  };
+
+  const getMostRecentDrinkName = () => {
+    return initialValues?.drink?.name ?? null;
   };
 
   const coffeeInInput = (
@@ -264,7 +312,8 @@ function MethodAndMethodStuffInput({
                 allowNegative: false,
               },
             }}
-            key={key}
+            defaultValue={getMostRecentCoffeeIn()}
+            key={`${key}${getMostRecentCoffeeIn()}`}
             className={classes.formInOut}
             id="outlined-basic"
             variant="outlined"
@@ -294,7 +343,8 @@ function MethodAndMethodStuffInput({
                 allowNegative: false,
               },
             }}
-            key={key}
+            defaultValue={getMostRecentWaterIn()}
+            key={`${key}${getMostRecentWaterIn()}`}
             id="outlined-basic"
             variant="outlined"
             onChange={handleLiquidInChange}
@@ -323,7 +373,8 @@ function MethodAndMethodStuffInput({
                 allowNegative: false,
               },
             }}
-            key={key}
+            defaultValue={getMostRecentLiquidOut()}
+            key={`${key}${getMostRecentLiquidOut()}`}
             id="liquid_out"
             variant="outlined"
             onChange={handleLiquidOutChange}
@@ -353,12 +404,14 @@ function MethodAndMethodStuffInput({
                     input: classes.resize,
                   },
                   inputProps: {
-                    decimalScale: 1,
+                    decimalScale: 0,
                     allowNegative: false,
+                    name: hoursEnum,
+                    isAllowed: ({ value }) => value < 1000,
                   },
                 }}
-                key={key}
-                id={hoursEnum}
+                defaultValue={getMostRecentSteepTimeHours()}
+                key={`${key}${getMostRecentSteepTimeHours()}`}
                 variant="outlined"
                 onChange={handleSteepTimeChange}
                 size="small"
@@ -368,18 +421,25 @@ function MethodAndMethodStuffInput({
         </Grid>
         <Grid item xs={4} sm={2}>
           <Typography variant="caption" align="center">
-            Hours
+            Minutes
           </Typography>
           <Box px={1}>
             <form autoComplete="off">
               <TextField
                 InputProps={{
+                  inputComponent: NumberFormatCustom,
                   classes: {
                     input: classes.resize,
                   },
+                  inputProps: {
+                    decimalScale: 0,
+                    allowNegative: false,
+                    name: minutesEnum,
+                    isAllowed: ({ value }) => value < 60,
+                  },
                 }}
-                key={key}
-                id={minutesEnum}
+                defaultValue={getMostRecentSteepTimeMinutes()}
+                key={`${key}${getMostRecentSteepTimeMinutes()}`}
                 variant="outlined"
                 onChange={handleSteepTimeChange}
                 size="small"
@@ -389,18 +449,25 @@ function MethodAndMethodStuffInput({
         </Grid>
         <Grid item xs={4} sm={2}>
           <Typography variant="caption" align="center">
-            Hours
+            Seconds
           </Typography>
           <Box px={1}>
             <form autoComplete="off">
               <TextField
                 InputProps={{
+                  inputComponent: NumberFormatCustom,
                   classes: {
                     input: classes.resize,
                   },
+                  inputProps: {
+                    decimalScale: 0,
+                    allowNegative: false,
+                    name: secondsEnum,
+                    isAllowed: ({ value }) => value < 60,
+                  },
                 }}
-                key={key}
-                id={secondsEnum}
+                defaultValue={getMostRecentSteepTimeSeconds()}
+                key={`${key}${getMostRecentSteepTimeSeconds()}`}
                 variant="outlined"
                 onChange={handleSteepTimeChange}
                 size="small"
@@ -487,7 +554,8 @@ function MethodAndMethodStuffInput({
           fieldName="brewer"
           options={getBrewerOptions()}
           onChange={handleBrewerChange}
-          key={key}
+          initialValue={getMostRecentBrewerName()}
+          key={`${key}${getMostRecentBrewerName()}`}
           textField={(params) => (
             <TextField
               {...params}
@@ -512,7 +580,8 @@ function MethodAndMethodStuffInput({
           fieldName="drink"
           options={getDrinkOptions()}
           onChange={handleDrinkChange}
-          key={key}
+          initialValue={getMostRecentDrinkName()}
+          key={`${key}${getMostRecentDrinkName()}`}
           textField={(params) => (
             <TextField
               {...params}
@@ -552,6 +621,11 @@ MethodAndMethodStuffInput.propTypes = {
   methods: PropTypes.array.isRequired,
   methodIdToBrewersMap: PropTypes.object.isRequired,
   methodIdToDrinksMap: PropTypes.object.isRequired,
+  mostRecentMethodData: PropTypes.object,
+};
+
+MethodAndMethodStuffInput.defaultProps = {
+  mostRecentMethodData: {},
 };
 
 export default MethodAndMethodStuffInput;

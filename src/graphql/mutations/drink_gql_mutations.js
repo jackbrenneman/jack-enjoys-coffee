@@ -18,7 +18,7 @@ export const drinkMutation = `
  * The mutation to edit an existing drink from the drinks table.
  */
 export const updateDrinkMutation = `
- mutation UpdateBrewer($drink: DrinkInput, $drink_id: ID!) {
+ mutation UpdateBrewer($drink: DrinkInput, $drink_id: Int!) {
    updateDrink(drink: $drink, drink_id: $drink_id) {
      drink_id
      name
@@ -30,7 +30,7 @@ export const updateDrinkMutation = `
  * The mutation to delete an existing drink from the drinks table.
  */
 export const deleteDrinkMutation = `
- mutation DeleteDrink($drink_id: ID!) {
+ mutation DeleteDrink($drink_id: Int!) {
    deleteDrink(drink_id: $drink_id)
  }
 `;

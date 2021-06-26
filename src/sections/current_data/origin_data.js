@@ -30,9 +30,13 @@ const useStyles = makeStyles((theme) => ({
       padding: 0,
     },
   },
+  emptyBox: {
+    width: '36px', // Same width as icon to make things centered
+    height: '36px', // Same height as icon to make things centered
+  },
 }));
 
-function OriginRow({ origin, onOriginDeletion }) {
+function OriginRow({ origin, onOriginDeletion, isUserAuthorized }) {
   const classes = useStyles();
   const { origin_id, name } = origin;
 
@@ -92,7 +96,7 @@ function OriginRow({ origin, onOriginDeletion }) {
             alignItems="center"
           >
             <Grid item>
-              <Grid item>
+              {isUserAuthorized ? (
                 <IconButton
                   aria-label="more"
                   onClick={handleDelete}
@@ -100,7 +104,9 @@ function OriginRow({ origin, onOriginDeletion }) {
                 >
                   <DeleteForeverIcon />
                 </IconButton>
-              </Grid>
+              ) : (
+                <div className={classes.emptyBox} />
+              )}
             </Grid>
             <Grid item>
               <Box px={1}>
@@ -108,13 +114,17 @@ function OriginRow({ origin, onOriginDeletion }) {
               </Box>
             </Grid>
             <Grid item>
-              <IconButton
-                aria-label="more"
-                onClick={handleEditOriginClick}
-                size="small"
-              >
-                {openEdit ? <ExpandLessIcon /> : <EditTwoToneIcon />}
-              </IconButton>
+              {isUserAuthorized ? (
+                <IconButton
+                  aria-label="more"
+                  onClick={handleEditOriginClick}
+                  size="small"
+                >
+                  {openEdit ? <ExpandLessIcon /> : <EditTwoToneIcon />}
+                </IconButton>
+              ) : (
+                <div className={classes.emptyBox} />
+              )}
             </Grid>
           </Grid>
         </CardContent>
@@ -136,15 +146,18 @@ OriginRow.propTypes = {
     name: PropTypes.string,
   }).isRequired,
   onOriginDeletion: PropTypes.func.isRequired,
+  isUserAuthorized: PropTypes.bool.isRequired,
 };
 
-function OriginData({ origins, onOriginDeletion }) {
+function OriginData({ origins, onOriginDeletion, isUserAuthorized }) {
   return (
     <Box pb={2}>
-      <Grid container direction="column" alignItems="center">
+      <Grid container>
         <Grid item xs={12}>
           <Box p={2}>
-            <Typography variant="h6">Origins</Typography>
+            <Typography variant="h6" align="center">
+              Origins
+            </Typography>
           </Box>
         </Grid>
         <Grid item xs={12}>
@@ -154,6 +167,7 @@ function OriginData({ origins, onOriginDeletion }) {
                 <OriginRow
                   origin={origin}
                   onOriginDeletion={onOriginDeletion}
+                  isUserAuthorized={isUserAuthorized}
                 />
               </Grid>
             ))}
@@ -167,6 +181,11 @@ function OriginData({ origins, onOriginDeletion }) {
 OriginData.propTypes = {
   origins: PropTypes.array.isRequired,
   onOriginDeletion: PropTypes.func.isRequired,
+  isUserAuthorized: PropTypes.bool,
+};
+
+OriginData.defaultProps = {
+  isUserAuthorized: false,
 };
 
 export default OriginData;

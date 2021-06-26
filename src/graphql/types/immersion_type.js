@@ -1,7 +1,12 @@
 /**
  * The Immersion Method Type. Contains all information on the Immersion brewing method.
  */
-import { GraphQLObjectType, GraphQLFloat, GraphQLString } from 'graphql';
+import {
+  GraphQLObjectType,
+  GraphQLFloat,
+  GraphQLString,
+  GraphQLInt,
+} from 'graphql';
 import { MethodCategoryEnum } from '../enums/method_category_enum.js';
 import { MethodInterface } from '../interfaces/method_interface.js';
 import { BrewerType } from './brewer_type.js';
@@ -13,6 +18,7 @@ export const ImmersionType = new GraphQLObjectType({
   interfaces: () => [MethodInterface],
   fields: {
     name: { type: GraphQLString },
+    method_id: { type: GraphQLInt },
     category: { type: MethodCategoryEnum },
     brewer: { type: BrewerType },
     drink: { type: DrinkType },

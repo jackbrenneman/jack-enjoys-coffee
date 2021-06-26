@@ -37,12 +37,17 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   emptyBox: {
-    width: '30px', // Same width as icon to make things centered
-    height: '30px', // Same height as icon to make things centered
+    width: '36px', // Same width as icon to make things centered
+    height: '36px', // Same height as icon to make things centered
   },
 }));
 
-function BrewerRow({ brewer, onBrewerDeletion, currentData }) {
+function BrewerRow({
+  brewer,
+  onBrewerDeletion,
+  currentData,
+  isUserAuthorized,
+}) {
   const classes = useStyles();
   const { brewer_id, name, website, method, is_active } = brewer;
 
@@ -131,7 +136,7 @@ function BrewerRow({ brewer, onBrewerDeletion, currentData }) {
             alignItems="center"
           >
             <Grid item>
-              <Grid item>
+              {isUserAuthorized ? (
                 <IconButton
                   aria-label="more"
                   onClick={handleDelete}
@@ -139,7 +144,9 @@ function BrewerRow({ brewer, onBrewerDeletion, currentData }) {
                 >
                   <DeleteForeverIcon />
                 </IconButton>
-              </Grid>
+              ) : (
+                <div className={classes.emptyBox} />
+              )}
             </Grid>
             <Grid item>
               <Box px={1}>
@@ -147,13 +154,17 @@ function BrewerRow({ brewer, onBrewerDeletion, currentData }) {
               </Box>
             </Grid>
             <Grid item>
-              <IconButton
-                aria-label="more"
-                onClick={handleEditBrewerClick}
-                size="small"
-              >
-                {openEdit ? <ExpandLessIcon /> : <EditTwoToneIcon />}
-              </IconButton>
+              {isUserAuthorized ? (
+                <IconButton
+                  aria-label="more"
+                  onClick={handleEditBrewerClick}
+                  size="small"
+                >
+                  {openEdit ? <ExpandLessIcon /> : <EditTwoToneIcon />}
+                </IconButton>
+              ) : (
+                <div className={classes.emptyBox} />
+              )}
             </Grid>
           </Grid>
         </CardContent>
@@ -182,9 +193,10 @@ BrewerRow.propTypes = {
     methods: PropTypes.array.isRequired,
   }),
   onBrewerDeletion: PropTypes.func.isRequired,
+  isUserAuthorized: PropTypes.bool.isRequired,
 };
 
-function BrewerData({ brewers, methods, onBrewerDeletion }) {
+function BrewerData({ brewers, methods, onBrewerDeletion, isUserAuthorized }) {
   return (
     <Box pb={2}>
       <Grid container direction="column" alignItems="center">
@@ -201,6 +213,7 @@ function BrewerData({ brewers, methods, onBrewerDeletion }) {
                   brewer={brewer}
                   currentData={{ methods }}
                   onBrewerDeletion={onBrewerDeletion}
+                  isUserAuthorized={isUserAuthorized}
                 />
               </Grid>
             ))}
@@ -215,6 +228,11 @@ BrewerData.propTypes = {
   brewers: PropTypes.array.isRequired,
   methods: PropTypes.array.isRequired,
   onBrewerDeletion: PropTypes.func.isRequired,
+  isUserAuthorized: PropTypes.bool,
+};
+
+BrewerData.defaultProps = {
+  isUserAuthorized: false,
 };
 
 export default BrewerData;

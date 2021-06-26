@@ -3,7 +3,6 @@
  */
 import {
   GraphQLString,
-  GraphQLID,
   GraphQLObjectType,
   GraphQLFloat,
   GraphQLInt,
@@ -16,7 +15,7 @@ export const CoffeeEntryType = new GraphQLObjectType({
   name: 'CoffeeEntry',
   description: 'Contains everything needed for a single coffee entry',
   fields: {
-    coffee_entry_id: { type: GraphQLID },
+    coffee_entry_id: { type: GraphQLInt },
     date: { type: DateType },
     user_id: { type: GraphQLInt },
     coffee: { type: CoffeeType },

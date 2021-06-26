@@ -4,8 +4,8 @@
 import {
   GraphQLString,
   GraphQLObjectType,
-  GraphQLID,
   GraphQLBoolean,
+  GraphQLInt,
 } from 'graphql';
 import { MethodType } from './method_type.js';
 
@@ -13,7 +13,7 @@ export const BrewerType = new GraphQLObjectType({
   name: 'Brewer',
   description: 'Contains all the info related to a brewer',
   fields: {
-    brewer_id: { type: GraphQLID },
+    brewer_id: { type: GraphQLInt },
     name: { type: GraphQLString },
     website: { type: GraphQLString },
     is_active: { type: GraphQLBoolean },

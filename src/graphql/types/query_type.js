@@ -5,7 +5,6 @@ import {
   GraphQLInt,
   GraphQLObjectType,
   GraphQLList,
-  GraphQLID,
   GraphQLString,
   GraphQLBoolean,
 } from 'graphql';
@@ -13,7 +12,6 @@ import {
 import {
   brewerByIdResolver,
   brewersByUserIdResolver,
-  brewersResolver,
   brewersByMethodIdResolver,
   brewersByNameResolver,
 } from '../resolvers/queries/brewer_query_type_resolvers.js';
@@ -23,7 +21,6 @@ import {
 } from '../resolvers/queries/coffee_entry_query_type_resolvers.js';
 import {
   coffeeByIdResolver,
-  coffeesResolver,
   coffeesByNameResolver,
   coffeesByRoasterIdResolver,
   coffeesByOriginIdResolver,
@@ -32,14 +29,12 @@ import {
 } from '../resolvers/queries/coffee_query_type_resolvers.js';
 import {
   drinkByIdResolver,
-  drinksResolver,
   drinksByMethodIdResolver,
   drinksByNameResolver,
   drinksByUserIdResolver,
 } from '../resolvers/queries/drink_query_type_resolvers.js';
 import {
   grinderByIdResolver,
-  grindersResolver,
   grindersByNameResolver,
   grindersByUserIdResolver,
 } from '../resolvers/queries/grinder_query_type_resolvers.js';
@@ -71,7 +66,6 @@ import { userTypeResolver } from '../resolvers/queries/user_query_type_resolvers
 import {
   watersByUserIdResolver,
   waterByIdResolver,
-  watersResolver,
   watersByNameResolver,
 } from '../resolvers/queries/water_query_type_resolvers.js';
 // Types
@@ -105,6 +99,7 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
       type: new GraphQLList(BrewerType),
       args: {
         only_active: { type: GraphQLBoolean },
+        user_id: { type: GraphQLInt },
         brewer_id: { type: GraphQLInt },
         method_id: { type: GraphQLInt },
         name: { type: GraphQLString },
@@ -157,7 +152,7 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
       type: new GraphQLList(CoffeeType),
       args: {
         only_active: { type: GraphQLBoolean },
-        user_id: { type: GraphQLID },
+        user_id: { type: GraphQLInt },
         coffee_id: { type: GraphQLInt },
         name: { type: GraphQLString },
         roaster_id: { type: GraphQLInt },
@@ -204,10 +199,10 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
     drinks: {
       type: new GraphQLList(DrinkType),
       args: {
-        user_id: { type: GraphQLID },
-        drink_id: { type: GraphQLID },
+        user_id: { type: GraphQLInt },
+        drink_id: { type: GraphQLInt },
         name: { type: GraphQLString },
-        method_id: { type: GraphQLID },
+        method_id: { type: GraphQLInt },
       },
       resolve(parentValue, { user_id, drink_id, method_id, name }, context) {
         // Err on the side of the user_id from arguments. Then fallback on logged in user.
@@ -230,8 +225,8 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
       type: new GraphQLList(GrinderType),
       args: {
         only_active: { type: GraphQLBoolean },
-        user_id: { type: GraphQLID },
-        grinder_id: { type: GraphQLID },
+        user_id: { type: GraphQLInt },
+        grinder_id: { type: GraphQLInt },
         name: { type: GraphQLString },
       },
       resolve(
@@ -272,7 +267,7 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
     origins: {
       type: new GraphQLList(OriginType),
       args: {
-        user_id: { type: GraphQLID },
+        user_id: { type: GraphQLInt },
         origin_id: { type: GraphQLInt },
         name: { type: GraphQLString },
       },
@@ -311,7 +306,7 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
       type: new GraphQLList(RoasterType),
       args: {
         only_active: { type: GraphQLBoolean },
-        user_id: { type: GraphQLID },
+        user_id: { type: GraphQLInt },
         roaster_id: { type: GraphQLInt },
         name: { type: GraphQLString },
         state: { type: GraphQLString },
@@ -354,7 +349,7 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
       type: new GraphQLList(WaterType),
       args: {
         only_active: { type: GraphQLBoolean },
-        user_id: { type: GraphQLID },
+        user_id: { type: GraphQLInt },
         water_id: { type: GraphQLInt },
         name: { type: GraphQLString },
       },
