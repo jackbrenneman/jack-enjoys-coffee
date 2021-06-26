@@ -99,6 +99,7 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
       type: new GraphQLList(BrewerType),
       args: {
         only_active: { type: GraphQLBoolean },
+        user_id: { type: GraphQLInt },
         brewer_id: { type: GraphQLInt },
         method_id: { type: GraphQLInt },
         name: { type: GraphQLString },

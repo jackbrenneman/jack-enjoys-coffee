@@ -23,7 +23,7 @@ mutation CreateRoaster($roaster: RoasterInput) {
  * The mutation to edit an existing roaster from the roasters table.
  */
 export const updateRoasterMutation = `
- mutation UpdateRoaster($roaster: RoasterInput, $roaster_id: ID!) {
+ mutation UpdateRoaster($roaster: RoasterInput, $roaster_id: Int!) {
    updateRoaster(roaster: $roaster, roaster_id: $roaster_id) {
      roaster_id
      name
@@ -40,7 +40,7 @@ export const updateRoasterMutation = `
  * The mutation to delete an existing roaster from the roasters table.
  */
 export const deleteRoasterMutation = `
- mutation DeleteRoaster($roaster_id: ID!) {
+ mutation DeleteRoaster($roaster_id: Int!) {
    deleteRoaster(roaster_id: $roaster_id)
  }
 `;

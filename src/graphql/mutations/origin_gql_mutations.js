@@ -18,7 +18,7 @@ export const originMutation = `
  * The mutation to edit an existing origin from the origins table.
  */
 export const updateOriginMutation = `
- mutation UpdateOrigin($name: String!, $origin_id: ID!) {
+ mutation UpdateOrigin($name: String!, $origin_id: Int!) {
    updateOrigin(name: $name, origin_id: $origin_id) {
      origin_id
      name
@@ -30,7 +30,7 @@ export const updateOriginMutation = `
  * The mutation to delete an existing origin from the origins table.
  */
 export const deleteOriginMutation = `
- mutation DeleteOrigin($origin_id: ID!) {
+ mutation DeleteOrigin($origin_id: Int!) {
    deleteOrigin(origin_id: $origin_id)
  }
 `;

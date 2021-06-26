@@ -5,9 +5,9 @@
 /**
  * Gets all the current info for all the stuff we can add data for.
  */
-export const currentDataQuery = `
+export const currentDataQuery = (user_id) => `
   query {
-    brewers {
+    brewers(user_id:${user_id}) {
       brewer_id
       name
       website
@@ -17,7 +17,7 @@ export const currentDataQuery = `
         name
       }
     }
-    coffees {
+    coffees(user_id:${user_id}) {
       coffee_id
       name
       is_active
@@ -34,7 +34,7 @@ export const currentDataQuery = `
         name
       }
     }
-    drinks {
+    drinks(user_id:${user_id}) {
       drink_id
       name
       method {
@@ -42,7 +42,7 @@ export const currentDataQuery = `
         name
       }
     }
-    grinders {
+    grinders(user_id:${user_id}) {
       grinder_id
       name
       website
@@ -52,7 +52,7 @@ export const currentDataQuery = `
       method_id
       name
     }
-    origins {
+    origins(user_id:${user_id}) {
       origin_id
       name
     }
@@ -60,7 +60,7 @@ export const currentDataQuery = `
       process_id
       name
     }
-    roasters {
+    roasters(user_id:${user_id}) {
       roaster_id
       name
       city
@@ -69,7 +69,7 @@ export const currentDataQuery = `
       website
       is_active
     }
-    waters {
+    waters(user_id:${user_id}) {
       water_id
       name
       description
@@ -83,7 +83,7 @@ export const currentDataQuery = `
  */
 export const activeCurrentDataQuery = (user_id, date_start, date_end) => `
  query {
-   brewers(only_active: true) {
+   brewers(only_active: true, user_id: ${user_id}) {
      brewer_id
      name
      website
@@ -154,7 +154,7 @@ export const activeCurrentDataQuery = (user_id, date_start, date_end) => `
     rating
     notes
   }
-   coffees(only_active: true) {
+   coffees(only_active: true, user_id: ${user_id}) {
      coffee_id
      name
      is_active
@@ -179,7 +179,7 @@ export const activeCurrentDataQuery = (user_id, date_start, date_end) => `
        name
      }
    }
-   grinders(only_active: true) {
+   grinders(only_active: true, user_id: ${user_id}) {
      grinder_id
      name
      website
@@ -197,7 +197,7 @@ export const activeCurrentDataQuery = (user_id, date_start, date_end) => `
      process_id
      name
    }
-   roasters(only_active: true) {
+   roasters(only_active: true, user_id: ${user_id}) {
      roaster_id
      name
      city
@@ -206,7 +206,7 @@ export const activeCurrentDataQuery = (user_id, date_start, date_end) => `
      website
      is_active
    }
-   waters(only_active: true) {
+   waters(only_active: true, user_id: ${user_id}) {
      water_id
      name
      description

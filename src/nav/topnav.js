@@ -135,7 +135,7 @@ function TopNav({ user }) {
         <Divider />
         <NavLink
           className={classes.navLink}
-          to={'/jacks_entries'}
+          to={'/entries?jacks_entries=1'}
           onClick={handleDrawerToggle}
           activeClassName={classes.activeNavLink}
         >
@@ -148,6 +148,23 @@ function TopNav({ user }) {
                 primary={
                   <Typography variant="caption">Jack's Entries</Typography>
                 }
+              />
+            </ListItem>
+          </Box>
+        </NavLink>
+        <NavLink
+          className={classes.navLink}
+          to={'/data?jacks_data=1'}
+          onClick={handleDrawerToggle}
+          activeClassName={classes.activeNavLink}
+        >
+          <Box pr={2}>
+            <ListItem button>
+              <ListItemIcon>
+                <LocalCafeIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={<Typography variant="caption">Jack's Data</Typography>}
               />
             </ListItem>
           </Box>

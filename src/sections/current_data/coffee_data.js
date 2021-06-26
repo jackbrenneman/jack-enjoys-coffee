@@ -36,13 +36,21 @@ const useStyles = makeStyles((theme) => ({
       padding: 0,
     },
   },
+  row: {
+    // minWidth: '80%',
+  },
   emptyBox: {
     width: '30px', // Same width as icon to make things centered
     height: '30px', // Same height as icon to make things centered
   },
 }));
 
-function CoffeeRow({ coffee, currentData, onCoffeeDeletion }) {
+function CoffeeRow({
+  coffee,
+  currentData,
+  onCoffeeDeletion,
+  isUserAuthorized,
+}) {
   const classes = useStyles();
   const { coffee_id, name, origin, process, roaster, is_active } = coffee;
 
@@ -135,7 +143,7 @@ function CoffeeRow({ coffee, currentData, onCoffeeDeletion }) {
             alignItems="center"
           >
             <Grid item>
-              <Grid item>
+              {isUserAuthorized ? (
                 <IconButton
                   aria-label="more"
                   onClick={handleDelete}
@@ -143,7 +151,9 @@ function CoffeeRow({ coffee, currentData, onCoffeeDeletion }) {
                 >
                   <DeleteForeverIcon />
                 </IconButton>
-              </Grid>
+              ) : (
+                <div className={classes.emptyBox} />
+              )}
             </Grid>
             <Grid item>
               <Box px={1}>
@@ -156,13 +166,17 @@ function CoffeeRow({ coffee, currentData, onCoffeeDeletion }) {
               </Box>
             </Grid>
             <Grid item>
-              <IconButton
-                aria-label="more"
-                onClick={handleEditCoffeeClick}
-                size="small"
-              >
-                {openEdit ? <ExpandLessIcon /> : <EditTwoToneIcon />}
-              </IconButton>
+              {isUserAuthorized ? (
+                <IconButton
+                  aria-label="more"
+                  onClick={handleEditCoffeeClick}
+                  size="small"
+                >
+                  {openEdit ? <ExpandLessIcon /> : <EditTwoToneIcon />}
+                </IconButton>
+              ) : (
+                <div className={classes.emptyBox} />
+              )}
             </Grid>
           </Grid>
         </CardContent>
@@ -193,6 +207,7 @@ CoffeeRow.propTypes = {
     roasters: PropTypes.array.isRequired,
   }),
   onCoffeeDeletion: PropTypes.func.isRequired,
+  isUserAuthorized: PropTypes.bool.isRequired,
 };
 
 function CoffeeData({
@@ -201,13 +216,16 @@ function CoffeeData({
   processes,
   roasters,
   onCoffeeDeletion,
+  isUserAuthorized,
 }) {
   return (
     <Box pb={2}>
-      <Grid container direction="column" alignItems="center">
+      <Grid container>
         <Grid item xs={12}>
           <Box p={2}>
-            <Typography variant="h6">Coffees</Typography>
+            <Typography variant="h6" align="center">
+              Coffees
+            </Typography>
           </Box>
         </Grid>
         <Grid item xs={12}>
@@ -218,6 +236,7 @@ function CoffeeData({
                   coffee={coffee}
                   currentData={{ origins, processes, roasters }}
                   onCoffeeDeletion={onCoffeeDeletion}
+                  isUserAuthorized={isUserAuthorized}
                 />
               </Grid>
             ))}
@@ -234,6 +253,11 @@ CoffeeData.propTypes = {
   processes: PropTypes.array.isRequired,
   roasters: PropTypes.array.isRequired,
   onCoffeeDeletion: PropTypes.func.isRequired,
+  isUserAuthorized: PropTypes.bool,
+};
+
+CoffeeData.defaultProps = {
+  isUserAuthorized: false,
 };
 
 export default CoffeeData;

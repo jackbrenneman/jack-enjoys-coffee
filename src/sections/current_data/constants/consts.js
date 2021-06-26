@@ -6,7 +6,7 @@ import Badge from '@material-ui/core/Badge';
 
 export const ActiveBadge = withStyles((theme) => ({
   badge: {
-    margin: '-2px',
+    margin: '0px -5px',
     backgroundColor: '#44b700',
     color: '#44b700',
   },
@@ -14,7 +14,7 @@ export const ActiveBadge = withStyles((theme) => ({
 
 export const InactiveBadge = withStyles((theme) => ({
   badge: {
-    margin: '-2px',
+    margin: '0px -5px',
     backgroundColor: '#EE4B2B',
     color: '#EE4B2B',
   },
