@@ -38,8 +38,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   emptyBox: {
-    width: '30px', // Same width as icon to make things centered
-    height: '30px', // Same height as icon to make things centered
+    width: '36px', // Same width as icon to make things centered
+    height: '36px', // Same height as icon to make things centered
   },
 }));
 

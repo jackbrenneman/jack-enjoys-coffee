@@ -196,6 +196,23 @@ function TopNav({ user }) {
             </ListItem>
           </Box>
         </NavLink>
+        <NavLink
+          className={classes.navLink}
+          to={'/data?jacks_data=1'}
+          onClick={handleDrawerToggle}
+          activeClassName={classes.activeNavLink}
+        >
+          <Box pr={2}>
+            <ListItem button>
+              <ListItemIcon>
+                <LocalCafeIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={<Typography variant="caption">Jack's Data</Typography>}
+              />
+            </ListItem>
+          </Box>
+        </NavLink>
       </>
     );
   };
