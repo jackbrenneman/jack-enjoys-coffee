@@ -14,7 +14,7 @@ import Divider from '@material-ui/core/Divider';
 // Custom Components
 import GeneralDetails from './general_details.js';
 
-function ImmersionDetails({ coffee_in, water_in, generalDetails }) {
+function ImmersionDetails({ coffee_in, water_in, steep_time, generalDetails }) {
   const useStyles = makeStyles(() => ({
     card: {
       padding: '0',
@@ -51,6 +51,13 @@ function ImmersionDetails({ coffee_in, water_in, generalDetails }) {
 
   const { notes, brewer_name } = generalDetails;
 
+  const getReadableSteepTime = () => {
+    const hours = Math.floor(steep_time / 3600);
+    const minutes = Math.floor((steep_time - hours * 3600) / 60);
+    const seconds = steep_time - hours * 3600 - minutes * 60;
+    return `${hours} hours ${minutes} minutes ${seconds} seconds`;
+  };
+
   return (
     <Box p={1}>
       <Card raised className={classes.card}>
@@ -65,30 +72,33 @@ function ImmersionDetails({ coffee_in, water_in, generalDetails }) {
             {brewer_name && (
               <Grid item>
                 <Box px={1}>
-                  <Typography
-                    variant="caption"
-                    className={classes.ratio}
-                    color="textSecondary"
-                  >
+                  <Typography variant="caption" color="textSecondary">
                     {brewer_name}
                   </Typography>
                 </Box>
               </Grid>
             )}
-            {coffee_in && (
+            {coffee_in && water_in && (
               <Grid item>
                 <Box px={1}>
-                  <Typography
-                    variant="caption"
-                    className={classes.ratio}
-                    color="textSecondary"
-                  >
+                  <Typography variant="caption" color="textSecondary">
                     {coffee_in} : {water_in}
                   </Typography>
                 </Box>
               </Grid>
             )}
           </Grid>
+          {steep_time && (
+            <Grid container justify="center" alignItems="center">
+              <Grid item>
+                <Box px={1}>
+                  <Typography variant="caption" color="textSecondary">
+                    {getReadableSteepTime()}
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          )}
           <Grid container justify="center" alignItems="center">
             <Grid xs={12} item>
               <Divider variant="middle" />
