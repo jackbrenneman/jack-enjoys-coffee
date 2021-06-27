@@ -62,13 +62,25 @@ function BrewInput({
   };
 
   const handleGrindSettingChange = (e) => {
-    setCoffeeEntry({
-      ...coffeeEntry,
-      brew: {
-        ...brew,
-        grinder_setting: parseFloat(e.target.value) || null,
-      },
-    });
+    // 0 is a valid setting, so need to make sure we handle it correctly
+    let grinderSetting = parseFloat(e.target.value);
+    if (grinderSetting >= 0) {
+      setCoffeeEntry({
+        ...coffeeEntry,
+        brew: {
+          ...brew,
+          grinder_setting: grinderSetting,
+        },
+      });
+    } else {
+      setCoffeeEntry({
+        ...coffeeEntry,
+        brew: {
+          ...brew,
+          grinder_setting: grinderSetting || null,
+        },
+      });
+    }
   };
 
   const handleWaterChange = (water) => {
@@ -77,7 +89,7 @@ function BrewInput({
       ...coffeeEntry,
       brew: {
         ...brew,
-        water_id: parseInt(water_id) || null,
+        water_id: parseInt(water_id) ?? null,
       },
     });
   };
