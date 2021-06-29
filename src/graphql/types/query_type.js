@@ -62,7 +62,7 @@ import {
   roastersByStateResolver,
   roastersByCountryResolver,
 } from '../resolvers/queries/roaster_query_type_resolvers.js';
-import { userTypeResolver } from '../resolvers/queries/user_query_type_resolvers.js';
+import { userByIdResolver } from '../resolvers/queries/user_query_type_resolvers.js';
 import {
   watersByUserIdResolver,
   waterByIdResolver,
@@ -338,9 +338,14 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
     },
     user: {
       type: UserType,
-      resolve(parentValue, args, context) {
-        if (context?.user?.user_id) {
-          return userTypeResolver(context?.user?.user_id);
+      args: {
+        user_id: { type: GraphQLInt },
+      },
+      resolve(parentValue, { user_id }, context) {
+        // Err on the side of the user_id from arguments. Then fallback on logged in user.
+        const userId = user_id ? user_id : getUserId(context);
+        if (userId) {
+          return userByIdResolver(userId);
         }
         return null;
       },

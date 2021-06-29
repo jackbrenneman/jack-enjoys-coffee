@@ -89,9 +89,9 @@ function NewCoffeeInput({
   };
 
   const handleSubmit = () => {
-    const alreadyThere = currentCoffees.find(
-      ({ name }) => coffee.name === name
-    );
+    const alreadyThere = currentCoffees.find(({ roaster, name }) => {
+      return coffee.name === name && coffee.roaster_id === roaster.roaster_id;
+    });
     if (alreadyThere) {
       // Let user know this brewer already exists and return
       setToast({
