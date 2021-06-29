@@ -4,6 +4,7 @@
 import { query } from '../../../db/index.js';
 import {
   selectUserDataQuery,
+  selectStartDate,
   selectTotalCoffeeEntries,
   selectUniqueCoffeeCount,
   selectUniqueRoasterCount,
@@ -21,6 +22,20 @@ export const userByIdResolver = (user_id) => {
     .then((result) => {
       const data = result.rows[0];
       return data;
+    })
+    .catch((e) => console.error(e.stack));
+};
+
+/**
+ * Resolver for start date by user_id.
+ *
+ * @param {int} user_id the user_id of the user
+ */
+export const startDateByUserIdResolver = (user_id) => {
+  return query(selectStartDate, [user_id])
+    .then((result) => {
+      const data = result.rows[0];
+      return data['start_date'];
     })
     .catch((e) => console.error(e.stack));
 };

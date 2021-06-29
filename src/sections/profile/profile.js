@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+// Custom Components
+import Stats from './stats.js';
 // Cookies
 import Cookies from 'universal-cookie';
 
@@ -75,6 +77,9 @@ function Profile({ user }) {
             </Typography>
           </NavLink>
         </Box>
+      </Grid>
+      <Grid item xs={12}>
+        <Stats user={user} />
       </Grid>
       <Grid item xs={12}>
         <Box pt={4} pb={8}>

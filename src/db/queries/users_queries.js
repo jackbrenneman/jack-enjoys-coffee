@@ -11,6 +11,13 @@ export const selectUserDataQuery = `
   SELECT user_id, user_name, email FROM users WHERE user_id = $1
 `;
 
+export const selectStartDate = `
+  SELECT
+  MIN(date) AS start_date
+  FROM coffee_entries
+  WHERE user_id = $1
+`;
+
 export const selectTotalCoffeeEntries = `
   SELECT
   COUNT(coffee_entries.coffee_entry_id)

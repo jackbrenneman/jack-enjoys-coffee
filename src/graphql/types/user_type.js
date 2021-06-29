@@ -12,8 +12,10 @@ import {
   drinkDataByMethodAndUserIdResolver,
   totalUniqueCoffeesByUserIdResolver,
   totalUniqueRoastersByUserIdResolver,
+  startDateByUserIdResolver,
 } from '../resolvers/queries/user_query_type_resolvers.js';
 import { MethodBreakdownType } from './breakdown_types/method_breakdown_type.js';
+import { DateType } from './date_type.js';
 
 export const UserType = new GraphQLObjectType({
   name: 'User',
@@ -34,6 +36,15 @@ export const UserType = new GraphQLObjectType({
       type: GraphQLString,
       resolve(parentValue) {
         return parentValue['email'] ?? null;
+      },
+    },
+    start_date: {
+      type: DateType,
+      resolve(parentValue) {
+        if (parentValue['user_id']) {
+          const startDate = startDateByUserIdResolver(parentValue['user_id']);
+          return startDate;
+        }
       },
     },
     total_coffee_entries: {
