@@ -61,6 +61,15 @@ function Profile({ user }) {
         </Box>
       </Grid>
       <Grid item xs={12}>
+        <Box py={2}>
+          <Button variant="contained" size="large" onClick={handleLogoutClick}>
+            <Typography variant="body1" align="center">
+              Logout
+            </Typography>
+          </Button>
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
         <Box pt={2}>
           <NavLink to={'/entries'}>
             <Typography variant="caption" align="center">
@@ -79,15 +88,8 @@ function Profile({ user }) {
         </Box>
       </Grid>
       <Grid item xs={12}>
-        <Stats user={user} />
-      </Grid>
-      <Grid item xs={12}>
-        <Box pt={4} pb={8}>
-          <Button variant="contained" size="large" onClick={handleLogoutClick}>
-            <Typography variant="body1" align="center">
-              Logout
-            </Typography>
-          </Button>
+        <Box pb={8}>
+          <Stats user={user} />
         </Box>
       </Grid>
     </Grid>
