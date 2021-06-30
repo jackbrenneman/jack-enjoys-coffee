@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 // Custom Components
-import Stats from './stats.js';
+import Stats from './stats/stats.js';
 // Cookies
 import Cookies from 'universal-cookie';
 
