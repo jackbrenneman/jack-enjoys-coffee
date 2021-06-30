@@ -47,11 +47,12 @@ export const selectDrinkData = `
   methods.name AS method_name,
   coffee_entries.drink_id,
   drinks.name AS drink_name,
-  COUNT(coffee_entries.drink_id)
+  COUNT(coffee_entries.drink_id) AS drink_count,
+  SUM(coffee_entries.coffee_in) AS coffee_in_total
   FROM coffee_entries
   LEFT JOIN drinks ON coffee_entries.drink_id = drinks.drink_id
   LEFT JOIN methods ON coffee_entries.method_id = methods.method_id
   WHERE coffee_entries.user_id = $1 AND coffee_entries.method_id = $2
   GROUP BY coffee_entries.drink_id, coffee_entries.method_id, methods.name, drinks.name
-  ORDER BY count DESC
+  ORDER BY drink_count DESC
 `;
