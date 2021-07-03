@@ -4,34 +4,62 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // Material UI
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import CardHeader from '@material-ui/core/CardHeader';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+
+const useStyles = makeStyles(() => ({
+  card: {
+    padding: '0',
+    backgroundColor: '#EEEEEE',
+  },
+  header: {
+    padding: '0',
+    paddingTop: '4px',
+  },
+  content: {
+    padding: '0',
+    '&:last-child': {
+      padding: 0,
+    },
+  },
+}));
 
 function DrinkBreakdownStats({ drinkStats }) {
   const { total_coffee_in, total_count, drink } = drinkStats;
   const { name: drinkName } = drink;
 
+  const classes = useStyles();
+
   return (
-    <Grid container direction="column" alignItems="center">
-      <Grid item xs={12}>
-        <Box py={1}>
-          <Typography variant="body1">{drinkName}</Typography>
-        </Box>
-      </Grid>
-      <Grid item xs={12}>
-        <Box>
-          <Typography variant="caption">
-            Total Coffee Used: {total_coffee_in} grams
-          </Typography>
-        </Box>
-        <Box>
-          <Typography variant="caption">
-            Total # of drinks: {total_count}
-          </Typography>
-        </Box>
-      </Grid>
-    </Grid>
+    <Box py={1}>
+      <Card raised variant="outlined" className={classes.card}>
+        <CardContent className={classes.content}>
+          <CardHeader
+            className={classes.header}
+            titleTypographyProps={{ variant: 'body1' }}
+            title={drinkName}
+          />
+          <Grid
+            direction="column"
+            container
+            justify="space-between"
+            alignItems="center"
+          >
+            <Typography variant="caption">
+              Total Coffee Used: {total_coffee_in}g
+            </Typography>
+            <Typography variant="caption">
+              Total Drinks: {total_count}
+            </Typography>
+          </Grid>
+        </CardContent>
+      </Card>
+    </Box>
   );
 }
 

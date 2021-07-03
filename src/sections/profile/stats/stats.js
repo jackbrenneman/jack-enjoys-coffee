@@ -89,36 +89,37 @@ function Stats({ user }) {
       className={classes.page}
     >
       <Grid item xs={12}>
-        <Box pt={4} pb={2}>
+        <Box py={1}>
           <Typography variant="h5">Stats</Typography>
         </Box>
       </Grid>
       {stats ? (
         <Grid item xs={12}>
-          <Box>
+          <Grid container direction="column" alignItems="center">
             <Typography variant="caption">
               Total Coffee Entries: {stats?.total_coffee_entries}
             </Typography>
-          </Box>
-          <Box>
+            <Typography variant="caption">
+              Total Coffee Brewed: {stats?.total_coffee_in / 1000}kg
+            </Typography>
             <Typography variant="caption">
               # of Unique Coffees: {stats?.total_unique_coffees}
             </Typography>
-          </Box>
-          <Box>
             <Typography variant="caption">
               # of Unique Roasters: {stats?.total_unique_roasters}
             </Typography>
-          </Box>
-          <Box>
             <Typography variant="caption">
               Average Coffee Consumption: {getAverageCoffeeConsumption()}{' '}
               drinks/day
             </Typography>
-          </Box>
-          {getMethodBreakdowns().map(({ breakdown }, index) => (
-            <MethodBreakdownStats key={index} methodStats={breakdown} />
-          ))}
+          </Grid>
+          <Grid container align="center" justify="center">
+            {getMethodBreakdowns().map(({ breakdown }, index) => (
+              <Grid item xs={10} lg={4} key={index}>
+                <MethodBreakdownStats methodStats={breakdown} />
+              </Grid>
+            ))}
+          </Grid>
         </Grid>
       ) : (
         <CircularProgress />

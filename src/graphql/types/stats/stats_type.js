@@ -1,13 +1,19 @@
 /**
  * The Stats Type. Contains all sorts of stats for a user.
  */
-import { GraphQLInt, GraphQLObjectType, GraphQLNonNull } from 'graphql';
+import {
+  GraphQLInt,
+  GraphQLObjectType,
+  GraphQLNonNull,
+  GraphQLFloat,
+} from 'graphql';
 import { DateType } from '../date_type.js';
 import {
   totalCoffeeEntriesByUserIdResolver,
   drinkDataByMethodAndUserIdResolver,
   totalUniqueCoffeesByUserIdResolver,
   totalUniqueRoastersByUserIdResolver,
+  totalCoffeeInByUserIdResolver,
   startDateByUserIdResolver,
 } from '../../resolvers/queries/user_query_type_resolvers.js';
 import { MethodBreakdownType } from './breakdown_types/method_breakdown_type.js';
@@ -45,6 +51,14 @@ export const StatsType = new GraphQLObjectType({
       resolve(parentValue, args, context) {
         if (parentValue['user_id']) {
           return totalUniqueRoastersByUserIdResolver(parentValue['user_id']);
+        }
+      },
+    },
+    total_coffee_in: {
+      type: GraphQLFloat,
+      resolve(parentValue, args, context) {
+        if (parentValue['user_id']) {
+          return totalCoffeeInByUserIdResolver(parentValue['user_id']);
         }
       },
     },

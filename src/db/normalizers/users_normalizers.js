@@ -66,9 +66,10 @@ export const normalizeMethodDrinkData = (drinks) => {
     ) => {
       return {
         method: { method_id, name: method_name },
-        total_count: parseInt(acc['total_count']) + parseInt(drink_count) || 0,
+        total_count:
+          parseInt(acc['total_count']) + (parseInt(drink_count) || 0),
         total_coffee_in:
-          parseInt(acc['total_coffee_in']) + parseInt(coffee_in_total) || 0,
+          parseInt(acc['total_coffee_in']) + (parseInt(coffee_in_total) || 0),
         drink_breakdown: [
           ...acc['drink_breakdown'],
           {

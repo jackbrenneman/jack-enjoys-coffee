@@ -25,6 +25,13 @@ export const selectTotalCoffeeEntries = `
   WHERE coffee_entries.user_id = $1
 `;
 
+export const selectTotalCoffeeIn = `
+  SELECT
+  SUM(coffee_entries.coffee_in)
+  FROM coffee_entries
+  WHERE coffee_entries.user_id = $1
+`;
+
 export const selectUniqueCoffeeCount = `
   SELECT
   COUNT(DISTINCT coffee_entries.coffee_id)

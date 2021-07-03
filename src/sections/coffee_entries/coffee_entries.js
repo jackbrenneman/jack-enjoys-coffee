@@ -4,7 +4,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
@@ -18,17 +17,6 @@ import CoffeeEntry from './coffee_entry.js';
 import { today, sevenDaysAgo } from '../../consts.js';
 
 function CurrentCoffeeEntries({ coffeeEntries, onDateChange }) {
-  const useStyles = makeStyles({
-    table: {
-      minWidth: 650,
-    },
-    dateSection: {
-      maxWidth: 500,
-    },
-  });
-
-  const classes = useStyles();
-
   // State that contains the date entries
   const [currentDates, setCurrentDates] = useState({
     startDate: sevenDaysAgo,
@@ -66,7 +54,6 @@ function CurrentCoffeeEntries({ coffeeEntries, onDateChange }) {
           </Typography>
           <form autoComplete="off">
             <TextField
-              className={classes.form}
               id="start_date"
               type="date"
               defaultValue={startDate}
@@ -87,7 +74,6 @@ function CurrentCoffeeEntries({ coffeeEntries, onDateChange }) {
           </Typography>
           <form autoComplete="off">
             <TextField
-              className={classes.form}
               id="end_date"
               type="date"
               defaultValue={endDate}

@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 // Custom Components
 import Stats from './stats/stats.js';
 // Cookies
@@ -39,26 +40,31 @@ function Profile({ user }) {
   const classes = useStyles();
 
   return (
-    <Grid
-      container
-      direction="column"
-      alignItems="center"
-      className={classes.page}
-    >
+    <Grid container align="center" justify="center" className={classes.page}>
       <Grid item xs={12}>
         <Box pt={4} pb={2}>
           <Typography variant="h2">Profile</Typography>
         </Box>
       </Grid>
       <Grid item xs={12}>
-        <Box pt={2}>
-          <Typography variant="body1">Hello {user_name}</Typography>
-        </Box>
+        <Typography variant="body1">Hello {user_name}</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Box>
-          <Typography variant="caption">User ID: {user_id}</Typography>
-        </Box>
+        <Typography variant="caption">User ID: {user_id}</Typography>
+      </Grid>
+      <Grid item xs={4}>
+        <NavLink to={'/entries'}>
+          <Typography variant="caption" align="center">
+            Your Coffee Entries
+          </Typography>
+        </NavLink>
+      </Grid>
+      <Grid item xs={4}>
+        <NavLink to={'/data'}>
+          <Typography variant="caption" align="center">
+            Your Coffee Data
+          </Typography>
+        </NavLink>
       </Grid>
       <Grid item xs={12}>
         <Box py={2}>
@@ -70,22 +76,7 @@ function Profile({ user }) {
         </Box>
       </Grid>
       <Grid item xs={12}>
-        <Box pt={2}>
-          <NavLink to={'/entries'}>
-            <Typography variant="caption" align="center">
-              Your Coffee Entries
-            </Typography>
-          </NavLink>
-        </Box>
-      </Grid>
-      <Grid item xs={12}>
-        <Box>
-          <NavLink to={'/data'}>
-            <Typography variant="caption" align="center">
-              Your Coffee Data
-            </Typography>
-          </NavLink>
-        </Box>
+        <Divider variant="middle" />
       </Grid>
       <Grid item xs={12}>
         <Box pb={8}>
