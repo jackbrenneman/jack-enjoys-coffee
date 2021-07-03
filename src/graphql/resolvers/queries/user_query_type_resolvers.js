@@ -6,6 +6,7 @@ import {
   selectUserDataQuery,
   selectStartDate,
   selectTotalCoffeeEntries,
+  selectTotalCoffeeIn,
   selectUniqueCoffeeCount,
   selectUniqueRoasterCount,
   selectDrinkData,
@@ -50,6 +51,21 @@ export const totalCoffeeEntriesByUserIdResolver = (user_id) => {
     .then((result) => {
       const data = result.rows[0];
       return data['count'];
+    })
+    .catch((e) => console.error(e.stack));
+};
+
+/**
+ * Resolver for total coffee in by user_id.
+ *
+ * @param {int} user_id the user_id of the user
+ * @returns
+ */
+export const totalCoffeeInByUserIdResolver = (user_id) => {
+  return query(selectTotalCoffeeIn, [user_id])
+    .then((result) => {
+      const data = result.rows[0];
+      return data['sum'];
     })
     .catch((e) => console.error(e.stack));
 };

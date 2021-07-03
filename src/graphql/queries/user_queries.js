@@ -14,6 +14,7 @@ query {
     stats {
       start_date
       total_coffee_entries
+      total_coffee_in
       total_unique_coffees
       total_unique_roasters
       espresso_breakdown: method_breakdown(method_id:1) {

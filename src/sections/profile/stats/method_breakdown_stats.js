@@ -1,42 +1,96 @@
 /**
  * The Method Breakdwon Stats for a user.
  */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // Material UI
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import CardHeader from '@material-ui/core/CardHeader';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import IconButton from '@material-ui/core/IconButton';
 // Custom Components
 import DrinkBreakdownStats from './drink_breakdown_stats';
+
+const useStyles = makeStyles(() => ({
+  card: {
+    padding: '0',
+  },
+  header: {
+    padding: '0',
+    paddingTop: '10px',
+  },
+  content: {
+    padding: '0',
+    '&:last-child': {
+      padding: 0,
+    },
+  },
+}));
 
 function MethodBreakdownStats({ methodStats }) {
   const { total_coffee_in, total_count, drink_breakdown, method } = methodStats;
   const { name: methodName } = method;
 
+  const classes = useStyles();
+
+  const [open, setOpen] = useState(false);
+
+  const handleMoreDetailsClick = (e) => {
+    setOpen(!open);
+  };
+
   return (
-    <Grid container direction="column" alignItems="center">
-      <Grid item xs={12}>
-        <Box pt={4} pb={2}>
-          <Typography variant="h6">{methodName} Breakdown</Typography>
-        </Box>
-      </Grid>
-      <Grid item xs={12}>
-        <Box>
-          <Typography variant="caption">
-            Total Coffee Used: {total_coffee_in} grams
-          </Typography>
-        </Box>
-        <Box>
-          <Typography variant="caption">
-            Total # of drinks: {total_count}
-          </Typography>
-        </Box>
-        {drink_breakdown.map((drinkStats, index) => (
-          <DrinkBreakdownStats key={index} drinkStats={drinkStats} />
-        ))}
-      </Grid>
-    </Grid>
+    <Box py={1}>
+      <Card raised className={classes.card}>
+        <CardContent className={classes.content}>
+          <CardHeader
+            className={classes.header}
+            titleTypographyProps={{ variant: 'h6' }}
+            title={`${methodName} Breakdown`}
+          />
+          <Grid
+            direction="column"
+            container
+            justify="space-between"
+            alignItems="center"
+          >
+            <Typography variant="caption" align="center">
+              Total Coffee Brewed: {total_coffee_in}g
+            </Typography>
+            <Typography variant="caption">
+              Total Drinks: {total_count}
+            </Typography>
+            <Grid item>
+              <Box px={1}>
+                <IconButton
+                  aria-label="more"
+                  onClick={handleMoreDetailsClick}
+                  size="small"
+                >
+                  <MoreHorizIcon />
+                </IconButton>
+              </Box>
+            </Grid>
+            {open && (
+              <Grid item xs={12}>
+                <Grid container align="center" justify="center">
+                  {drink_breakdown.map((drinkStats, index) => (
+                    <Grid item xs={10} lg={4} key={index}>
+                      <DrinkBreakdownStats drinkStats={drinkStats} />
+                    </Grid>
+                  ))}
+                </Grid>
+              </Grid>
+            )}
+          </Grid>
+        </CardContent>
+      </Card>
+    </Box>
   );
 }
 
