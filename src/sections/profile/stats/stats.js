@@ -100,7 +100,7 @@ function Stats({ user }) {
               Total Coffee Entries: {stats?.total_coffee_entries}
             </Typography>
             <Typography variant="caption">
-              Total Coffee Brewed: {stats?.total_coffee_in / 1000} kilos
+              Total Coffee Brewed: {stats?.total_coffee_in / 1000}kg
             </Typography>
             <Typography variant="caption">
               # of Unique Coffees: {stats?.total_unique_coffees}
