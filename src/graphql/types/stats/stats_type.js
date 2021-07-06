@@ -17,7 +17,7 @@ import {
   totalWaterInByUserIdResolver,
   startDateByUserIdResolver,
 } from '../../resolvers/queries/user_query_type_resolvers.js';
-import { MethodBreakdownInterface } from './breakdown_types/method_breakdown_interface.js';
+import { MethodStatsInterface } from './method_stats_interface.js';
 
 export const StatsType = new GraphQLObjectType({
   name: 'Stats',
@@ -71,8 +71,8 @@ export const StatsType = new GraphQLObjectType({
         }
       },
     },
-    method_breakdown: {
-      type: MethodBreakdownInterface,
+    method_stats: {
+      type: MethodStatsInterface,
       args: { method_id: { type: GraphQLNonNull(GraphQLInt) } },
       resolve(parentValue, { method_id }, context) {
         if (parentValue['user_id'] && method_id) {

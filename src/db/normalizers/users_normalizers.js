@@ -33,7 +33,7 @@ export const normalizeUsersMutation = (user) => {
  * @returns {object} the drink data in the form:
  *   {
  *     total_count: 52,
- *     drink_breakdown: [
+ *     drink_stats: [
  *       {
  *         drink: {
  *           drink_id: 1,
@@ -56,9 +56,8 @@ export const normalizeMethodDrinkData = (drinks) => {
     total_liquid_out: 0,
     total_steep_time: 0,
     total_water_in: 0,
-    drink_breakdown: [],
+    drink_stats: [],
   };
-  // A drink will contain: a name, drink_id, method_id, and count
   const normalizedDrinkData = drinks.reduce(
     (
       acc,
@@ -89,8 +88,8 @@ export const normalizeMethodDrinkData = (drinks) => {
           (parseFloat(total_steep_time) || 0),
         total_water_in:
           parseFloat(acc['total_water_in']) + (parseFloat(total_water_in) || 0),
-        drink_breakdown: [
-          ...acc['drink_breakdown'],
+        drink_stats: [
+          ...acc['drink_stats'],
           {
             drink: {
               drink_id,

@@ -17,14 +17,14 @@ query {
       total_coffee_in
       total_unique_coffees
       total_unique_roasters
-      espresso_breakdown: method_breakdown(method_id:1) {
+      espresso_stats: method_stats(method_id:1) {
         total_coffee_in
         total_count
         method {
           method_id
           name
         }
-        drink_breakdown {
+        drink_stats {
           drink {
             name
             drink_id
@@ -37,14 +37,14 @@ query {
           total_count
         }
       }
-      pour_over_breakdown: method_breakdown(method_id:2) {
+      pour_over_stats: method_stats(method_id:2) {
         total_count
         total_coffee_in
         method {
           method_id
           name
         }
-        drink_breakdown {
+        drink_stats {
           drink {
             name
             drink_id
@@ -57,14 +57,14 @@ query {
           total_count
         }
       }
-      immersion_breakdown: method_breakdown(method_id:3) {
+      immersion_stats: method_stats(method_id:3) {
         total_count
         total_coffee_in
         method {
           method_id
           name
         }
-        drink_breakdown {
+        drink_stats {
           drink {
             name
             drink_id
