@@ -1,5 +1,5 @@
 /**
- * The Method Breakdown Type. Contains all information regarding a user's .
+ * The Method Breakdown Type. Contains all information regarding a user's method usage and stats.
  */
 import {
   GraphQLFloat,

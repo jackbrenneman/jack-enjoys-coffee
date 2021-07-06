@@ -32,6 +32,20 @@ export const selectTotalCoffeeIn = `
   WHERE coffee_entries.user_id = $1
 `;
 
+export const selectTotalLiquidOut = `
+  SELECT
+  SUM(coffee_entries.liquid_out)
+  FROM coffee_entries
+  WHERE coffee_entries.user_id = $1
+`;
+
+export const selectTotalWaterIn = `
+  SELECT
+  SUM(coffee_entries.water_in)
+  FROM coffee_entries
+  WHERE coffee_entries.user_id = $1
+`;
+
 export const selectUniqueCoffeeCount = `
   SELECT
   COUNT(DISTINCT coffee_entries.coffee_id)
@@ -55,7 +69,10 @@ export const selectDrinkData = `
   coffee_entries.drink_id,
   drinks.name AS drink_name,
   COUNT(coffee_entries.drink_id) AS drink_count,
-  SUM(coffee_entries.coffee_in) AS coffee_in_total
+  SUM(coffee_entries.coffee_in) AS total_coffee_in,
+  SUM(coffee_entries.liquid_out) AS total_liquid_out,
+  SUM(coffee_entries.steep_time) AS total_steep_time,
+  SUM(coffee_entries.water_in) AS total_water_in
   FROM coffee_entries
   LEFT JOIN drinks ON coffee_entries.drink_id = drinks.drink_id
   LEFT JOIN methods ON coffee_entries.method_id = methods.method_id

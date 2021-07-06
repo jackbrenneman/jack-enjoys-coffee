@@ -50,7 +50,14 @@ export const normalizeUsersMutation = (user) => {
  *
  */
 export const normalizeMethodDrinkData = (drinks) => {
-  let drinkData = { total_count: 0, total_coffee_in: 0, drink_breakdown: [] };
+  let drinkData = {
+    total_count: 0,
+    total_coffee_in: 0,
+    total_liquid_out: 0,
+    total_steep_time: 0,
+    total_water_in: 0,
+    drink_breakdown: [],
+  };
   // A drink will contain: a name, drink_id, method_id, and count
   const normalizedDrinkData = drinks.reduce(
     (
@@ -61,7 +68,10 @@ export const normalizeMethodDrinkData = (drinks) => {
         drink_name,
         drink_id,
         drink_count = 0,
-        coffee_in_total = 0,
+        total_coffee_in = 0,
+        total_liquid_out = 0,
+        total_steep_time = 0,
+        total_water_in = 0,
       }
     ) => {
       return {
@@ -69,7 +79,16 @@ export const normalizeMethodDrinkData = (drinks) => {
         total_count:
           parseInt(acc['total_count']) + (parseInt(drink_count) || 0),
         total_coffee_in:
-          parseInt(acc['total_coffee_in']) + (parseInt(coffee_in_total) || 0),
+          parseFloat(acc['total_coffee_in']) +
+          (parseFloat(total_coffee_in) || 0),
+        total_liquid_out:
+          parseFloat(acc['total_liquid_out']) +
+          (parseFloat(total_liquid_out) || 0),
+        total_steep_time:
+          parseFloat(acc['total_steep_time']) +
+          (parseFloat(total_steep_time) || 0),
+        total_water_in:
+          parseFloat(acc['total_water_in']) + (parseFloat(total_water_in) || 0),
         drink_breakdown: [
           ...acc['drink_breakdown'],
           {
@@ -79,7 +98,10 @@ export const normalizeMethodDrinkData = (drinks) => {
               method: { method_id, name: method_name },
             },
             total_count: parseInt(drink_count) || 0,
-            total_coffee_in: parseInt(coffee_in_total) || 0,
+            total_coffee_in: parseFloat(total_coffee_in) || 0,
+            total_liquid_out: parseFloat(total_liquid_out) || 0,
+            total_steep_time: parseFloat(total_steep_time) || 0,
+            total_water_in: parseFloat(total_water_in) || 0,
           },
         ],
       };

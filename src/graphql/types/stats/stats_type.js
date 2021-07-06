@@ -14,9 +14,10 @@ import {
   totalUniqueCoffeesByUserIdResolver,
   totalUniqueRoastersByUserIdResolver,
   totalCoffeeInByUserIdResolver,
+  totalWaterInByUserIdResolver,
   startDateByUserIdResolver,
 } from '../../resolvers/queries/user_query_type_resolvers.js';
-import { MethodBreakdownType } from './breakdown_types/method_breakdown_type.js';
+import { MethodBreakdownInterface } from './breakdown_types/method_breakdown_interface.js';
 
 export const StatsType = new GraphQLObjectType({
   name: 'Stats',
@@ -62,8 +63,16 @@ export const StatsType = new GraphQLObjectType({
         }
       },
     },
+    total_water_in: {
+      type: GraphQLFloat,
+      resolve(parentValue, args, context) {
+        if (parentValue['user_id']) {
+          return totalWaterInByUserIdResolver(parentValue['user_id']);
+        }
+      },
+    },
     method_breakdown: {
-      type: MethodBreakdownType,
+      type: MethodBreakdownInterface,
       args: { method_id: { type: GraphQLNonNull(GraphQLInt) } },
       resolve(parentValue, { method_id }, context) {
         if (parentValue['user_id'] && method_id) {
