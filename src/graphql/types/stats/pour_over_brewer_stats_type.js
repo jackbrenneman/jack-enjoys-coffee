@@ -5,7 +5,7 @@ import { GraphQLObjectType, GraphQLInt, GraphQLFloat } from 'graphql';
 import { BrewerType } from '../brewer_type.js';
 
 export const PourOverBrewerStatsType = new GraphQLObjectType({
-  name: 'PourOverStatsType',
+  name: 'PourOverBrewerStatsType',
   description: 'Data regarding a pour over brewer and its details for a user',
   fields: {
     brewer: { type: BrewerType },
