@@ -66,7 +66,9 @@ function DrinkStats({ drinkStats }) {
               <Divider />
             </Grid>
             {!!total_count && (
-              <Typography variant="caption">Count: {total_count}</Typography>
+              <Typography variant="caption">
+                Drink Count: {total_count}
+              </Typography>
             )}
             {!!total_coffee_in && (
               <Typography variant="caption">

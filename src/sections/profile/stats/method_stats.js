@@ -38,7 +38,15 @@ const useStyles = makeStyles(() => ({
 }));
 
 function MethodStats({ methodStats }) {
-  const { drink_stats, method, total_coffee_in, total_count } = methodStats;
+  const {
+    drink_stats,
+    method,
+    total_coffee_in,
+    total_count,
+    total_espresso_liquid_out,
+    total_water_in,
+    total_steep_time,
+  } = methodStats;
   const { name: methodName } = method;
 
   const classes = useStyles();
@@ -67,12 +75,27 @@ function MethodStats({ methodStats }) {
             <Grid item xs={12} className={classes.divider}>
               <Divider />
             </Grid>
-            <Typography variant="caption" align="center">
-              Total Coffee Brewed: {total_coffee_in}g
-            </Typography>
             <Typography variant="caption">
-              Total Drinks: {total_count}
+              Drink Count: {total_count}
             </Typography>
+            <Typography variant="caption" align="center">
+              Total Coffee Used: {total_coffee_in}g
+            </Typography>
+            {!!total_espresso_liquid_out && (
+              <Typography variant="caption">
+                Total Espresso Made: {total_espresso_liquid_out}g
+              </Typography>
+            )}
+            {!!total_water_in && (
+              <Typography variant="caption">
+                Total Water Used: {total_water_in / 1000}L
+              </Typography>
+            )}
+            {!!total_steep_time && (
+              <Typography variant="caption">
+                Total Steep Time: {total_steep_time}s
+              </Typography>
+            )}
             <Grid item>
               <Box px={1}>
                 <IconButton

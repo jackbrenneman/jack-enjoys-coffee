@@ -162,6 +162,9 @@ export const normalizeMethodDrinkData = (drinks) => {
               total_immersion_water_in:
                 parseFloat(immersionData['total_immersion_water_in']) +
                 (parseFloat(total_water_in) || 0),
+              total_immersion_steep_time:
+                parseFloat(immersionData['total_immersion_steep_time']) +
+                (parseFloat(total_steep_time) || 0),
               drink_stats: [
                 ...immersionData['drink_stats'],
                 {
@@ -173,6 +176,7 @@ export const normalizeMethodDrinkData = (drinks) => {
                   total_count: parseInt(drink_count) || 0,
                   total_coffee_in: parseFloat(total_coffee_in) || 0,
                   total_water_in: parseFloat(total_water_in) || 0,
+                  total_steep_time: parseFloat(total_steep_time) || 0,
                 },
               ],
             },
