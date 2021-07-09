@@ -3,16 +3,14 @@
  */
 import { GraphQLObjectType, GraphQLInt, GraphQLFloat } from 'graphql';
 import { DrinkType } from '../drink_type.js';
-import { DrinkStatsInterface } from './drink_stats_interface.js';
 
 export const EspressoDrinkStatsType = new GraphQLObjectType({
   name: 'EspressoDrinkStatsType',
   description: 'Data regarding an espresso drink and its details for a user',
-  interfaces: () => [DrinkStatsInterface],
   fields: {
     drink: { type: DrinkType },
     total_count: { type: GraphQLInt },
     total_coffee_in: { type: GraphQLFloat },
-    total_liquid_out: { type: GraphQLFloat },
+    total_espresso_liquid_out: { type: GraphQLFloat },
   },
 });

@@ -69,11 +69,30 @@ function Stats({ user }) {
   };
 
   const getMethodStats = () => {
-    const { espresso_stats, pour_over_stats, immersion_stats } = stats;
+    const { method_stats } = stats;
+    const { espresso_stats, pour_over_stats, immersion_stats } = method_stats;
     return [
-      { stats: espresso_stats },
-      { stats: pour_over_stats },
-      { stats: immersion_stats },
+      {
+        stats: {
+          ...espresso_stats,
+          total_coffee_in: espresso_stats?.total_espresso_coffee_in,
+          total_count: espresso_stats?.total_espresso_count,
+        },
+      },
+      {
+        stats: {
+          ...pour_over_stats,
+          total_coffee_in: pour_over_stats?.total_pour_over_coffee_in,
+          total_count: pour_over_stats?.total_pour_over_count,
+        },
+      },
+      {
+        stats: {
+          ...immersion_stats,
+          total_coffee_in: immersion_stats?.total_immersion_coffee_in,
+          total_count: immersion_stats?.total_immersion_count,
+        },
+      },
     ];
   };
 

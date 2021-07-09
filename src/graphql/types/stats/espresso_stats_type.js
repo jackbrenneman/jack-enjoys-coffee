@@ -8,18 +8,16 @@ import {
   GraphQLObjectType,
 } from 'graphql';
 import { MethodType } from '../method_type.js';
-import { MethodStatsInterface } from './method_stats_interface.js';
-import { DrinkStatsInterface } from './drink_stats_interface.js';
+import { EspressoDrinkStatsType } from './espresso_drink_stats_type.js';
 
 export const EspressoStatsType = new GraphQLObjectType({
   name: 'EspressoStatsType',
   description: 'Data regarding a user and their espresso method stats',
-  interfaces: () => [MethodStatsInterface],
   fields: {
     method: { type: MethodType },
-    total_count: { type: GraphQLInt },
-    total_coffee_in: { type: GraphQLFloat },
-    total_liquid_out: { type: GraphQLFloat },
-    drink_stats: { type: GraphQLList(DrinkStatsInterface) },
+    total_espresso_count: { type: GraphQLInt },
+    total_espresso_coffee_in: { type: GraphQLFloat },
+    total_espresso_liquid_out: { type: GraphQLFloat },
+    drink_stats: { type: GraphQLList(EspressoDrinkStatsType) },
   },
 });

@@ -11,7 +11,7 @@ import {
   selectTotalLiquidOut,
   selectUniqueCoffeeCount,
   selectUniqueRoasterCount,
-  selectDrinkData,
+  selectMethodAndDrinkData,
 } from '../../../db/queries/users_queries.js';
 import { normalizeMethodDrinkData } from '../../../db/normalizers/users_normalizers.js';
 
@@ -131,13 +131,12 @@ export const totalUniqueRoastersByUserIdResolver = (user_id) => {
 };
 
 /**
- * Resolver for drink data by user_id and method_id.
+ * Resolver for method and drink data by user_id.
  *
- * @param {int} user_id   the user_id of the user
- * @param {int} method_id the method_id of the method
+ * @param {int} user_id the user_id of the user
  */
-export const drinkDataByMethodAndUserIdResolver = (user_id, method_id) => {
-  return query(selectDrinkData, [user_id, method_id])
+export const methodAndDrinkDataByUserIdResolver = (user_id) => {
+  return query(selectMethodAndDrinkData, [user_id])
     .then((result) => {
       const data = result.rows;
       return normalizeMethodDrinkData(data);

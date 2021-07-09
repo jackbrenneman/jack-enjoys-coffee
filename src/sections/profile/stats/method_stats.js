@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function MethodStats({ methodStats }) {
-  const { total_coffee_in, total_count, drink_stats, method } = methodStats;
+  const { drink_stats, method, total_coffee_in, total_count } = methodStats;
   const { name: methodName } = method;
 
   const classes = useStyles();

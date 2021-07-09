@@ -1,23 +1,18 @@
 /**
  * The Stats Type. Contains all sorts of stats for a user.
  */
-import {
-  GraphQLInt,
-  GraphQLObjectType,
-  GraphQLNonNull,
-  GraphQLFloat,
-} from 'graphql';
+import { GraphQLInt, GraphQLObjectType, GraphQLFloat } from 'graphql';
 import { DateType } from '../date_type.js';
 import {
   totalCoffeeEntriesByUserIdResolver,
-  drinkDataByMethodAndUserIdResolver,
+  methodAndDrinkDataByUserIdResolver,
   totalUniqueCoffeesByUserIdResolver,
   totalUniqueRoastersByUserIdResolver,
   totalCoffeeInByUserIdResolver,
   totalWaterInByUserIdResolver,
   startDateByUserIdResolver,
 } from '../../resolvers/queries/user_query_type_resolvers.js';
-import { MethodStatsInterface } from './method_stats_interface.js';
+import { MethodStatsType } from './method_stats_type.js';
 
 export const StatsType = new GraphQLObjectType({
   name: 'Stats',
@@ -72,14 +67,10 @@ export const StatsType = new GraphQLObjectType({
       },
     },
     method_stats: {
-      type: MethodStatsInterface,
-      args: { method_id: { type: GraphQLNonNull(GraphQLInt) } },
-      resolve(parentValue, { method_id }, context) {
-        if (parentValue['user_id'] && method_id) {
-          return drinkDataByMethodAndUserIdResolver(
-            parentValue['user_id'],
-            method_id
-          );
+      type: MethodStatsType,
+      resolve(parentValue, args, context) {
+        if (parentValue['user_id']) {
+          return methodAndDrinkDataByUserIdResolver(parentValue['user_id']);
         }
       },
     },
