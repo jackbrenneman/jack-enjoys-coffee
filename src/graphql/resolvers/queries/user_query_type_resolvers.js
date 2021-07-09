@@ -7,9 +7,11 @@ import {
   selectStartDate,
   selectTotalCoffeeEntries,
   selectTotalCoffeeIn,
+  selectTotalWaterIn,
+  selectTotalLiquidOut,
   selectUniqueCoffeeCount,
   selectUniqueRoasterCount,
-  selectDrinkData,
+  selectMethodAndDrinkData,
 } from '../../../db/queries/users_queries.js';
 import { normalizeMethodDrinkData } from '../../../db/normalizers/users_normalizers.js';
 
@@ -71,6 +73,36 @@ export const totalCoffeeInByUserIdResolver = (user_id) => {
 };
 
 /**
+ * Resolver for total water in by user_id.
+ *
+ * @param {int} user_id the user_id of the user
+ * @returns
+ */
+export const totalWaterInByUserIdResolver = (user_id) => {
+  return query(selectTotalWaterIn, [user_id])
+    .then((result) => {
+      const data = result.rows[0];
+      return data['sum'];
+    })
+    .catch((e) => console.error(e.stack));
+};
+
+/**
+ * Resolver for total liquid out by user_id.
+ *
+ * @param {int} user_id the user_id of the user
+ * @returns
+ */
+export const totalLiquidOutByUserIdResolver = (user_id) => {
+  return query(selectTotalLiquidOut, [user_id])
+    .then((result) => {
+      const data = result.rows[0];
+      return data['sum'];
+    })
+    .catch((e) => console.error(e.stack));
+};
+
+/**
  * Resolver for total unique coffees by user_id.
  *
  * @param {int} user_id the user_id of the user
@@ -99,13 +131,12 @@ export const totalUniqueRoastersByUserIdResolver = (user_id) => {
 };
 
 /**
- * Resolver for drink data by user_id and method_id.
+ * Resolver for method and drink data by user_id.
  *
- * @param {int} user_id   the user_id of the user
- * @param {int} method_id the method_id of the method
+ * @param {int} user_id the user_id of the user
  */
-export const drinkDataByMethodAndUserIdResolver = (user_id, method_id) => {
-  return query(selectDrinkData, [user_id, method_id])
+export const methodAndDrinkDataByUserIdResolver = (user_id) => {
+  return query(selectMethodAndDrinkData, [user_id])
     .then((result) => {
       const data = result.rows;
       return normalizeMethodDrinkData(data);

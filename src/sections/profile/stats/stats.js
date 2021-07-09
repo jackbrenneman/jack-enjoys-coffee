@@ -13,7 +13,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { userStatsQuery } from '../../../graphql/queries/user_queries.js';
 import { queryGQL } from '../../../graphql/fetch.js';
 // Custom Components
-import MethodBreakdownStats from './method_breakdown_stats.js';
+import MethodStats from './method_stats.js';
 
 const millisecondsInOneDay = 1000 * 60 * 60 * 24;
 
@@ -68,16 +68,31 @@ function Stats({ user }) {
     return 0;
   };
 
-  const getMethodBreakdowns = () => {
-    const {
-      espresso_breakdown,
-      pour_over_breakdown,
-      immersion_breakdown,
-    } = stats;
+  const getMethodStats = () => {
+    const { method_stats } = stats;
+    const { espresso_stats, pour_over_stats, immersion_stats } = method_stats;
     return [
-      { breakdown: espresso_breakdown },
-      { breakdown: pour_over_breakdown },
-      { breakdown: immersion_breakdown },
+      {
+        stats: {
+          ...espresso_stats,
+          total_coffee_in: espresso_stats?.total_espresso_coffee_in,
+          total_count: espresso_stats?.total_espresso_count,
+        },
+      },
+      {
+        stats: {
+          ...pour_over_stats,
+          total_coffee_in: pour_over_stats?.total_pour_over_coffee_in,
+          total_count: pour_over_stats?.total_pour_over_count,
+        },
+      },
+      {
+        stats: {
+          ...immersion_stats,
+          total_coffee_in: immersion_stats?.total_immersion_coffee_in,
+          total_count: immersion_stats?.total_immersion_count,
+        },
+      },
     ];
   };
 
@@ -114,9 +129,9 @@ function Stats({ user }) {
             </Typography>
           </Grid>
           <Grid container align="center" justify="center">
-            {getMethodBreakdowns().map(({ breakdown }, index) => (
+            {getMethodStats().map(({ stats }, index) => (
               <Grid item xs={10} lg={4} key={index}>
-                <MethodBreakdownStats methodStats={breakdown} />
+                <MethodStats methodStats={stats} />
               </Grid>
             ))}
           </Grid>

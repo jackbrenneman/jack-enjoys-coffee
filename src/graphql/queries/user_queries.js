@@ -14,67 +14,65 @@ query {
     stats {
       start_date
       total_coffee_entries
-      total_coffee_in
       total_unique_coffees
       total_unique_roasters
-      espresso_breakdown: method_breakdown(method_id:1) {
-        total_coffee_in
-        total_count
-        method {
-          method_id
-          name
-        }
-        drink_breakdown {
-          drink {
+      total_coffee_in
+      method_stats {
+        espresso_stats {
+          method {
+            method_id
             name
-            drink_id
-            method {
-              method_id
+          }
+          total_espresso_count
+          total_espresso_coffee_in
+          total_espresso_liquid_out
+          drink_stats {
+            drink {
+              drink_id
               name
             }
+            total_count
+            total_coffee_in
+            total_espresso_liquid_out
           }
-          total_coffee_in
-          total_count
         }
-      }
-      pour_over_breakdown: method_breakdown(method_id:2) {
-        total_count
-        total_coffee_in
-        method {
-          method_id
-          name
-        }
-        drink_breakdown {
-          drink {
+        pour_over_stats {
+          method {
+            method_id
             name
-            drink_id
-            method {
-              method_id
+          }
+          total_pour_over_count
+          total_pour_over_coffee_in
+          total_pour_over_water_in
+          drink_stats {
+            drink {
+              drink_id
               name
             }
+            total_count
+            total_coffee_in
+            total_water_in
           }
-          total_coffee_in
-          total_count
         }
-      }
-      immersion_breakdown: method_breakdown(method_id:3) {
-        total_count
-        total_coffee_in
-        method {
-          method_id
-          name
-        }
-        drink_breakdown {
-          drink {
+        immersion_stats {
+          method {
+            method_id
             name
-            drink_id
-            method {
-              method_id
+          }
+          total_immersion_count
+          total_immersion_coffee_in
+          total_immersion_water_in
+          total_immersion_steep_time
+          drink_stats {
+            drink {
+              drink_id
               name
             }
+            total_count
+            total_coffee_in
+            total_water_in
+            total_steep_time
           }
-          total_coffee_in
-          total_count
         }
       }
     }

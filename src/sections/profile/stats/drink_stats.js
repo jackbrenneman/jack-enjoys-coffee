@@ -1,5 +1,5 @@
 /**
- * The Drink Breakdwon Stats for a user.
+ * The Drink Stats for a user.
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -29,7 +29,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function DrinkBreakdownStats({ drinkStats }) {
+function DrinkStats({ drinkStats }) {
   const { total_coffee_in, total_count, drink } = drinkStats;
   const { name: drinkName } = drink;
 
@@ -63,7 +63,7 @@ function DrinkBreakdownStats({ drinkStats }) {
   );
 }
 
-DrinkBreakdownStats.propTypes = {
+DrinkStats.propTypes = {
   drinkStats: PropTypes.shape({
     drink: PropTypes.shape({
       drink_id: PropTypes.number,
@@ -78,8 +78,8 @@ DrinkBreakdownStats.propTypes = {
   }),
 };
 
-DrinkBreakdownStats.defaultProps = {
+DrinkStats.defaultProps = {
   drinkStats: {},
 };
 
-export default DrinkBreakdownStats;
+export default DrinkStats;

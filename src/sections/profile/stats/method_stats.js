@@ -1,5 +1,5 @@
 /**
- * The Method Breakdwon Stats for a user.
+ * The Method Stats for a user.
  */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
@@ -14,7 +14,7 @@ import CardContent from '@material-ui/core/CardContent';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import IconButton from '@material-ui/core/IconButton';
 // Custom Components
-import DrinkBreakdownStats from './drink_breakdown_stats';
+import DrinkStats from './drink_stats';
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -32,8 +32,8 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function MethodBreakdownStats({ methodStats }) {
-  const { total_coffee_in, total_count, drink_breakdown, method } = methodStats;
+function MethodStats({ methodStats }) {
+  const { drink_stats, method, total_coffee_in, total_count } = methodStats;
   const { name: methodName } = method;
 
   const classes = useStyles();
@@ -51,7 +51,7 @@ function MethodBreakdownStats({ methodStats }) {
           <CardHeader
             className={classes.header}
             titleTypographyProps={{ variant: 'h6' }}
-            title={`${methodName} Breakdown`}
+            title={`${methodName} Stats`}
           />
           <Grid
             direction="column"
@@ -79,9 +79,9 @@ function MethodBreakdownStats({ methodStats }) {
             {open && (
               <Grid item xs={12}>
                 <Grid container align="center" justify="center">
-                  {drink_breakdown.map((drinkStats, index) => (
+                  {drink_stats.map((drinkStats, index) => (
                     <Grid item xs={10} lg={4} key={index}>
-                      <DrinkBreakdownStats drinkStats={drinkStats} />
+                      <DrinkStats drinkStats={drinkStats} />
                     </Grid>
                   ))}
                 </Grid>
@@ -94,7 +94,7 @@ function MethodBreakdownStats({ methodStats }) {
   );
 }
 
-MethodBreakdownStats.propTypes = {
+MethodStats.propTypes = {
   methodStats: PropTypes.shape({
     total_coffee_in: PropTypes.number,
     total_count: PropTypes.number,
@@ -102,7 +102,7 @@ MethodBreakdownStats.propTypes = {
       method_id: PropTypes.number,
       name: PropTypes.string,
     }),
-    drink_breakdown: PropTypes.arrayOf(
+    drink_stats: PropTypes.arrayOf(
       PropTypes.shape({
         drink: PropTypes.shape({
           drink_id: PropTypes.number,
@@ -115,8 +115,8 @@ MethodBreakdownStats.propTypes = {
   }),
 };
 
-MethodBreakdownStats.defaultProps = {
+MethodStats.defaultProps = {
   methodStats: {},
 };
 
-export default MethodBreakdownStats;
+export default MethodStats;
