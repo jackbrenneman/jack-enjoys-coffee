@@ -11,15 +11,20 @@ import Box from '@material-ui/core/Box';
 import CardHeader from '@material-ui/core/CardHeader';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles(() => ({
   card: {
     padding: '0',
     backgroundColor: '#EEEEEE',
+    minWidth: '170px',
   },
   header: {
     padding: '0',
     paddingTop: '4px',
+  },
+  divider: {
+    minWidth: '150px',
   },
   content: {
     padding: '0',
@@ -30,18 +35,25 @@ const useStyles = makeStyles(() => ({
 }));
 
 function DrinkStats({ drinkStats }) {
-  const { total_coffee_in, total_count, drink } = drinkStats;
+  const {
+    total_coffee_in,
+    total_count,
+    drink,
+    total_espresso_liquid_out,
+    total_water_in,
+    total_steep_time,
+  } = drinkStats;
   const { name: drinkName } = drink;
 
   const classes = useStyles();
 
   return (
-    <Box py={1}>
+    <Box p={1}>
       <Card raised variant="outlined" className={classes.card}>
         <CardContent className={classes.content}>
           <CardHeader
             className={classes.header}
-            titleTypographyProps={{ variant: 'body1' }}
+            titleTypographyProps={{ variant: 'body2' }}
             title={drinkName}
           />
           <Grid
@@ -50,12 +62,32 @@ function DrinkStats({ drinkStats }) {
             justify="space-between"
             alignItems="center"
           >
-            <Typography variant="caption">
-              Total Coffee Used: {total_coffee_in}g
-            </Typography>
-            <Typography variant="caption">
-              Total Drinks: {total_count}
-            </Typography>
+            <Grid item xs={12} className={classes.divider}>
+              <Divider />
+            </Grid>
+            {!!total_count && (
+              <Typography variant="caption">Count: {total_count}</Typography>
+            )}
+            {!!total_coffee_in && (
+              <Typography variant="caption">
+                Total Coffee Used: {total_coffee_in}g
+              </Typography>
+            )}
+            {!!total_espresso_liquid_out && (
+              <Typography variant="caption">
+                Total Espresso Made: {total_espresso_liquid_out}g
+              </Typography>
+            )}
+            {!!total_water_in && (
+              <Typography variant="caption">
+                Total Water Used: {total_water_in / 1000}L
+              </Typography>
+            )}
+            {!!total_steep_time && (
+              <Typography variant="caption">
+                Total Steep Time: {total_steep_time}s
+              </Typography>
+            )}
           </Grid>
         </CardContent>
       </Card>

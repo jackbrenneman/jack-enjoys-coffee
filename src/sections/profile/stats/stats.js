@@ -130,7 +130,7 @@ function Stats({ user }) {
           </Grid>
           <Grid container align="center" justify="center">
             {getMethodStats().map(({ stats }, index) => (
-              <Grid item xs={10} lg={4} key={index}>
+              <Grid item xs={10} key={index}>
                 <MethodStats methodStats={stats} />
               </Grid>
             ))}
