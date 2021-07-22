@@ -16,7 +16,12 @@ import CoffeeEntry from './coffee_entry.js';
 // Constants
 import { today, sevenDaysAgo } from '../../consts.js';
 
-function CurrentCoffeeEntries({ coffeeEntries, onDateChange }) {
+function CurrentCoffeeEntries({
+  coffeeEntries,
+  onDateChange,
+  onCoffeeEntryDeletion,
+  currentData,
+}) {
   // State that contains the date entries
   const [currentDates, setCurrentDates] = useState({
     startDate: sevenDaysAgo,
@@ -107,7 +112,11 @@ function CurrentCoffeeEntries({ coffeeEntries, onDateChange }) {
         <Grid container align="center" justify="center">
           {coffeeEntries.map((coffeeEntry) => (
             <Grid item xs={10} sm={3} lg={2} key={coffeeEntry.coffee_entry_id}>
-              <CoffeeEntry coffeeEntry={coffeeEntry} />
+              <CoffeeEntry
+                onCoffeeEntryDeletion={onCoffeeEntryDeletion}
+                coffeeEntry={coffeeEntry}
+                currentData={currentData}
+              />
             </Grid>
           ))}
         </Grid>
@@ -119,6 +128,18 @@ function CurrentCoffeeEntries({ coffeeEntries, onDateChange }) {
 CurrentCoffeeEntries.propTypes = {
   coffeeEntries: PropTypes.array.isRequired,
   onDateChange: PropTypes.func.isRequired,
+  onCoffeeEntryDeletion: PropTypes.func.isRequired,
+  currentData: PropTypes.shape({
+    brewers: PropTypes.array,
+    coffees: PropTypes.array,
+    drinks: PropTypes.array,
+    grinders: PropTypes.array,
+    methods: PropTypes.array,
+    origins: PropTypes.array,
+    processes: PropTypes.array,
+    roasters: PropTypes.array,
+    waters: PropTypes.array,
+  }),
 };
 
 export default CurrentCoffeeEntries;
