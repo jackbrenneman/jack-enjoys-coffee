@@ -20,14 +20,13 @@ import EspressoDetails from './entry_details/espresso_details.js';
 import PouroverDetails from './entry_details/pourover_details.js';
 import ImmersionDetails from './entry_details/immersion_details.js';
 // Constants
-import { espressoEnum, pouroverEnum, immersionEnum } from '../../consts.js';
+import { espressoId, pouroverId, immersionId } from '../../consts.js';
 import EditCoffeeEntry from './edit/edit_coffee_entry.js';
 
 function CurrentCoffeeEntry({
   coffeeEntry,
   currentData,
   onCoffeeEntryDeletion,
-  onSaveChangesSuccess,
 }) {
   const [currentCoffeeEntry, setCurrentCoffeeEntry] = useState(coffeeEntry);
   const { coffee, date, brew, rating, notes } = currentCoffeeEntry;
@@ -41,8 +40,8 @@ function CurrentCoffeeEntry({
 
   const {
     name: method_name,
+    method_id,
     brewer,
-    category,
     coffee_in,
     drink,
     liquid_out,
@@ -135,8 +134,8 @@ function CurrentCoffeeEntry({
   };
 
   const getMoreDetailsView = () => {
-    switch (category) {
-      case espressoEnum:
+    switch (method_id) {
+      case espressoId:
         return (
           <EspressoDetails
             coffee_in={coffee_in}
@@ -144,7 +143,7 @@ function CurrentCoffeeEntry({
             generalDetails={generalDetails}
           />
         );
-      case pouroverEnum:
+      case pouroverId:
         return (
           <PouroverDetails
             coffee_in={coffee_in}
@@ -152,7 +151,7 @@ function CurrentCoffeeEntry({
             generalDetails={generalDetails}
           />
         );
-      case immersionEnum:
+      case immersionId:
         return (
           <ImmersionDetails
             coffee_in={coffee_in}

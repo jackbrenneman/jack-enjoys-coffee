@@ -35,6 +35,9 @@ export const defaultSteepTimeState = {
 };
 
 // Method Constants
+export const espressoId = 1;
+export const pouroverId = 2;
+export const immersionId = 3;
 export const espressoEnum = 'ESPRESSO';
 export const pouroverEnum = 'POUROVER';
 export const immersionEnum = 'IMMERSION';

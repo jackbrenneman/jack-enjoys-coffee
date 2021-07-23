@@ -18,7 +18,7 @@ export const coffeeEntryMutation = `
  */
 export const updateCoffeeEntryMutation = `
  mutation UpdateCoffeeEntry($coffeeEntry: CoffeeEntryInput, $coffee_entry_id: Int!) {
-   updateCoffee(coffeeEntry: $coffeeEntry, coffee_entry_id: $coffee_entry_id) {
+   updateCoffeeEntry(coffeeEntry: $coffeeEntry, coffee_entry_id: $coffee_entry_id) {
      coffee_entry_id
    }
  }

@@ -90,6 +90,9 @@ function EditCoffeeEntry({
   // State used to reset inputs
   const [key, setKey] = useState(true);
 
+  // State used for the coffee name so we can have an initial coffee populated correctly
+  const [coffeeName, setCoffeeName] = useState(coffee?.name);
+
   // State used for editing a coffee.
   const [coffeeEntryData, setCoffeeEntryData] = useState(coffeeEntry);
 
@@ -127,9 +130,38 @@ function EditCoffeeEntry({
     roasterIdToCoffees,
   } = currentData;
 
+  /**
+   * Given a coffee entry, get the important bits to write to the database
+   *
+   * @param {object} updatedCoffeeEntry The updated coffee entry
+   *
+   * @returns {object}                  The normalized, updated coffee entry
+   */
+  const normalizeCoffeeEntryForUpdate = (updatedCoffeeEntry) => {
+    return {
+      date: updatedCoffeeEntry?.date,
+      coffee_id: updatedCoffeeEntry?.coffee?.coffee_id,
+      method_id: updatedCoffeeEntry?.brew?.method?.method_id,
+      brewer_id: updatedCoffeeEntry?.brew?.method?.brewer?.brewer_id,
+      drink_id: updatedCoffeeEntry?.brew?.method?.drink?.drink_id,
+      grinder_id: updatedCoffeeEntry?.brew?.grind?.grinder?.grinder_id,
+      grinder_setting: updatedCoffeeEntry?.brew?.grind?.setting,
+      water_id: updatedCoffeeEntry?.brew?.water?.water_id,
+      coffee_in: updatedCoffeeEntry?.brew?.method?.coffee_in,
+      liquid_out: updatedCoffeeEntry?.brew?.method?.liquid_out,
+      water_in: updatedCoffeeEntry?.brew?.method?.water_in,
+      steep_time: updatedCoffeeEntry?.brew?.method?.steep_time,
+      notes: updatedCoffeeEntry?.notes,
+      rating: updatedCoffeeEntry?.rating,
+    };
+  };
+
   const handleSaveChanges = () => {
+    const normalizedCoffeeEntry = normalizeCoffeeEntryForUpdate(
+      coffeeEntryData
+    );
     writeGQL(updateCoffeeEntryMutation, {
-      coffeeEntry: coffeeEntryData,
+      coffeeEntry: normalizedCoffeeEntry,
       coffee_entry_id: parseInt(coffee_entry_id),
     })
       .then(({ data }) => {
@@ -175,35 +207,30 @@ function EditCoffeeEntry({
     return;
   };
 
-  const handleRoasterChange = (e) => {
-    setRoasterId(e?.roaster_id);
-  };
-
-  const handleCoffeeChange = (e) => {
+  const handleDateChange = (e) => {
     setCoffeeEntryData({
       ...coffeeEntryData,
-      coffee: e,
+      date: e.target.value,
+    });
+  };
+
+  const handleRoasterChange = ({ roaster_id }) => {
+    if (roaster_id === roasterId) {
+      return;
+    }
+    setRoasterId(roaster_id);
+    setCoffeeName('');
+  };
+
+  const handleCoffeeChange = (coffee) => {
+    setCoffeeEntryData({
+      ...coffeeEntryData,
+      coffee,
     });
   };
 
   const getMethodFromMethodId = (methodId) => {
     return methods.find((method) => method.method_id === methodId);
-  };
-
-  const getDrinkFromDrinkId = (drinkId) => {
-    return drinks.find((drink) => drink.drink_id === drinkId);
-  };
-
-  const getBrewerFromBrewerId = (brewerId) => {
-    return brewers.find((brewer) => brewer.brewer_id === brewerId);
-  };
-
-  const getWaterFromWaterId = (waterId) => {
-    return waters.find((water) => water.water_id === waterId);
-  };
-
-  const getGrinderFromGrinderId = (grinderId) => {
-    return grinders.find((grinder) => grinder.grinder_id === grinderId);
   };
 
   const handleMethodChange = (e) => {
@@ -242,27 +269,27 @@ function EditCoffeeEntry({
     });
   };
 
-  const handleBrewerChange = (e) => {
+  const handleBrewerChange = (brewer) => {
     setCoffeeEntryData({
       ...coffeeEntryData,
       brew: {
         ...coffeeEntryData?.brew,
         method: {
           ...coffeeEntryData?.brew?.method,
-          brewer: getBrewerFromBrewerId(e.target.value),
+          brewer,
         },
       },
     });
   };
 
-  const handleDrinkChange = (e) => {
+  const handleDrinkChange = (drink) => {
     setCoffeeEntryData({
       ...coffeeEntryData,
       brew: {
         ...coffeeEntryData?.brew,
         method: {
           ...coffeeEntryData?.brew?.method,
-          drink: getDrinkFromDrinkId(e.target.value),
+          drink,
         },
       },
     });
@@ -382,24 +409,24 @@ function EditCoffeeEntry({
     });
   };
 
-  const handleWaterChange = (e) => {
+  const handleWaterChange = (water) => {
     setCoffeeEntryData({
       ...coffeeEntryData,
       brew: {
         ...coffeeEntryData?.brew,
-        water: getWaterFromWaterId(e.target.value),
+        water,
       },
     });
   };
 
-  const handleGrinderChange = (e) => {
+  const handleGrinderChange = (grinder) => {
     setCoffeeEntryData({
       ...coffeeEntryData,
       brew: {
         ...coffeeEntryData?.brew,
         grind: {
           ...coffeeEntryData?.brew?.grind,
-          grinder: getGrinderFromGrinderId(e.target.value),
+          grinder,
         },
       },
     });
@@ -447,14 +474,14 @@ function EditCoffeeEntry({
     });
   };
 
-  const { rating, notes, brew } = coffeeEntryData;
+  const { rating, notes, brew, date } = coffeeEntryData;
   const { method, grind, water } = brew;
   const { method_id, drink, brewer, water_in, liquid_out, coffee_in } = method;
-  const { brewer_id } = brewer;
-  const { drink_id } = drink;
-  const { water_id } = water;
+  const { name: brewer_name } = brewer;
+  const { name: drink_name } = drink;
+  const { name: water_name } = water;
   const { grinder, setting } = grind;
-  const { grinder_id } = grinder;
+  const { name: grinder_name } = grinder;
 
   // Determines what coffee options there are for the roaster selected
   const getCoffeeOptions = () => {
@@ -478,6 +505,17 @@ function EditCoffeeEntry({
       return methodIdToDrinks[method_id] ? methodIdToDrinks[method_id] : [];
     }
     return drinks;
+  };
+
+  // Gets the date in the form we want
+  const getDate = () => {
+    const realDate = new Date(date);
+    const year = realDate.getFullYear();
+    const month = realDate.getMonth() + 1;
+    const day = realDate.getDate();
+    return `${year}-${month > 9 ? month : `0${month}`}-${
+      day > 9 ? day : `0${day}`
+    }`;
   };
 
   const coffeeInInput = (
@@ -575,7 +613,7 @@ function EditCoffeeEntry({
         </Grid>
       </Grid>
       <Grid container justify="center">
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4}>
           <Typography variant="caption" align="center">
             Hours
           </Typography>
@@ -602,7 +640,7 @@ function EditCoffeeEntry({
             </form>
           </Box>
         </Grid>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4}>
           <Typography variant="caption" align="center">
             Minutes
           </Typography>
@@ -629,7 +667,7 @@ function EditCoffeeEntry({
             </form>
           </Box>
         </Grid>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4}>
           <Typography variant="caption" align="center">
             Seconds
           </Typography>
@@ -670,10 +708,10 @@ function EditCoffeeEntry({
       case espressoEnum:
         return (
           <Grid container justify="center">
-            <Grid item xs={4} sm={2}>
+            <Grid item xs={4}>
               {coffeeInInput}
             </Grid>
-            <Grid item xs={4} sm={2}>
+            <Grid item xs={4}>
               {liquidOutInput}
             </Grid>
           </Grid>
@@ -681,10 +719,10 @@ function EditCoffeeEntry({
       case pouroverEnum:
         return (
           <Grid container justify="center">
-            <Grid item xs={4} sm={2}>
+            <Grid item xs={4}>
               {coffeeInInput}
             </Grid>
-            <Grid item xs={4} sm={2}>
+            <Grid item xs={4}>
               {waterInInput}
             </Grid>
           </Grid>
@@ -693,10 +731,10 @@ function EditCoffeeEntry({
         return (
           <>
             <Grid container justify="center">
-              <Grid item xs={4} sm={2}>
+              <Grid item xs={4}>
                 {coffeeInInput}
               </Grid>
-              <Grid item xs={4} sm={2}>
+              <Grid item xs={4}>
                 {waterInInput}
               </Grid>
             </Grid>
@@ -706,10 +744,10 @@ function EditCoffeeEntry({
       default:
         return (
           <Grid container justify="center">
-            <Grid item xs={4} sm={2}>
+            <Grid item xs={4}>
               {coffeeInInput}
             </Grid>
-            <Grid item xs={4} sm={2}>
+            <Grid item xs={4}>
               {liquidOutInput}
             </Grid>
           </Grid>
@@ -722,6 +760,30 @@ function EditCoffeeEntry({
       <Card raised className={classes.card}>
         <CardContent className={classes.content}>
           <Grid direction="row" container justify="center" alignItems="center">
+            <Grid item xs={12}>
+              <Typography variant="caption" align="center">
+                Date
+              </Typography>
+            </Grid>
+            <form autoComplete="off">
+              <TextField
+                className={classes.form}
+                InputProps={{
+                  classes: {
+                    input: classes.resize,
+                  },
+                }}
+                id="date"
+                type="date"
+                defaultValue={getDate()}
+                onChange={handleDateChange}
+                SelectProps={{
+                  native: true,
+                }}
+                variant="outlined"
+                size="small"
+              />
+            </form>
             <Grid item xs={12}>
               <Typography variant="caption" align="center">
                 Roaster
@@ -761,7 +823,8 @@ function EditCoffeeEntry({
                 fieldName="coffee"
                 options={getCoffeeOptions()}
                 onChange={handleCoffeeChange}
-                initialValue={coffee.name}
+                initialValue={coffeeName}
+                key={`${coffeeName}${roasterId}`}
                 textField={(params) => (
                   <TextField
                     {...params}
@@ -812,55 +875,56 @@ function EditCoffeeEntry({
                 Brewer
               </Typography>
             </Grid>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="method"
-                value={brewer_id ?? ''}
-                select
-                onChange={handleBrewerChange}
-                variant="outlined"
-                size="small"
-                InputProps={{
-                  classes: {
-                    input: classes.resize,
-                  },
-                }}
-              >
-                {getBrewerOptions().map(({ brewer_id, name }) => (
-                  <MenuItem value={brewer_id} key={brewer_id}>
-                    {name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </form>
+            <AutocompleteWrapperSimple
+              fieldName="brewer"
+              options={getBrewerOptions()}
+              onChange={handleBrewerChange}
+              initialValue={brewer_name}
+              key={`${key}${brewer_name}`}
+              textField={(params) => (
+                <TextField
+                  {...params}
+                  ref={params.InputProps.ref}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
+                  className={classes.form}
+                  id="brewer"
+                  size="small"
+                  variant="outlined"
+                />
+              )}
+            />
+
             <Grid item xs={12}>
               <Typography variant="caption" align="center">
                 Drink
               </Typography>
             </Grid>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="method"
-                value={drink_id ?? ''}
-                select
-                onChange={handleDrinkChange}
-                variant="outlined"
-                size="small"
-                InputProps={{
-                  classes: {
-                    input: classes.resize,
-                  },
-                }}
-              >
-                {getDrinkOptions().map(({ drink_id, name }) => (
-                  <MenuItem value={drink_id} key={drink_id}>
-                    {name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </form>
+            <AutocompleteWrapperSimple
+              fieldName="drink"
+              options={getDrinkOptions()}
+              onChange={handleDrinkChange}
+              initialValue={drink_name}
+              key={`${key}${drink_name}`}
+              textField={(params) => (
+                <TextField
+                  {...params}
+                  ref={params.InputProps.ref}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
+                  className={classes.form}
+                  id="drink"
+                  size="small"
+                  variant="outlined"
+                />
+              )}
+            />
             <Grid item xs={12}>
               <Box pt={1}>
                 <Grid container justify="center">
@@ -873,28 +937,28 @@ function EditCoffeeEntry({
                 Grinder
               </Typography>
             </Grid>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="grinder"
-                value={grinder_id}
-                select
-                onChange={handleGrinderChange}
-                variant="outlined"
-                size="small"
-                InputProps={{
-                  classes: {
-                    input: classes.resize,
-                  },
-                }}
-              >
-                {grinders.map(({ grinder_id, name }) => (
-                  <MenuItem value={grinder_id} key={grinder_id}>
-                    {name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </form>
+            <AutocompleteWrapperSimple
+              fieldName="name"
+              options={grinders}
+              onChange={handleGrinderChange}
+              initialValue={grinder_name}
+              textField={(params) => (
+                <TextField
+                  {...params}
+                  ref={params.InputProps.ref}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
+                  className={classes.form}
+                  id="grinder"
+                  size="small"
+                  variant="outlined"
+                  InputLabelProps={{ style: { textAlign: 'center' } }}
+                />
+              )}
+            />
             <Grid item xs={12}>
               <Typography variant="caption" align="center">
                 Grind Setting
@@ -921,28 +985,28 @@ function EditCoffeeEntry({
                 Water
               </Typography>
             </Grid>
-            <form autoComplete="off">
-              <TextField
-                className={classes.form}
-                id="water"
-                value={water_id}
-                select
-                onChange={handleWaterChange}
-                variant="outlined"
-                size="small"
-                InputProps={{
-                  classes: {
-                    input: classes.resize,
-                  },
-                }}
-              >
-                {waters.map(({ water_id, name }) => (
-                  <MenuItem value={water_id} key={water_id}>
-                    {name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </form>
+            <AutocompleteWrapperSimple
+              fieldName="name"
+              options={waters}
+              onChange={handleWaterChange}
+              initialValue={water_name}
+              textField={(params) => (
+                <TextField
+                  {...params}
+                  ref={params.InputProps.ref}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
+                  className={classes.form}
+                  id="grinder"
+                  size="small"
+                  variant="outlined"
+                  InputLabelProps={{ style: { textAlign: 'center' } }}
+                />
+              )}
+            />
             <Grid item xs={12}>
               <Typography variant="caption" align="center">
                 Rating
@@ -1009,6 +1073,24 @@ function EditCoffeeEntry({
                 >
                   <Typography variant="caption" align="center">
                     Save Changes
+                  </Typography>
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid container justify="center" alignItems="center">
+            <Grid xs={12} item>
+              <Box py={2}>
+                <Divider variant="middle" />
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid direction="row" container justify="center" alignItems="center">
+            <Grid item>
+              <Box py={1}>
+                <Button variant="contained" size="small" onClick={handleDelete}>
+                  <Typography variant="caption" align="center">
+                    Delete Entry
                   </Typography>
                 </Button>
               </Box>

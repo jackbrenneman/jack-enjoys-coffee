@@ -54,13 +54,13 @@ export const updateCoffeeEntryMutationResolver = (
   coffee_entry_id,
   user_id
 ) => {
-  // First, get the waters into an array of the value entries for queries
-  const waterData = Object.values({
+  // Add user_id, then get the coffee entry into an array of the value entries for queries
+  const coffeeEntryData = Object.values({
     ...coffee_entry,
     coffee_entry_id,
     user_id,
   });
-  return query(updateCoffeeEntry, waterData)
+  return query(updateCoffeeEntry, coffeeEntryData)
     .then((result) => {
       const data = result.rows[0];
       return data;
