@@ -160,7 +160,6 @@ function EditCoffeeEntry({
     const normalizedCoffeeEntry = normalizeCoffeeEntryForUpdate(
       coffeeEntryData
     );
-    console.log(normalizedCoffeeEntry);
     writeGQL(updateCoffeeEntryMutation, {
       coffee_entry: normalizedCoffeeEntry,
       coffee_entry_id: parseInt(coffee_entry_id),
@@ -478,8 +477,8 @@ function EditCoffeeEntry({
   const { rating, notes, brew, date } = coffeeEntryData;
   const { method, grind, water } = brew;
   const { method_id, drink, brewer, water_in, liquid_out, coffee_in } = method;
-  const { name: brewer_name } = brewer;
-  const { name: drink_name } = drink;
+  const { name: brewer_name = null } = brewer;
+  const { name: drink_name = null } = drink;
   const { name: water_name } = water;
   const { grinder, setting } = grind;
   const { name: grinder_name } = grinder;
@@ -881,7 +880,7 @@ function EditCoffeeEntry({
               options={getBrewerOptions()}
               onChange={handleBrewerChange}
               initialValue={brewer_name}
-              key={`${key}${brewer_name}`}
+              key={`brewer${key}${brewer_name}`}
               textField={(params) => (
                 <TextField
                   {...params}
@@ -909,7 +908,7 @@ function EditCoffeeEntry({
               options={getDrinkOptions()}
               onChange={handleDrinkChange}
               initialValue={drink_name}
-              key={`${key}${drink_name}`}
+              key={`drink${key}${drink_name}`}
               textField={(params) => (
                 <TextField
                   {...params}

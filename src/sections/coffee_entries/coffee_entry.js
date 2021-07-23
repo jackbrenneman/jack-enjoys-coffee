@@ -128,7 +128,7 @@ function CurrentCoffeeEntry({
     origin_name: origin_name,
     process_name: process_name,
     grinder_name: grinder_name,
-    grinder_setting: parseInt(setting),
+    grinder_setting: parseFloat(setting),
     water_name: water_name,
     notes: notes,
   };
