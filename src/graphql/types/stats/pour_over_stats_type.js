@@ -8,6 +8,7 @@ import {
   GraphQLObjectType,
 } from 'graphql';
 import { MethodType } from '../method_type.js';
+import { PourOverBrewerStatsType } from './pour_over_brewer_stats_type.js';
 import { PourOverDrinkStatsType } from './pour_over_drink_stats_type.js';
 
 export const PourOverStatsType = new GraphQLObjectType({
@@ -19,5 +20,6 @@ export const PourOverStatsType = new GraphQLObjectType({
     total_pour_over_coffee_in: { type: GraphQLFloat },
     total_pour_over_water_in: { type: GraphQLFloat },
     drink_stats: { type: GraphQLList(PourOverDrinkStatsType) },
+    brewer_stats: { type: GraphQLList(PourOverBrewerStatsType) },
   },
 });

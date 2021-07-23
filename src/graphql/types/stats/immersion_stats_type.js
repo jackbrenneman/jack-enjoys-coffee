@@ -8,6 +8,7 @@ import {
   GraphQLObjectType,
 } from 'graphql';
 import { MethodType } from '../method_type.js';
+import { ImmersionBrewerStatsType } from './immersion_brewer_stats_type.js';
 import { ImmersionDrinkStatsType } from './immersion_drink_stats_type.js';
 
 export const ImmersionStatsType = new GraphQLObjectType({
@@ -20,5 +21,6 @@ export const ImmersionStatsType = new GraphQLObjectType({
     total_immersion_steep_time: { type: GraphQLInt },
     total_immersion_water_in: { type: GraphQLFloat },
     drink_stats: { type: GraphQLList(ImmersionDrinkStatsType) },
+    brewer_stats: { type: GraphQLList(ImmersionBrewerStatsType) },
   },
 });

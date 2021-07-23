@@ -12,16 +12,24 @@ import Grid from '@material-ui/core/Grid';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import IconButton from '@material-ui/core/IconButton';
 // Custom Components
 import EspressoDetails from './entry_details/espresso_details.js';
 import PouroverDetails from './entry_details/pourover_details.js';
 import ImmersionDetails from './entry_details/immersion_details.js';
 // Constants
-import { espressoEnum, pouroverEnum, immersionEnum } from '../../consts.js';
+import { espressoId, pouroverId, immersionId } from '../../consts.js';
+import EditCoffeeEntry from './edit/edit_coffee_entry.js';
 
-function CurrentCoffeeEntry({ coffeeEntry }) {
-  const { coffee, date, brew, rating, notes } = coffeeEntry;
+function CurrentCoffeeEntry({
+  coffeeEntry,
+  currentData,
+  onCoffeeEntryDeletion,
+}) {
+  const [currentCoffeeEntry, setCurrentCoffeeEntry] = useState(coffeeEntry);
+  const { coffee, date, brew, rating, notes } = currentCoffeeEntry;
   const realDate = new Date(date);
   const localeDate = realDate.toLocaleDateString('en-US', { timeZone: 'UTC' });
   const { name: coffee_name, roaster, origin, process } = coffee;
@@ -32,8 +40,8 @@ function CurrentCoffeeEntry({ coffeeEntry }) {
 
   const {
     name: method_name,
+    method_id,
     brewer,
-    category,
     coffee_in,
     drink,
     liquid_out,
@@ -48,8 +56,30 @@ function CurrentCoffeeEntry({ coffeeEntry }) {
 
   const [open, setOpen] = useState(false);
 
+  const [openEdit, setOpenEdit] = useState(false);
+
+  const handleSaveChangesSuccess = (newData) => {
+    setCurrentCoffeeEntry(newData);
+  };
+
+  const handleSaveChangesFail = () => {
+    // TODO: show the user there was a failed save
+    console.log('failed save -- coffee entry');
+  };
+
+  const handleEditClick = (e) => {
+    setOpen(false);
+    setOpenEdit(!openEdit);
+  };
+
   const handleMoreDetailsClick = (e) => {
+    setOpenEdit(false);
     setOpen(!open);
+  };
+
+  const handleExpandLessClick = (e) => {
+    setOpen(false);
+    setOpenEdit(false);
   };
 
   const useStyles = makeStyles(() => ({
@@ -98,14 +128,14 @@ function CurrentCoffeeEntry({ coffeeEntry }) {
     origin_name: origin_name,
     process_name: process_name,
     grinder_name: grinder_name,
-    grinder_setting: parseInt(setting),
+    grinder_setting: parseFloat(setting),
     water_name: water_name,
     notes: notes,
   };
 
   const getMoreDetailsView = () => {
-    switch (category) {
-      case espressoEnum:
+    switch (method_id) {
+      case espressoId:
         return (
           <EspressoDetails
             coffee_in={coffee_in}
@@ -113,7 +143,7 @@ function CurrentCoffeeEntry({ coffeeEntry }) {
             generalDetails={generalDetails}
           />
         );
-      case pouroverEnum:
+      case pouroverId:
         return (
           <PouroverDetails
             coffee_in={coffee_in}
@@ -121,7 +151,7 @@ function CurrentCoffeeEntry({ coffeeEntry }) {
             generalDetails={generalDetails}
           />
         );
-      case immersionEnum:
+      case immersionId:
         return (
           <ImmersionDetails
             coffee_in={coffee_in}
@@ -146,12 +176,7 @@ function CurrentCoffeeEntry({ coffeeEntry }) {
             title={roaster_name}
             subheader={`${method_name} | ${drink_name}`}
           />
-          <Grid
-            direction="row"
-            container
-            justify="space-between"
-            alignItems="center"
-          >
+          <Grid direction="row" container justify="center" alignItems="center">
             <Grid item>
               <Box px={2}>
                 <Typography className={getRatingStyle()} variant="caption">
@@ -159,32 +184,100 @@ function CurrentCoffeeEntry({ coffeeEntry }) {
                 </Typography>
               </Box>
             </Grid>
+          </Grid>
+
+          <Grid
+            direction="row"
+            container
+            justify="space-between"
+            alignItems="center"
+          >
+            {openEdit ? (
+              <Grid item>
+                <Box px={1}>
+                  <IconButton
+                    aria-label="more"
+                    onClick={handleExpandLessClick}
+                    size="small"
+                  >
+                    <ExpandLessIcon />
+                  </IconButton>
+                </Box>{' '}
+              </Grid>
+            ) : (
+              <Grid item>
+                <Box px={1}>
+                  <IconButton
+                    aria-label="more"
+                    onClick={handleEditClick}
+                    size="small"
+                  >
+                    <EditTwoToneIcon />
+                  </IconButton>
+                </Box>
+              </Grid>
+            )}
             <Grid item>
               <Box px={1}>
                 <Typography variant="caption">{localeDate}</Typography>
               </Box>
             </Grid>
-            <Grid item>
-              <Box px={1}>
-                <IconButton
-                  aria-label="more"
-                  onClick={handleMoreDetailsClick}
-                  size="small"
-                >
-                  <MoreHorizIcon />
-                </IconButton>
-              </Box>
-            </Grid>
+            {open ? (
+              <Grid item>
+                <Box px={1}>
+                  <IconButton
+                    aria-label="more"
+                    onClick={handleExpandLessClick}
+                    size="small"
+                  >
+                    <ExpandLessIcon />
+                  </IconButton>
+                </Box>{' '}
+              </Grid>
+            ) : (
+              <Grid item>
+                <Box px={1}>
+                  <IconButton
+                    aria-label="more"
+                    onClick={handleMoreDetailsClick}
+                    size="small"
+                  >
+                    <MoreHorizIcon />
+                  </IconButton>
+                </Box>
+              </Grid>
+            )}
           </Grid>
         </CardContent>
       </Card>
-      {open && getMoreDetailsView()}
+      {open && !openEdit && getMoreDetailsView()}
+      {openEdit && !open && (
+        <EditCoffeeEntry
+          coffeeEntry={currentCoffeeEntry}
+          currentData={currentData}
+          onSaveChangesSuccess={handleSaveChangesSuccess}
+          onSaveChangesFail={handleSaveChangesFail}
+          onCoffeeEntryDeletion={onCoffeeEntryDeletion}
+        />
+      )}
     </Box>
   );
 }
 
 CurrentCoffeeEntry.propTypes = {
+  onCoffeeEntryDeletion: PropTypes.func.isRequired,
   coffeeEntry: PropTypes.object.isRequired,
+  currentData: PropTypes.shape({
+    brewers: PropTypes.array,
+    coffees: PropTypes.array,
+    drinks: PropTypes.array,
+    grinders: PropTypes.array,
+    methods: PropTypes.array,
+    origins: PropTypes.array,
+    processes: PropTypes.array,
+    roasters: PropTypes.array,
+    waters: PropTypes.array,
+  }),
 };
 
 export default CurrentCoffeeEntry;

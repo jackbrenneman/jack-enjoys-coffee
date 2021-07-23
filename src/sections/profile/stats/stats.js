@@ -77,6 +77,7 @@ function Stats({ user }) {
           ...espresso_stats,
           total_coffee_in: espresso_stats?.total_espresso_coffee_in,
           total_count: espresso_stats?.total_espresso_count,
+          total_espresso_liquid_out: espresso_stats?.total_espresso_liquid_out,
         },
       },
       {
@@ -84,6 +85,7 @@ function Stats({ user }) {
           ...pour_over_stats,
           total_coffee_in: pour_over_stats?.total_pour_over_coffee_in,
           total_count: pour_over_stats?.total_pour_over_count,
+          total_water_in: pour_over_stats?.total_pour_over_water_in,
         },
       },
       {
@@ -91,6 +93,8 @@ function Stats({ user }) {
           ...immersion_stats,
           total_coffee_in: immersion_stats?.total_immersion_coffee_in,
           total_count: immersion_stats?.total_immersion_count,
+          total_water_in: immersion_stats?.total_immersion_water_in,
+          total_steep_time: immersion_stats?.total_immersion_steep_time,
         },
       },
     ];
@@ -130,7 +134,7 @@ function Stats({ user }) {
           </Grid>
           <Grid container align="center" justify="center">
             {getMethodStats().map(({ stats }, index) => (
-              <Grid item xs={10} lg={4} key={index}>
+              <Grid item xs={10} key={index}>
                 <MethodStats methodStats={stats} />
               </Grid>
             ))}

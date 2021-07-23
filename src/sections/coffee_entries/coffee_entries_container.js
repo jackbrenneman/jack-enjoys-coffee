@@ -17,8 +17,13 @@ import { currentCoffeeEntriesQuery } from '../../graphql/queries/current_coffee_
 import { queryGQL } from '../../graphql/fetch.js';
 // Custom Components
 import CurrentCoffeeEntries from './coffee_entries.js';
-// Constants
+// Constants and Helpers
 import { today, sevenDaysAgo } from '../../consts.js';
+import {
+  createMethodIdToDrinksMap,
+  createMethodIdToBrewersMap,
+  createRoasterIdToCoffeesMap,
+} from '../coffee_entry/helpers/input_helpers.js';
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -31,8 +36,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CurrentCoffeeEntriesContainer({ user }) {
-  // State that basically contains all the current info
+  // State that basically contains all the current coffee entries
   const [currentCoffeeEntries, setCurrentCoffeeEntries] = useState([]);
+
+  // State that basically contains all the current coffee data
+  const [currentData, setCurrentData] = useState({});
 
   const queryParams = new URLSearchParams(useLocation().search);
   const queryParamsObject = {
@@ -50,6 +58,51 @@ function CurrentCoffeeEntriesContainer({ user }) {
 
   const classes = useStyles();
 
+  // Will set states on initial data fetch if it was successfully
+  const maybeSetState = (data) => {
+    const {
+      coffeeEntries,
+      brewers,
+      coffees,
+      drinks,
+      grinders,
+      methods,
+      origins,
+      processes,
+      roasters,
+      waters,
+    } = data;
+    if (coffeeEntries) {
+      setCurrentCoffeeEntries(coffeeEntries);
+    }
+    if (
+      brewers &&
+      coffees &&
+      drinks &&
+      grinders &&
+      methods &&
+      origins &&
+      processes &&
+      roasters &&
+      waters
+    ) {
+      setCurrentData({
+        brewers,
+        coffees,
+        drinks,
+        grinders,
+        methods,
+        origins,
+        processes,
+        roasters,
+        waters,
+        roasterIdToCoffees: createRoasterIdToCoffeesMap(coffees),
+        methodIdToBrewers: createMethodIdToBrewersMap(brewers),
+        methodIdToDrinks: createMethodIdToDrinksMap(drinks),
+      });
+    }
+  };
+
   // When the component renders, we fetch all the current data of the past week
   useEffect(() => {
     // Fetch the coffee entries for the correct user. Three scenarios:
@@ -59,10 +112,7 @@ function CurrentCoffeeEntriesContainer({ user }) {
     if (jacksEntries) {
       queryGQL(currentCoffeeEntriesQuery(1, sevenDaysAgo, today))
         .then(({ data }) => {
-          const { coffeeEntries } = data;
-          if (coffeeEntries) {
-            setCurrentCoffeeEntries(coffeeEntries);
-          }
+          maybeSetState(data);
         })
         .catch((e) => {
           // TODO: Determine what to do if fetch is unsuccessful
@@ -73,10 +123,7 @@ function CurrentCoffeeEntriesContainer({ user }) {
         currentCoffeeEntriesQuery(queryParamsUserId, sevenDaysAgo, today)
       )
         .then(({ data }) => {
-          const { coffeeEntries } = data;
-          if (coffeeEntries) {
-            setCurrentCoffeeEntries(coffeeEntries);
-          }
+          maybeSetState(data);
         })
         .catch((e) => {
           // TODO: Determine what to do if fetch is unsuccessful
@@ -85,10 +132,7 @@ function CurrentCoffeeEntriesContainer({ user }) {
     } else if (user?.user_id) {
       queryGQL(currentCoffeeEntriesQuery(user.user_id, sevenDaysAgo, today))
         .then(({ data }) => {
-          const { coffeeEntries } = data;
-          if (coffeeEntries) {
-            setCurrentCoffeeEntries(coffeeEntries);
-          }
+          maybeSetState(data);
         })
         .catch((e) => {
           // TODO: Determine what to do if fetch is unsuccessful
@@ -150,6 +194,13 @@ function CurrentCoffeeEntriesContainer({ user }) {
     return <Typography variant="h2">Coffee Entries</Typography>;
   };
 
+  const handleCoffeeEntryDeletion = (deleted_coffee_entry_id) => {
+    const coffeeEntriesMinusDeletedOne = currentCoffeeEntries.filter(
+      ({ coffee_entry_id }) => deleted_coffee_entry_id !== coffee_entry_id
+    );
+    setCurrentCoffeeEntries(coffeeEntriesMinusDeletedOne);
+  };
+
   return (
     <Box className={classes.page}>
       <Grid container align="center" justify="center">
@@ -173,6 +224,8 @@ function CurrentCoffeeEntriesContainer({ user }) {
               <CurrentCoffeeEntries
                 coffeeEntries={currentCoffeeEntries}
                 onDateChange={updateDateRange}
+                onCoffeeEntryDeletion={handleCoffeeEntryDeletion}
+                currentData={currentData}
               />
             </Grid>
             <Snackbar

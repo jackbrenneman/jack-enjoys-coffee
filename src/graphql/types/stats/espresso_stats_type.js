@@ -9,6 +9,7 @@ import {
 } from 'graphql';
 import { MethodType } from '../method_type.js';
 import { EspressoDrinkStatsType } from './espresso_drink_stats_type.js';
+import { EspressoBrewerStatsType } from './espress_brewer_stats_type.js';
 
 export const EspressoStatsType = new GraphQLObjectType({
   name: 'EspressoStatsType',
@@ -19,5 +20,6 @@ export const EspressoStatsType = new GraphQLObjectType({
     total_espresso_coffee_in: { type: GraphQLFloat },
     total_espresso_liquid_out: { type: GraphQLFloat },
     drink_stats: { type: GraphQLList(EspressoDrinkStatsType) },
+    brewer_stats: { type: GraphQLList(EspressoBrewerStatsType) },
   },
 });
