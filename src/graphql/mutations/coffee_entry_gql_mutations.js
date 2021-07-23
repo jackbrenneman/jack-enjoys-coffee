@@ -17,8 +17,8 @@ export const coffeeEntryMutation = `
  * The mutation to edit an existing coffee entry from the coffee_entries table.
  */
 export const updateCoffeeEntryMutation = `
- mutation UpdateCoffeeEntry($coffeeEntry: CoffeeEntryInput, $coffee_entry_id: Int!) {
-   updateCoffeeEntry(coffeeEntry: $coffeeEntry, coffee_entry_id: $coffee_entry_id) {
+ mutation UpdateCoffeeEntry($coffee_entry: CoffeeEntryInput, $coffee_entry_id: Int!) {
+   updateCoffeeEntry(coffee_entry: $coffee_entry, coffee_entry_id: $coffee_entry_id) {
      coffee_entry_id
    }
  }

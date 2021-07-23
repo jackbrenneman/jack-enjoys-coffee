@@ -139,20 +139,20 @@ function EditCoffeeEntry({
    */
   const normalizeCoffeeEntryForUpdate = (updatedCoffeeEntry) => {
     return {
-      date: updatedCoffeeEntry?.date,
-      coffee_id: updatedCoffeeEntry?.coffee?.coffee_id,
-      method_id: updatedCoffeeEntry?.brew?.method?.method_id,
-      brewer_id: updatedCoffeeEntry?.brew?.method?.brewer?.brewer_id,
-      drink_id: updatedCoffeeEntry?.brew?.method?.drink?.drink_id,
-      grinder_id: updatedCoffeeEntry?.brew?.grind?.grinder?.grinder_id,
-      grinder_setting: updatedCoffeeEntry?.brew?.grind?.setting,
-      water_id: updatedCoffeeEntry?.brew?.water?.water_id,
-      coffee_in: updatedCoffeeEntry?.brew?.method?.coffee_in,
-      liquid_out: updatedCoffeeEntry?.brew?.method?.liquid_out,
-      water_in: updatedCoffeeEntry?.brew?.method?.water_in,
-      steep_time: updatedCoffeeEntry?.brew?.method?.steep_time,
-      notes: updatedCoffeeEntry?.notes,
-      rating: updatedCoffeeEntry?.rating,
+      date: updatedCoffeeEntry?.date ?? null,
+      coffee_id: updatedCoffeeEntry?.coffee?.coffee_id ?? null,
+      method_id: updatedCoffeeEntry?.brew?.method?.method_id ?? null,
+      brewer_id: updatedCoffeeEntry?.brew?.method?.brewer?.brewer_id ?? null,
+      drink_id: updatedCoffeeEntry?.brew?.method?.drink?.drink_id ?? null,
+      grinder_id: updatedCoffeeEntry?.brew?.grind?.grinder?.grinder_id ?? null,
+      grinder_setting: updatedCoffeeEntry?.brew?.grind?.setting ?? null,
+      water_id: updatedCoffeeEntry?.brew?.water?.water_id ?? null,
+      coffee_in: updatedCoffeeEntry?.brew?.method?.coffee_in ?? null,
+      liquid_out: updatedCoffeeEntry?.brew?.method?.liquid_out ?? null,
+      water_in: updatedCoffeeEntry?.brew?.method?.water_in ?? null,
+      steep_time: updatedCoffeeEntry?.brew?.method?.steep_time ?? null,
+      notes: updatedCoffeeEntry?.notes ?? null,
+      rating: updatedCoffeeEntry?.rating ?? null,
     };
   };
 
@@ -160,8 +160,9 @@ function EditCoffeeEntry({
     const normalizedCoffeeEntry = normalizeCoffeeEntryForUpdate(
       coffeeEntryData
     );
+    console.log(normalizedCoffeeEntry);
     writeGQL(updateCoffeeEntryMutation, {
-      coffeeEntry: normalizedCoffeeEntry,
+      coffee_entry: normalizedCoffeeEntry,
       coffee_entry_id: parseInt(coffee_entry_id),
     })
       .then(({ data }) => {
@@ -1065,17 +1066,15 @@ function EditCoffeeEntry({
           </Grid>
           <Grid direction="row" container justify="center" alignItems="center">
             <Grid item>
-              <Box py={1}>
-                <Button
-                  variant="contained"
-                  size="small"
-                  onClick={handleSaveChanges}
-                >
-                  <Typography variant="caption" align="center">
-                    Save Changes
-                  </Typography>
-                </Button>
-              </Box>
+              <Button
+                variant="contained"
+                size="small"
+                onClick={handleSaveChanges}
+              >
+                <Typography variant="caption" align="center">
+                  Save Changes
+                </Typography>
+              </Button>
             </Grid>
           </Grid>
           <Grid container justify="center" alignItems="center">
@@ -1087,7 +1086,7 @@ function EditCoffeeEntry({
           </Grid>
           <Grid direction="row" container justify="center" alignItems="center">
             <Grid item>
-              <Box py={1}>
+              <Box pb={2}>
                 <Button variant="contained" size="small" onClick={handleDelete}>
                   <Typography variant="caption" align="center">
                     Delete Entry
