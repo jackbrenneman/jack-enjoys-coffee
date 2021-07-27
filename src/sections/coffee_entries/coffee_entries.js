@@ -17,6 +17,7 @@ import CoffeeEntry from './coffee_entry.js';
 import { today, sevenDaysAgo } from '../../consts.js';
 
 function CurrentCoffeeEntries({
+  canEdit,
   coffeeEntries,
   onDateChange,
   onCoffeeEntryDeletion,
@@ -126,6 +127,7 @@ function CurrentCoffeeEntries({
 }
 
 CurrentCoffeeEntries.propTypes = {
+  canEdit: PropTypes.bool,
   coffeeEntries: PropTypes.array.isRequired,
   onDateChange: PropTypes.func.isRequired,
   onCoffeeEntryDeletion: PropTypes.func.isRequired,
@@ -140,6 +142,10 @@ CurrentCoffeeEntries.propTypes = {
     roasters: PropTypes.array,
     waters: PropTypes.array,
   }),
+};
+
+CurrentCoffeeEntries.defaultProps = {
+  canEdit: true,
 };
 
 export default CurrentCoffeeEntries;

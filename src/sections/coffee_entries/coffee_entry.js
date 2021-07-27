@@ -24,6 +24,7 @@ import { espressoId, pouroverId, immersionId } from '../../consts.js';
 import EditCoffeeEntry from './edit/edit_coffee_entry.js';
 
 function CurrentCoffeeEntry({
+  canEdit,
   coffeeEntry,
   currentData,
   onCoffeeEntryDeletion,
@@ -185,7 +186,6 @@ function CurrentCoffeeEntry({
               </Box>
             </Grid>
           </Grid>
-
           <Grid
             direction="row"
             container
@@ -205,17 +205,25 @@ function CurrentCoffeeEntry({
                 </Box>{' '}
               </Grid>
             ) : (
-              <Grid item>
-                <Box px={1}>
-                  <IconButton
-                    aria-label="more"
-                    onClick={handleEditClick}
-                    size="small"
-                  >
-                    <EditTwoToneIcon />
-                  </IconButton>
-                </Box>
-              </Grid>
+              <>
+                {canEdit ? (
+                  <Grid item>
+                    <Box px={1}>
+                      <IconButton
+                        aria-label="more"
+                        onClick={handleEditClick}
+                        size="small"
+                      >
+                        <EditTwoToneIcon />
+                      </IconButton>
+                    </Box>
+                  </Grid>
+                ) : (
+                  <Grid item>
+                    <Box px={1}></Box>
+                  </Grid>
+                )}
+              </>
             )}
             <Grid item>
               <Box px={1}>

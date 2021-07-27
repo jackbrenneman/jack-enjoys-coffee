@@ -3,6 +3,8 @@
  */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+// React Router
+import { useLocation } from 'react-router-dom';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -18,7 +20,6 @@ import MethodStats from './method_stats.js';
 const millisecondsInOneDay = 1000 * 60 * 60 * 24;
 
 function Stats({ user }) {
-  const { user_id } = user;
   const useStyles = makeStyles((theme) => ({
     page: {
       backgroundColor: '#EEEEEE',
@@ -31,10 +32,39 @@ function Stats({ user }) {
 
   const [stats, setStats] = useState(null);
 
+  const queryParams = new URLSearchParams(useLocation().search);
+  const queryParamsObject = {
+    queryParamsUserId: queryParams.get('user_id') ?? false,
+    jacksStats: queryParams.get('jacks_stats') ?? false,
+  };
+  const { queryParamsUserId, jacksStats } = queryParamsObject;
+
   // When the component renders, we fetch all the stats for the user
   useEffect(() => {
-    if (user_id) {
-      queryGQL(userStatsQuery(user_id))
+    if (jacksStats) {
+      queryGQL(userStatsQuery(1))
+        .then(({ data }) => {
+          if (data?.user?.stats) {
+            setStats(data.user.stats);
+          }
+        })
+        .catch((e) => {
+          // TODO: Determine what to do if fetch is unsuccessful
+          console.log(e);
+        });
+    } else if (queryParamsUserId) {
+      queryGQL(userStatsQuery(queryParamsUserId))
+        .then(({ data }) => {
+          if (data?.user?.stats) {
+            setStats(data.user.stats);
+          }
+        })
+        .catch((e) => {
+          // TODO: Determine what to do if fetch is unsuccessful
+          console.log(e);
+        });
+    } else if (user?.user_id) {
+      queryGQL(userStatsQuery(user?.user_id))
         .then(({ data }) => {
           if (data?.user?.stats) {
             setStats(data.user.stats);
@@ -45,7 +75,7 @@ function Stats({ user }) {
           console.log(e);
         });
     }
-  }, [user_id]);
+  }, [queryParamsUserId, jacksStats, user]);
 
   const classes = useStyles();
 

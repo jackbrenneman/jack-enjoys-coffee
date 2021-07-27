@@ -20,6 +20,7 @@ import { UserContext } from './contexts/user_context.js';
 // Cookies
 import Cookies from 'universal-cookie';
 import Profile from './sections/profile/profile.js';
+import Stats from './sections/profile/stats/stats.js';
 
 const history = createBrowserHistory();
 const cookies = new Cookies();
@@ -72,6 +73,9 @@ function App() {
             </Route>
             <Route exact path="/new_data">
               <DataEntryContainer user={user} />
+            </Route>
+            <Route exact path="/stats">
+              <Stats user={user} />
             </Route>
             <Route path="/">
               <Home />
