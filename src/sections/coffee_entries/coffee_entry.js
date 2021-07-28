@@ -24,6 +24,7 @@ import { espressoId, pouroverId, immersionId } from '../../consts.js';
 import EditCoffeeEntry from './edit/edit_coffee_entry.js';
 
 function CurrentCoffeeEntry({
+  canEdit,
   coffeeEntry,
   currentData,
   onCoffeeEntryDeletion,
@@ -108,6 +109,10 @@ function CurrentCoffeeEntry({
       color: 'green',
       fontWeight: 'bold',
     },
+    emptyBox: {
+      width: '36px', // Same width as icon to make things centered
+      height: '36px', // Same height as icon to make things centered
+    },
   }));
 
   const classes = useStyles();
@@ -185,7 +190,6 @@ function CurrentCoffeeEntry({
               </Box>
             </Grid>
           </Grid>
-
           <Grid
             direction="row"
             container
@@ -205,17 +209,27 @@ function CurrentCoffeeEntry({
                 </Box>{' '}
               </Grid>
             ) : (
-              <Grid item>
-                <Box px={1}>
-                  <IconButton
-                    aria-label="more"
-                    onClick={handleEditClick}
-                    size="small"
-                  >
-                    <EditTwoToneIcon />
-                  </IconButton>
-                </Box>
-              </Grid>
+              <>
+                {canEdit ? (
+                  <Grid item>
+                    <Box px={1}>
+                      <IconButton
+                        aria-label="more"
+                        onClick={handleEditClick}
+                        size="small"
+                      >
+                        <EditTwoToneIcon />
+                      </IconButton>
+                    </Box>
+                  </Grid>
+                ) : (
+                  <Grid item>
+                    <Box px={1}>
+                      <div className={classes.emptyBox} />
+                    </Box>
+                  </Grid>
+                )}
+              </>
             )}
             <Grid item>
               <Box px={1}>

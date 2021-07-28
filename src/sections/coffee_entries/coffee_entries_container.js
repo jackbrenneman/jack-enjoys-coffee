@@ -201,6 +201,16 @@ function CurrentCoffeeEntriesContainer({ user }) {
     setCurrentCoffeeEntries(coffeeEntriesMinusDeletedOne);
   };
 
+  const getCanEdit = () => {
+    if (jacksEntries || queryParamsUserId) {
+      return false;
+    }
+    if (user?.user_id) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <Box className={classes.page}>
       <Grid container align="center" justify="center">
@@ -222,6 +232,7 @@ function CurrentCoffeeEntriesContainer({ user }) {
           <>
             <Grid item xs={12}>
               <CurrentCoffeeEntries
+                canEdit={getCanEdit()}
                 coffeeEntries={currentCoffeeEntries}
                 onDateChange={updateDateRange}
                 onCoffeeEntryDeletion={handleCoffeeEntryDeletion}

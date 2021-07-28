@@ -17,6 +17,7 @@ import CoffeeEntry from './coffee_entry.js';
 import { today, sevenDaysAgo } from '../../consts.js';
 
 function CurrentCoffeeEntries({
+  canEdit,
   coffeeEntries,
   onDateChange,
   onCoffeeEntryDeletion,
@@ -113,6 +114,7 @@ function CurrentCoffeeEntries({
           {coffeeEntries.map((coffeeEntry) => (
             <Grid item xs={10} sm={3} lg={2} key={coffeeEntry.coffee_entry_id}>
               <CoffeeEntry
+                canEdit={canEdit}
                 onCoffeeEntryDeletion={onCoffeeEntryDeletion}
                 coffeeEntry={coffeeEntry}
                 currentData={currentData}
@@ -126,6 +128,7 @@ function CurrentCoffeeEntries({
 }
 
 CurrentCoffeeEntries.propTypes = {
+  canEdit: PropTypes.bool,
   coffeeEntries: PropTypes.array.isRequired,
   onDateChange: PropTypes.func.isRequired,
   onCoffeeEntryDeletion: PropTypes.func.isRequired,
@@ -140,6 +143,10 @@ CurrentCoffeeEntries.propTypes = {
     roasters: PropTypes.array,
     waters: PropTypes.array,
   }),
+};
+
+CurrentCoffeeEntries.defaultProps = {
+  canEdit: true,
 };
 
 export default CurrentCoffeeEntries;

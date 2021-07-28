@@ -19,6 +19,8 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import PersonOutlineTwoToneIcon from '@material-ui/icons/PersonOutlineTwoTone';
+import PieChartOutlinedIcon from '@material-ui/icons/PieChartOutlined';
+import ListAltTwoToneIcon from '@material-ui/icons/ListAltTwoTone';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import CreateTwoToneIcon from '@material-ui/icons/CreateTwoTone';
@@ -72,10 +74,12 @@ function TopNav({ user }) {
           <Box pr={2}>
             <ListItem button>
               <ListItemIcon>
-                <LocalCafeIcon />
+                <ListAltTwoToneIcon />
               </ListItemIcon>
               <ListItemText
-                primary={<Typography variant="caption">My Entries</Typography>}
+                primary={
+                  <Typography variant="caption">My Coffee Entries</Typography>
+                }
               />
             </ListItem>
           </Box>
@@ -92,7 +96,26 @@ function TopNav({ user }) {
                 <LocalCafeIcon />
               </ListItemIcon>
               <ListItemText
-                primary={<Typography variant="caption">My Data</Typography>}
+                primary={
+                  <Typography variant="caption">My Coffee Data</Typography>
+                }
+              />
+            </ListItem>
+          </Box>
+        </NavLink>
+        <NavLink
+          className={classes.navLink}
+          to={'/stats'}
+          onClick={handleDrawerToggle}
+          activeClassName={classes.activeNavLink}
+        >
+          <Box pr={2}>
+            <ListItem button>
+              <ListItemIcon>
+                <PieChartOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={<Typography variant="caption">My Stats</Typography>}
               />
             </ListItem>
           </Box>
@@ -110,7 +133,9 @@ function TopNav({ user }) {
                 <CreateTwoToneIcon />
               </ListItemIcon>
               <ListItemText
-                primary={<Typography variant="caption">New Entry</Typography>}
+                primary={
+                  <Typography variant="caption">New Coffee Entry</Typography>
+                }
               />
             </ListItem>
           </Box>
@@ -127,7 +152,9 @@ function TopNav({ user }) {
                 <CreateTwoToneIcon />
               </ListItemIcon>
               <ListItemText
-                primary={<Typography variant="caption">Add Data</Typography>}
+                primary={
+                  <Typography variant="caption">Add Coffee Data</Typography>
+                }
               />
             </ListItem>
           </Box>
@@ -142,7 +169,7 @@ function TopNav({ user }) {
           <Box pr={2}>
             <ListItem button>
               <ListItemIcon>
-                <LocalCafeIcon />
+                <ListAltTwoToneIcon />
               </ListItemIcon>
               <ListItemText
                 primary={
@@ -165,6 +192,25 @@ function TopNav({ user }) {
               </ListItemIcon>
               <ListItemText
                 primary={<Typography variant="caption">Jack's Data</Typography>}
+              />
+            </ListItem>
+          </Box>
+        </NavLink>
+        <NavLink
+          className={classes.navLink}
+          to={'/stats?jacks_stats=1'}
+          onClick={handleDrawerToggle}
+          activeClassName={classes.activeNavLink}
+        >
+          <Box pr={2}>
+            <ListItem button>
+              <ListItemIcon>
+                <PieChartOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <Typography variant="caption">Jack's Stats</Typography>
+                }
               />
             </ListItem>
           </Box>
@@ -186,7 +232,7 @@ function TopNav({ user }) {
           <Box pr={2}>
             <ListItem button>
               <ListItemIcon>
-                <LocalCafeIcon />
+                <ListAltTwoToneIcon />
               </ListItemIcon>
               <ListItemText
                 primary={
@@ -209,6 +255,25 @@ function TopNav({ user }) {
               </ListItemIcon>
               <ListItemText
                 primary={<Typography variant="caption">Jack's Data</Typography>}
+              />
+            </ListItem>
+          </Box>
+        </NavLink>
+        <NavLink
+          className={classes.navLink}
+          to={'/stats?jacks_stats=1'}
+          onClick={handleDrawerToggle}
+          activeClassName={classes.activeNavLink}
+        >
+          <Box pr={2}>
+            <ListItem button>
+              <ListItemIcon>
+                <PieChartOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <Typography variant="caption">Jack's Stats</Typography>
+                }
               />
             </ListItem>
           </Box>
