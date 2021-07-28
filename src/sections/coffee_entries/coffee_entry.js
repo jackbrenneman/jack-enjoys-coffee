@@ -109,6 +109,10 @@ function CurrentCoffeeEntry({
       color: 'green',
       fontWeight: 'bold',
     },
+    emptyBox: {
+      width: '36px', // Same width as icon to make things centered
+      height: '36px', // Same height as icon to make things centered
+    },
   }));
 
   const classes = useStyles();
@@ -220,7 +224,9 @@ function CurrentCoffeeEntry({
                   </Grid>
                 ) : (
                   <Grid item>
-                    <Box px={1}></Box>
+                    <Box px={1}>
+                      <div className={classes.emptyBox} />
+                    </Box>
                   </Grid>
                 )}
               </>

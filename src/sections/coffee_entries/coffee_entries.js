@@ -114,6 +114,7 @@ function CurrentCoffeeEntries({
           {coffeeEntries.map((coffeeEntry) => (
             <Grid item xs={10} sm={3} lg={2} key={coffeeEntry.coffee_entry_id}>
               <CoffeeEntry
+                canEdit={canEdit}
                 onCoffeeEntryDeletion={onCoffeeEntryDeletion}
                 coffeeEntry={coffeeEntry}
                 currentData={currentData}
