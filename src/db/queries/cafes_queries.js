@@ -1,7 +1,7 @@
 /**
  * All queries related to the "cafes" table.
  */
- export const selectAllCafe = 'SELECT * FROM cafes';
+ export const selectAllCafes = 'SELECT * FROM cafes';
  export const selectCafesByUserId =
    'SELECT * FROM cafes WHERE user_id = $1 ORDER BY is_active DESC';
  export const selectActiveCafesByUserId =

@@ -164,7 +164,7 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         name: { type: GraphQLString },
         state: { type: GraphQLString },
       },
-      resolve(parentValue, { user_id, cafe_id, only_active, name, state, only_active }, context) {
+      resolve(parentValue, { user_id, cafe_id, name, state, only_active }, context) {
         // Err on the side of the user_id from arguments. Then fallback on logged in user.
         const userId = user_id ? user_id : getUserId(context);
         if (userId) {
