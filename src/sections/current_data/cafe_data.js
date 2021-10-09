@@ -45,7 +45,6 @@
 
  function CafeRow({
    cafe,
-   currentData,
    onCafeDeletion,
    isUserAuthorized,
  }) {
@@ -227,7 +226,6 @@
 
  function CafeData({
    cafes,
-   coffees,
    onCafeDeletion,
    isUserAuthorized,
  }) {
@@ -244,7 +242,7 @@
          <Grid item xs={12}>
            <Grid container align="center" justify="center">
              {cafes.map((cafe) => (
-               <Grid item xs={10} sm={3} lg={2} key={cafe.cafe_id}>
+               <Grid item xs={10} sm={3} key={cafe.cafe_id}>
                  <CafeRow
                    cafe={cafe}
                    onCafeDeletion={onCafeDeletion}

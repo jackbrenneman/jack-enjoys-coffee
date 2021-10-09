@@ -28,6 +28,7 @@ import Divider from '@material-ui/core/Divider';
 import { currentDataQuery } from '../../graphql/queries/data_entry_queries.js';
 import { queryGQL } from '../../graphql/fetch.js';
 // Input Components
+import NewCafeInput from './new_cafe_input.js';
 import NewCoffeeInput from './new_coffee_input.js';
 import NewOriginInput from './new_origin_input.js';
 import NewRoasterInput from './new_roaster_input.js';
@@ -38,6 +39,7 @@ import NewDrinkInput from './new_drink_input.js';
 // Constants
 import {
   roasterEnum,
+  cafeEnum,
   coffeeEnum,
   originEnum,
   brewerEnum,
@@ -121,6 +123,8 @@ function DataEntryContainer({ user }) {
     switch (dataOption) {
       case brewerEnum:
         return <NewBrewerInput {...dataEntryFormProps} />;
+      case cafeEnum:
+        return <NewCafeInput {...dataEntryFormProps} />;
       case coffeeEnum:
         return <NewCoffeeInput {...dataEntryFormProps} />;
       case drinkEnum:
@@ -161,6 +165,16 @@ function DataEntryContainer({ user }) {
                           label={
                             <Typography variant="caption" align="center">
                               Brewer
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                        <FormControlLabel
+                          value={cafeEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Cafe
                             </Typography>
                           }
                           labelPlacement="bottom"

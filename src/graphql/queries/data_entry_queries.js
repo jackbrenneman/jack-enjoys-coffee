@@ -17,6 +17,15 @@ export const currentDataQuery = (user_id) => `
         name
       }
     }
+    cafes(user_id:${user_id}) {
+      cafe_id
+      name
+      city
+      state
+      country
+      website
+      is_active
+    }
     coffees(user_id:${user_id}) {
       coffee_id
       name

@@ -231,7 +231,7 @@ function CoffeeData({
         <Grid item xs={12}>
           <Grid container align="center" justify="center">
             {coffees.map((coffee) => (
-              <Grid item xs={10} sm={3} lg={2} key={coffee.coffee_id}>
+              <Grid item xs={10} sm={3} key={coffee.coffee_id}>
                 <CoffeeRow
                   coffee={coffee}
                   currentData={{ origins, processes, roasters }}

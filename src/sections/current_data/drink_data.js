@@ -184,7 +184,7 @@ function DrinkData({ drinks, methods, onDrinkDeletion, isUserAuthorized }) {
         <Grid item xs={12}>
           <Grid container align="center" justify="center">
             {drinks.map((drink) => (
-              <Grid item xs={10} sm={3} lg={2} key={drink.drink_id}>
+              <Grid item xs={10} sm={3} key={drink.drink_id}>
                 <DrinkRow
                   drink={drink}
                   currentData={{ methods }}

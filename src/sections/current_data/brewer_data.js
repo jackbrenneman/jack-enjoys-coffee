@@ -208,7 +208,7 @@ function BrewerData({ brewers, methods, onBrewerDeletion, isUserAuthorized }) {
         <Grid item xs={12}>
           <Grid container align="center" justify="center">
             {brewers.map((brewer) => (
-              <Grid item xs={10} sm={3} lg={2} key={brewer.brewer_id}>
+              <Grid item xs={10} sm={3} key={brewer.brewer_id}>
                 <BrewerRow
                   brewer={brewer}
                   currentData={{ methods }}

@@ -163,7 +163,7 @@ function OriginData({ origins, onOriginDeletion, isUserAuthorized }) {
         <Grid item xs={12}>
           <Grid container align="center" justify="center">
             {origins.map((origin) => (
-              <Grid item xs={10} sm={3} lg={2} key={origin.origin_id}>
+              <Grid item xs={10} sm={3} key={origin.origin_id}>
                 <OriginRow
                   origin={origin}
                   onOriginDeletion={onOriginDeletion}
