@@ -10,6 +10,7 @@
  import Grid from '@material-ui/core/Grid';
  import Card from '@material-ui/core/Card';
  import CardContent from '@material-ui/core/CardContent';
+ import Switch from '@material-ui/core/Switch';
  import TextField from '@material-ui/core/TextField';
  import AutocompleteWrapperSimple from '../helpers/autocomplete_container_simple.js';
  import ExpandLessIcon from '@material-ui/icons/ExpandLess';
@@ -70,6 +71,23 @@
    // State used for the selection of coffee so we can show the user info about it
    const [selectedCafe, setSelectedCafe] = useState(null);
 
+   // State used to switch between a homebrew and a cafe visit
+   const [isCafeVisit, setIsCafeVisit] = useState(false);
+
+   const handleChangeIsCafeStatus = () => {
+     // If turning off cafe visit toggle, need to clear the cafe field
+     if (isCafeVisit) {
+       // If so, unset all the fields under coffee
+       setCoffeeEntry({
+        ...coffeeEntry,
+        cafe_id: null,
+      });
+      setSelectedCafe(null);
+     }
+     setIsCafeVisit(!isCafeVisit);
+
+   };
+
    const handleCafeChange = (selectedCafe) => {
      // Check if the user unselected the cafe first
      if (!selectedCafe) {
@@ -91,102 +109,120 @@
    };
 
    return (
-     <Grid container justify="center">
+     <Grid container direction="column" alignItems="center">
        <Grid item xs={12}>
-         <Grid container align="center" justify="center">
-           <Grid item xs={12}>
-             <Typography variant="caption" align="center">
-               Cafe Name
-             </Typography>
-             <AutocompleteWrapperSimple
-               fieldName="name"
-               options={cafes}
-               onChange={handleCafeChange}
-               textField={(params) => (
-                 <TextField
-                   {...params}
-                   ref={params.InputProps.ref}
-                   InputProps={{
-                     classes: {
-                       input: classes.resize,
-                     },
-                   }}
-                   className={classes.form}
-                   id="cafe"
-                   variant="outlined"
-                 />
-               )}
-             />
-           </Grid>
-           <Grid item xs={12}>
-             <Box px={1}>
-               <IconButton
-                 aria-label="more"
-                 onClick={handleMoreDetailsClick}
-                 size="small"
-                 disabled={!selectedCafe}
-               >
-                 {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-               </IconButton>
-             </Box>
-           </Grid>
-           {open && (
-             <Grid item xs={10}>
-               <Card raised className={classes.card}>
-                 <CardContent className={classes.content}>
-                   <Grid
-                     direction="row"
-                     container
-                     justify="center"
-                     alignItems="center"
-                   >
-                     <Grid item>
-                       <Box px={2}>
-                         <Typography variant="caption" className={classes.name}>
-                           {selectedCafe?.city}
-                         </Typography>
-                       </Box>
-                     </Grid>
-                   </Grid>
-                   <Grid
-                     direction="row"
-                     container
-                     justify="center"
-                     alignItems="center"
-                   >
-                     <Grid item>
-                       <Box px={2}>
-                         <Typography variant="caption" className={classes.name}>
-                           {selectedCafe?.state}
-                         </Typography>
-                       </Box>
-                     </Grid>
-                   </Grid>
-                   <Grid
-                     direction="row"
-                     container
-                     justify="center"
-                     alignItems="center"
-                   >
-                     <Grid item>
-                       <Box px={2}>
-                         <Typography variant="caption" color="textSecondary">
-                           {selectedCafe?.country}
-                         </Typography>
-                       </Box>
-                     </Grid>
-                   </Grid>
-                 </CardContent>
-               </Card>
-             </Grid>
-           )}
-         </Grid>
-       </Grid>
-       <Grid item xs={12}>
-         <Box py={2}>
-           <Divider variant="middle" />
+         <Box pt={1}>
+           <Typography variant="caption" align="center">
+             Cafe Visit?
+           </Typography>
          </Box>
        </Grid>
+       <Grid item xs={12}>
+         <Switch
+           checked={isCafeVisit}
+           onChange={handleChangeIsCafeStatus}
+           name="is_cafe_visit"
+         />
+       </Grid>
+       {isCafeVisit &&
+         <Grid container justify="center">
+           <Grid item xs={12}>
+             <Grid container align="center" justify="center">
+               <Grid item xs={12}>
+                 <Typography variant="caption" align="center">
+                   Cafe Name
+                 </Typography>
+                 <AutocompleteWrapperSimple
+                   fieldName="name"
+                   options={cafes}
+                   onChange={handleCafeChange}
+                   textField={(params) => (
+                     <TextField
+                       {...params}
+                       ref={params.InputProps.ref}
+                       InputProps={{
+                         classes: {
+                           input: classes.resize,
+                         },
+                       }}
+                       className={classes.form}
+                       id="cafe"
+                       variant="outlined"
+                     />
+                   )}
+                 />
+               </Grid>
+               <Grid item xs={12}>
+                 <Box px={1}>
+                   <IconButton
+                     aria-label="more"
+                     onClick={handleMoreDetailsClick}
+                     size="small"
+                     disabled={!selectedCafe}
+                   >
+                     {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                   </IconButton>
+                 </Box>
+               </Grid>
+               {open && (
+                 <Grid item xs={10}>
+                   <Card raised className={classes.card}>
+                     <CardContent className={classes.content}>
+                       <Grid
+                         direction="row"
+                         container
+                         justify="center"
+                         alignItems="center"
+                       >
+                         <Grid item>
+                           <Box px={2}>
+                             <Typography variant="caption" className={classes.name}>
+                               {selectedCafe?.city}
+                             </Typography>
+                           </Box>
+                         </Grid>
+                       </Grid>
+                       <Grid
+                         direction="row"
+                         container
+                         justify="center"
+                         alignItems="center"
+                       >
+                         <Grid item>
+                           <Box px={2}>
+                             <Typography variant="caption" className={classes.name}>
+                               {selectedCafe?.state}
+                             </Typography>
+                           </Box>
+                         </Grid>
+                       </Grid>
+                       <Grid
+                         direction="row"
+                         container
+                         justify="center"
+                         alignItems="center"
+                       >
+                         <Grid item>
+                           <Box px={2}>
+                             <Typography variant="caption" color="textSecondary">
+                               {selectedCafe?.country}
+                             </Typography>
+                           </Box>
+                         </Grid>
+                       </Grid>
+                     </CardContent>
+                   </Card>
+                 </Grid>
+               )}
+             </Grid>
+           </Grid>
+           <Grid item xs={12}>
+             <Box py={2}>
+               <Divider variant="middle" />
+             </Box>
+           </Grid>
+         </Grid>
+       }
      </Grid>
    );
  }

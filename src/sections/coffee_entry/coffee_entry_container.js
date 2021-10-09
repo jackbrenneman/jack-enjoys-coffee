@@ -78,9 +78,6 @@ function CoffeeEntryContainer({ user }) {
   // State used for roaster to coffee map
   const [methodToDrinks, setMethodToDrinks] = useState({});
 
-  // State used to switch between a homebrew and a cafe visit
-  const [isCafeVisit, setIsCafeVisit] = useState(false);
-
   // State used for popping toast message for when write is successful or not
   const [toast, setToast] = useState({
     open: false,
@@ -156,12 +153,18 @@ function CoffeeEntryContainer({ user }) {
 
   const { mostRecentCoffee, mostRecentBrewData } = mostRecentCoffeeEntry;
 
-  const sectionsHomeBrew = [
+  const sections = [
     {
       component: (
         <DateInput coffeeEntry={coffeeEntry} setCoffeeEntry={setCoffeeEntry} />
       ),
       name: 'Date',
+    },
+    {
+      component: (
+        <CafeInput coffeeEntry={coffeeEntry} setCoffeeEntry={setCoffeeEntry} cafes={cafes} />
+      ),
+      name: 'Cafe',
     },
     {
       component: (
@@ -210,42 +213,7 @@ function CoffeeEntryContainer({ user }) {
     },
   ];
 
-  const sectionsCafe = [
-    {
-      component: (
-        <DateInput coffeeEntry={coffeeEntry} setCoffeeEntry={setCoffeeEntry} />
-      ),
-      name: 'Date',
-    },
-    {
-      component: (
-        <CafeInput
-          coffeeEntry={coffeeEntry}
-          setCoffeeEntry={setCoffeeEntry}
-          cafes={cafes}
-        />
-      ),
-      name: 'Cafe',
-    },
-    {
-      component: (
-        <RatingInput
-          coffeeEntry={coffeeEntry}
-          setCoffeeEntry={setCoffeeEntry}
-        />
-      ),
-      name: 'Rating',
-    },
-    {
-      component: (
-        <NotesInput coffeeEntry={coffeeEntry} setCoffeeEntry={setCoffeeEntry} />
-      ),
-      name: 'Notes',
-    },
-  ];
-
   const getEntrySections = () => {
-    const sections = isCafeVisit ? sectionsCafe : sectionsHomeBrew;
     return sections.map(({ component, name }) => (
       <Box px={2} className={classes.section} key={name}>
         <Grid item xs={12}>
