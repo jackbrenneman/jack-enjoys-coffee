@@ -10,6 +10,7 @@ import {
 import { CoffeeType } from './coffee_type.js';
 import { BrewType } from './brew_type.js';
 import { DateType } from './date_type.js';
+import { CafeType } from './cafe_type.js';
 
 export const CoffeeEntryType = new GraphQLObjectType({
   name: 'CoffeeEntry',
@@ -18,6 +19,7 @@ export const CoffeeEntryType = new GraphQLObjectType({
     coffee_entry_id: { type: GraphQLInt },
     date: { type: DateType },
     user_id: { type: GraphQLInt },
+    cafe: { type: CafeType },
     coffee: { type: CoffeeType },
     brew: { type: BrewType },
     rating: { type: GraphQLFloat },

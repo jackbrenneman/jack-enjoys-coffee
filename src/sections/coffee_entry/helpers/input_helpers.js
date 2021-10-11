@@ -129,6 +129,7 @@ export const createMethodIdToDrinksMap = (drinks) => {
  *   {
  *      date,
  *      coffee_id,
+ *      cafe_id,
  *      brew: {
  *        method_id,
  *        brewer_id,
@@ -148,6 +149,7 @@ export const createMethodIdToDrinksMap = (drinks) => {
  *   {
  *      user_id: 1,
  *      date,
+ *      cafe_id,
  *      coffee_id,
  *      method_id,
  *      brewer_id,
@@ -165,7 +167,7 @@ export const createMethodIdToDrinksMap = (drinks) => {
  *
  */
 export const normalizeCoffeeEntryInput = (coffeeEntry) => {
-  const { date, coffee_id, brew, notes, rating } = coffeeEntry;
+  const { date, cafe_id, coffee_id, brew, notes, rating } = coffeeEntry;
   const {
     method_id,
     brewer_id,
@@ -180,6 +182,7 @@ export const normalizeCoffeeEntryInput = (coffeeEntry) => {
   } = brew;
   return {
     date,
+    cafe_id: cafe_id ?? null,
     coffee_id: coffee_id ?? null,
     method_id: method_id ?? null,
     brewer_id: brewer_id ?? null,
@@ -203,6 +206,9 @@ export const normalizeCoffeeEntryInput = (coffeeEntry) => {
  *   {
  *     coffee: {
  *       coffee_id
+ *     }
+ *     cafe: {
+ *       cafe_id
  *     }
  *     brew: {
  *       method: {
@@ -233,6 +239,7 @@ export const normalizeCoffeeEntryInput = (coffeeEntry) => {
  * @returns {object} coffee entry in the shape needed for the state
  *   {
  *      date,
+ *      cafe_id,
  *      coffee_id,
  *      brew: {
  *        method_id,
@@ -253,8 +260,9 @@ export const normalizeCoffeeEntryInput = (coffeeEntry) => {
 export const normalizeMostRecentCoffeeEntryForInput = (
   mostRecentCoffeeEntry
 ) => {
-  const { coffee, brew } = mostRecentCoffeeEntry;
+  const { cafe, coffee, brew } = mostRecentCoffeeEntry;
   const { coffee_id } = coffee;
+  const { cafe_id } = cafe;
   const { method, grind, water } = brew;
   const {
     method_id,
@@ -272,6 +280,7 @@ export const normalizeMostRecentCoffeeEntryForInput = (
   const { water_id } = water;
   return {
     date: today,
+    cafe_id: cafe_id,
     coffee_id: coffee_id,
     brew: {
       method_id,
@@ -298,6 +307,9 @@ export const normalizeMostRecentCoffeeEntryForInput = (
  *     coffee: {
  *       coffee_id
  *     }
+ *     cafe: {
+ *       cafe_id
+ *     }
  *     brew: {
  *       method: {
  *         method_id,
@@ -326,6 +338,7 @@ export const normalizeMostRecentCoffeeEntryForInput = (
  *
  * @returns {object} coffee entry in the shape needed for the state
  *   {
+ *      cafe_name,
  *      coffee_name,
  *      method_name,
  *      brewer_name,
@@ -340,11 +353,14 @@ export const normalizeMostRecentCoffeeEntryForInput = (
  *   }
  */
 export const normalizeMostRecentCoffeeEntry = (mostRecentCoffeeEntry) => {
-  const { coffee = {}, brew = {} } = mostRecentCoffeeEntry;
+  const { coffee = {}, brew = {}, cafe = {} } = mostRecentCoffeeEntry;
   const { method = {}, grind = {}, water = {} } = brew;
   return {
     mostRecentCoffee: {
       ...coffee,
+    },
+    mostRecentCafe: {
+      ...cafe,
     },
     mostRecentBrewData: {
       mostRecentMethod: {

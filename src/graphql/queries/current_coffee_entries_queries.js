@@ -11,6 +11,10 @@ export const currentCoffeeEntriesQuery = (user_id, date_start, date_end) => `
     coffee_entry_id
     user_id
     date
+    cafe {
+      cafe_id
+      name
+    }
     coffee {
       coffee_id
       name
@@ -77,6 +81,14 @@ export const currentCoffeeEntriesQuery = (user_id, date_start, date_end) => `
       method_id
       name
     }
+  }
+  cafes(user_id:${user_id}) {
+    cafe_id
+    name
+    city
+    state
+    country
+    is_active
   }
   coffees(user_id:${user_id}) {
     coffee_id

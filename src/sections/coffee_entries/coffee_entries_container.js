@@ -62,6 +62,7 @@ function CurrentCoffeeEntriesContainer({ user }) {
   const maybeSetState = (data) => {
     const {
       coffeeEntries,
+      cafes,
       brewers,
       coffees,
       drinks,
@@ -77,6 +78,7 @@ function CurrentCoffeeEntriesContainer({ user }) {
     }
     if (
       brewers &&
+      cafes &&
       coffees &&
       drinks &&
       grinders &&
@@ -88,6 +90,7 @@ function CurrentCoffeeEntriesContainer({ user }) {
     ) {
       setCurrentData({
         brewers,
+        cafes,
         coffees,
         drinks,
         grinders,

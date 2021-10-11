@@ -259,7 +259,7 @@
 
  CafeData.propTypes = {
    cafes: PropTypes.array.isRequired,
-   onRoasterDeletion: PropTypes.func.isRequired,
+   onCafeDeletion: PropTypes.func.isRequired,
    isUserAuthorized: PropTypes.bool,
  };
 

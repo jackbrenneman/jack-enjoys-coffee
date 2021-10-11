@@ -94,6 +94,7 @@ export const insertIntoCoffeeEntries = `
     (
       user_id,
       date,
+      cafe_id,
       coffee_id,
       method_id,
       brewer_id,
@@ -108,7 +109,7 @@ export const insertIntoCoffeeEntries = `
       notes,
       rating
     )
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
   RETURNING *
 `;
 export const deleteCoffeeEntry =
@@ -117,19 +118,20 @@ export const updateCoffeeEntry = `
   UPDATE coffee_entries
   SET
     date = $1,
-    coffee_id = $2,
-    method_id = $3,
-    brewer_id = $4,
-    drink_id = $5,
-    grinder_id = $6,
-    grinder_setting = $7,
-    water_id = $8,
-    coffee_in = $9,
-    liquid_out = $10,
-    water_in = $11,
-    steep_time = $12,
-    notes = $13,
-    rating = $14
-  WHERE coffee_entry_id = $15 AND user_id = $16
+    cafe_id = $2,
+    coffee_id = $3,
+    method_id = $4,
+    brewer_id = $5,
+    drink_id = $6,
+    grinder_id = $7,
+    grinder_setting = $8,
+    water_id = $9,
+    coffee_in = $10,
+    liquid_out = $11,
+    water_in = $12,
+    steep_time = $13,
+    notes = $14,
+    rating = $15
+  WHERE coffee_entry_id = $16 AND user_id = $17
   RETURNING *
 `;

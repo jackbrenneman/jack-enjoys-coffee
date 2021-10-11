@@ -16,6 +16,8 @@ export const CoffeeEntryInputType = new GraphQLInputObjectType({
   fields: {
     // Date
     date: { type: GraphQLString },
+    // Cafe Info
+    cafe_id: { type: GraphQLInt },
     // Coffee Info
     coffee_id: { type: GraphQLInt },
     // Brew Info

@@ -115,6 +115,10 @@ export const activeCurrentDataQuery = (user_id, date_start, date_end) => `
     coffee_entry_id
     user_id
     date
+    cafe {
+      cafe_id
+      name
+    }
     coffee {
       coffee_id
       name

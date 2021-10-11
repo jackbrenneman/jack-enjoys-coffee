@@ -85,7 +85,7 @@ function EditCoffeeEntry({
 }) {
   const classes = useStyles();
 
-  const { coffee_entry_id, coffee } = coffeeEntry;
+  const { coffee_entry_id, coffee, cafe } = coffeeEntry;
 
   // State used to reset inputs
   const [key, setKey] = useState(true);
@@ -119,6 +119,7 @@ function EditCoffeeEntry({
 
   const {
     methods,
+    cafes,
     coffees,
     brewers,
     drinks,
@@ -140,6 +141,7 @@ function EditCoffeeEntry({
   const normalizeCoffeeEntryForUpdate = (updatedCoffeeEntry) => {
     return {
       date: updatedCoffeeEntry?.date ?? null,
+      cafe_id: updatedCoffeeEntry?.cafe?.cafe_id ?? null,
       coffee_id: updatedCoffeeEntry?.coffee?.coffee_id ?? null,
       method_id: updatedCoffeeEntry?.brew?.method?.method_id ?? null,
       brewer_id: updatedCoffeeEntry?.brew?.method?.brewer?.brewer_id ?? null,
@@ -220,6 +222,14 @@ function EditCoffeeEntry({
     }
     setRoasterId(roaster_id);
     setCoffeeName('');
+  };
+
+  const handleCafeChange = (cafeSelected) => {
+    const cafe = cafeSelected ? cafeSelected : null;
+    setCoffeeEntryData({
+      ...coffeeEntryData,
+      cafe,
+    });
   };
 
   const handleCoffeeChange = (coffee) => {
@@ -784,6 +794,35 @@ function EditCoffeeEntry({
                 size="small"
               />
             </form>
+            <Grid item xs={12}>
+              <Typography variant="caption" align="center">
+                Cafe
+              </Typography>
+            </Grid>
+            <Grid item>
+              <AutocompleteWrapperSimple
+                fieldName="cafe"
+                options={cafes}
+                onChange={handleCafeChange}
+                initialValue={cafe?.name}
+                textField={(params) => (
+                  <TextField
+                    {...params}
+                    ref={params.InputProps.ref}
+                    InputProps={{
+                      classes: {
+                        input: classes.resize,
+                      },
+                    }}
+                    value={cafe}
+                    className={classes.form}
+                    id="cafe"
+                    size="small"
+                    variant="outlined"
+                  />
+                )}
+              />
+            </Grid>
             <Grid item xs={12}>
               <Typography variant="caption" align="center">
                 Roaster
