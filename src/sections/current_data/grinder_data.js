@@ -201,7 +201,7 @@ function GrinderData({ grinders, onGrinderDeletion, isUserAuthorized }) {
         <Grid item xs={12}>
           <Grid container align="center" justify="center">
             {grinders.map((grinder) => (
-              <Grid item xs={10} sm={3} lg={2} key={grinder.grinder_id}>
+              <Grid item xs={10} sm={3} key={grinder.grinder_id}>
                 <GrinderRow
                   grinder={grinder}
                   onGrinderDeletion={onGrinderDeletion}

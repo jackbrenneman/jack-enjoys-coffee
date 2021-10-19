@@ -1,6 +1,7 @@
 /**
  * The Current Data Container, which will allow users to basically see what data is in the DBs, including:
  *    - Brewers
+ *    - Cafes
  *    - Coffees
  *    - Drinks
  *    - Grinders
@@ -28,6 +29,7 @@ import { currentDataQuery } from '../../graphql/queries/data_entry_queries.js';
 import { queryGQL } from '../../graphql/fetch.js';
 // Data Components
 import BrewerData from './brewer_data.js';
+import CafeData from './cafe_data.js';
 import CoffeeData from './coffee_data.js';
 import DrinkData from './drink_data.js';
 import GrinderData from './grinder_data.js';
@@ -37,6 +39,7 @@ import WaterData from './water_data.js';
 // Constants
 import {
   roasterEnum,
+  cafeEnum,
   coffeeEnum,
   originEnum,
   brewerEnum,
@@ -128,6 +131,7 @@ function CurrentDataContainer({ user }) {
   const { dataOption } = dataEntry;
   const {
     brewers,
+    cafes,
     coffees,
     drinks,
     grinders,
@@ -145,6 +149,16 @@ function CurrentDataContainer({ user }) {
     setCurrentData({
       ...currentData,
       coffees: coffeesMinusDeletedOne,
+    });
+  };
+
+  const handleCafeDeletion = (deleted_cafe_id) => {
+    const cafesMinusDeletedOne = cafes.filter(
+      ({ cafe_id }) => deleted_cafe_id !== cafe_id
+    );
+    setCurrentData({
+      ...currentData,
+      cafes: cafesMinusDeletedOne,
     });
   };
 
@@ -219,6 +233,14 @@ function CurrentDataContainer({ user }) {
             isUserAuthorized={isAuthorized}
           />
         );
+      case cafeEnum:
+        return (
+          <CafeData
+            cafes={cafes}
+            onCafeDeletion={handleCafeDeletion}
+            isUserAuthorized={isAuthorized}
+          />
+        )
       case coffeeEnum:
         return (
           <CoffeeData
@@ -300,6 +322,16 @@ function CurrentDataContainer({ user }) {
                           label={
                             <Typography variant="caption" align="center">
                               Brewers
+                            </Typography>
+                          }
+                          labelPlacement="bottom"
+                        />
+                        <FormControlLabel
+                          value={cafeEnum}
+                          control={<Radio className={classes.radio} />}
+                          label={
+                            <Typography variant="caption" align="center">
+                              Cafes
                             </Typography>
                           }
                           labelPlacement="bottom"

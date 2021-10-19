@@ -21,6 +21,7 @@ import { queryGQL, writeGQL } from '../../graphql/fetch.js';
 import DateInput from './inputs/date_input.js';
 import CoffeeInput from './inputs/coffee_input.js';
 import BrewInput from './inputs/brew/brew_input.js';
+import CafeInput from './inputs/cafe_input.js';
 import RatingInput from './inputs/rating_input.js';
 import NotesInput from './inputs/notes_input.js';
 // Consts
@@ -139,6 +140,7 @@ function CoffeeEntryContainer({ user }) {
 
   const {
     brewers,
+    cafes,
     coffees,
     drinks,
     grinders,
@@ -157,6 +159,12 @@ function CoffeeEntryContainer({ user }) {
         <DateInput coffeeEntry={coffeeEntry} setCoffeeEntry={setCoffeeEntry} />
       ),
       name: 'Date',
+    },
+    {
+      component: (
+        <CafeInput coffeeEntry={coffeeEntry} setCoffeeEntry={setCoffeeEntry} cafes={cafes} />
+      ),
+      name: 'Cafe',
     },
     {
       component: (

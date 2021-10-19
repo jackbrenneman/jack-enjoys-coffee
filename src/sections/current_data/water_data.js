@@ -193,7 +193,7 @@ function WaterData({ waters, onWaterDeletion, isUserAuthorized }) {
         <Grid item xs={12}>
           <Grid container align="center" justify="center">
             {waters.map((water) => (
-              <Grid item xs={10} sm={3} lg={2} key={water.water_id}>
+              <Grid item xs={10} sm={3} key={water.water_id}>
                 <WaterRow
                   water={water}
                   onWaterDeletion={onWaterDeletion}

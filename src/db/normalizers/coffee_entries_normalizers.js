@@ -8,6 +8,8 @@ export const normalizeCoffeeEntries = (data) => {
       brewer_id,
       brewer_name,
       coffee_entry_id,
+      cafe_id,
+      cafe_name,
       coffee_id,
       coffee_in,
       coffee_name,
@@ -34,6 +36,10 @@ export const normalizeCoffeeEntries = (data) => {
       water_id,
       water_name,
     } = coffeeEntry;
+    const cafe = {
+      cafe_id,
+      name: cafe_name,
+    }
     const coffee = {
       coffee_id,
       name: coffee_name,
@@ -64,6 +70,7 @@ export const normalizeCoffeeEntries = (data) => {
     const normalizedCoffeeEntry = {
       coffee_entry_id,
       date,
+      cafe,
       coffee,
       brew,
       notes,

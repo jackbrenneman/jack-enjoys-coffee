@@ -10,6 +10,7 @@ import {
 // Types
 import { AuthType } from './auth_type.js';
 import { BrewerType } from './brewer_type.js';
+import { CafeType } from './cafe_type.js';
 import { CoffeeEntryType } from './coffee_entry_type.js';
 import { CoffeeType } from './coffee_type.js';
 import { DrinkType } from './drink_type.js';
@@ -19,6 +20,7 @@ import { RoasterType } from './roaster_type.js';
 import { WaterType } from './water_type.js';
 // Input Types
 import { BrewerInputType } from './inputs/brewer_input_type.js';
+import { CafeInputType } from './inputs/cafe_input_type.js';
 import { CoffeeEntryInputType } from './inputs/coffee_entry_input_type.js';
 import { CoffeeInputType } from './inputs/coffee_input_type.js';
 import { DrinkInputType } from './inputs/drink_input_type.js';
@@ -33,6 +35,11 @@ import {
   deleteBrewerMutationResolver,
   updateBrewerMutationResolver,
 } from '../resolvers/mutations/brewer_mutation_type_resolvers.js';
+import {
+  createCafeMutationResolver,
+  deleteCafeMutationResolver,
+  updateCafeMutationResolver,
+} from '../resolvers/mutations/cafe_mutation_type_resolvers.js';
 import {
   createCoffeeEntryMutationResolver,
   deleteCoffeeEntryMutationResolver,
@@ -182,6 +189,48 @@ const JackEnjoysCoffeeMutationType = new GraphQLObjectType({
         const user_id = getUserId(context);
         if (user_id) {
           return updateBrewerMutationResolver(brewer, brewer_id, user_id);
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    cafe: {
+      type: CafeType,
+      args: {
+        cafe: { type: CafeInputType },
+      },
+      resolve(parentValue, { cafe }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return createCafeMutationResolver(cafe, user_id);
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    deleteCafe: {
+      type: GraphQLInt,
+      args: {
+        cafe_id: { type: new GraphQLNonNull(GraphQLInt) },
+      },
+      resolve(parentValue, { cafe_id }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return deleteCafeMutationResolver(cafe_id, user_id)
+            ? cafe_id
+            : 0;
+        }
+        throw new Error('401: Unauthorized');
+      },
+    },
+    updateCafe: {
+      type: CafeType,
+      args: {
+        cafe_id: { type: new GraphQLNonNull(GraphQLInt) },
+        cafe: { type: CafeInputType },
+      },
+      resolve(parentValue, { cafe_id, cafe }, context) {
+        const user_id = getUserId(context);
+        if (user_id) {
+          return updateCafeMutationResolver(cafe, cafe_id, user_id);
         }
         throw new Error('401: Unauthorized');
       },

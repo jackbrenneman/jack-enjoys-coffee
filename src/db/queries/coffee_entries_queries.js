@@ -49,12 +49,14 @@ export const selectCoffeeEntriesByUserIdAndDateRange = `
   SELECT
     coffee_entries.coffee_entry_id,
     coffee_entries.brewer_id,
+    coffee_entries.cafe_id,
     coffee_entries.date,
     coffee_entries.user_id,
     coffee_entries.grinder_id,
     coffee_entries.coffee_id,
     coffee_entries.drink_id,
     coffee_entries.method_id,
+    cafes.name AS cafe_name,
     coffees.name AS coffee_name,
     methods.name AS method_name,
     origins.origin_id AS origin_id,
@@ -77,6 +79,7 @@ export const selectCoffeeEntriesByUserIdAndDateRange = `
     coffee_entries.notes
   FROM coffee_entries
   LEFT JOIN users ON coffee_entries.user_id = users.user_id
+  LEFT JOIN cafes ON coffee_entries.cafe_id = cafes.cafe_id
   LEFT JOIN coffees ON coffee_entries.coffee_id = coffees.coffee_id
   LEFT JOIN roasters ON coffees.roaster_id = roasters.roaster_id
   LEFT JOIN processes ON coffees.process_id = processes.process_id
@@ -94,6 +97,7 @@ export const insertIntoCoffeeEntries = `
     (
       user_id,
       date,
+      cafe_id,
       coffee_id,
       method_id,
       brewer_id,
@@ -108,7 +112,7 @@ export const insertIntoCoffeeEntries = `
       notes,
       rating
     )
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
   RETURNING *
 `;
 export const deleteCoffeeEntry =
@@ -117,19 +121,20 @@ export const updateCoffeeEntry = `
   UPDATE coffee_entries
   SET
     date = $1,
-    coffee_id = $2,
-    method_id = $3,
-    brewer_id = $4,
-    drink_id = $5,
-    grinder_id = $6,
-    grinder_setting = $7,
-    water_id = $8,
-    coffee_in = $9,
-    liquid_out = $10,
-    water_in = $11,
-    steep_time = $12,
-    notes = $13,
-    rating = $14
-  WHERE coffee_entry_id = $15 AND user_id = $16
+    cafe_id = $2,
+    coffee_id = $3,
+    method_id = $4,
+    brewer_id = $5,
+    drink_id = $6,
+    grinder_id = $7,
+    grinder_setting = $8,
+    water_id = $9,
+    coffee_in = $10,
+    liquid_out = $11,
+    water_in = $12,
+    steep_time = $13,
+    notes = $14,
+    rating = $15
+  WHERE coffee_entry_id = $16 AND user_id = $17
   RETURNING *
 `;

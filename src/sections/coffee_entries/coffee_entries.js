@@ -112,7 +112,7 @@ function CurrentCoffeeEntries({
       <Grid item xs={12}>
         <Grid container align="center" justify="center">
           {coffeeEntries.map((coffeeEntry) => (
-            <Grid item xs={10} sm={3} lg={2} key={coffeeEntry.coffee_entry_id}>
+            <Grid item xs={10} sm={3} key={coffeeEntry.coffee_entry_id}>
               <CoffeeEntry
                 canEdit={canEdit}
                 onCoffeeEntryDeletion={onCoffeeEntryDeletion}

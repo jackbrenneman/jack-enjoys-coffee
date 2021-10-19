@@ -16,6 +16,12 @@ import {
   brewersByNameResolver,
 } from '../resolvers/queries/brewer_query_type_resolvers.js';
 import {
+  cafeByIdResolver,
+  cafesByNameResolver,
+  cafesByStateResolver,
+  cafesByUserIdResolver,
+} from '../resolvers/queries/cafe_query_type_resolvers.js';
+import {
   coffeeEntriesByUserIdResolver,
   coffeeEntriesByUserIdAndDataRangeResolver,
 } from '../resolvers/queries/coffee_entry_query_type_resolvers.js';
@@ -70,6 +76,7 @@ import {
 } from '../resolvers/queries/water_query_type_resolvers.js';
 // Types
 import { BrewerType } from './brewer_type.js';
+import { CafeType } from './cafe_type.js';
 import { CoffeeEntryType } from './coffee_entry_type.js';
 import { CoffeeType } from './coffee_type.js';
 import { DrinkType } from './drink_type.js';
@@ -143,6 +150,34 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
           }
           // If no date given, get all coffeeEntries
           return coffeeEntriesByUserIdResolver(user_id);
+        }
+        // If not signed in and no args inputted, return nothing.
+        return [];
+      },
+    },
+    cafes: {
+      type: new GraphQLList(CafeType),
+      args: {
+        only_active: { type: GraphQLBoolean },
+        user_id: { type: GraphQLInt },
+        cafe_id: { type: GraphQLInt },
+        name: { type: GraphQLString },
+        state: { type: GraphQLString },
+      },
+      resolve(parentValue, { user_id, cafe_id, name, state, only_active }, context) {
+        // Err on the side of the user_id from arguments. Then fallback on logged in user.
+        const userId = user_id ? user_id : getUserId(context);
+        if (userId) {
+          return cafesByUserIdResolver(userId, only_active);
+        }
+        if (cafe_id) {
+          return cafeByIdResolver(cafe_id);
+        } else if (name) {
+          // If there's a name, get those cafes similar to that name.
+          return cafesByNameResolver(name);
+        } else if (state) {
+          // If there's a state, get the cafes from that state.
+          return cafesByStateResolver(state);
         }
         // If not signed in and no args inputted, return nothing.
         return [];

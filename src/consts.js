@@ -14,6 +14,7 @@ export const newEntryPath = '/new_entry';
 
 // Used so we know what kind of data the user is trying to input
 export const drinkEnum = 'DRINK';
+export const cafeEnum = 'CAFE';
 export const grinderEnum = 'GRINDER';
 export const roasterEnum = 'ROASTER';
 export const coffeeEnum = 'COFFEE';
@@ -49,6 +50,7 @@ export const methodIdToMethodEnum = {
 
 export const currentDataDefault = {
   brewers: [],
+  cafes: [],
   coffees: [],
   drinks: [],
   grinders: [],
@@ -66,6 +68,13 @@ export const dataEntryDefault = {
     name: '',
     website: '',
     method_id: 1,
+  },
+  cafe: {
+    name: '',
+    city: '',
+    state: '',
+    country: '',
+    website: '',
   },
   coffee: {
     name: '',
