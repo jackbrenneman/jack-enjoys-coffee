@@ -49,12 +49,14 @@ export const selectCoffeeEntriesByUserIdAndDateRange = `
   SELECT
     coffee_entries.coffee_entry_id,
     coffee_entries.brewer_id,
+    coffee_entries.cafe_id,
     coffee_entries.date,
     coffee_entries.user_id,
     coffee_entries.grinder_id,
     coffee_entries.coffee_id,
     coffee_entries.drink_id,
     coffee_entries.method_id,
+    cafes.name AS cafe_name,
     coffees.name AS coffee_name,
     methods.name AS method_name,
     origins.origin_id AS origin_id,
@@ -77,6 +79,7 @@ export const selectCoffeeEntriesByUserIdAndDateRange = `
     coffee_entries.notes
   FROM coffee_entries
   LEFT JOIN users ON coffee_entries.user_id = users.user_id
+  LEFT JOIN cafes ON coffee_entries.cafe_id = cafes.cafe_id
   LEFT JOIN coffees ON coffee_entries.coffee_id = coffees.coffee_id
   LEFT JOIN roasters ON coffees.roaster_id = roasters.roaster_id
   LEFT JOIN processes ON coffees.process_id = processes.process_id

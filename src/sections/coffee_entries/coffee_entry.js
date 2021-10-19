@@ -30,10 +30,11 @@ function CurrentCoffeeEntry({
   onCoffeeEntryDeletion,
 }) {
   const [currentCoffeeEntry, setCurrentCoffeeEntry] = useState(coffeeEntry);
-  const { coffee, date, brew, rating, notes } = currentCoffeeEntry;
+  const { coffee, date, brew, rating, notes, cafe } = currentCoffeeEntry;
   const realDate = new Date(date);
   const localeDate = realDate.toLocaleDateString('en-US', { timeZone: 'UTC' });
   const { name: coffee_name, roaster, origin, process } = coffee;
+  const { name: cafe_name } = cafe;
   const { name: roaster_name } = roaster;
   const { name: origin_name } = origin;
   const { name: process_name } = process;
@@ -129,6 +130,7 @@ function CurrentCoffeeEntry({
 
   const generalDetails = {
     brewer_name: brewer_name,
+    cafe_name: cafe_name,
     coffee_name: coffee_name,
     origin_name: origin_name,
     process_name: process_name,
@@ -170,6 +172,24 @@ function CurrentCoffeeEntry({
     }
   };
 
+  const getTitle = () => {
+    if (roaster_name) {
+      return roaster_name;
+    } else if (cafe_name) {
+      return cafe_name;
+    }
+  }
+
+  const getSubtitle = () => {
+    if (method_name && drink_name) {
+      return `${method_name} | ${drink_name}`
+    } else if (method_name) {
+      return method_name;
+    } else if (drink_name) {
+      return drink_name;
+    }
+  }
+
   return (
     <Box p={1}>
       <Card raised className={classes.card}>
@@ -178,8 +198,8 @@ function CurrentCoffeeEntry({
             className={classes.header}
             titleTypographyProps={{ variant: 'caption' }}
             subheaderTypographyProps={{ variant: 'caption' }}
-            title={roaster_name}
-            subheader={`${method_name} | ${drink_name}`}
+            title={getTitle()}
+            subheader={getSubtitle()}
           />
           <Grid direction="row" container justify="center" alignItems="center">
             <Grid item>
