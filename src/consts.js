@@ -251,6 +251,12 @@ export const newInputPropTypesShape = {
   setToast: PropTypes.func.isRequired,
 };
 
+// All the props for filtering for coffee entries
+export const filterCoffeeEntriesPropTypesShape = {
+  onSubmit: PropTypes.func.isRequired,
+  currentData: PropTypes.object.isRequired,
+};
+
 // All the Brew Info for a coffee entry
 const brewPropTypesShape = {
   method_id: PropTypes.number,

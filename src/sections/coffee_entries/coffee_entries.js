@@ -6,23 +6,31 @@ import PropTypes from 'prop-types';
 // Material UI
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import FilterListIcon from '@material-ui/icons/FilterList';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 // Custom Components
 import CoffeeEntry from './coffee_entry.js';
 // Constants
 import { today, sevenDaysAgo } from '../../consts.js';
+import FilterCoffeeEntries from './filter/filter_coffee_entries.js';
 
 function CurrentCoffeeEntries({
   canEdit,
   coffeeEntries,
   onDateChange,
+  onFilter,
   onCoffeeEntryDeletion,
   currentData,
 }) {
+  // State that determines whether or not to show the filter section
+  const [showFilter, setShowFilter] = useState(false);
+  // State that contains the data for filtering coffee entries
+  const [filterData, setFilterData] = useState({});
   // State that contains the date entries
   const [currentDates, setCurrentDates] = useState({
     startDate: sevenDaysAgo,
@@ -46,9 +54,18 @@ function CurrentCoffeeEntries({
     });
   };
 
+  const handleShowFilter = (e) => {
+    setShowFilter(!showFilter);
+  };
+
   const handleUpdateDate = () => {
     // TODO: Make sure startDate is before or equal to endDate
     onDateChange(startDate, endDate);
+  };
+
+  const handleFilterSubmit = () => {
+    // TODO: Make sure startDate is before or equal to endDate
+    onFilter(coffeeEntries, filterData);
   };
 
   return (
@@ -110,6 +127,26 @@ function CurrentCoffeeEntries({
         </Box>
       </Grid>
       <Grid item xs={12}>
+        <Box py={1}>
+          <IconButton
+            aria-label="refresh"
+            onClick={handleShowFilter}
+            size="small"
+          >
+            <FilterListIcon />
+          </IconButton>
+        </Box>
+      </Grid>
+      {
+        showFilter &&
+        <FilterCoffeeEntries onSubmit={handleFilterSubmit} />
+      }
+      <Grid item xs={12}>
+        <Box py={2}>
+          <Divider variant="middle" />
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
         <Grid container align="center" justify="center">
           {coffeeEntries.map((coffeeEntry) => (
             <Grid item xs={10} sm={3} key={coffeeEntry.coffee_entry_id}>
@@ -131,6 +168,7 @@ CurrentCoffeeEntries.propTypes = {
   canEdit: PropTypes.bool,
   coffeeEntries: PropTypes.array.isRequired,
   onDateChange: PropTypes.func.isRequired,
+  onFilter: PropTypes.func.isRequired,
   onCoffeeEntryDeletion: PropTypes.func.isRequired,
   currentData: PropTypes.shape({
     brewers: PropTypes.array,

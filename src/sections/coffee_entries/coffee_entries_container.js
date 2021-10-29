@@ -185,6 +185,11 @@ function CurrentCoffeeEntriesContainer({ user }) {
     }
   };
 
+  // Filters the coffee entries with the appropriate filters selected
+  const filterCoffeeEntries = (coffeeEntries, filterData) => {
+    return coffeeEntries;
+  };
+
   const getPageTitle = () => {
     if (jacksEntries) {
       // Viewing Jack's entries
@@ -238,6 +243,7 @@ function CurrentCoffeeEntriesContainer({ user }) {
                 canEdit={getCanEdit()}
                 coffeeEntries={currentCoffeeEntries}
                 onDateChange={updateDateRange}
+                onFilter={filterCoffeeEntries}
                 onCoffeeEntryDeletion={handleCoffeeEntryDeletion}
                 currentData={currentData}
               />
