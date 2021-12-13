@@ -36,11 +36,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CurrentCoffeeEntriesContainer({ user }) {
-  // State that basically contains all the current coffee entries
+  // State that contains all the current coffee entries
   const [currentCoffeeEntries, setCurrentCoffeeEntries] = useState([]);
 
-  // State that basically contains all the current coffee data
+  // State that contains all the current FILTERED coffee entries
+  const [currentFilteredCoffeeEntries, setCurrentFilteredCoffeeEntries] = useState([]);
+
+  // State that contains all the current coffee data
   const [currentData, setCurrentData] = useState({});
+
+  // State that contains info on if coffee entries are being loaded
+  const [isLoading, setIsLoading] = useState(true);
 
   const queryParams = new URLSearchParams(useLocation().search);
   const queryParamsObject = {
@@ -112,14 +118,17 @@ function CurrentCoffeeEntriesContainer({ user }) {
     // - Jack's specific coffee entries page -> Jack's entries
     // - A user_id in query params -> user_id's entries
     // - A signed in user's entries -> signed in user's entries
+    setIsLoading(true);
     if (jacksEntries) {
       queryGQL(currentCoffeeEntriesQuery(1, sevenDaysAgo, today))
         .then(({ data }) => {
           maybeSetState(data);
+          setIsLoading(false);
         })
         .catch((e) => {
           // TODO: Determine what to do if fetch is unsuccessful
           console.log(e);
+          setIsLoading(false);
         });
     } else if (queryParamsUserId) {
       queryGQL(
@@ -127,36 +136,43 @@ function CurrentCoffeeEntriesContainer({ user }) {
       )
         .then(({ data }) => {
           maybeSetState(data);
+          setIsLoading(false);
         })
         .catch((e) => {
           // TODO: Determine what to do if fetch is unsuccessful
           console.log(e);
+          setIsLoading(false);
         });
     } else if (user?.user_id) {
       queryGQL(currentCoffeeEntriesQuery(user.user_id, sevenDaysAgo, today))
         .then(({ data }) => {
           maybeSetState(data);
+          setIsLoading(false);
         })
         .catch((e) => {
           // TODO: Determine what to do if fetch is unsuccessful
           console.log(e);
+          setIsLoading(false);
         });
     }
   }, [queryParamsUserId, jacksEntries, user]);
 
   // Updates the date range, and fetches the coffee entry data for that given range
   const updateDateRange = (startDate, endDate) => {
+    setIsLoading(true);
     if (jacksEntries) {
       queryGQL(currentCoffeeEntriesQuery(1, startDate, endDate))
         .then(({ data }) => {
           const { coffeeEntries } = data;
           if (coffeeEntries) {
             setCurrentCoffeeEntries(coffeeEntries);
+            setIsLoading(false);
           }
         })
         .catch((e) => {
           // TODO: Determine what to do if fetch is unsuccessful
           console.log(e);
+          setIsLoading(false);
         });
     } else if (queryParamsUserId) {
       queryGQL(currentCoffeeEntriesQuery(queryParamsUserId, startDate, endDate))
@@ -164,11 +180,13 @@ function CurrentCoffeeEntriesContainer({ user }) {
           const { coffeeEntries } = data;
           if (coffeeEntries) {
             setCurrentCoffeeEntries(coffeeEntries);
+            setIsLoading(false);
           }
         })
         .catch((e) => {
           // TODO: Determine what to do if fetch is unsuccessful
           console.log(e);
+          setIsLoading(false);
         });
     } else if (user?.user_id) {
       queryGQL(currentCoffeeEntriesQuery(user.user_id, startDate, endDate))
@@ -176,18 +194,58 @@ function CurrentCoffeeEntriesContainer({ user }) {
           const { coffeeEntries } = data;
           if (coffeeEntries) {
             setCurrentCoffeeEntries(coffeeEntries);
+            setIsLoading(false);
           }
         })
         .catch((e) => {
           // TODO: Determine what to do if fetch is unsuccessful
           console.log(e);
+          setIsLoading(false);
         });
     }
   };
 
   // Filters the coffee entries with the appropriate filters selected
-  const filterCoffeeEntries = (coffeeEntries, filterData) => {
-    return coffeeEntries;
+  const filterCoffeeEntries = (filterData) => {
+    setIsLoading(true);
+    let filteredCoffeeEntries = currentCoffeeEntries;
+    const {filteredCoffees, filteredRoasters, filteredOrigins, filteredProcesses} = filterData;
+    if (!filteredCoffees.length && !filteredRoasters.length && !filteredOrigins.length && !filteredProcesses.length) {
+      setCurrentFilteredCoffeeEntries([]);
+      setIsLoading(false);
+      return;
+    }
+    if (filteredCoffees.length || filteredRoasters.length) {
+      // Coffees and Roasters are the "top level"; first, let's find all the coffees that fit in the filters selected for coffees and/or roasters
+      filteredCoffeeEntries = currentCoffeeEntries.filter(coffeeEntry => {
+        // First check if it's a coffee that's being filtered for
+        let isAFilteredCoffee = false;
+        if (filteredCoffees.length) {
+          isAFilteredCoffee = filteredCoffees.findIndex(filteredCoffee => coffeeEntry?.coffee?.coffee_id === filteredCoffee?.coffee_id) > -1;
+        }
+        if (!isAFilteredCoffee) {
+          // Now let's check if it's a roaster that's being filtered for (because it's not a coffee)
+          let isAFilteredRoaster = false;
+          if (filteredRoasters.length) {
+            isAFilteredRoaster = filteredRoasters.findIndex(filteredRoaster => coffeeEntry?.coffee?.roaster?.roaster_id === filteredRoaster?.roaster_id) > -1;
+          }
+          return isAFilteredRoaster;
+        } else {
+          // It is a filtered coffee, so return true
+          return true;
+        }
+      });
+    }
+    // Now we have coffee entries that are only of certain coffees/roasters. If there are origins and/or processes to filter for, let's do that
+    if (filteredOrigins.length) {
+      filteredCoffeeEntries = filteredCoffeeEntries.filter(coffeeEntry => (filteredOrigins.findIndex(filteredOrigin => coffeeEntry?.coffee?.origin?.origin_id === filteredOrigin?.origin_id) > -1));
+    }
+    if (filteredProcesses.length) {
+      filteredCoffeeEntries = filteredCoffeeEntries.filter(coffeeEntry => (filteredProcesses.findIndex(filteredProcess => coffeeEntry?.coffee?.process?.process_id === filteredProcess?.process_id) > -1));
+    }
+    // If there are no filtered coffee entries left, we need to let the user know that they filtered out everything for the current date range
+    setCurrentFilteredCoffeeEntries(filteredCoffeeEntries);
+    setIsLoading(false);
   };
 
   const getPageTitle = () => {
@@ -219,6 +277,16 @@ function CurrentCoffeeEntriesContainer({ user }) {
     return false;
   };
 
+  const getCoffeeEntriesToShow = () => {
+    // If there are filtered coffee entries, show those
+    if (currentFilteredCoffeeEntries.length) {
+      return currentFilteredCoffeeEntries;
+    } else {
+      // Otherwise, just show them all
+      return currentCoffeeEntries;
+    }
+  }
+
   return (
     <Box className={classes.page}>
       <Grid container align="center" justify="center">
@@ -241,7 +309,8 @@ function CurrentCoffeeEntriesContainer({ user }) {
             <Grid item xs={12}>
               <CurrentCoffeeEntries
                 canEdit={getCanEdit()}
-                coffeeEntries={currentCoffeeEntries}
+                coffeeEntries={getCoffeeEntriesToShow()}
+                isLoading={isLoading}
                 onDateChange={updateDateRange}
                 onFilter={filterCoffeeEntries}
                 onCoffeeEntryDeletion={handleCoffeeEntryDeletion}

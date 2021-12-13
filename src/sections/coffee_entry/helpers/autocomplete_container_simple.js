@@ -11,6 +11,7 @@ function AutocompleteWrapperSimple({
   onChange,
   options,
   textField,
+  shouldShowValueOnChange,
   initialValue,
 }) {
   const [value, setValue] = useState({ name: initialValue ?? '' });
@@ -19,12 +20,18 @@ function AutocompleteWrapperSimple({
   const handleOnChange = (event, newValue) => {
     if (typeof newValue === 'string') {
       // I am still unsure when this ever happens tbh
-      setValue({
-        name: newValue,
-      });
+      if (shouldShowValueOnChange) {
+        setValue({
+          name: newValue,
+        });
+      }
     } else {
       // The user chose something that was already an option
-      setValue(newValue);
+      if (shouldShowValueOnChange) {
+        setValue(newValue);
+      } else {
+        setValue({ name: '' });
+      }
       // onChange is the function supplied that will update state
       onChange(newValue ? newValue : '');
     }
@@ -64,10 +71,12 @@ AutocompleteWrapperSimple.propTypes = {
   onChange: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
   textField: PropTypes.func.isRequired,
+  shouldShowValueOnChange: PropTypes.bool,
   initialValue: PropTypes.string,
 };
 
 AutocompleteWrapperSimple.defaultProps = {
+  shouldShowValueOnChange: true,
   initialValue: '',
 };
 

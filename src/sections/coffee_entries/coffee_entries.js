@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 // Material UI
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import RefreshIcon from '@material-ui/icons/Refresh';
@@ -15,13 +14,16 @@ import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 // Custom Components
 import CoffeeEntry from './coffee_entry.js';
+import ActiveFilters from './filter/active_filters.js';
 // Constants
 import { today, sevenDaysAgo } from '../../consts.js';
 import FilterCoffeeEntries from './filter/filter_coffee_entries.js';
+import { CircularProgress } from '@material-ui/core';
 
 function CurrentCoffeeEntries({
   canEdit,
   coffeeEntries,
+  isLoading,
   onDateChange,
   onFilter,
   onCoffeeEntryDeletion,
@@ -30,13 +32,25 @@ function CurrentCoffeeEntries({
   // State that determines whether or not to show the filter section
   const [showFilter, setShowFilter] = useState(false);
   // State that contains the data for filtering coffee entries
-  const [filterData, setFilterData] = useState({});
+  const [filterData, setFilterData] = useState({
+    filteredCoffees: [],
+    filteredRoasters: [],
+    filteredOrigins: [],
+    filteredProcesses: []
+  });
   // State that contains the date entries
   const [currentDates, setCurrentDates] = useState({
     startDate: sevenDaysAgo,
     endDate: today,
   });
   const { startDate, endDate } = currentDates;
+
+  const [datesShown, setDatesShown] = useState({
+    startDateShown: startDate,
+    endDateShown: endDate,
+  })
+
+  const { startDateShown, endDateShown } = datesShown;
 
   const handleStartDateChange = (e) => {
     const date = e.target.value;
@@ -61,12 +75,19 @@ function CurrentCoffeeEntries({
   const handleUpdateDate = () => {
     // TODO: Make sure startDate is before or equal to endDate
     onDateChange(startDate, endDate);
+    setDatesShown({
+      startDateShown: startDate,
+      endDateShown: endDate,
+    });
   };
 
   const handleFilterSubmit = () => {
-    // TODO: Make sure startDate is before or equal to endDate
-    onFilter(coffeeEntries, filterData);
+    onFilter(filterData);
   };
+
+  // Just determines if there are active filters so we can correctly show the user
+  const {filteredCoffees, filteredRoasters, filteredProcesses, filteredOrigins} = filterData;
+  const showFiltersActive = filteredCoffees.length || filteredRoasters.length || filteredOrigins.length || filteredProcesses.length;
 
   return (
     <Grid container align="center" justify="center">
@@ -139,7 +160,7 @@ function CurrentCoffeeEntries({
       </Grid>
       {
         showFilter &&
-        <FilterCoffeeEntries onSubmit={handleFilterSubmit} />
+        <FilterCoffeeEntries onSubmit={handleFilterSubmit} currentData={currentData} setFilterData={setFilterData} filterData={filterData} />
       }
       <Grid item xs={12}>
         <Box py={2}>
@@ -147,7 +168,31 @@ function CurrentCoffeeEntries({
         </Box>
       </Grid>
       <Grid item xs={12}>
+      {isLoading ? <CircularProgress /> :
         <Grid container align="center" justify="center">
+          <Grid item xs={12}>
+            <Typography variant="body1" align="center">
+              Date Range
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="body1" align="center">
+              {startDateShown} ---- {endDateShown}
+            </Typography>
+          </Grid>
+          {
+            !!showFiltersActive &&
+              <>
+                <Grid item xs={12}>
+                  <Typography variant="body1" align="center">
+                    Filters Applied
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <ActiveFilters filterData={filterData} />
+                </Grid>
+              </>
+          }
           {coffeeEntries.map((coffeeEntry) => (
             <Grid item xs={10} sm={3} key={coffeeEntry.coffee_entry_id}>
               <CoffeeEntry
@@ -158,7 +203,7 @@ function CurrentCoffeeEntries({
               />
             </Grid>
           ))}
-        </Grid>
+        </Grid>}
       </Grid>
     </Grid>
   );
@@ -167,6 +212,7 @@ function CurrentCoffeeEntries({
 CurrentCoffeeEntries.propTypes = {
   canEdit: PropTypes.bool,
   coffeeEntries: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   onDateChange: PropTypes.func.isRequired,
   onFilter: PropTypes.func.isRequired,
   onCoffeeEntryDeletion: PropTypes.func.isRequired,
