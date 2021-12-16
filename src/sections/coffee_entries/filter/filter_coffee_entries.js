@@ -18,7 +18,7 @@
    onSubmit,
    currentData,
    filterData,
-   setFilterData,
+   onFilterChange,
  }) {
    const {filteredCoffees, filteredRoasters, filteredOrigins, filteredProcesses} = filterData;
    const useStyles = makeStyles(() => ({
@@ -49,19 +49,21 @@
       // If we make it in here, that means the coffee was already selected; so we don't need to add it again
       return;
     }
-    filteredCoffees.push(addedCoffee);
-    setFilterData({
+    const newFilteredCoffees = filteredCoffees.concat([addedCoffee]);
+    onFilterChange({
       ...filterData,
-      filteredCoffees: filteredCoffees
+      filteredCoffees: newFilteredCoffees
     });
   };
 
   const handleCoffeeDelete = (deletedCoffeeId) => {
     const deletedCoffeeIndex = filteredCoffees.findIndex(coffee => coffee.coffee_id === deletedCoffeeId);
-    filteredCoffees.splice(deletedCoffeeIndex, 1);
-    setFilterData({
+    const newFilteredCoffeesOne = filteredCoffees.slice(0, deletedCoffeeIndex);
+    const newFilteredCoffeesTwo = filteredCoffees.slice(deletedCoffeeIndex + 1);
+    const newFilteredCoffees = newFilteredCoffeesOne.concat(newFilteredCoffeesTwo);
+    onFilterChange({
       ...filterData,
-      filteredCoffees: filteredCoffees,
+      filteredCoffees: newFilteredCoffees,
     })
   };
 
@@ -71,19 +73,22 @@
       // If we make it in here, that means the roaster was already selected; so we don't need to add it again
       return;
     }
-     filteredRoasters.push(addedRoaster);
-     setFilterData({
+     const newFilteredRoasters = filteredRoasters.concat([addedRoaster]);
+     onFilterChange({
        ...filterData,
-       filteredRoasters: filteredRoasters
+       filteredRoasters: newFilteredRoasters
      });
    };
 
    const handleRoasterDelete = (deletedRoasterId) => {
     const deletedRoasterIndex = filteredRoasters.findIndex(roaster => roaster.roaster_id === deletedRoasterId);
-    filteredRoasters.splice(deletedRoasterIndex, 1);
-    setFilterData({
+    const newFilteredRoastersOne = filteredRoasters.slice(0, deletedRoasterIndex);
+    const newFilteredRoastersTwo = filteredRoasters.slice(deletedRoasterIndex + 1);
+    const newFilteredRoasters = newFilteredRoastersOne.concat(newFilteredRoastersTwo);
+    console.log(newFilteredRoastersOne, newFilteredRoastersTwo, newFilteredRoasters);
+    onFilterChange({
       ...filterData,
-      filteredRoasters: filteredRoasters,
+      filteredRoasters: newFilteredRoasters,
     })
   };
 
@@ -93,19 +98,21 @@
       // If we make it in here, that means the origin was already selected; so we don't need to add it again
       return;
     }
-     filteredOrigins.push(addedOrigin);
-     setFilterData({
+    const newFilteredOrigins = filteredOrigins.concat([addedOrigin]);
+     onFilterChange({
        ...filterData,
-       filteredOrigins: filteredOrigins
+       filteredOrigins: newFilteredOrigins
      });
    };
 
    const handleOriginDelete = (deletedOriginId) => {
     const deletedOriginIndex = filteredOrigins.findIndex(origin => origin.origin_id === deletedOriginId);
-    filteredOrigins.splice(deletedOriginIndex, 1);
-    setFilterData({
+    const newFilteredOriginsOne = filteredOrigins.slice(0, deletedOriginIndex);
+    const newFilteredOriginsTwo = filteredOrigins.slice(deletedOriginIndex + 1);
+    const newFilteredOrigins = newFilteredOriginsOne.concat(newFilteredOriginsTwo);
+    onFilterChange({
       ...filterData,
-      filteredOrigins: filteredOrigins,
+      filteredOrigins: newFilteredOrigins,
     })
   };
 
@@ -115,20 +122,26 @@
       // If we make it in here, that means the process was already selected; so we don't need to add it again
       return;
     }
-     filteredProcesses.push(addedProcess);
-     setFilterData({
+    const newFilteredProcesses = filteredProcesses.concat([addedProcess]);
+     onFilterChange({
        ...filterData,
-       filteredProcesses: filteredProcesses
+       filteredProcesses: newFilteredProcesses
      });
    };
 
    const handleProcessDelete = (deletedProcessId) => {
     const deletedProcessIndex = filteredProcesses.findIndex(process => process.process_id === deletedProcessId);
-    filteredProcesses.splice(deletedProcessIndex, 1);
-    setFilterData({
+    const newFilteredProcessesOne = filteredProcesses.slice(0, deletedProcessIndex);
+    const newFilteredProcessesTwo = filteredProcesses.slice(deletedProcessIndex + 1);
+    const newFilteredProcesses = newFilteredProcessesOne.concat(newFilteredProcessesTwo);
+    onFilterChange({
       ...filterData,
-      filteredProcesses: filteredProcesses,
+      filteredProcesses: newFilteredProcesses,
     })
+  };
+
+  const handleSubmit = () => {
+    onSubmit();
   };
 
    return (
@@ -283,7 +296,7 @@
        </Grid>
        <Grid item xs={12}>
          <Box pt={4} pb={8}>
-           <Button variant="contained" size="large" onClick={onSubmit}>
+           <Button variant="contained" size="large" onClick={handleSubmit}>
              <Typography variant="body1" align="center">
                Update Filters
              </Typography>

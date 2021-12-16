@@ -39,6 +39,14 @@ function CurrentCoffeeEntriesContainer({ user }) {
   // State that contains all the current coffee entries
   const [currentCoffeeEntries, setCurrentCoffeeEntries] = useState([]);
 
+   // State that contains the data for the applied filters on coffee entries
+   const [currentlyAppliedFilters, setCurrentlyAppliedFilters] = useState({
+    filteredCoffees: [],
+    filteredRoasters: [],
+    filteredOrigins: [],
+    filteredProcesses: []
+  });
+
   // State that contains all the current FILTERED coffee entries
   const [currentFilteredCoffeeEntries, setCurrentFilteredCoffeeEntries] = useState([]);
 
@@ -56,10 +64,17 @@ function CurrentCoffeeEntriesContainer({ user }) {
   };
   const { queryParamsUserId, jacksEntries, newEntry } = queryParamsObject;
   // State used for popping toast message for when write is successful
-  const [toastOpen, setToastOpen] = useState(!!newEntry);
+  const [newEntryToastOpen, setNewEntryToastOpen] = useState(!!newEntry);
 
-  const handleToastClose = () => {
-    setToastOpen(false);
+  const handleNewEntryToastClose = () => {
+    setNewEntryToastOpen(false);
+  };
+
+   // State used for popping toast message for when filtering returns no results
+   const [noFilterResultsToastOpen, setNoFilterResultsToastOpen] = useState(false);
+
+   const handleNoFilterResultsToastClose = () => {
+    setNoFilterResultsToastOpen(false);
   };
 
   const classes = useStyles();
@@ -212,6 +227,12 @@ function CurrentCoffeeEntriesContainer({ user }) {
     const {filteredCoffees, filteredRoasters, filteredOrigins, filteredProcesses} = filterData;
     if (!filteredCoffees.length && !filteredRoasters.length && !filteredOrigins.length && !filteredProcesses.length) {
       setCurrentFilteredCoffeeEntries([]);
+      setCurrentlyAppliedFilters({
+        filteredCoffees: [],
+        filteredRoasters: [],
+        filteredOrigins: [],
+        filteredProcesses: []
+      });
       setIsLoading(false);
       return;
     }
@@ -244,7 +265,11 @@ function CurrentCoffeeEntriesContainer({ user }) {
       filteredCoffeeEntries = filteredCoffeeEntries.filter(coffeeEntry => (filteredProcesses.findIndex(filteredProcess => coffeeEntry?.coffee?.process?.process_id === filteredProcess?.process_id) > -1));
     }
     // If there are no filtered coffee entries left, we need to let the user know that they filtered out everything for the current date range
+    if (filteredCoffeeEntries.length === 0) {
+      setNoFilterResultsToastOpen(true);
+    }
     setCurrentFilteredCoffeeEntries(filteredCoffeeEntries);
+    setCurrentlyAppliedFilters(filterData);
     setIsLoading(false);
   };
 
@@ -287,6 +312,8 @@ function CurrentCoffeeEntriesContainer({ user }) {
     }
   }
 
+  const {filteredCoffees, filteredRoasters, filteredOrigins, filteredProcesses} = currentlyAppliedFilters;
+
   return (
     <Box className={classes.page}>
       <Grid container align="center" justify="center">
@@ -310,6 +337,10 @@ function CurrentCoffeeEntriesContainer({ user }) {
               <CurrentCoffeeEntries
                 canEdit={getCanEdit()}
                 coffeeEntries={getCoffeeEntriesToShow()}
+                currentlyAppliedCoffeeFilters={filteredCoffees}
+                currentlyAppliedRoasterFilters={filteredRoasters}
+                currentlyAppliedOriginFilters={filteredOrigins}
+                currentlyAppliedProcessFilters={filteredProcesses}
                 isLoading={isLoading}
                 onDateChange={updateDateRange}
                 onFilter={filterCoffeeEntries}
@@ -318,13 +349,24 @@ function CurrentCoffeeEntriesContainer({ user }) {
               />
             </Grid>
             <Snackbar
-              open={toastOpen}
+              open={newEntryToastOpen}
               autoHideDuration={3000}
-              onClose={handleToastClose}
+              onClose={handleNewEntryToastClose}
             >
-              <Alert onClose={handleToastClose}>
+              <Alert onClose={handleNewEntryToastClose}>
                 <Typography variant="body1">
                   New Entry Added Successfully!
+                </Typography>
+              </Alert>
+            </Snackbar>
+            <Snackbar
+              open={noFilterResultsToastOpen}
+              autoHideDuration={3000}
+              onClose={handleNoFilterResultsToastClose}
+            >
+              <Alert onClose={handleNoFilterResultsToastClose}>
+                <Typography variant="body1">
+                  Filters resulted in no results!
                 </Typography>
               </Alert>
             </Snackbar>

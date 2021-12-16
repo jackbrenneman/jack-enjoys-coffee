@@ -19,6 +19,7 @@ export const grinderEnum = 'GRINDER';
 export const roasterEnum = 'ROASTER';
 export const coffeeEnum = 'COFFEE';
 export const originEnum = 'ORIGIN';
+export const processEnum = 'PROCESS';
 export const brewerEnum = 'BREWER';
 export const waterEnum = 'WATER';
 
@@ -255,6 +256,13 @@ export const newInputPropTypesShape = {
 export const filterCoffeeEntriesPropTypesShape = {
   onSubmit: PropTypes.func.isRequired,
   currentData: PropTypes.object.isRequired,
+  filterData: PropTypes.shape({
+    filteredCoffees: PropTypes.array,
+    filteredRoasters: PropTypes.array,
+    filteredProcesses: PropTypes.array,
+    filteredOrigins: PropTypes.array,
+  }),
+  onFilterChange: PropTypes.func.isRequired,
 };
 
 // All the Brew Info for a coffee entry

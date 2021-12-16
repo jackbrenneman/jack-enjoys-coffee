@@ -23,6 +23,10 @@ import { CircularProgress } from '@material-ui/core';
 function CurrentCoffeeEntries({
   canEdit,
   coffeeEntries,
+  currentlyAppliedCoffeeFilters,
+  currentlyAppliedRoasterFilters,
+  currentlyAppliedOriginFilters,
+  currentlyAppliedProcessFilters,
   isLoading,
   onDateChange,
   onFilter,
@@ -45,12 +49,12 @@ function CurrentCoffeeEntries({
   });
   const { startDate, endDate } = currentDates;
 
-  const [datesShown, setDatesShown] = useState({
-    startDateShown: startDate,
-    endDateShown: endDate,
+  const [currentlyAppliedDates, setCurrentlyAppliedDates] = useState({
+    currentlyAppliedStartDate: startDate,
+    currentlyAppliedEndDate: endDate,
   })
 
-  const { startDateShown, endDateShown } = datesShown;
+  const { currentlyAppliedStartDate, currentlyAppliedEndDate } = currentlyAppliedDates;
 
   const handleStartDateChange = (e) => {
     const date = e.target.value;
@@ -68,26 +72,28 @@ function CurrentCoffeeEntries({
     });
   };
 
-  const handleShowFilter = (e) => {
+  const handleToggleFilter = (e) => {
     setShowFilter(!showFilter);
   };
 
   const handleUpdateDate = () => {
     // TODO: Make sure startDate is before or equal to endDate
     onDateChange(startDate, endDate);
-    setDatesShown({
-      startDateShown: startDate,
-      endDateShown: endDate,
+    setCurrentlyAppliedDates({
+      currentlyAppliedStartDate: startDate,
+      currentlyAppliedEndDate: endDate,
     });
   };
 
+  // When the user actually submits the filters they want to see
   const handleFilterSubmit = () => {
     onFilter(filterData);
   };
 
-  // Just determines if there are active filters so we can correctly show the user
-  const {filteredCoffees, filteredRoasters, filteredProcesses, filteredOrigins} = filterData;
-  const showFiltersActive = filteredCoffees.length || filteredRoasters.length || filteredOrigins.length || filteredProcesses.length;
+  // When the user changes the filters, but hasn't submitted yet
+  const handleFilterChange = (newFilterData) => {
+    setFilterData(newFilterData);
+  };
 
   return (
     <Grid container align="center" justify="center">
@@ -151,7 +157,7 @@ function CurrentCoffeeEntries({
         <Box py={1}>
           <IconButton
             aria-label="refresh"
-            onClick={handleShowFilter}
+            onClick={handleToggleFilter}
             size="small"
           >
             <FilterListIcon />
@@ -160,7 +166,7 @@ function CurrentCoffeeEntries({
       </Grid>
       {
         showFilter &&
-        <FilterCoffeeEntries onSubmit={handleFilterSubmit} currentData={currentData} setFilterData={setFilterData} filterData={filterData} />
+        <FilterCoffeeEntries onSubmit={handleFilterSubmit} currentData={currentData} onFilterChange={handleFilterChange} filterData={filterData} />
       }
       <Grid item xs={12}>
         <Box py={2}>
@@ -172,27 +178,12 @@ function CurrentCoffeeEntries({
         <Grid container align="center" justify="center">
           <Grid item xs={12}>
             <Typography variant="body1" align="center">
-              Date Range
+              {currentlyAppliedStartDate} ---- {currentlyAppliedEndDate}
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="body1" align="center">
-              {startDateShown} ---- {endDateShown}
-            </Typography>
+            <ActiveFilters currentlyAppliedCoffeeFilters={currentlyAppliedCoffeeFilters} currentlyAppliedRoasterFilters={currentlyAppliedRoasterFilters} currentlyAppliedOriginFilters={currentlyAppliedOriginFilters} currentlyAppliedProcessFilters={currentlyAppliedProcessFilters} />
           </Grid>
-          {
-            !!showFiltersActive &&
-              <>
-                <Grid item xs={12}>
-                  <Typography variant="body1" align="center">
-                    Filters Applied
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <ActiveFilters filterData={filterData} />
-                </Grid>
-              </>
-          }
           {coffeeEntries.map((coffeeEntry) => (
             <Grid item xs={10} sm={3} key={coffeeEntry.coffee_entry_id}>
               <CoffeeEntry
@@ -212,6 +203,10 @@ function CurrentCoffeeEntries({
 CurrentCoffeeEntries.propTypes = {
   canEdit: PropTypes.bool,
   coffeeEntries: PropTypes.array.isRequired,
+  currentlyAppliedCoffeeFilters: PropTypes.array,
+  currentlyAppliedRoasterFilters: PropTypes.array,
+  currentlyAppliedOriginFilters: PropTypes.array,
+  currentlyAppliedProcessFilters: PropTypes.array,
   isLoading: PropTypes.bool.isRequired,
   onDateChange: PropTypes.func.isRequired,
   onFilter: PropTypes.func.isRequired,
@@ -231,6 +226,10 @@ CurrentCoffeeEntries.propTypes = {
 
 CurrentCoffeeEntries.defaultProps = {
   canEdit: true,
+  currentlyAppliedCoffeeFilters: [],
+  currentlyAppliedRoasterFilters: [],
+  currentlyAppliedOriginFilters: [],
+  currentlyAppliedProcessFilters: [],
 };
 
 export default CurrentCoffeeEntries;
