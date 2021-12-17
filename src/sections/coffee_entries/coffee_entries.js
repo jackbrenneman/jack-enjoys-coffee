@@ -4,10 +4,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // Material UI
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import ArrowRightAlt from '@material-ui/icons/ArrowRightAlt';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import IconButton from '@material-ui/core/IconButton';
@@ -33,6 +38,25 @@ function CurrentCoffeeEntries({
   onCoffeeEntryDeletion,
   currentData,
 }) {
+  const useStyles = makeStyles(() => ({
+    card: {
+      padding: '0',
+      background: 'dimgrey',
+    },
+    header: {
+      padding: '0',
+      paddingTop: '5px',
+    },
+    content: {
+      padding: '0',
+      '&:last-child': {
+        padding: 0,
+      },
+      color: 'white',
+    },
+  }));
+
+  const classes = useStyles();
   // State that determines whether or not to show the filter section
   const [showFilter, setShowFilter] = useState(false);
   // State that contains the data for filtering coffee entries
@@ -55,6 +79,10 @@ function CurrentCoffeeEntries({
   })
 
   const { currentlyAppliedStartDate, currentlyAppliedEndDate } = currentlyAppliedDates;
+  const formattedStartDateObject = new Date(currentlyAppliedStartDate);
+  const formattedStartDateString = formattedStartDateObject.toDateString();
+  const formattedEndDateObject = new Date(currentlyAppliedEndDate);
+  const formattedEndDateString = formattedEndDateObject.toDateString();
 
   const handleStartDateChange = (e) => {
     const date = e.target.value;
@@ -94,6 +122,17 @@ function CurrentCoffeeEntries({
   const handleFilterChange = (newFilterData) => {
     setFilterData(newFilterData);
   };
+
+  const getDateArrowIcon = () =>
+      <IconButton
+        aria-label="refresh"
+        onClick={handleUpdateDate}
+        size="small"
+        sx={{ color: "white" }}
+      >
+        <ArrowRightAlt />
+      </IconButton>
+  ;
 
   return (
     <Grid container align="center" justify="center">
@@ -174,27 +213,41 @@ function CurrentCoffeeEntries({
         </Box>
       </Grid>
       <Grid item xs={12}>
-      {isLoading ? <CircularProgress /> :
-        <Grid container align="center" justify="center">
-          <Grid item xs={12}>
-            <Typography variant="body1" align="center">
-              {currentlyAppliedStartDate} ---- {currentlyAppliedEndDate}
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <ActiveFilters currentlyAppliedCoffeeFilters={currentlyAppliedCoffeeFilters} currentlyAppliedRoasterFilters={currentlyAppliedRoasterFilters} currentlyAppliedOriginFilters={currentlyAppliedOriginFilters} currentlyAppliedProcessFilters={currentlyAppliedProcessFilters} />
-          </Grid>
-          {coffeeEntries.map((coffeeEntry) => (
-            <Grid item xs={10} sm={3} key={coffeeEntry.coffee_entry_id}>
-              <CoffeeEntry
-                canEdit={canEdit}
-                onCoffeeEntryDeletion={onCoffeeEntryDeletion}
-                coffeeEntry={coffeeEntry}
-                currentData={currentData}
-              />
+        <Box pb={4}>
+          {isLoading ? <CircularProgress /> :
+            <Grid container align="center" justify="center">
+              <Grid item xs={8}>
+                <Box p={1}>
+                  <Card raised className={classes.card}>
+                    <CardContent className={classes.content}>
+                      <CardHeader
+                        className={classes.header}
+                        titleTypographyProps={{ variant: 'caption' }}
+                        title={<Typography variant="subtitle1" align="center">Dates Applied</Typography>}
+                      />
+                      <Typography variant="caption" align="center">
+                        {formattedStartDateString} {getDateArrowIcon()} {formattedEndDateString}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <ActiveFilters currentlyAppliedCoffeeFilters={currentlyAppliedCoffeeFilters} currentlyAppliedRoasterFilters={currentlyAppliedRoasterFilters} currentlyAppliedOriginFilters={currentlyAppliedOriginFilters} currentlyAppliedProcessFilters={currentlyAppliedProcessFilters} />
+              </Grid>
+              {coffeeEntries.map((coffeeEntry) => (
+                <Grid item xs={10} sm={3} key={coffeeEntry.coffee_entry_id}>
+                  <CoffeeEntry
+                    canEdit={canEdit}
+                    onCoffeeEntryDeletion={onCoffeeEntryDeletion}
+                    coffeeEntry={coffeeEntry}
+                    currentData={currentData}
+                  />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>}
+          }
+        </Box>
       </Grid>
     </Grid>
   );

@@ -12,7 +12,7 @@
  import CardHeader from '@material-ui/core/CardHeader';
  import Card from '@material-ui/core/Card';
  import CardContent from '@material-ui/core/CardContent';
-import { coffeeEnum, originEnum, processEnum, roasterEnum } from '../../../consts';
+ import { coffeeEnum, originEnum, processEnum, roasterEnum } from '../../../consts';
 
  function ActiveFilters({
   currentlyAppliedCoffeeFilters,
@@ -23,32 +23,17 @@ import { coffeeEnum, originEnum, processEnum, roasterEnum } from '../../../const
   const useStyles = makeStyles(() => ({
     card: {
       padding: '0',
+      background: 'darkgrey',
     },
     header: {
       padding: '0',
-      paddingTop: '10px',
+      paddingTop: '5px',
     },
     content: {
       padding: '0',
       '&:last-child': {
         padding: 0,
       },
-    },
-    ratingBad: {
-      color: 'red',
-      fontWeight: 'bold',
-    },
-    ratingMeh: {
-      color: '#e3b129',
-      fontWeight: 'bold',
-    },
-    ratingGood: {
-      color: 'green',
-      fontWeight: 'bold',
-    },
-    emptyBox: {
-      width: '36px', // Same width as icon to make things centered
-      height: '36px', // Same height as icon to make things centered
     },
   }));
 
@@ -57,22 +42,22 @@ import { coffeeEnum, originEnum, processEnum, roasterEnum } from '../../../const
   const getTitle = (filterEnum) => {
     switch (filterEnum) {
       case coffeeEnum:
-        return <Typography>Coffee Filters</Typography>;
+        return <Typography variant="subtitle1">Coffee Filters Applied</Typography>;
       case roasterEnum:
-        return <Typography>Roaster Filters</Typography>;
+        return <Typography variant="subtitle1">Roaster Filters Applied</Typography>;
       case originEnum:
-        return <Typography>Origin Filters</Typography>;
+        return <Typography variant="subtitle1">Origin Filters Applied</Typography>;
       case processEnum:
-        return <Typography>Process Filters</Typography>;
+        return <Typography variant="subtitle1">Process Filters Applied</Typography>;
       default:
-        return <Typography>Filters</Typography>
+        return <Typography variant="subtitle1">Filters</Typography>
     }
   }
 
    return (
      <Grid container direction="row" justify="center" alignItems="center">
        {!!currentlyAppliedCoffeeFilters.length &&
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={11} sm={5}>
           <Box p={1}>
             <Card raised className={classes.card}>
               <CardContent className={classes.content}>
@@ -83,7 +68,7 @@ import { coffeeEnum, originEnum, processEnum, roasterEnum } from '../../../const
                 />
                 <Grid container justify="center">
                   {currentlyAppliedCoffeeFilters.map(filteredCoffee =>
-                    <Grid key={filteredCoffee?.coffee_id} item sm={4} xs={12}>
+                    <Grid key={filteredCoffee?.coffee_id} item sm={4} xs={6}>
                       <Box p={1}>
                         <Chip label={filteredCoffee?.name} />
                       </Box>
@@ -96,7 +81,7 @@ import { coffeeEnum, originEnum, processEnum, roasterEnum } from '../../../const
         </Grid>
        }
        {!!currentlyAppliedRoasterFilters.length &&
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={11} sm={5}>
           <Box p={1}>
             <Card raised className={classes.card}>
               <CardContent className={classes.content}>
@@ -107,7 +92,7 @@ import { coffeeEnum, originEnum, processEnum, roasterEnum } from '../../../const
                 />
                 <Grid container justify="center">
                   {currentlyAppliedRoasterFilters.map(filteredRoaster =>
-                    <Grid key={filteredRoaster?.roaster_id} item sm={4} xs={12}>
+                    <Grid key={filteredRoaster?.roaster_id} item sm={4} xs={6}>
                       <Box p={1}>
                         <Chip label={filteredRoaster?.name} />
                       </Box>
@@ -120,7 +105,7 @@ import { coffeeEnum, originEnum, processEnum, roasterEnum } from '../../../const
         </Grid>
        }
        {!!currentlyAppliedOriginFilters.length &&
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={11} sm={5}>
           <Box p={1}>
             <Card raised className={classes.card}>
               <CardContent className={classes.content}>
@@ -131,7 +116,7 @@ import { coffeeEnum, originEnum, processEnum, roasterEnum } from '../../../const
                 />
                 <Grid container justify="center">
                   {currentlyAppliedOriginFilters.map(filteredOrigin =>
-                    <Grid key={filteredOrigin?.origin_id} item sm={4} xs={12}>
+                    <Grid key={filteredOrigin?.origin_id} item sm={4} xs={6}>
                       <Box p={1}>
                         <Chip label={filteredOrigin?.name} />
                       </Box>
@@ -144,7 +129,7 @@ import { coffeeEnum, originEnum, processEnum, roasterEnum } from '../../../const
         </Grid>
        }
        {!!currentlyAppliedProcessFilters.length &&
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={11} sm={5}>
           <Box p={1}>
             <Card raised className={classes.card}>
               <CardContent className={classes.content}>
@@ -155,7 +140,7 @@ import { coffeeEnum, originEnum, processEnum, roasterEnum } from '../../../const
                 />
                 <Grid container justify="center">
                   {currentlyAppliedProcessFilters.map(filteredProcess =>
-                    <Grid key={filteredProcess?.process_id} item sm={4} xs={12}>
+                    <Grid key={filteredProcess?.process_id} item xs={3}>
                       <Box p={1}>
                         <Chip label={filteredProcess?.name} />
                       </Box>
