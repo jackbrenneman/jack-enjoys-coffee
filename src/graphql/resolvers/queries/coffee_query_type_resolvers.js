@@ -1,7 +1,7 @@
 /**
  * Coffee Type Resolvers. Fetches the information for coffees on a GraphQL request.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   selectAllCoffees,
   selectCoffeesByUserId,
@@ -11,7 +11,7 @@ import {
   selectCoffeesByRoasterId,
   selectCoffeesByOriginId,
   selectCoffeesByProcessId,
-} from '../../../db/queries/coffees_queries.js';
+} from "../../../db/queries/coffees_queries.js";
 import {
   normalizeCoffees,
   normalizeCoffeesByUserId,
@@ -20,7 +20,7 @@ import {
   normalizeCoffeesByRoasterId,
   normalizeCoffeesByOriginId,
   normalizeCoffeesByProcessId,
-} from '../../../db/normalizers/coffees_normalizers.js';
+} from "../../../db/normalizers/coffees_normalizers.js";
 
 /**
  * Resolver for all coffees.

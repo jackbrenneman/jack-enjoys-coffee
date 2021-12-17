@@ -6,14 +6,14 @@ import {
   GraphQLInt,
   GraphQLList,
   GraphQLObjectType,
-} from 'graphql';
-import { MethodType } from '../method_type.js';
-import { EspressoDrinkStatsType } from './espresso_drink_stats_type.js';
-import { EspressoBrewerStatsType } from './espress_brewer_stats_type.js';
+} from "graphql";
+import { MethodType } from "../method_type.js";
+import { EspressoDrinkStatsType } from "./espresso_drink_stats_type.js";
+import { EspressoBrewerStatsType } from "./espress_brewer_stats_type.js";
 
 export const EspressoStatsType = new GraphQLObjectType({
-  name: 'EspressoStatsType',
-  description: 'Data regarding a user and their espresso method stats',
+  name: "EspressoStatsType",
+  description: "Data regarding a user and their espresso method stats",
   fields: {
     method: { type: MethodType },
     total_espresso_count: { type: GraphQLInt },

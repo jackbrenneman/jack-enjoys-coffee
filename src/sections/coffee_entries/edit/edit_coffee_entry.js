@@ -1,28 +1,28 @@
 /**
  * Edit a Coffee Entry. Allows users to edit their coffee entry
  */
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import NumberFormat from 'react-number-format';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import NumberFormat from "react-number-format";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Divider from '@material-ui/core/Divider';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Divider from "@material-ui/core/Divider";
+import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
 // Queries and Fetching
-import { writeGQL } from '../../../graphql/fetch.js';
+import { writeGQL } from "../../../graphql/fetch.js";
 import {
   updateCoffeeEntryMutation,
   deleteCoffeeEntryMutation,
-} from '../../../graphql/mutations/coffee_entry_gql_mutations.js';
+} from "../../../graphql/mutations/coffee_entry_gql_mutations.js";
 // Custom Components
-import AutocompleteWrapperSimple from '../../coffee_entry/helpers/autocomplete_container_simple.js';
+import AutocompleteWrapperSimple from "../../coffee_entry/helpers/autocomplete_container_simple.js";
 import {
   ratingsInputData,
   hoursEnum,
@@ -32,7 +32,7 @@ import {
   pouroverEnum,
   immersionEnum,
   methodIdToMethodEnum,
-} from '../../../consts.js';
+} from "../../../consts.js";
 
 const NumberFormatCustom = (props) => {
   const { inputRef, onChange, ...other } = props;
@@ -55,24 +55,24 @@ const NumberFormatCustom = (props) => {
 
 const useStyles = makeStyles(() => ({
   form: {
-    width: '180px',
+    width: "180px",
   },
   card: {
-    padding: '0',
+    padding: "0",
   },
   header: {
-    padding: '0',
-    paddingTop: '10px',
+    padding: "0",
+    paddingTop: "10px",
   },
   content: {
-    padding: '0',
-    '&:last-child': {
+    padding: "0",
+    "&:last-child": {
       padding: 0,
     },
   },
   resize: {
     fontSize: 12,
-    textAlign: 'center',
+    textAlign: "center",
   },
 }));
 
@@ -185,7 +185,7 @@ function EditCoffeeEntry({
 
   const handleDeletionFail = () => {
     // TODO: show the user there was a failed delete
-    console.log('failed delete -- coffee entry');
+    console.log("failed delete -- coffee entry");
   };
 
   const handleDelete = () => {
@@ -221,7 +221,7 @@ function EditCoffeeEntry({
       return;
     }
     setRoasterId(roaster_id);
-    setCoffeeName('');
+    setCoffeeName("");
   };
 
   const handleCafeChange = (cafeSelected) => {
@@ -994,7 +994,7 @@ function EditCoffeeEntry({
                   id="grinder"
                   size="small"
                   variant="outlined"
-                  InputLabelProps={{ style: { textAlign: 'center' } }}
+                  InputLabelProps={{ style: { textAlign: "center" } }}
                 />
               )}
             />
@@ -1042,7 +1042,7 @@ function EditCoffeeEntry({
                   id="grinder"
                   size="small"
                   variant="outlined"
-                  InputLabelProps={{ style: { textAlign: 'center' } }}
+                  InputLabelProps={{ style: { textAlign: "center" } }}
                 />
               )}
             />

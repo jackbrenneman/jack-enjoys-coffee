@@ -1,8 +1,8 @@
 /**
  * Processes Mutation Resolvers. Fetches the information for processes on a GraphQL request. Do I need this?
  */
-import { query } from '../../../db/index.js';
-import { insertIntoProcesses } from '../../../db/queries/processes_queries.js';
+import { query } from "../../../db/index.js";
+import { insertIntoProcesses } from "../../../db/queries/processes_queries.js";
 
 /**
  * Resolver mutation for all processes.

@@ -1,7 +1,7 @@
 /**
  * Brewer Type Resolvers. Fetches the information for brewers on a GraphQL request.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   selectAllBrewers,
   selectBrewersByUserId,
@@ -9,14 +9,14 @@ import {
   selectBrewerById,
   selectBrewersByName,
   selectBrewersByMethodId,
-} from '../../../db/queries/brewers_queries.js';
+} from "../../../db/queries/brewers_queries.js";
 import {
   normalizeBrewers,
   normalizeBrewersByUserId,
   normalizeBrewerById,
   normalizeBrewersByName,
   normalizeBrewersByMethodId,
-} from '../../../db/normalizers/brewers_normalizers.js';
+} from "../../../db/normalizers/brewers_normalizers.js";
 
 /**
  * Resolver for all brewers.

@@ -1,12 +1,12 @@
 /**
  * Roaster Mutation Resolvers. Fetches the information for roasters on a GraphQL request.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   deleteRoaster,
   insertIntoRoasters,
   updateRoaster,
-} from '../../../db/queries/roasters_queries.js';
+} from "../../../db/queries/roasters_queries.js";
 
 /**
  * Resolver mutation for all roasters.

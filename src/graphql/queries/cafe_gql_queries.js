@@ -5,7 +5,7 @@
 /**
  * Query to get all cafes from the cafes table.
  */
- export const cafesQuery = `
+export const cafesQuery = `
  query {
    cafes {
      cafe_id
@@ -19,10 +19,10 @@
 `;
 
 /**
-* Query for cafe by id.
-*
-* @param {int} cafe_id the id of the cafe to get info for
-*/
+ * Query for cafe by id.
+ *
+ * @param {int} cafe_id the id of the cafe to get info for
+ */
 export const cafeByIdQuery = (cafe_id) => `
  query {
    cafes(cafe_id=${cafe_id}) {
@@ -37,10 +37,10 @@ export const cafeByIdQuery = (cafe_id) => `
 `;
 
 /**
-* Query for cafes by name.
-*
-* @param {string} name the name of the cafe the user is searching for
-*/
+ * Query for cafes by name.
+ *
+ * @param {string} name the name of the cafe the user is searching for
+ */
 export const cafesByNameQuery = (name) => `
  query {
    cafes(name=${name}) {
@@ -55,10 +55,10 @@ export const cafesByNameQuery = (name) => `
 `;
 
 /**
-* Query for cafes by city.
-*
-* @param {int} city the city of the cafe the user is searching for
-*/
+ * Query for cafes by city.
+ *
+ * @param {int} city the city of the cafe the user is searching for
+ */
 export const cafesByCityQuery = (city) => `
  query {
    cafes(city=${city}) {
@@ -73,10 +73,10 @@ export const cafesByCityQuery = (city) => `
 `;
 
 /**
-* Query for cafes by state.
-*
-* @param {int} state the state of the cafe the user is searching for
-*/
+ * Query for cafes by state.
+ *
+ * @param {int} state the state of the cafe the user is searching for
+ */
 export const cafesByStateQuery = (state) => `
  query {
    cafes(state=${state}) {
@@ -91,10 +91,10 @@ export const cafesByStateQuery = (state) => `
 `;
 
 /**
-* Query for cafes by country.
-*
-* @param {int} country the country of the cafe the user is searching for
-*/
+ * Query for cafes by country.
+ *
+ * @param {int} country the country of the cafe the user is searching for
+ */
 export const cafesByCountryQuery = (cafe) => `
  query {
    cafes(country=${country}) {

@@ -1,20 +1,20 @@
 /**
  * The Rating for a Coffee Entry.
  */
-import React, { useState } from 'react';
+import React, { useState } from "react";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 // Constants
 import {
   coffeeEntryPropTypesShape,
   naRating,
   ratingsInputData,
-} from '../../../consts.js';
+} from "../../../consts.js";
 
 function RatingInput({ coffeeEntry, setCoffeeEntry }) {
   // State used for rating
@@ -22,7 +22,7 @@ function RatingInput({ coffeeEntry, setCoffeeEntry }) {
 
   const useStyles = makeStyles(() => ({
     form: {
-      width: '100px',
+      width: "100px",
     },
   }));
 

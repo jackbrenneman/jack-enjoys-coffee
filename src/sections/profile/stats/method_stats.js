@@ -1,37 +1,37 @@
 /**
  * The Method Stats for a user.
  */
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import CardHeader from '@material-ui/core/CardHeader';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import IconButton from '@material-ui/core/IconButton';
-import Divider from '@material-ui/core/Divider';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import CardHeader from "@material-ui/core/CardHeader";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import IconButton from "@material-ui/core/IconButton";
+import Divider from "@material-ui/core/Divider";
 // Custom Components
-import DrinkStats from './drink_stats';
+import DrinkStats from "./drink_stats";
 
 const useStyles = makeStyles(() => ({
   card: {
-    padding: '0',
-    maxWidth: '500px',
+    padding: "0",
+    maxWidth: "500px",
   },
   divider: {
-    minWidth: '200px',
+    minWidth: "200px",
   },
   header: {
-    padding: '0',
-    paddingTop: '10px',
+    padding: "0",
+    paddingTop: "10px",
   },
   content: {
-    padding: '0',
-    '&:last-child': {
+    padding: "0",
+    "&:last-child": {
       padding: 0,
     },
   },
@@ -63,7 +63,7 @@ function MethodStats({ methodStats }) {
         <CardContent className={classes.content}>
           <CardHeader
             className={classes.header}
-            titleTypographyProps={{ variant: 'body1' }}
+            titleTypographyProps={{ variant: "body1" }}
             title={`${methodName} Stats`}
           />
           <Grid

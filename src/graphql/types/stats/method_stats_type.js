@@ -10,14 +10,14 @@
  *   - Drink Stats
  * Then, each of the different types have their own fields specific to the method used.
  */
-import { GraphQLObjectType } from 'graphql';
-import { EspressoStatsType } from './espresso_stats_type.js';
-import { ImmersionStatsType } from './immersion_stats_type.js';
-import { PourOverStatsType } from './pour_over_stats_type.js';
+import { GraphQLObjectType } from "graphql";
+import { EspressoStatsType } from "./espresso_stats_type.js";
+import { ImmersionStatsType } from "./immersion_stats_type.js";
+import { PourOverStatsType } from "./pour_over_stats_type.js";
 
 export const MethodStatsType = new GraphQLObjectType({
-  name: 'MethodStats',
-  description: 'The Stats on method in which coffee is brewed',
+  name: "MethodStats",
+  description: "The Stats on method in which coffee is brewed",
   fields: {
     espresso_stats: {
       type: EspressoStatsType,

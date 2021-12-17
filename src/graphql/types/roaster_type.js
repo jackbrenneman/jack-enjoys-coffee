@@ -6,10 +6,10 @@ import {
   GraphQLInt,
   GraphQLString,
   GraphQLBoolean,
-} from 'graphql';
+} from "graphql";
 
 export const RoasterType = new GraphQLObjectType({
-  name: 'Roaster',
+  name: "Roaster",
   fields: {
     roaster_id: { type: GraphQLInt },
     name: { type: GraphQLString },

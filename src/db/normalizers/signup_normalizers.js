@@ -1,7 +1,7 @@
 /**
  * Normalizers for any queries regarding signing up users.
  */
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 export const normalizeSignupMutation = (user) => {
   const { user_id, user_name, email } = user;
@@ -11,6 +11,6 @@ export const normalizeSignupMutation = (user) => {
       user_name,
       email,
     },
-    token: jwt.sign({ ...user }, process.env.JWT_SECRET, { expiresIn: '1h' }),
+    token: jwt.sign({ ...user }, process.env.JWT_SECRET, { expiresIn: "1h" }),
   };
 };

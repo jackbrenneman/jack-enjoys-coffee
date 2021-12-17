@@ -1,32 +1,32 @@
 /**
  * The top navigation bar.
  */
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 // React Router
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Drawer from '@material-ui/core/Drawer';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import PersonOutlineTwoToneIcon from '@material-ui/icons/PersonOutlineTwoTone';
-import PieChartOutlinedIcon from '@material-ui/icons/PieChartOutlined';
-import ListAltTwoToneIcon from '@material-ui/icons/ListAltTwoTone';
-import MenuIcon from '@material-ui/icons/Menu';
-import HomeIcon from '@material-ui/icons/Home';
-import CreateTwoToneIcon from '@material-ui/icons/CreateTwoTone';
-import LocalCafeIcon from '@material-ui/icons/LocalCafe';
+import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import AppBar from "@material-ui/core/AppBar";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Drawer from "@material-ui/core/Drawer";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import PersonOutlineTwoToneIcon from "@material-ui/icons/PersonOutlineTwoTone";
+import PieChartOutlinedIcon from "@material-ui/icons/PieChartOutlined";
+import ListAltTwoToneIcon from "@material-ui/icons/ListAltTwoTone";
+import MenuIcon from "@material-ui/icons/Menu";
+import HomeIcon from "@material-ui/icons/Home";
+import CreateTwoToneIcon from "@material-ui/icons/CreateTwoTone";
+import LocalCafeIcon from "@material-ui/icons/LocalCafe";
 // Custom Components
-import logo from '../media/icons/coffee-icon.png';
+import logo from "../media/icons/coffee-icon.png";
 
 function TopNav({ user }) {
   const useStyles = makeStyles((theme) => ({
@@ -34,21 +34,21 @@ function TopNav({ user }) {
       flexGrow: 1,
     },
     root: {
-      background: 'grey',
+      background: "grey",
     },
     menuButton: {
-      color: 'white',
-      marginRight: '5%',
+      color: "white",
+      marginRight: "5%",
     },
     title: {
-      color: 'white',
+      color: "white",
     },
     navLink: {
-      textDecoration: 'none',
-      color: 'black',
+      textDecoration: "none",
+      color: "black",
     },
     activeNavLink: {
-      color: 'brown',
+      color: "brown",
     },
   }));
   const classes = useStyles();
@@ -67,7 +67,7 @@ function TopNav({ user }) {
       <>
         <NavLink
           className={classes.navLink}
-          to={'/entries'}
+          to={"/entries"}
           onClick={handleDrawerToggle}
           activeClassName={classes.activeNavLink}
         >
@@ -86,7 +86,7 @@ function TopNav({ user }) {
         </NavLink>
         <NavLink
           className={classes.navLink}
-          to={'/data'}
+          to={"/data"}
           onClick={handleDrawerToggle}
           activeClassName={classes.activeNavLink}
         >
@@ -105,7 +105,7 @@ function TopNav({ user }) {
         </NavLink>
         <NavLink
           className={classes.navLink}
-          to={'/stats'}
+          to={"/stats"}
           onClick={handleDrawerToggle}
           activeClassName={classes.activeNavLink}
         >
@@ -123,7 +123,7 @@ function TopNav({ user }) {
         <Divider />
         <NavLink
           className={classes.navLink}
-          to={'/new_entry'}
+          to={"/new_entry"}
           onClick={handleDrawerToggle}
           activeClassName={classes.activeNavLink}
         >
@@ -142,7 +142,7 @@ function TopNav({ user }) {
         </NavLink>
         <NavLink
           className={classes.navLink}
-          to={'/new_data'}
+          to={"/new_data"}
           onClick={handleDrawerToggle}
           activeClassName={classes.activeNavLink}
         >
@@ -162,7 +162,7 @@ function TopNav({ user }) {
         <Divider />
         <NavLink
           className={classes.navLink}
-          to={'/entries?jacks_entries=1'}
+          to={"/entries?jacks_entries=1"}
           onClick={handleDrawerToggle}
           activeClassName={classes.activeNavLink}
         >
@@ -181,7 +181,7 @@ function TopNav({ user }) {
         </NavLink>
         <NavLink
           className={classes.navLink}
-          to={'/data?jacks_data=1'}
+          to={"/data?jacks_data=1"}
           onClick={handleDrawerToggle}
           activeClassName={classes.activeNavLink}
         >
@@ -198,7 +198,7 @@ function TopNav({ user }) {
         </NavLink>
         <NavLink
           className={classes.navLink}
-          to={'/stats?jacks_stats=1'}
+          to={"/stats?jacks_stats=1"}
           onClick={handleDrawerToggle}
           activeClassName={classes.activeNavLink}
         >
@@ -225,7 +225,7 @@ function TopNav({ user }) {
         <Divider />
         <NavLink
           className={classes.navLink}
-          to={'/entries?jacks_entries=1'}
+          to={"/entries?jacks_entries=1"}
           onClick={handleDrawerToggle}
           activeClassName={classes.activeNavLink}
         >
@@ -244,7 +244,7 @@ function TopNav({ user }) {
         </NavLink>
         <NavLink
           className={classes.navLink}
-          to={'/data?jacks_data=1'}
+          to={"/data?jacks_data=1"}
           onClick={handleDrawerToggle}
           activeClassName={classes.activeNavLink}
         >
@@ -261,7 +261,7 @@ function TopNav({ user }) {
         </NavLink>
         <NavLink
           className={classes.navLink}
-          to={'/stats?jacks_stats=1'}
+          to={"/stats?jacks_stats=1"}
           onClick={handleDrawerToggle}
           activeClassName={classes.activeNavLink}
         >
@@ -309,7 +309,7 @@ function TopNav({ user }) {
           <Box p={1} display="flex" justifyContent="center">
             <NavLink
               className={classes.navLink}
-              to={user?.user_id ? '/profile' : '/login'}
+              to={user?.user_id ? "/profile" : "/login"}
             >
               <PersonOutlineTwoToneIcon />
             </NavLink>
@@ -330,7 +330,7 @@ function TopNav({ user }) {
           <List>
             <NavLink
               className={classes.navLink}
-              to={'/home'}
+              to={"/home"}
               onClick={handleDrawerToggle}
               activeClassName={classes.activeNavLink}
             >

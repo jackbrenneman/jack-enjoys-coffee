@@ -1,7 +1,7 @@
 /**
  * User Type Resolver. Fetches the information for a user on a GraphQL request.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   selectUserDataQuery,
   selectStartDate,
@@ -12,8 +12,8 @@ import {
   selectUniqueCoffeeCount,
   selectUniqueRoasterCount,
   selectMethodAndDrinkData,
-} from '../../../db/queries/users_queries.js';
-import { normalizeMethodDrinkData } from '../../../db/normalizers/users_normalizers.js';
+} from "../../../db/queries/users_queries.js";
+import { normalizeMethodDrinkData } from "../../../db/normalizers/users_normalizers.js";
 
 /**
  * Resolver for user by user_id.
@@ -38,7 +38,7 @@ export const startDateByUserIdResolver = (user_id) => {
   return query(selectStartDate, [user_id])
     .then((result) => {
       const data = result.rows[0];
-      return data['start_date'];
+      return data["start_date"];
     })
     .catch((e) => console.error(e.stack));
 };
@@ -52,7 +52,7 @@ export const totalCoffeeEntriesByUserIdResolver = (user_id) => {
   return query(selectTotalCoffeeEntries, [user_id])
     .then((result) => {
       const data = result.rows[0];
-      return data['count'];
+      return data["count"];
     })
     .catch((e) => console.error(e.stack));
 };
@@ -67,7 +67,7 @@ export const totalCoffeeInByUserIdResolver = (user_id) => {
   return query(selectTotalCoffeeIn, [user_id])
     .then((result) => {
       const data = result.rows[0];
-      return data['sum'];
+      return data["sum"];
     })
     .catch((e) => console.error(e.stack));
 };
@@ -82,7 +82,7 @@ export const totalWaterInByUserIdResolver = (user_id) => {
   return query(selectTotalWaterIn, [user_id])
     .then((result) => {
       const data = result.rows[0];
-      return data['sum'];
+      return data["sum"];
     })
     .catch((e) => console.error(e.stack));
 };
@@ -97,7 +97,7 @@ export const totalLiquidOutByUserIdResolver = (user_id) => {
   return query(selectTotalLiquidOut, [user_id])
     .then((result) => {
       const data = result.rows[0];
-      return data['sum'];
+      return data["sum"];
     })
     .catch((e) => console.error(e.stack));
 };
@@ -111,7 +111,7 @@ export const totalUniqueCoffeesByUserIdResolver = (user_id) => {
   return query(selectUniqueCoffeeCount, [user_id])
     .then((result) => {
       const data = result.rows[0];
-      return data['count'];
+      return data["count"];
     })
     .catch((e) => console.error(e.stack));
 };
@@ -125,7 +125,7 @@ export const totalUniqueRoastersByUserIdResolver = (user_id) => {
   return query(selectUniqueRoasterCount, [user_id])
     .then((result) => {
       const data = result.rows[0];
-      return data['total_unique_roasters'];
+      return data["total_unique_roasters"];
     })
     .catch((e) => console.error(e.stack));
 };

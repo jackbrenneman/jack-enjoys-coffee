@@ -13,7 +13,7 @@ export const normalizeUsersMutation = (user) => {
       user_name,
       email,
     },
-    token: 'test',
+    token: "test",
   };
 };
 
@@ -93,16 +93,16 @@ export const normalizeMethodDrinkData = (drinks) => {
             1: {
               method: { method_id, name: method_name },
               total_espresso_count:
-                parseInt(espressoData['total_espresso_count']) +
+                parseInt(espressoData["total_espresso_count"]) +
                 (parseInt(drink_count) || 0),
               total_espresso_coffee_in:
-                parseFloat(espressoData['total_espresso_coffee_in']) +
+                parseFloat(espressoData["total_espresso_coffee_in"]) +
                 (parseFloat(total_coffee_in) || 0),
               total_espresso_liquid_out:
-                parseFloat(espressoData['total_espresso_liquid_out']) +
+                parseFloat(espressoData["total_espresso_liquid_out"]) +
                 (parseFloat(total_espresso_liquid_out) || 0),
               drink_stats: [
-                ...espressoData['drink_stats'],
+                ...espressoData["drink_stats"],
                 {
                   drink: {
                     drink_id,
@@ -124,16 +124,16 @@ export const normalizeMethodDrinkData = (drinks) => {
             2: {
               method: { method_id, name: method_name },
               total_pour_over_count:
-                parseInt(pourOverData['total_pour_over_count']) +
+                parseInt(pourOverData["total_pour_over_count"]) +
                 (parseInt(drink_count) || 0),
               total_pour_over_coffee_in:
-                parseFloat(pourOverData['total_pour_over_coffee_in']) +
+                parseFloat(pourOverData["total_pour_over_coffee_in"]) +
                 (parseFloat(total_coffee_in) || 0),
               total_pour_over_water_in:
-                parseFloat(pourOverData['total_pour_over_water_in']) +
+                parseFloat(pourOverData["total_pour_over_water_in"]) +
                 (parseFloat(total_water_in) || 0),
               drink_stats: [
-                ...pourOverData['drink_stats'],
+                ...pourOverData["drink_stats"],
                 {
                   drink: {
                     drink_id,
@@ -154,19 +154,19 @@ export const normalizeMethodDrinkData = (drinks) => {
             3: {
               method: { method_id, name: method_name },
               total_immersion_count:
-                parseInt(immersionData['total_immersion_count']) +
+                parseInt(immersionData["total_immersion_count"]) +
                 (parseInt(drink_count) || 0),
               total_immersion_coffee_in:
-                parseFloat(immersionData['total_immersion_coffee_in']) +
+                parseFloat(immersionData["total_immersion_coffee_in"]) +
                 (parseFloat(total_coffee_in) || 0),
               total_immersion_water_in:
-                parseFloat(immersionData['total_immersion_water_in']) +
+                parseFloat(immersionData["total_immersion_water_in"]) +
                 (parseFloat(total_water_in) || 0),
               total_immersion_steep_time:
-                parseFloat(immersionData['total_immersion_steep_time']) +
+                parseFloat(immersionData["total_immersion_steep_time"]) +
                 (parseFloat(total_steep_time) || 0),
               drink_stats: [
-                ...immersionData['drink_stats'],
+                ...immersionData["drink_stats"],
                 {
                   drink: {
                     drink_id,

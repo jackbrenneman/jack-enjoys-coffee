@@ -1,34 +1,35 @@
 /**
  * Constants and such.
  */
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 // Valid paths
-export const homePath = '/home';
-export const entriesPath = '/entries';
-export const loginPath = '/login';
-export const profilePath = '/profile';
-export const signupPath = '/signup';
-export const newDataPath = '/new_data';
-export const newEntryPath = '/new_entry';
+export const homePath = "/home";
+export const entriesPath = "/entries";
+export const loginPath = "/login";
+export const profilePath = "/profile";
+export const signupPath = "/signup";
+export const newDataPath = "/new_data";
+export const newEntryPath = "/new_entry";
 
 // Used so we know what kind of data the user is trying to input
-export const drinkEnum = 'DRINK';
-export const cafeEnum = 'CAFE';
-export const grinderEnum = 'GRINDER';
-export const roasterEnum = 'ROASTER';
-export const coffeeEnum = 'COFFEE';
-export const originEnum = 'ORIGIN';
-export const brewerEnum = 'BREWER';
-export const waterEnum = 'WATER';
+export const drinkEnum = "DRINK";
+export const cafeEnum = "CAFE";
+export const grinderEnum = "GRINDER";
+export const roasterEnum = "ROASTER";
+export const coffeeEnum = "COFFEE";
+export const originEnum = "ORIGIN";
+export const processEnum = "PROCESS";
+export const brewerEnum = "BREWER";
+export const waterEnum = "WATER";
 
 // Only for when no rating has been inputted yet by the user
-export const naRating = 'NA';
+export const naRating = "NA";
 
 // Steep Time Constants
-export const hoursEnum = 'HOURS';
-export const minutesEnum = 'MINUTES';
-export const secondsEnum = 'SECONDS';
+export const hoursEnum = "HOURS";
+export const minutesEnum = "MINUTES";
+export const secondsEnum = "SECONDS";
 export const defaultSteepTimeState = {
   [hoursEnum]: 0,
   [minutesEnum]: 0,
@@ -39,9 +40,9 @@ export const defaultSteepTimeState = {
 export const espressoId = 1;
 export const pouroverId = 2;
 export const immersionId = 3;
-export const espressoEnum = 'ESPRESSO';
-export const pouroverEnum = 'POUROVER';
-export const immersionEnum = 'IMMERSION';
+export const espressoEnum = "ESPRESSO";
+export const pouroverEnum = "POUROVER";
+export const immersionEnum = "IMMERSION";
 export const methodIdToMethodEnum = {
   1: espressoEnum,
   2: pouroverEnum,
@@ -65,44 +66,44 @@ export const dataEntryDefault = {
   currentData: currentDataDefault,
   dataOption: coffeeEnum,
   brewer: {
-    name: '',
-    website: '',
+    name: "",
+    website: "",
     method_id: 1,
   },
   cafe: {
-    name: '',
-    city: '',
-    state: '',
-    country: '',
-    website: '',
+    name: "",
+    city: "",
+    state: "",
+    country: "",
+    website: "",
   },
   coffee: {
-    name: '',
-    roaster_id: '',
+    name: "",
+    roaster_id: "",
     process_id: 1,
-    origin_id: '',
+    origin_id: "",
   },
   drink: {
-    name: '',
+    name: "",
     method_id: 1,
   },
   grinder: {
-    name: '',
-    website: '',
+    name: "",
+    website: "",
   },
   origin: {
-    name: '',
+    name: "",
   },
   roaster: {
-    name: '',
-    city: '',
-    state: '',
-    country: '',
-    website: '',
+    name: "",
+    city: "",
+    state: "",
+    country: "",
+    website: "",
   },
   water: {
-    name: '',
-    description: '',
+    name: "",
+    description: "",
   },
 };
 
@@ -223,7 +224,7 @@ export const defaultCoffeeEntry = {
     steep_time: null,
   },
   // Notes and Rating
-  notes: '',
+  notes: "",
   rating: null,
 };
 
@@ -249,6 +250,19 @@ export const newInputPropTypesShape = {
   setCurrentData: PropTypes.func.isRequired,
   setDataEntry: PropTypes.func.isRequired,
   setToast: PropTypes.func.isRequired,
+};
+
+// All the props for filtering for coffee entries
+export const filterCoffeeEntriesPropTypesShape = {
+  onSubmit: PropTypes.func.isRequired,
+  currentData: PropTypes.object.isRequired,
+  filterData: PropTypes.shape({
+    filteredCoffees: PropTypes.array,
+    filteredRoasters: PropTypes.array,
+    filteredProcesses: PropTypes.array,
+    filteredOrigins: PropTypes.array,
+  }),
+  onFilterChange: PropTypes.func.isRequired,
 };
 
 // All the Brew Info for a coffee entry

@@ -1,9 +1,9 @@
 /**
  * Signup Mutation Resolvers. Signs a user up.
  */
-import { query } from '../../../db/index.js';
-import { signupUser } from '../../../db/queries/users_queries.js';
-import { normalizeSignupMutation } from '../../../db/normalizers/signup_normalizers.js';
+import { query } from "../../../db/index.js";
+import { signupUser } from "../../../db/queries/users_queries.js";
+import { normalizeSignupMutation } from "../../../db/normalizers/signup_normalizers.js";
 
 /**
  * Resolver mutation for signing up a user.

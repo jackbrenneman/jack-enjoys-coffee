@@ -1,13 +1,13 @@
 /**
  * General Details on a brew for an entry
  */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
 function GeneralDetails({
   coffee_name,
@@ -19,7 +19,7 @@ function GeneralDetails({
 }) {
   const useStyles = makeStyles(() => ({
     name: {
-      fontWeight: 'bold',
+      fontWeight: "bold",
     },
   }));
 

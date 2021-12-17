@@ -1,12 +1,12 @@
 /**
  * Drinks Mutation Resolvers. Writes information for drinks through GraphQL.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   insertIntoDrinks,
   updateDrink,
   deleteDrink,
-} from '../../../db/queries/drinks_queries.js';
+} from "../../../db/queries/drinks_queries.js";
 
 /**
  * Resolver mutation for all drinks.

@@ -1,17 +1,17 @@
 /**
  * Methods Type Resolvers. Fetches the information for methods on a GraphQL request.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   selectAllMethods,
   selectMethodById,
   selectMethodsByName,
-} from '../../../db/queries/methods_queries.js';
+} from "../../../db/queries/methods_queries.js";
 import {
   normalizeMethods,
   normalizeMethodById,
   normalizeMethodsByName,
-} from '../../../db/normalizers/methods_normalizers.js';
+} from "../../../db/normalizers/methods_normalizers.js";
 
 /**
  * Resolver for all methods.

@@ -1,21 +1,21 @@
 /**
  * A new coffee input, allowing the user to write to the DB
  */
-import React from 'react';
+import React from "react";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Typography from '@material-ui/core/Typography';
-import AutocompleteWrapperSimple from '../coffee_entry/helpers/autocomplete_container_simple.js';
+import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
+import Typography from "@material-ui/core/Typography";
+import AutocompleteWrapperSimple from "../coffee_entry/helpers/autocomplete_container_simple.js";
 // Queries and Fetching
-import { coffeeMutation } from '../../graphql/mutations/coffee_gql_mutations.js';
-import { writeGQL } from '../../graphql/fetch.js';
+import { coffeeMutation } from "../../graphql/mutations/coffee_gql_mutations.js";
+import { writeGQL } from "../../graphql/fetch.js";
 // Constants
-import { newInputPropTypesShape } from '../../consts.js';
+import { newInputPropTypesShape } from "../../consts.js";
 
 function NewCoffeeInput({
   currentData,
@@ -28,14 +28,14 @@ function NewCoffeeInput({
   const { process_id } = coffee;
   const useStyles = makeStyles(() => ({
     inputSection: {
-      maxWidth: '600px',
+      maxWidth: "600px",
     },
     form: {
-      width: '200px',
+      width: "200px",
     },
     resize: {
       fontSize: 16,
-      textAlign: 'center',
+      textAlign: "center",
     },
   }));
 
@@ -96,8 +96,8 @@ function NewCoffeeInput({
       // Let user know this brewer already exists and return
       setToast({
         open: true,
-        severity: 'warning',
-        message: 'This coffee already exists',
+        severity: "warning",
+        message: "This coffee already exists",
       });
       return;
     }
@@ -108,8 +108,8 @@ function NewCoffeeInput({
           // Write was successful, let user know, update state and return
           setToast({
             open: true,
-            severity: 'success',
-            message: 'New Coffee Added!',
+            severity: "success",
+            message: "New Coffee Added!",
           });
           setCurrentData({
             ...currentData,
@@ -120,15 +120,15 @@ function NewCoffeeInput({
         // Write was not successful, let user know and return
         setToast({
           open: true,
-          severity: 'error',
-          message: 'Something went wrong...please try again',
+          severity: "error",
+          message: "Something went wrong...please try again",
         });
       })
       .catch((e) => {
         setToast({
           open: true,
-          severity: 'error',
-          message: 'Something went wrong...please try again',
+          severity: "error",
+          message: "Something went wrong...please try again",
         });
         console.log(e);
       });

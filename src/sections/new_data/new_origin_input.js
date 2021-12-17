@@ -1,19 +1,19 @@
 /**
  * A new origin input, allowing the user to write to the DB
  */
-import React from 'react';
+import React from "react";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 // Queries and Fetching
-import { originMutation } from '../../graphql/mutations/origin_gql_mutations.js';
-import { writeGQL } from '../../graphql/fetch.js';
+import { originMutation } from "../../graphql/mutations/origin_gql_mutations.js";
+import { writeGQL } from "../../graphql/fetch.js";
 // Constants
-import { newInputPropTypesShape } from '../../consts.js';
+import { newInputPropTypesShape } from "../../consts.js";
 
 function NewOriginInput({
   currentData,
@@ -25,11 +25,11 @@ function NewOriginInput({
   const { origin } = dataEntry;
   const useStyles = makeStyles(() => ({
     form: {
-      width: '200px',
+      width: "200px",
     },
     resize: {
       fontSize: 16,
-      textAlign: 'center',
+      textAlign: "center",
     },
   }));
 
@@ -56,8 +56,8 @@ function NewOriginInput({
       // Let user know this brewer already exists and return
       setToast({
         open: true,
-        severity: 'warning',
-        message: 'This origin already exists',
+        severity: "warning",
+        message: "This origin already exists",
       });
       return;
     }
@@ -68,8 +68,8 @@ function NewOriginInput({
           // Write was successful, let user know, update state and return
           setToast({
             open: true,
-            severity: 'success',
-            message: 'New Origin Added!',
+            severity: "success",
+            message: "New Origin Added!",
           });
           setCurrentData({
             ...currentData,
@@ -80,15 +80,15 @@ function NewOriginInput({
         // Write was not successful, let user know and return
         setToast({
           open: true,
-          severity: 'error',
-          message: 'Something went wrong...please try again',
+          severity: "error",
+          message: "Something went wrong...please try again",
         });
       })
       .catch((e) => {
         setToast({
           open: true,
-          severity: 'error',
-          message: 'Something went wrong...please try again',
+          severity: "error",
+          message: "Something went wrong...please try again",
         });
         console.log(e);
       });

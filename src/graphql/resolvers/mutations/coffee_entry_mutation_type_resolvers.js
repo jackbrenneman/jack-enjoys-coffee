@@ -1,12 +1,12 @@
 /**
  * Coffee Entry Mutation Resolvers. Writes information for coffee entries through GraphQL.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   deleteCoffeeEntry,
   insertIntoCoffeeEntries,
   updateCoffeeEntry,
-} from '../../../db/queries/coffee_entries_queries.js';
+} from "../../../db/queries/coffee_entries_queries.js";
 
 /**
  * Resolver mutation for a coffee entry.

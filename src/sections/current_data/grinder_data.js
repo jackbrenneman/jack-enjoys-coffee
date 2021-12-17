@@ -1,40 +1,40 @@
 /**
  * Grinder Data. Shows all grinders stored in the DB
  */
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import EditTwoToneIcon from "@material-ui/icons/EditTwoTone";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 // Custom Components
-import EditGrinderData from './edit/grinder/edit_grinder_data';
-import { ActiveBadge, InactiveBadge } from './constants/consts.js';
+import EditGrinderData from "./edit/grinder/edit_grinder_data";
+import { ActiveBadge, InactiveBadge } from "./constants/consts.js";
 // Queries and Fetching
-import { deleteGrinderMutation } from '../../graphql/mutations/grinder_gql_mutations.js';
-import { writeGQL } from '../../graphql/fetch.js';
+import { deleteGrinderMutation } from "../../graphql/mutations/grinder_gql_mutations.js";
+import { writeGQL } from "../../graphql/fetch.js";
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    padding: '0',
+    padding: "0",
   },
   content: {
-    padding: '0',
-    '&:last-child': {
+    padding: "0",
+    "&:last-child": {
       padding: 0,
     },
   },
   emptyBox: {
-    width: '36px', // Same width as icon to make things centered
-    height: '36px', // Same height as icon to make things centered
+    width: "36px", // Same width as icon to make things centered
+    height: "36px", // Same height as icon to make things centered
   },
 }));
 
@@ -58,12 +58,12 @@ function GrinderRow({ grinder, onGrinderDeletion, isUserAuthorized }) {
 
   const handleSaveChangesFail = () => {
     // TODO: show the user there was a failed save
-    console.log('failed save -- brewers');
+    console.log("failed save -- brewers");
   };
 
   const handleDeletionFail = () => {
     // TODO: show the user there was a failed delete
-    console.log('failed delete -- brewers');
+    console.log("failed delete -- brewers");
   };
 
   const handleEditGrinderClick = (e) => {

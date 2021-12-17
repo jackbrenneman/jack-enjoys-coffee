@@ -1,9 +1,9 @@
 /**
  * Signin Mutation Resolvers. Signs a user in.
  */
-import { query } from '../../../db/index.js';
-import { signinUser } from '../../../db/queries/users_queries.js';
-import { normalizeSigninMutation } from '../../../db/normalizers/signin_normalizers.js';
+import { query } from "../../../db/index.js";
+import { signinUser } from "../../../db/queries/users_queries.js";
+import { normalizeSigninMutation } from "../../../db/normalizers/signin_normalizers.js";
 
 /**
  * Resolver mutation for signing in a user.

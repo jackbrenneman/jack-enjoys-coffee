@@ -6,15 +6,15 @@ import {
   GraphQLFloat,
   GraphQLString,
   GraphQLInt,
-} from 'graphql';
-import { MethodCategoryEnum } from '../enums/method_category_enum.js';
-import { MethodInterface } from '../interfaces/method_interface.js';
-import { BrewerType } from './brewer_type.js';
-import { DrinkType } from './drink_type.js';
+} from "graphql";
+import { MethodCategoryEnum } from "../enums/method_category_enum.js";
+import { MethodInterface } from "../interfaces/method_interface.js";
+import { BrewerType } from "./brewer_type.js";
+import { DrinkType } from "./drink_type.js";
 
 export const ImmersionType = new GraphQLObjectType({
-  name: 'Immersion',
-  description: 'Contains all the info related to an immersion brew',
+  name: "Immersion",
+  description: "Contains all the info related to an immersion brew",
   interfaces: () => [MethodInterface],
   fields: {
     name: { type: GraphQLString },

@@ -8,34 +8,34 @@
  *    - Roasters
  *    - Waters
  */
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 // React Router
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Typography from '@material-ui/core/Typography';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
-import Divider from '@material-ui/core/Divider';
+import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Grid from "@material-ui/core/Grid";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Typography from "@material-ui/core/Typography";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
+import Divider from "@material-ui/core/Divider";
 // Queries and Fetching
-import { currentDataQuery } from '../../graphql/queries/data_entry_queries.js';
-import { queryGQL } from '../../graphql/fetch.js';
+import { currentDataQuery } from "../../graphql/queries/data_entry_queries.js";
+import { queryGQL } from "../../graphql/fetch.js";
 // Input Components
-import NewCafeInput from './new_cafe_input.js';
-import NewCoffeeInput from './new_coffee_input.js';
-import NewOriginInput from './new_origin_input.js';
-import NewRoasterInput from './new_roaster_input.js';
-import NewBrewerInput from './new_brewer_input.js';
-import NewWaterInput from './new_water_input.js';
-import NewGrinderInput from './new_grinder_input.js';
-import NewDrinkInput from './new_drink_input.js';
+import NewCafeInput from "./new_cafe_input.js";
+import NewCoffeeInput from "./new_coffee_input.js";
+import NewOriginInput from "./new_origin_input.js";
+import NewRoasterInput from "./new_roaster_input.js";
+import NewBrewerInput from "./new_brewer_input.js";
+import NewWaterInput from "./new_water_input.js";
+import NewGrinderInput from "./new_grinder_input.js";
+import NewDrinkInput from "./new_drink_input.js";
 // Constants
 import {
   roasterEnum,
@@ -48,7 +48,7 @@ import {
   grinderEnum,
   currentDataDefault,
   dataEntryDefault,
-} from '../../consts.js';
+} from "../../consts.js";
 
 function DataEntryContainer({ user }) {
   // State used for determining which data entry component to show.
@@ -60,20 +60,20 @@ function DataEntryContainer({ user }) {
   // State used for popping toast message for when write is successful or not
   const [toast, setToast] = useState({
     open: false,
-    severity: 'success',
-    message: '',
+    severity: "success",
+    message: "",
   });
 
   const useStyles = makeStyles((theme) => ({
     page: {
-      backgroundColor: '#EEEEEE',
-      minHeight: '100vh',
+      backgroundColor: "#EEEEEE",
+      minHeight: "100vh",
     },
     radio: {
-      padding: '2px',
+      padding: "2px",
     },
     navLink: {
-      textDecoration: 'none',
+      textDecoration: "none",
     },
   }));
 
@@ -271,12 +271,12 @@ function DataEntryContainer({ user }) {
       ) : (
         <Box py={4}>
           <Typography variant="body1" align="center">
-            You must{' '}
+            You must{" "}
             {
-              <NavLink className={classes.navLink} to={'/login'}>
+              <NavLink className={classes.navLink} to={"/login"}>
                 Login
               </NavLink>
-            }{' '}
+            }{" "}
             to add new data
           </Typography>
         </Box>

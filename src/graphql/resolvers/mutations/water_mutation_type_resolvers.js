@@ -1,12 +1,12 @@
 /**
  * Waters Mutation Resolvers. Fetches the information for waters on a GraphQL request.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   insertIntoWaters,
   deleteWater,
   updateWater,
-} from '../../../db/queries/waters_queries.js';
+} from "../../../db/queries/waters_queries.js";
 
 /**
  * Resolver mutation for all waters.

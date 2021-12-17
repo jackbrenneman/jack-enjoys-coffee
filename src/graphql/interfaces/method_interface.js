@@ -14,17 +14,17 @@ import {
   GraphQLFloat,
   GraphQLString,
   GraphQLInt,
-} from 'graphql';
-import { MethodCategoryEnum } from '../enums/method_category_enum.js';
-import { BrewerType } from '../types/brewer_type.js';
-import { DrinkType } from '../types/drink_type.js';
-import { EspressoType } from '../types/espresso_type.js';
-import { PourOverType } from '../types/pour_over_type.js';
-import { ImmersionType } from '../types/immersion_type.js';
+} from "graphql";
+import { MethodCategoryEnum } from "../enums/method_category_enum.js";
+import { BrewerType } from "../types/brewer_type.js";
+import { DrinkType } from "../types/drink_type.js";
+import { EspressoType } from "../types/espresso_type.js";
+import { PourOverType } from "../types/pour_over_type.js";
+import { ImmersionType } from "../types/immersion_type.js";
 
 export const MethodInterface = new GraphQLInterfaceType({
-  name: 'MethodInterface',
-  description: 'The Method in which coffee is brewed.',
+  name: "MethodInterface",
+  description: "The Method in which coffee is brewed.",
   fields: {
     name: { type: GraphQLString },
     method_id: { type: GraphQLInt },

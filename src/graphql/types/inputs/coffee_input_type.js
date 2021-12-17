@@ -7,11 +7,11 @@ import {
   GraphQLInputObjectType,
   GraphQLInt,
   GraphQLBoolean,
-} from 'graphql';
+} from "graphql";
 
 export const CoffeeInputType = new GraphQLInputObjectType({
-  name: 'CoffeeInput',
-  description: 'Contains all the info needed to add coffee info in a mutation',
+  name: "CoffeeInput",
+  description: "Contains all the info needed to add coffee info in a mutation",
   fields: {
     name: { type: GraphQLString },
     roaster_id: { type: GraphQLInt },

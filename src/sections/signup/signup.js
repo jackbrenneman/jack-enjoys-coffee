@@ -1,38 +1,38 @@
 /**
  * The page to Sign a user up.
  */
-import React, { useState } from 'react';
+import React, { useState } from "react";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
-import TextField from '@material-ui/core/TextField';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
+import TextField from "@material-ui/core/TextField";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import IconButton from "@material-ui/core/IconButton";
 // Queries and Fetching
-import { signupMutation } from '../../graphql/mutations/signup_gql_mutations.js';
-import { writeGQL } from '../../graphql/fetch.js';
+import { signupMutation } from "../../graphql/mutations/signup_gql_mutations.js";
+import { writeGQL } from "../../graphql/fetch.js";
 // Cookies
-import Cookies from 'universal-cookie';
+import Cookies from "universal-cookie";
 
 function Signup() {
   const useStyles = makeStyles((theme) => ({
     page: {
-      backgroundColor: '#EEEEEE',
-      minHeight: '100vh',
+      backgroundColor: "#EEEEEE",
+      minHeight: "100vh",
     },
     form: {
-      width: '225px',
+      width: "225px",
     },
     section: {
-      maxWidth: '800px',
+      maxWidth: "800px",
     },
   }));
 
@@ -50,22 +50,22 @@ function Signup() {
 
   const onSignupFailure = () => {
     // TODO: surface to the user that login failed for some reason.
-    console.log('failure :(');
+    console.log("failure :(");
     return;
   };
 
   const onSignupSuccess = (token, user_id, user_name) => {
     const cookies = new Cookies();
-    cookies.set('user_token', token, {
-      path: '/',
+    cookies.set("user_token", token, {
+      path: "/",
       expires: new Date(Date.now() + 3600000),
     });
     cookies.set(
-      'user',
+      "user",
       { user_id: user_id, user_name: user_name },
-      { path: '/', expires: new Date(Date.now() + 3600000) }
+      { path: "/", expires: new Date(Date.now() + 3600000) }
     );
-    window.location.replace('/profile');
+    window.location.replace("/profile");
     return;
   };
 
@@ -80,19 +80,19 @@ function Signup() {
   const handleSignupClick = () => {
     const { user_name, email, password } = signup;
     if (!user_name) {
-      console.log('No username inputted');
+      console.log("No username inputted");
       return;
     }
     if (!email) {
-      console.log('No email inputted');
+      console.log("No email inputted");
       return;
     }
     if (!password) {
-      console.log('No password inputted');
+      console.log("No password inputted");
       return;
     }
     if (confirmPassword !== password) {
-      console.log('Passwords do not match');
+      console.log("Passwords do not match");
       return;
     }
     writeGQL(signupMutation, { signup: signup })
@@ -109,16 +109,16 @@ function Signup() {
         onSignupFailure();
         setToast({
           open: true,
-          severity: 'error',
-          message: 'Something went wrong...please try again',
+          severity: "error",
+          message: "Something went wrong...please try again",
         });
       })
       .catch((e) => {
         onSignupFailure();
         setToast({
           open: true,
-          severity: 'error',
-          message: 'Something went wrong...please try again',
+          severity: "error",
+          message: "Something went wrong...please try again",
         });
         console.log(e);
       });
@@ -155,8 +155,8 @@ function Signup() {
   // State used for popping toast message for when write is successful or not
   const [toast, setToast] = useState({
     open: false,
-    severity: 'success',
-    message: '',
+    severity: "success",
+    message: "",
   });
 
   const handleToastClose = () => {
@@ -217,7 +217,7 @@ function Signup() {
           </Typography>
           <form autoComplete="off">
             <OutlinedInput
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               className={classes.form}
               id="password"
               onChange={handlePasswordChange}
@@ -243,7 +243,7 @@ function Signup() {
           </Typography>
           <form autoComplete="off">
             <OutlinedInput
-              type={showConfirmPassword ? 'text' : 'password'}
+              type={showConfirmPassword ? "text" : "password"}
               className={classes.form}
               id="confirm-password"
               onChange={handleConfirmPasswordChange}

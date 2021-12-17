@@ -1,45 +1,45 @@
 /**
  * Roaster Data. Shows all roasters stored in the DB
  */
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import CardHeader from '@material-ui/core/CardHeader';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import CardHeader from "@material-ui/core/CardHeader";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import EditTwoToneIcon from "@material-ui/icons/EditTwoTone";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 // Custom Components
-import EditRoasterData from './edit/roaster/edit_roaster_data.js';
-import { ActiveBadge, InactiveBadge } from './constants/consts.js';
+import EditRoasterData from "./edit/roaster/edit_roaster_data.js";
+import { ActiveBadge, InactiveBadge } from "./constants/consts.js";
 // Queries and Fetching
-import { deleteRoasterMutation } from '../../graphql/mutations/roaster_gql_mutations.js';
-import { writeGQL } from '../../graphql/fetch.js';
+import { deleteRoasterMutation } from "../../graphql/mutations/roaster_gql_mutations.js";
+import { writeGQL } from "../../graphql/fetch.js";
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    padding: '0',
+    padding: "0",
   },
   header: {
-    padding: '0',
-    paddingTop: '10px',
+    padding: "0",
+    paddingTop: "10px",
   },
   content: {
-    padding: '0',
-    '&:last-child': {
+    padding: "0",
+    "&:last-child": {
       padding: 0,
     },
   },
   emptyBox: {
-    width: '36px', // Same width as icon to make things centered
-    height: '36px', // Same height as icon to make things centered
+    width: "36px", // Same width as icon to make things centered
+    height: "36px", // Same height as icon to make things centered
   },
 }));
 
@@ -80,12 +80,12 @@ function RoasterRow({
 
   const handleSaveChangesFail = (newData) => {
     // TODO: show the user there was a failed save
-    console.log('failed save');
+    console.log("failed save");
   };
 
   const handleRoasterDeletionFail = () => {
     // TODO: show the user there was a failed delete
-    console.log('failed delete');
+    console.log("failed delete");
   };
 
   const handleEditRoasterClick = (e) => {
@@ -131,7 +131,7 @@ function RoasterRow({
     // Should not delete a roaster if it's tied to a coffee.
     if (coffees.find((coffee) => coffee?.roaster?.roaster_id === roaster_id)) {
       handleRoasterDeletionFail();
-      console.log('roaster has a coffee bro');
+      console.log("roaster has a coffee bro");
       return;
     }
     writeGQL(deleteRoasterMutation, {
@@ -160,8 +160,8 @@ function RoasterRow({
         <CardContent className={classes.content}>
           <CardHeader
             className={classes.header}
-            titleTypographyProps={{ variant: 'body2' }}
-            subheaderTypographyProps={{ variant: 'caption' }}
+            titleTypographyProps={{ variant: "body2" }}
+            subheaderTypographyProps={{ variant: "caption" }}
             title={getTitle()}
             subheader={currentCountry}
           />
@@ -186,8 +186,8 @@ function RoasterRow({
             </Grid>
             <Grid item>
               <Box px={1}>
-                <Typography variant="caption">{`${currentCity ?? ''}${
-                  currentState ? `, ${currentState}` : ''
+                <Typography variant="caption">{`${currentCity ?? ""}${
+                  currentState ? `, ${currentState}` : ""
                 }`}</Typography>
               </Box>
             </Grid>

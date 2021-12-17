@@ -6,13 +6,13 @@ import {
   GraphQLInt,
   GraphQLObjectType,
   GraphQLString,
-} from 'graphql';
-import { OriginType } from './origin_type.js';
-import { ProcessType } from './process_type.js';
-import { RoasterType } from './roaster_type.js';
+} from "graphql";
+import { OriginType } from "./origin_type.js";
+import { ProcessType } from "./process_type.js";
+import { RoasterType } from "./roaster_type.js";
 
 export const CoffeeType = new GraphQLObjectType({
-  name: 'Coffee',
+  name: "Coffee",
   fields: {
     coffee_id: { type: GraphQLInt },
     name: { type: GraphQLString },

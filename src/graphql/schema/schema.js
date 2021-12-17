@@ -1,12 +1,12 @@
 /**
  * The schema for GraphQL.
  */
-import { GraphQLSchema } from 'graphql';
-import { JackEnjoysCoffeeQueryType } from '../types/query_type.js';
-import JackEnjoysCoffeeMutationType from '../types/mutation_type.js';
-import { EspressoType } from '../types/espresso_type.js';
-import { PourOverType } from '../types/pour_over_type.js';
-import { ImmersionType } from '../types/immersion_type.js';
+import { GraphQLSchema } from "graphql";
+import { JackEnjoysCoffeeQueryType } from "../types/query_type.js";
+import JackEnjoysCoffeeMutationType from "../types/mutation_type.js";
+import { EspressoType } from "../types/espresso_type.js";
+import { PourOverType } from "../types/pour_over_type.js";
+import { ImmersionType } from "../types/immersion_type.js";
 
 export const JackEnjoysCoffeeSchema = new GraphQLSchema({
   query: JackEnjoysCoffeeQueryType,

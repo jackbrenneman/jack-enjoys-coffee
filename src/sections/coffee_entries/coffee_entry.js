@@ -1,27 +1,27 @@
 /**
  * A single, current Coffee Entry.
  */
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import CardHeader from '@material-ui/core/CardHeader';
-import Card from '@material-ui/core/Card';
-import Grid from '@material-ui/core/Grid';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import CardHeader from "@material-ui/core/CardHeader";
+import Card from "@material-ui/core/Card";
+import Grid from "@material-ui/core/Grid";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import EditTwoToneIcon from "@material-ui/icons/EditTwoTone";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import IconButton from "@material-ui/core/IconButton";
 // Custom Components
-import EspressoDetails from './entry_details/espresso_details.js';
-import PouroverDetails from './entry_details/pourover_details.js';
-import ImmersionDetails from './entry_details/immersion_details.js';
+import EspressoDetails from "./entry_details/espresso_details.js";
+import PouroverDetails from "./entry_details/pourover_details.js";
+import ImmersionDetails from "./entry_details/immersion_details.js";
 // Constants
-import { espressoId, pouroverId, immersionId } from '../../consts.js';
-import EditCoffeeEntry from './edit/edit_coffee_entry.js';
+import { espressoId, pouroverId, immersionId } from "../../consts.js";
+import EditCoffeeEntry from "./edit/edit_coffee_entry.js";
 
 function CurrentCoffeeEntry({
   canEdit,
@@ -32,7 +32,7 @@ function CurrentCoffeeEntry({
   const [currentCoffeeEntry, setCurrentCoffeeEntry] = useState(coffeeEntry);
   const { coffee, date, brew, rating, notes, cafe } = currentCoffeeEntry;
   const realDate = new Date(date);
-  const localeDate = realDate.toLocaleDateString('en-US', { timeZone: 'UTC' });
+  const localeDate = realDate.toLocaleDateString("en-US", { timeZone: "UTC" });
   const { name: coffee_name, roaster, origin, process } = coffee;
   const { name: cafe_name } = cafe;
   const { name: roaster_name } = roaster;
@@ -66,7 +66,7 @@ function CurrentCoffeeEntry({
 
   const handleSaveChangesFail = () => {
     // TODO: show the user there was a failed save
-    console.log('failed save -- coffee entry');
+    console.log("failed save -- coffee entry");
   };
 
   const handleEditClick = (e) => {
@@ -86,33 +86,33 @@ function CurrentCoffeeEntry({
 
   const useStyles = makeStyles(() => ({
     card: {
-      padding: '0',
+      padding: "0",
     },
     header: {
-      padding: '0',
-      paddingTop: '10px',
+      padding: "0",
+      paddingTop: "10px",
     },
     content: {
-      padding: '0',
-      '&:last-child': {
+      padding: "0",
+      "&:last-child": {
         padding: 0,
       },
     },
     ratingBad: {
-      color: 'red',
-      fontWeight: 'bold',
+      color: "red",
+      fontWeight: "bold",
     },
     ratingMeh: {
-      color: '#e3b129',
-      fontWeight: 'bold',
+      color: "#e3b129",
+      fontWeight: "bold",
     },
     ratingGood: {
-      color: 'green',
-      fontWeight: 'bold',
+      color: "green",
+      fontWeight: "bold",
     },
     emptyBox: {
-      width: '36px', // Same width as icon to make things centered
-      height: '36px', // Same height as icon to make things centered
+      width: "36px", // Same width as icon to make things centered
+      height: "36px", // Same height as icon to make things centered
     },
   }));
 
@@ -178,17 +178,17 @@ function CurrentCoffeeEntry({
     } else if (cafe_name) {
       return cafe_name;
     }
-  }
+  };
 
   const getSubtitle = () => {
     if (method_name && drink_name) {
-      return `${method_name} | ${drink_name}`
+      return `${method_name} | ${drink_name}`;
     } else if (method_name) {
       return method_name;
     } else if (drink_name) {
       return drink_name;
     }
-  }
+  };
 
   return (
     <Box p={1}>
@@ -196,8 +196,8 @@ function CurrentCoffeeEntry({
         <CardContent className={classes.content}>
           <CardHeader
             className={classes.header}
-            titleTypographyProps={{ variant: 'caption' }}
-            subheaderTypographyProps={{ variant: 'caption' }}
+            titleTypographyProps={{ variant: "caption" }}
+            subheaderTypographyProps={{ variant: "caption" }}
             title={getTitle()}
             subheader={getSubtitle()}
           />
@@ -226,7 +226,7 @@ function CurrentCoffeeEntry({
                   >
                     <ExpandLessIcon />
                   </IconButton>
-                </Box>{' '}
+                </Box>{" "}
               </Grid>
             ) : (
               <>
@@ -266,7 +266,7 @@ function CurrentCoffeeEntry({
                   >
                     <ExpandLessIcon />
                   </IconButton>
-                </Box>{' '}
+                </Box>{" "}
               </Grid>
             ) : (
               <Grid item>

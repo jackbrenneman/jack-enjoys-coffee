@@ -6,14 +6,14 @@ import {
   GraphQLInt,
   GraphQLList,
   GraphQLObjectType,
-} from 'graphql';
-import { MethodType } from '../method_type.js';
-import { ImmersionBrewerStatsType } from './immersion_brewer_stats_type.js';
-import { ImmersionDrinkStatsType } from './immersion_drink_stats_type.js';
+} from "graphql";
+import { MethodType } from "../method_type.js";
+import { ImmersionBrewerStatsType } from "./immersion_brewer_stats_type.js";
+import { ImmersionDrinkStatsType } from "./immersion_drink_stats_type.js";
 
 export const ImmersionStatsType = new GraphQLObjectType({
-  name: 'ImmersionStatsType',
-  description: 'Data regarding a user and their immersion method stats',
+  name: "ImmersionStatsType",
+  description: "Data regarding a user and their immersion method stats",
   fields: {
     method: { type: MethodType },
     total_immersion_count: { type: GraphQLInt },

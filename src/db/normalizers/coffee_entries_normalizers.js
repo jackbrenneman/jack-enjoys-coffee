@@ -39,7 +39,7 @@ export const normalizeCoffeeEntries = (data) => {
     const cafe = {
       cafe_id,
       name: cafe_name,
-    }
+    };
     const coffee = {
       coffee_id,
       name: coffee_name,

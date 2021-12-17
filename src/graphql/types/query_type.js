@@ -7,24 +7,24 @@ import {
   GraphQLList,
   GraphQLString,
   GraphQLBoolean,
-} from 'graphql';
+} from "graphql";
 // Resolvers
 import {
   brewerByIdResolver,
   brewersByUserIdResolver,
   brewersByMethodIdResolver,
   brewersByNameResolver,
-} from '../resolvers/queries/brewer_query_type_resolvers.js';
+} from "../resolvers/queries/brewer_query_type_resolvers.js";
 import {
   cafeByIdResolver,
   cafesByNameResolver,
   cafesByStateResolver,
   cafesByUserIdResolver,
-} from '../resolvers/queries/cafe_query_type_resolvers.js';
+} from "../resolvers/queries/cafe_query_type_resolvers.js";
 import {
   coffeeEntriesByUserIdResolver,
   coffeeEntriesByUserIdAndDataRangeResolver,
-} from '../resolvers/queries/coffee_entry_query_type_resolvers.js';
+} from "../resolvers/queries/coffee_entry_query_type_resolvers.js";
 import {
   coffeeByIdResolver,
   coffeesByNameResolver,
@@ -32,34 +32,34 @@ import {
   coffeesByOriginIdResolver,
   coffeesByProcessIdResolver,
   coffeesByUserIdResolver,
-} from '../resolvers/queries/coffee_query_type_resolvers.js';
+} from "../resolvers/queries/coffee_query_type_resolvers.js";
 import {
   drinkByIdResolver,
   drinksByMethodIdResolver,
   drinksByNameResolver,
   drinksByUserIdResolver,
-} from '../resolvers/queries/drink_query_type_resolvers.js';
+} from "../resolvers/queries/drink_query_type_resolvers.js";
 import {
   grinderByIdResolver,
   grindersByNameResolver,
   grindersByUserIdResolver,
-} from '../resolvers/queries/grinder_query_type_resolvers.js';
+} from "../resolvers/queries/grinder_query_type_resolvers.js";
 import {
   methodByIdResolver,
   methodsResolver,
   methodsByNameResolver,
-} from '../resolvers/queries/method_query_type_resolvers.js';
+} from "../resolvers/queries/method_query_type_resolvers.js";
 import {
   originByIdResolver,
   originsByUserIdResolver,
   originsResolver,
   originsByNameResolver,
-} from '../resolvers/queries/origin_query_type_resolvers.js';
+} from "../resolvers/queries/origin_query_type_resolvers.js";
 import {
   processByIdResolver,
   processesResolver,
   processesByNameResolver,
-} from '../resolvers/queries/process_query_type_resolvers.js';
+} from "../resolvers/queries/process_query_type_resolvers.js";
 import {
   roastersByUserIdResolver,
   roasterByIdResolver,
@@ -67,28 +67,28 @@ import {
   roastersByCityResolver,
   roastersByStateResolver,
   roastersByCountryResolver,
-} from '../resolvers/queries/roaster_query_type_resolvers.js';
-import { userByIdResolver } from '../resolvers/queries/user_query_type_resolvers.js';
+} from "../resolvers/queries/roaster_query_type_resolvers.js";
+import { userByIdResolver } from "../resolvers/queries/user_query_type_resolvers.js";
 import {
   watersByUserIdResolver,
   waterByIdResolver,
   watersByNameResolver,
-} from '../resolvers/queries/water_query_type_resolvers.js';
+} from "../resolvers/queries/water_query_type_resolvers.js";
 // Types
-import { BrewerType } from './brewer_type.js';
-import { CafeType } from './cafe_type.js';
-import { CoffeeEntryType } from './coffee_entry_type.js';
-import { CoffeeType } from './coffee_type.js';
-import { DrinkType } from './drink_type.js';
-import { GrinderType } from './grinder_type.js';
-import { MethodType } from './method_type.js';
-import { OriginType } from './origin_type.js';
-import { ProcessType } from './process_type.js';
-import { RoasterType } from './roaster_type.js';
-import { UserType } from './user_type.js';
-import { WaterType } from './water_type.js';
+import { BrewerType } from "./brewer_type.js";
+import { CafeType } from "./cafe_type.js";
+import { CoffeeEntryType } from "./coffee_entry_type.js";
+import { CoffeeType } from "./coffee_type.js";
+import { DrinkType } from "./drink_type.js";
+import { GrinderType } from "./grinder_type.js";
+import { MethodType } from "./method_type.js";
+import { OriginType } from "./origin_type.js";
+import { ProcessType } from "./process_type.js";
+import { RoasterType } from "./roaster_type.js";
+import { UserType } from "./user_type.js";
+import { WaterType } from "./water_type.js";
 // Validation
-import { getUserId } from '../validate/validate.js';
+import { getUserId } from "../validate/validate.js";
 
 // Used for the default end time on date ranges
 const currentDate = new Date();
@@ -100,7 +100,7 @@ const defaultDate = `${year}-${month > 9 ? month : `0${month}`}-${
 }`;
 
 export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
-  name: 'Query',
+  name: "Query",
   fields: {
     brewers: {
       type: new GraphQLList(BrewerType),
@@ -164,7 +164,11 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         name: { type: GraphQLString },
         state: { type: GraphQLString },
       },
-      resolve(parentValue, { user_id, cafe_id, name, state, only_active }, context) {
+      resolve(
+        parentValue,
+        { user_id, cafe_id, name, state, only_active },
+        context
+      ) {
         // Err on the side of the user_id from arguments. Then fallback on logged in user.
         const userId = user_id ? user_id : getUserId(context);
         if (userId) {

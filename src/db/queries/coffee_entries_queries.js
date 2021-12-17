@@ -1,7 +1,7 @@
 /**
  * All queries related to the "coffee_entries" table.
  */
-export const selectAllCoffeeEntries = 'SELECT * FROM coffee_entries';
+export const selectAllCoffeeEntries = "SELECT * FROM coffee_entries";
 export const selectCoffeeEntriesByUserId = `
   SELECT
     coffee_entries.coffee_entry_id,
@@ -116,7 +116,7 @@ export const insertIntoCoffeeEntries = `
   RETURNING *
 `;
 export const deleteCoffeeEntry =
-  'DELETE FROM coffee_entries WHERE coffee_entry_id = $1 AND user_id = $2';
+  "DELETE FROM coffee_entries WHERE coffee_entry_id = $1 AND user_id = $2";
 export const updateCoffeeEntry = `
   UPDATE coffee_entries
   SET
