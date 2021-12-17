@@ -1,20 +1,20 @@
 /**
  * Grinder Type Resolvers. Fetches the information for grinders on a GraphQL request.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   selectAllGrinders,
   selectGrindersByUserId,
   selectActiveGrindersByUserId,
   selectGrinderById,
   selectGrindersByName,
-} from '../../../db/queries/grinders_queries.js';
+} from "../../../db/queries/grinders_queries.js";
 import {
   normalizeGrinders,
   normalizeGrindersByUserId,
   normalizeGrinderById,
   normalizeGrindersByName,
-} from '../../../db/normalizers/grinders_normalizers.js';
+} from "../../../db/normalizers/grinders_normalizers.js";
 
 /**
  * Resolver for all grinders.

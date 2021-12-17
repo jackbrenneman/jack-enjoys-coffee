@@ -5,11 +5,11 @@
  *   - Immersion
  * This will determine which Type Method resolves to.
  */
-import { GraphQLEnumType } from 'graphql';
+import { GraphQLEnumType } from "graphql";
 
 export const MethodCategoryEnum = new GraphQLEnumType({
-  name: 'MethodCategory',
-  description: 'The category for the method in which coffee is brewed.',
+  name: "MethodCategory",
+  description: "The category for the method in which coffee is brewed.",
   values: {
     ESPRESSO: { value: 1 },
     POUROVER: { value: 2 },

@@ -1,7 +1,7 @@
 /**
  * Date Type. A scalar value to hold a date.
  */
-import { GraphQLScalarType } from 'graphql';
+import { GraphQLScalarType } from "graphql";
 
 // Just makes sure the date is in the right format.
 const dateValidator = (date) => {
@@ -9,6 +9,6 @@ const dateValidator = (date) => {
 };
 
 export const DateType = new GraphQLScalarType({
-  name: 'Date',
+  name: "Date",
   serialize: dateValidator,
 });

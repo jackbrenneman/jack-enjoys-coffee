@@ -75,8 +75,8 @@ export const selectBrewersByName = `
   WHERE LOWER(brewers.name) LIKE LOWER($1)
 `;
 export const insertIntoBrewers =
-  'INSERT INTO brewers (name, website, method_id, is_active, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+  "INSERT INTO brewers (name, website, method_id, is_active, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING *";
 export const deleteBrewer =
-  'DELETE FROM brewers WHERE brewer_id = $1 AND user_id = $2';
+  "DELETE FROM brewers WHERE brewer_id = $1 AND user_id = $2";
 export const updateBrewer =
-  'UPDATE brewers SET name = $1, website = $2, method_id = $3, is_active = $4 WHERE brewer_id = $5 AND user_id = $6 RETURNING *';
+  "UPDATE brewers SET name = $1, website = $2, method_id = $3, is_active = $4 WHERE brewer_id = $5 AND user_id = $6 RETURNING *";

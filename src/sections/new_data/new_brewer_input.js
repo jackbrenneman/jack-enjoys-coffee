@@ -1,20 +1,20 @@
 /**
  * A new brewer input, allowing the user to write to the DB
  */
-import React from 'react';
+import React from "react";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
 // Queries and Fetching
-import { brewerMutation } from '../../graphql/mutations/brewer_gql_mutations.js';
-import { writeGQL } from '../../graphql/fetch.js';
+import { brewerMutation } from "../../graphql/mutations/brewer_gql_mutations.js";
+import { writeGQL } from "../../graphql/fetch.js";
 // Constants
-import { newInputPropTypesShape } from '../../consts.js';
+import { newInputPropTypesShape } from "../../consts.js";
 
 function NewBrewerInput({
   currentData,
@@ -27,14 +27,14 @@ function NewBrewerInput({
   const { method_id } = brewer;
   const useStyles = makeStyles(() => ({
     inputSection: {
-      maxWidth: '600px',
+      maxWidth: "600px",
     },
     form: {
-      width: '200px',
+      width: "200px",
     },
     resize: {
       fontSize: 16,
-      textAlign: 'center',
+      textAlign: "center",
     },
   }));
 
@@ -80,8 +80,8 @@ function NewBrewerInput({
       // Let user know this brewer already exists and return
       setToast({
         open: true,
-        severity: 'warning',
-        message: 'This brewer already exists',
+        severity: "warning",
+        message: "This brewer already exists",
       });
       return;
     }
@@ -92,8 +92,8 @@ function NewBrewerInput({
           // Write was successful, let user know, update state and return
           setToast({
             open: true,
-            severity: 'success',
-            message: 'New Brewer Added!',
+            severity: "success",
+            message: "New Brewer Added!",
           });
           setCurrentData({
             ...currentData,
@@ -104,15 +104,15 @@ function NewBrewerInput({
         // Write was not successful, let user know and return
         setToast({
           open: true,
-          severity: 'error',
-          message: 'Something went wrong...please try again',
+          severity: "error",
+          message: "Something went wrong...please try again",
         });
       })
       .catch((e) => {
         setToast({
           open: true,
-          severity: 'error',
-          message: 'Something went wrong...please try again',
+          severity: "error",
+          message: "Something went wrong...please try again",
         });
         console.log(e);
       });

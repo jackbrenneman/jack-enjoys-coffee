@@ -1,19 +1,19 @@
 /**
  * Origins Type Resolvers. Fetches the information for origins on a GraphQL request.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   selectAllOrigins,
   selectOriginsByUserId,
   selectOriginById,
   selectOriginsByName,
-} from '../../../db/queries/origins_queries.js';
+} from "../../../db/queries/origins_queries.js";
 import {
   normalizeOrigins,
   normalizeOriginsByUserId,
   normalizeOriginById,
   normalizeOriginsByName,
-} from '../../../db/normalizers/origins_normalizers.js';
+} from "../../../db/normalizers/origins_normalizers.js";
 
 /**
  * Resolver for all origins.

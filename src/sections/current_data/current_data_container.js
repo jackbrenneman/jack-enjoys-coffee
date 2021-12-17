@@ -9,33 +9,33 @@
  *    - Roasters
  *    - Waters
  */
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 // React Router
 // React Router
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from "react-router-dom";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
+import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Grid from "@material-ui/core/Grid";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 // Queries and Fetching
-import { currentDataQuery } from '../../graphql/queries/data_entry_queries.js';
-import { queryGQL } from '../../graphql/fetch.js';
+import { currentDataQuery } from "../../graphql/queries/data_entry_queries.js";
+import { queryGQL } from "../../graphql/fetch.js";
 // Data Components
-import BrewerData from './brewer_data.js';
-import CafeData from './cafe_data.js';
-import CoffeeData from './coffee_data.js';
-import DrinkData from './drink_data.js';
-import GrinderData from './grinder_data.js';
-import OriginData from './origin_data.js';
-import RoasterData from './roaster_data.js';
-import WaterData from './water_data.js';
+import BrewerData from "./brewer_data.js";
+import CafeData from "./cafe_data.js";
+import CoffeeData from "./coffee_data.js";
+import DrinkData from "./drink_data.js";
+import GrinderData from "./grinder_data.js";
+import OriginData from "./origin_data.js";
+import RoasterData from "./roaster_data.js";
+import WaterData from "./water_data.js";
 // Constants
 import {
   roasterEnum,
@@ -48,13 +48,13 @@ import {
   grinderEnum,
   currentDataDefault,
   dataEntryDefault,
-} from '../../consts.js';
+} from "../../consts.js";
 
 function CurrentDataContainer({ user }) {
   const queryParams = new URLSearchParams(useLocation().search);
   const queryParamsObject = {
-    queryParamsUserId: queryParams.get('user_id') ?? false,
-    jacksData: queryParams.get('jacks_data') ?? false,
+    queryParamsUserId: queryParams.get("user_id") ?? false,
+    jacksData: queryParams.get("jacks_data") ?? false,
   };
   const { queryParamsUserId, jacksData } = queryParamsObject;
   // State used for determining which data entry component to show.
@@ -68,11 +68,11 @@ function CurrentDataContainer({ user }) {
 
   const useStyles = makeStyles((theme) => ({
     page: {
-      backgroundColor: '#EEEEEE',
-      minHeight: '100vh',
+      backgroundColor: "#EEEEEE",
+      minHeight: "100vh",
     },
     radio: {
-      padding: '2px',
+      padding: "2px",
     },
   }));
 
@@ -240,7 +240,7 @@ function CurrentDataContainer({ user }) {
             onCafeDeletion={handleCafeDeletion}
             isUserAuthorized={isAuthorized}
           />
-        )
+        );
       case coffeeEnum:
         return (
           <CoffeeData
@@ -406,7 +406,7 @@ function CurrentDataContainer({ user }) {
               <Grid item xs={12}>
                 <Box pt={2}>
                   <Typography variant="caption" align="center">
-                    <NavLink className={classes.navLink} to={'/new_data'}>
+                    <NavLink className={classes.navLink} to={"/new_data"}>
                       Add New Data
                     </NavLink>
                   </Typography>
@@ -429,12 +429,12 @@ function CurrentDataContainer({ user }) {
       ) : (
         <Box py={4}>
           <Typography variant="body1" align="center">
-            You must{' '}
+            You must{" "}
             {
-              <NavLink className={classes.navLink} to={'/login'}>
+              <NavLink className={classes.navLink} to={"/login"}>
                 Login
               </NavLink>
-            }{' '}
+            }{" "}
             to add new data
           </Typography>
         </Box>

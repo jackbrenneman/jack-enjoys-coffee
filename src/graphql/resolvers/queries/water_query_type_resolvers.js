@@ -1,20 +1,20 @@
 /**
  * Waters Type Resolvers. Fetches the information for waters on a GraphQL request.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   selectAllWaters,
   selectWatersByUserId,
   selectActiveWatersByUserId,
   selectWaterById,
   selectWatersByName,
-} from '../../../db/queries/waters_queries.js';
+} from "../../../db/queries/waters_queries.js";
 import {
   normalizeWaters,
   normalizeWatersByUserId,
   normalizeWaterById,
   normalizeWatersByName,
-} from '../../../db/normalizers/waters_normalizers.js';
+} from "../../../db/normalizers/waters_normalizers.js";
 
 /**
  * Resolver for all waters.

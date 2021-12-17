@@ -1,37 +1,37 @@
 /**
  * The Current Cofffee Entries Container, which will allow users to view their coffee entries.
  */
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 // React Router
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from "react-router-dom";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
+import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 // Queries and Fetching
-import { currentCoffeeEntriesQuery } from '../../graphql/queries/current_coffee_entries_queries.js';
-import { queryGQL } from '../../graphql/fetch.js';
+import { currentCoffeeEntriesQuery } from "../../graphql/queries/current_coffee_entries_queries.js";
+import { queryGQL } from "../../graphql/fetch.js";
 // Custom Components
-import CurrentCoffeeEntries from './coffee_entries.js';
+import CurrentCoffeeEntries from "./coffee_entries.js";
 // Constants and Helpers
-import { today, sevenDaysAgo } from '../../consts.js';
+import { today, sevenDaysAgo } from "../../consts.js";
 import {
   createMethodIdToDrinksMap,
   createMethodIdToBrewersMap,
   createRoasterIdToCoffeesMap,
-} from '../coffee_entry/helpers/input_helpers.js';
+} from "../coffee_entry/helpers/input_helpers.js";
 
 const useStyles = makeStyles((theme) => ({
   page: {
-    backgroundColor: '#EEEEEE',
-    minHeight: '100vh',
+    backgroundColor: "#EEEEEE",
+    minHeight: "100vh",
   },
   navLink: {
-    textDecoration: 'none',
+    textDecoration: "none",
   },
 }));
 
@@ -39,16 +39,19 @@ function CurrentCoffeeEntriesContainer({ user }) {
   // State that contains all the current coffee entries
   const [currentCoffeeEntries, setCurrentCoffeeEntries] = useState([]);
 
-   // State that contains the data for the applied filters on coffee entries
-   const [currentlyAppliedFilters, setCurrentlyAppliedFilters] = useState({
+  // State that contains the data for the applied filters on coffee entries
+  const [currentlyAppliedFilters, setCurrentlyAppliedFilters] = useState({
     filteredCoffees: [],
     filteredRoasters: [],
     filteredOrigins: [],
-    filteredProcesses: []
+    filteredProcesses: [],
   });
 
   // State that contains all the current FILTERED coffee entries
-  const [currentFilteredCoffeeEntries, setCurrentFilteredCoffeeEntries] = useState([]);
+  const [
+    currentFilteredCoffeeEntries,
+    setCurrentFilteredCoffeeEntries,
+  ] = useState([]);
 
   // State that contains all the current coffee data
   const [currentData, setCurrentData] = useState({});
@@ -58,9 +61,9 @@ function CurrentCoffeeEntriesContainer({ user }) {
 
   const queryParams = new URLSearchParams(useLocation().search);
   const queryParamsObject = {
-    newEntry: queryParams.get('new_entry') ?? false,
-    queryParamsUserId: queryParams.get('user_id') ?? false,
-    jacksEntries: queryParams.get('jacks_entries') ?? false,
+    newEntry: queryParams.get("new_entry") ?? false,
+    queryParamsUserId: queryParams.get("user_id") ?? false,
+    jacksEntries: queryParams.get("jacks_entries") ?? false,
   };
   const { queryParamsUserId, jacksEntries, newEntry } = queryParamsObject;
   // State used for popping toast message for when write is successful
@@ -70,10 +73,12 @@ function CurrentCoffeeEntriesContainer({ user }) {
     setNewEntryToastOpen(false);
   };
 
-   // State used for popping toast message for when filtering returns no results
-   const [noFilterResultsToastOpen, setNoFilterResultsToastOpen] = useState(false);
+  // State used for popping toast message for when filtering returns no results
+  const [noFilterResultsToastOpen, setNoFilterResultsToastOpen] = useState(
+    false
+  );
 
-   const handleNoFilterResultsToastClose = () => {
+  const handleNoFilterResultsToastClose = () => {
     setNoFilterResultsToastOpen(false);
   };
 
@@ -224,31 +229,50 @@ function CurrentCoffeeEntriesContainer({ user }) {
   const filterCoffeeEntries = (filterData) => {
     setIsLoading(true);
     let filteredCoffeeEntries = currentCoffeeEntries;
-    const {filteredCoffees, filteredRoasters, filteredOrigins, filteredProcesses} = filterData;
-    if (!filteredCoffees.length && !filteredRoasters.length && !filteredOrigins.length && !filteredProcesses.length) {
+    const {
+      filteredCoffees,
+      filteredRoasters,
+      filteredOrigins,
+      filteredProcesses,
+    } = filterData;
+    if (
+      !filteredCoffees.length &&
+      !filteredRoasters.length &&
+      !filteredOrigins.length &&
+      !filteredProcesses.length
+    ) {
       setCurrentFilteredCoffeeEntries([]);
       setCurrentlyAppliedFilters({
         filteredCoffees: [],
         filteredRoasters: [],
         filteredOrigins: [],
-        filteredProcesses: []
+        filteredProcesses: [],
       });
       setIsLoading(false);
       return;
     }
     if (filteredCoffees.length || filteredRoasters.length) {
       // Coffees and Roasters are the "top level"; first, let's find all the coffees that fit in the filters selected for coffees and/or roasters
-      filteredCoffeeEntries = currentCoffeeEntries.filter(coffeeEntry => {
+      filteredCoffeeEntries = currentCoffeeEntries.filter((coffeeEntry) => {
         // First check if it's a coffee that's being filtered for
         let isAFilteredCoffee = false;
         if (filteredCoffees.length) {
-          isAFilteredCoffee = filteredCoffees.findIndex(filteredCoffee => coffeeEntry?.coffee?.coffee_id === filteredCoffee?.coffee_id) > -1;
+          isAFilteredCoffee =
+            filteredCoffees.findIndex(
+              (filteredCoffee) =>
+                coffeeEntry?.coffee?.coffee_id === filteredCoffee?.coffee_id
+            ) > -1;
         }
         if (!isAFilteredCoffee) {
           // Now let's check if it's a roaster that's being filtered for (because it's not a coffee)
           let isAFilteredRoaster = false;
           if (filteredRoasters.length) {
-            isAFilteredRoaster = filteredRoasters.findIndex(filteredRoaster => coffeeEntry?.coffee?.roaster?.roaster_id === filteredRoaster?.roaster_id) > -1;
+            isAFilteredRoaster =
+              filteredRoasters.findIndex(
+                (filteredRoaster) =>
+                  coffeeEntry?.coffee?.roaster?.roaster_id ===
+                  filteredRoaster?.roaster_id
+              ) > -1;
           }
           return isAFilteredRoaster;
         } else {
@@ -259,10 +283,24 @@ function CurrentCoffeeEntriesContainer({ user }) {
     }
     // Now we have coffee entries that are only of certain coffees/roasters. If there are origins and/or processes to filter for, let's do that
     if (filteredOrigins.length) {
-      filteredCoffeeEntries = filteredCoffeeEntries.filter(coffeeEntry => (filteredOrigins.findIndex(filteredOrigin => coffeeEntry?.coffee?.origin?.origin_id === filteredOrigin?.origin_id) > -1));
+      filteredCoffeeEntries = filteredCoffeeEntries.filter(
+        (coffeeEntry) =>
+          filteredOrigins.findIndex(
+            (filteredOrigin) =>
+              coffeeEntry?.coffee?.origin?.origin_id ===
+              filteredOrigin?.origin_id
+          ) > -1
+      );
     }
     if (filteredProcesses.length) {
-      filteredCoffeeEntries = filteredCoffeeEntries.filter(coffeeEntry => (filteredProcesses.findIndex(filteredProcess => coffeeEntry?.coffee?.process?.process_id === filteredProcess?.process_id) > -1));
+      filteredCoffeeEntries = filteredCoffeeEntries.filter(
+        (coffeeEntry) =>
+          filteredProcesses.findIndex(
+            (filteredProcess) =>
+              coffeeEntry?.coffee?.process?.process_id ===
+              filteredProcess?.process_id
+          ) > -1
+      );
     }
     // If there are no filtered coffee entries left, we need to let the user know that they filtered out everything for the current date range
     if (filteredCoffeeEntries.length === 0) {
@@ -310,9 +348,14 @@ function CurrentCoffeeEntriesContainer({ user }) {
       // Otherwise, just show them all
       return currentCoffeeEntries;
     }
-  }
+  };
 
-  const {filteredCoffees, filteredRoasters, filteredOrigins, filteredProcesses} = currentlyAppliedFilters;
+  const {
+    filteredCoffees,
+    filteredRoasters,
+    filteredOrigins,
+    filteredProcesses,
+  } = currentlyAppliedFilters;
 
   return (
     <Box className={classes.page}>
@@ -323,7 +366,7 @@ function CurrentCoffeeEntriesContainer({ user }) {
         {user?.user_id && (
           <Grid item xs={12}>
             <Box>
-              <NavLink to={'/new_entry'}>
+              <NavLink to={"/new_entry"}>
                 <Typography variant="caption" align="center">
                   New Entry
                 </Typography>
@@ -376,12 +419,12 @@ function CurrentCoffeeEntriesContainer({ user }) {
             <Grid item xs={12}>
               <Box py={4}>
                 <Typography variant="body1" align="center">
-                  Please{' '}
+                  Please{" "}
                   {
-                    <NavLink className={classes.navLink} to={'/login'}>
+                    <NavLink className={classes.navLink} to={"/login"}>
                       Login
                     </NavLink>
-                  }{' '}
+                  }{" "}
                   in order to see your coffee entries.
                 </Typography>
               </Box>

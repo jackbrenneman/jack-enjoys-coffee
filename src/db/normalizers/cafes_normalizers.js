@@ -1,7 +1,7 @@
 /**
  * Normalizers for any queries regarding cafes.
  */
- export const normalizeCafes = (data) => {
+export const normalizeCafes = (data) => {
   return data;
 };
 

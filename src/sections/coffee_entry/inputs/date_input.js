@@ -1,23 +1,23 @@
 /**
  * The Date for a Coffee Entry.
  */
-import React from 'react';
+import React from "react";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 // Constants
-import { coffeeEntryPropTypesShape } from '../../../consts.js';
+import { coffeeEntryPropTypesShape } from "../../../consts.js";
 
 function DateInput({ coffeeEntry, setCoffeeEntry }) {
   const { date } = coffeeEntry;
   const useStyles = makeStyles(() => ({
     form: {
-      width: '200px',
+      width: "200px",
     },
     resize: {
-      textAlign: 'center',
+      textAlign: "center",
     },
   }));
 

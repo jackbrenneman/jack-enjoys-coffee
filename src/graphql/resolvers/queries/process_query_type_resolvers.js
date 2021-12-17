@@ -1,17 +1,17 @@
 /**
  * Process Type Resolvers. Fetches the information for processes on a GraphQL request.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   selectAllProcesses,
   selectProcessById,
   selectProcessesByName,
-} from '../../../db/queries/processes_queries.js';
+} from "../../../db/queries/processes_queries.js";
 import {
   normalizeProcesses,
   normalizeProcessById,
   normalizeProcessesByName,
-} from '../../../db/normalizers/processes_normalizers.js';
+} from "../../../db/normalizers/processes_normalizers.js";
 
 /**
  * Resolver for all processes.

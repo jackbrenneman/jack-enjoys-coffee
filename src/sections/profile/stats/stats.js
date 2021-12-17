@@ -1,32 +1,32 @@
 /**
  * The Stats for a user.
  */
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 // React Router
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import CircularProgress from "@material-ui/core/CircularProgress";
 // Queries and Fetching
-import { userStatsQuery } from '../../../graphql/queries/user_queries.js';
-import { queryGQL } from '../../../graphql/fetch.js';
+import { userStatsQuery } from "../../../graphql/queries/user_queries.js";
+import { queryGQL } from "../../../graphql/fetch.js";
 // Custom Components
-import MethodStats from './method_stats.js';
+import MethodStats from "./method_stats.js";
 
 const millisecondsInOneDay = 1000 * 60 * 60 * 24;
 
 function Stats({ user }) {
   const useStyles = makeStyles((theme) => ({
     page: {
-      backgroundColor: '#EEEEEE',
-      minHeight: '100vh',
+      backgroundColor: "#EEEEEE",
+      minHeight: "100vh",
     },
     section: {
-      maxWidth: '800px',
+      maxWidth: "800px",
     },
   }));
 
@@ -34,8 +34,8 @@ function Stats({ user }) {
 
   const queryParams = new URLSearchParams(useLocation().search);
   const queryParamsObject = {
-    queryParamsUserId: queryParams.get('user_id') ?? false,
-    jacksStats: queryParams.get('jacks_stats') ?? false,
+    queryParamsUserId: queryParams.get("user_id") ?? false,
+    jacksStats: queryParams.get("jacks_stats") ?? false,
   };
   const { queryParamsUserId, jacksStats } = queryParamsObject;
 
@@ -83,12 +83,12 @@ function Stats({ user }) {
     const { start_date = null, total_coffee_entries = null } = stats;
     if (start_date && total_coffee_entries) {
       const startDate = start_date ? new Date(start_date) : null;
-      const localeStartDate = startDate.toLocaleDateString('en-US', {
-        timeZone: 'UTC',
+      const localeStartDate = startDate.toLocaleDateString("en-US", {
+        timeZone: "UTC",
       });
       const today = new Date();
-      const localeToday = today.toLocaleDateString('en-US', {
-        timeZone: 'UTC',
+      const localeToday = today.toLocaleDateString("en-US", {
+        timeZone: "UTC",
       });
       const daysBetweenStartAndNow =
         (new Date(localeToday) - new Date(localeStartDate)) /
@@ -158,7 +158,7 @@ function Stats({ user }) {
               # of Unique Roasters: {stats?.total_unique_roasters}
             </Typography>
             <Typography variant="caption">
-              Average Coffee Consumption: {getAverageCoffeeConsumption()}{' '}
+              Average Coffee Consumption: {getAverageCoffeeConsumption()}{" "}
               drinks/day
             </Typography>
           </Grid>

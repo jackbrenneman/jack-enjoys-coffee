@@ -6,11 +6,11 @@ import {
   GraphQLObjectType,
   GraphQLBoolean,
   GraphQLInt,
-} from 'graphql';
+} from "graphql";
 
 export const GrinderType = new GraphQLObjectType({
-  name: 'Grinder',
-  description: 'Grinder used to...grind coffee',
+  name: "Grinder",
+  description: "Grinder used to...grind coffee",
   fields: {
     grinder_id: { type: GraphQLInt },
     name: { type: GraphQLString },

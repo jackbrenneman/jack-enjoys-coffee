@@ -7,11 +7,11 @@ import {
   GraphQLInputObjectType,
   GraphQLInt,
   GraphQLBoolean,
-} from 'graphql';
+} from "graphql";
 
 export const BrewerInputType = new GraphQLInputObjectType({
-  name: 'BrewerInput',
-  description: 'Contains all the info needed to add brewer info in a mutation',
+  name: "BrewerInput",
+  description: "Contains all the info needed to add brewer info in a mutation",
   fields: {
     name: { type: GraphQLString },
     website: { type: GraphQLString },

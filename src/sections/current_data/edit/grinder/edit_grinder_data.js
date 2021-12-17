@@ -1,43 +1,43 @@
 /**
  * Edit Grinder Data. Allows users to edit Grinder Data
  */
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Switch from '@material-ui/core/Switch';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Divider from '@material-ui/core/Divider';
-import TextField from '@material-ui/core/TextField';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Switch from "@material-ui/core/Switch";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Divider from "@material-ui/core/Divider";
+import TextField from "@material-ui/core/TextField";
 // Queries and Fetching
-import { updateGrinderMutation } from '../../../../graphql/mutations/grinder_gql_mutations.js';
-import { writeGQL } from '../../../../graphql/fetch.js';
+import { updateGrinderMutation } from "../../../../graphql/mutations/grinder_gql_mutations.js";
+import { writeGQL } from "../../../../graphql/fetch.js";
 
 const useStyles = makeStyles(() => ({
   form: {
-    width: '200px',
+    width: "200px",
   },
   card: {
-    padding: '0',
+    padding: "0",
   },
   header: {
-    padding: '0',
-    paddingTop: '10px',
+    padding: "0",
+    paddingTop: "10px",
   },
   content: {
-    padding: '0',
-    '&:last-child': {
+    padding: "0",
+    "&:last-child": {
       padding: 0,
     },
   },
   resize: {
     fontSize: 12,
-    textAlign: 'center',
+    textAlign: "center",
   },
 }));
 

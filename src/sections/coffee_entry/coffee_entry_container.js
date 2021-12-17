@@ -1,29 +1,29 @@
 /**
  * The form to input a new Coffee Entry.
  */
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 // React Router
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 // Queries and Fetching
-import { activeCurrentDataQuery } from '../../graphql/queries/data_entry_queries.js';
-import { coffeeEntryMutation } from '../../graphql/mutations/coffee_entry_gql_mutations';
-import { queryGQL, writeGQL } from '../../graphql/fetch.js';
+import { activeCurrentDataQuery } from "../../graphql/queries/data_entry_queries.js";
+import { coffeeEntryMutation } from "../../graphql/mutations/coffee_entry_gql_mutations";
+import { queryGQL, writeGQL } from "../../graphql/fetch.js";
 // Components
-import DateInput from './inputs/date_input.js';
-import CoffeeInput from './inputs/coffee_input.js';
-import BrewInput from './inputs/brew/brew_input.js';
-import CafeInput from './inputs/cafe_input.js';
-import RatingInput from './inputs/rating_input.js';
-import NotesInput from './inputs/notes_input.js';
+import DateInput from "./inputs/date_input.js";
+import CoffeeInput from "./inputs/coffee_input.js";
+import BrewInput from "./inputs/brew/brew_input.js";
+import CafeInput from "./inputs/cafe_input.js";
+import RatingInput from "./inputs/rating_input.js";
+import NotesInput from "./inputs/notes_input.js";
 // Consts
 import {
   currentDataDefault,
@@ -31,7 +31,7 @@ import {
   defaultMostRecentCoffeeEntry,
   yesterday,
   today,
-} from '../../consts.js';
+} from "../../consts.js";
 // Helpers
 import {
   createRoasterIdToCoffeesMap,
@@ -40,19 +40,19 @@ import {
   normalizeCoffeeEntryInput,
   normalizeMostRecentCoffeeEntryForInput,
   normalizeMostRecentCoffeeEntry,
-} from './helpers/input_helpers.js';
+} from "./helpers/input_helpers.js";
 
 function CoffeeEntryContainer({ user }) {
   const useStyles = makeStyles((theme) => ({
     page: {
-      backgroundColor: '#EEEEEE',
-      minHeight: '100vh',
+      backgroundColor: "#EEEEEE",
+      minHeight: "100vh",
     },
     section: {
-      maxWidth: '800px',
+      maxWidth: "800px",
     },
     navLink: {
-      textDecoration: 'none',
+      textDecoration: "none",
     },
   }));
 
@@ -81,8 +81,8 @@ function CoffeeEntryContainer({ user }) {
   // State used for popping toast message for when write is successful or not
   const [toast, setToast] = useState({
     open: false,
-    severity: 'success',
-    message: '',
+    severity: "success",
+    message: "",
   });
 
   const handleToastClose = () => {
@@ -158,13 +158,17 @@ function CoffeeEntryContainer({ user }) {
       component: (
         <DateInput coffeeEntry={coffeeEntry} setCoffeeEntry={setCoffeeEntry} />
       ),
-      name: 'Date',
+      name: "Date",
     },
     {
       component: (
-        <CafeInput coffeeEntry={coffeeEntry} setCoffeeEntry={setCoffeeEntry} cafes={cafes} />
+        <CafeInput
+          coffeeEntry={coffeeEntry}
+          setCoffeeEntry={setCoffeeEntry}
+          cafes={cafes}
+        />
       ),
-      name: 'Cafe',
+      name: "Cafe",
     },
     {
       component: (
@@ -177,7 +181,7 @@ function CoffeeEntryContainer({ user }) {
           mostRecentCoffee={mostRecentCoffee}
         />
       ),
-      name: 'Coffee',
+      name: "Coffee",
     },
     {
       component: (
@@ -194,7 +198,7 @@ function CoffeeEntryContainer({ user }) {
           mostRecentBrewData={mostRecentBrewData}
         />
       ),
-      name: 'Brew',
+      name: "Brew",
     },
     {
       component: (
@@ -203,13 +207,13 @@ function CoffeeEntryContainer({ user }) {
           setCoffeeEntry={setCoffeeEntry}
         />
       ),
-      name: 'Rating',
+      name: "Rating",
     },
     {
       component: (
         <NotesInput coffeeEntry={coffeeEntry} setCoffeeEntry={setCoffeeEntry} />
       ),
-      name: 'Notes',
+      name: "Notes",
     },
   ];
 
@@ -230,21 +234,21 @@ function CoffeeEntryContainer({ user }) {
         const { coffeeEntry: newCoffeeEntry } = data;
         if (newCoffeeEntry.coffee_entry_id) {
           // Write was successful
-          window.location.replace('/entries?new_entry=1');
+          window.location.replace("/entries?new_entry=1");
           return;
         }
         // Write was not successful, let user know and return
         setToast({
           open: true,
-          severity: 'error',
-          message: 'Something went wrong...please try again',
+          severity: "error",
+          message: "Something went wrong...please try again",
         });
       })
       .catch((e) => {
         setToast({
           open: true,
-          severity: 'error',
-          message: 'Something went wrong...please try again',
+          severity: "error",
+          message: "Something went wrong...please try again",
         });
         console.log(e);
       });
@@ -291,12 +295,12 @@ function CoffeeEntryContainer({ user }) {
       ) : (
         <Box py={4}>
           <Typography variant="body1" align="center">
-            You must{' '}
+            You must{" "}
             {
-              <NavLink className={classes.navLink} to={'/login'}>
+              <NavLink className={classes.navLink} to={"/login"}>
                 Login
               </NavLink>
-            }{' '}
+            }{" "}
             to create a new entry
           </Typography>
         </Box>

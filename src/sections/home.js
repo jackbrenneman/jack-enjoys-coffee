@@ -1,38 +1,44 @@
 /**
  * Home page.
  */
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import { Divider } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import { Divider } from "@material-ui/core";
 // Custom Components
-import logo from '../media/icons/coffee-icon.png';
+import logo from "../media/icons/coffee-icon.png";
 
 function Home() {
   const useStyles = makeStyles((theme) => ({
     home: {
-      backgroundColor: '#EEEEEE',
-      minHeight: '100vh',
+      backgroundColor: "#EEEEEE",
+      minHeight: "100vh",
     },
     navLink: {
-      textDecoration: 'none',
+      textDecoration: "none",
     },
     divider: {
-      maxWidth: '200px',
-    }
+      maxWidth: "200px",
+    },
   }));
   const classes = useStyles();
 
   const getRatingDefinition = (rating) => {
     switch (rating) {
       case 1:
-        return <Typography variant="subtitle1">{rating}: Actively Harmful</Typography>;
+        return (
+          <Typography variant="subtitle1">
+            {rating}: Actively Harmful
+          </Typography>
+        );
       case 2:
-        return <Typography variant="subtitle1">{rating}: Horrendous</Typography>;
+        return (
+          <Typography variant="subtitle1">{rating}: Horrendous</Typography>
+        );
       case 3:
         return <Typography variant="subtitle1">{rating}: Bad</Typography>;
       case 4:
@@ -44,11 +50,23 @@ function Home() {
       case 7:
         return <Typography variant="subtitle1">{rating}: Great</Typography>;
       case 8:
-        return <Typography variant="subtitle1">{rating}: Absolutely Amazing</Typography>;
+        return (
+          <Typography variant="subtitle1">
+            {rating}: Absolutely Amazing
+          </Typography>
+        );
       case 9:
-        return <Typography variant="subtitle1">{rating}: Between 8 and 10</Typography>;
+        return (
+          <Typography variant="subtitle1">
+            {rating}: Between 8 and 10
+          </Typography>
+        );
       case 10:
-        return <Typography variant="subtitle1">{rating}: Life Changing Experience</Typography>;
+        return (
+          <Typography variant="subtitle1">
+            {rating}: Life Changing Experience
+          </Typography>
+        );
       default:
         return null;
     }
@@ -88,14 +106,18 @@ function Home() {
       </Box>
       <Box py={2} px={1} display="flex" justifyContent="center">
         <Typography variant="body1" align="center">
-          Something that might be a little strange to others looking at my ratings is how low they might be. My rating scale is definetely different, so I wanted to get down in writing what the rating numbers mean to me, so that others might hopefully get a better understanding (and so people know I don't think I'm drinking bad coffee most days).
+          Something that might be a little strange to others looking at my
+          ratings is how low they might be. My rating scale is definetely
+          different, so I wanted to get down in writing what the rating numbers
+          mean to me, so that others might hopefully get a better understanding
+          (and so people know I don't think I'm drinking bad coffee most days).
         </Typography>
       </Box>
       <Grid container align="center" justify="center" direction="row">
         <Grid item xs={8}>
           <Divider />
         </Grid>
-        {ratingScale.map(rating =>
+        {ratingScale.map((rating) => (
           <Grid item xs={8} key={rating}>
             <Box px={1} display="flex" justifyContent="left">
               {getRatingDefinition(rating)}
@@ -104,21 +126,21 @@ function Home() {
               <Divider />
             </Box>
           </Grid>
-        )}
+        ))}
       </Grid>
       <Box py={2} px={1} display="flex" justifyContent="center">
         <Typography variant="body1" align="center">
-          Thanks for checking out the site!{' '}
+          Thanks for checking out the site!{" "}
           <Link
             to={{
-              pathname: 'https://github.com/jackbrenneman/jack-enjoys-coffee',
+              pathname: "https://github.com/jackbrenneman/jack-enjoys-coffee",
             }}
             target="_blank"
             rel="noopener noreferrer"
             className={classes.navLink}
           >
             Here's
-          </Link>{' '}
+          </Link>{" "}
           the Github page for it if you're into looking at that.
         </Typography>
       </Box>

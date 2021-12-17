@@ -1,12 +1,12 @@
 /**
  * Grinders Mutation Resolvers. Writes information for grinders through GraphQL.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   deleteGrinder,
   insertIntoGrinders,
   updateGrinder,
-} from '../../../db/queries/grinders_queries.js';
+} from "../../../db/queries/grinders_queries.js";
 
 /**
  * Resolver mutation for all grinders.

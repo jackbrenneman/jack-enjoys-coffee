@@ -1,7 +1,7 @@
 /**
  * Roaster Type Resolvers. Fetches the information for roasters on a GraphQL request.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   selectAllRoasters,
   selectRoastersByUserId,
@@ -11,7 +11,7 @@ import {
   selectRoastersByCity,
   selectRoastersByState,
   selectRoastersByCountry,
-} from '../../../db/queries/roasters_queries.js';
+} from "../../../db/queries/roasters_queries.js";
 import {
   normalizeRoasters,
   normalizeRoasterById,
@@ -19,7 +19,7 @@ import {
   normalizeRoastersByCity,
   normalizeRoastersByState,
   normalizeRoastersByCountry,
-} from '../../../db/normalizers/roasters_normalizers.js';
+} from "../../../db/normalizers/roasters_normalizers.js";
 
 /**
  * Resolver for all roasters.

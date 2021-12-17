@@ -2,11 +2,11 @@
  * Roaster input type. Used for mutations.
  */
 
-import { GraphQLString, GraphQLInputObjectType, GraphQLBoolean } from 'graphql';
+import { GraphQLString, GraphQLInputObjectType, GraphQLBoolean } from "graphql";
 
 export const RoasterInputType = new GraphQLInputObjectType({
-  name: 'RoasterInput',
-  description: 'Contains all the info needed to add roaster info in a mutation',
+  name: "RoasterInput",
+  description: "Contains all the info needed to add roaster info in a mutation",
   fields: {
     name: { type: GraphQLString },
     city: { type: GraphQLString },

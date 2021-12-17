@@ -1,34 +1,34 @@
 /**
  * The Drink Stats for a user.
  */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import CardHeader from '@material-ui/core/CardHeader';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Divider from '@material-ui/core/Divider';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import CardHeader from "@material-ui/core/CardHeader";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles(() => ({
   card: {
-    padding: '0',
-    backgroundColor: '#EEEEEE',
-    minWidth: '170px',
+    padding: "0",
+    backgroundColor: "#EEEEEE",
+    minWidth: "170px",
   },
   header: {
-    padding: '0',
-    paddingTop: '4px',
+    padding: "0",
+    paddingTop: "4px",
   },
   divider: {
-    minWidth: '150px',
+    minWidth: "150px",
   },
   content: {
-    padding: '0',
-    '&:last-child': {
+    padding: "0",
+    "&:last-child": {
       padding: 0,
     },
   },
@@ -53,7 +53,7 @@ function DrinkStats({ drinkStats }) {
         <CardContent className={classes.content}>
           <CardHeader
             className={classes.header}
-            titleTypographyProps={{ variant: 'body2' }}
+            titleTypographyProps={{ variant: "body2" }}
             title={drinkName}
           />
           <Grid

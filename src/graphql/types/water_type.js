@@ -6,11 +6,11 @@ import {
   GraphQLInt,
   GraphQLObjectType,
   GraphQLBoolean,
-} from 'graphql';
+} from "graphql";
 
 export const WaterType = new GraphQLObjectType({
-  name: 'Water',
-  description: 'Water used to brew coffee',
+  name: "Water",
+  description: "Water used to brew coffee",
   fields: {
     water_id: { type: GraphQLInt },
     name: { type: GraphQLString },

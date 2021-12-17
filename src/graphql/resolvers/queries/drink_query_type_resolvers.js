@@ -1,21 +1,21 @@
 /**
  * Drink Type Resolvers. Fetches the information for drinks on a GraphQL request.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   selectAllDrinks,
   selectDrinksByUserId,
   selectDrinkById,
   selectDrinksByName,
   selectDrinksByMethodId,
-} from '../../../db/queries/drinks_queries.js';
+} from "../../../db/queries/drinks_queries.js";
 import {
   normalizeDrinks,
   normalizeDrinksByUserId,
   normalizeDrinkById,
   normalizeDrinksByName,
   normalizeDrinksByMethodId,
-} from '../../../db/normalizers/drinks_normalizers.js';
+} from "../../../db/normalizers/drinks_normalizers.js";
 
 /**
  * Resolver for all drinks.

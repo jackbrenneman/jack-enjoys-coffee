@@ -1,12 +1,12 @@
 /**
  * Origins Mutation Resolvers. Fetches the information for origins on a GraphQL request.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   insertIntoOrigins,
   deleteOrigin,
   updateOrigin,
-} from '../../../db/queries/origins_queries.js';
+} from "../../../db/queries/origins_queries.js";
 
 /**
  * Resolver mutation for all origins.

@@ -1,15 +1,15 @@
 /**
  * Cafe Type. Stores all information on a cafe.
  */
- import {
+import {
   GraphQLObjectType,
   GraphQLInt,
   GraphQLString,
   GraphQLBoolean,
-} from 'graphql';
+} from "graphql";
 
 export const CafeType = new GraphQLObjectType({
-  name: 'Cafe',
+  name: "Cafe",
   fields: {
     cafe_id: { type: GraphQLInt },
     name: { type: GraphQLString },

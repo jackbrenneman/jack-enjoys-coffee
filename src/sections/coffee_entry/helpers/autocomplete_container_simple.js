@@ -1,11 +1,11 @@
 /**
  * A simple autocomplete component wrapper.
  */
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import Autocomplete, {
   createFilterOptions,
-} from '@material-ui/lab/Autocomplete';
+} from "@material-ui/lab/Autocomplete";
 
 function AutocompleteWrapperSimple({
   onChange,
@@ -14,11 +14,11 @@ function AutocompleteWrapperSimple({
   shouldShowValueOnChange,
   initialValue,
 }) {
-  const [value, setValue] = useState({ name: initialValue ?? '' });
+  const [value, setValue] = useState({ name: initialValue ?? "" });
   const filter = createFilterOptions();
 
   const handleOnChange = (event, newValue) => {
-    if (typeof newValue === 'string') {
+    if (typeof newValue === "string") {
       // I am still unsure when this ever happens tbh
       if (shouldShowValueOnChange) {
         setValue({
@@ -30,10 +30,10 @@ function AutocompleteWrapperSimple({
       if (shouldShowValueOnChange) {
         setValue(newValue);
       } else {
-        setValue({ name: '' });
+        setValue({ name: "" });
       }
       // onChange is the function supplied that will update state
-      onChange(newValue ? newValue : '');
+      onChange(newValue ? newValue : "");
     }
   };
 
@@ -54,7 +54,7 @@ function AutocompleteWrapperSimple({
       options={options}
       getOptionLabel={(option) => {
         // Value selected with enter, right from the input
-        if (typeof option === 'string') {
+        if (typeof option === "string") {
           return option;
         }
         // Regular option
@@ -77,7 +77,7 @@ AutocompleteWrapperSimple.propTypes = {
 
 AutocompleteWrapperSimple.defaultProps = {
   shouldShowValueOnChange: true,
-  initialValue: '',
+  initialValue: "",
 };
 
 export default AutocompleteWrapperSimple;

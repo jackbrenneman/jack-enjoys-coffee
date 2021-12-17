@@ -5,22 +5,22 @@
  */
 
 export const queryGQL = (queryString) => {
-  return fetch('/graphql', {
-    method: 'POST',
+  return fetch("/graphql", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      "Content-Type": "application/json",
+      Accept: "application/json",
     },
     body: JSON.stringify({ query: queryString }),
   }).then((r) => r.json());
 };
 
 export const writeGQL = (queryString, inputs) => {
-  return fetch('/graphql', {
-    method: 'POST',
+  return fetch("/graphql", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      "Content-Type": "application/json",
+      Accept: "application/json",
     },
     body: JSON.stringify({
       query: queryString,

@@ -1,19 +1,19 @@
 /**
  * The Brew Info for the method and drink type. When the user selects a method, the drink type should update to reflect the different drink types that can be made with that method.
  */
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import NumberFormat from 'react-number-format';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import NumberFormat from "react-number-format";
 // Material UI
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Divider from '@material-ui/core/Divider';
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
+import Divider from "@material-ui/core/Divider";
 // Custom Components
-import AutocompleteWrapperSimple from '../../helpers/autocomplete_container_simple';
+import AutocompleteWrapperSimple from "../../helpers/autocomplete_container_simple";
 // Constants
 import {
   coffeeEntryPropTypesShape,
@@ -25,7 +25,7 @@ import {
   secondsEnum,
   defaultSteepTimeState,
   methodIdToMethodEnum,
-} from '../../../../consts.js';
+} from "../../../../consts.js";
 
 const NumberFormatCustom = (props) => {
   const { inputRef, onChange, ...other } = props;
@@ -60,15 +60,15 @@ function MethodAndMethodStuffInput({
   const { method_id: selectedMethodId } = brew;
   const useStyles = makeStyles(() => ({
     form: {
-      width: '200px',
+      width: "200px",
     },
     resizeBigger: {
       fontSize: 18,
-      textAlign: 'center',
+      textAlign: "center",
     },
     resize: {
       fontSize: 14,
-      textAlign: 'center',
+      textAlign: "center",
     },
   }));
 

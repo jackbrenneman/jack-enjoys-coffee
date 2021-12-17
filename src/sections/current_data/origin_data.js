@@ -1,38 +1,38 @@
 /**
  * Origin Data. Shows all origins stored in the DB
  */
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import EditTwoToneIcon from "@material-ui/icons/EditTwoTone";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 // Custom Components
-import EditOriginData from './edit/origin/edit_origin_data.js';
+import EditOriginData from "./edit/origin/edit_origin_data.js";
 // Queries and Fetching
-import { deleteOriginMutation } from '../../graphql/mutations/origin_gql_mutations.js';
-import { writeGQL } from '../../graphql/fetch.js';
+import { deleteOriginMutation } from "../../graphql/mutations/origin_gql_mutations.js";
+import { writeGQL } from "../../graphql/fetch.js";
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    padding: '0',
+    padding: "0",
   },
   content: {
-    padding: '0',
-    '&:last-child': {
+    padding: "0",
+    "&:last-child": {
       padding: 0,
     },
   },
   emptyBox: {
-    width: '36px', // Same width as icon to make things centered
-    height: '36px', // Same height as icon to make things centered
+    width: "36px", // Same width as icon to make things centered
+    height: "36px", // Same height as icon to make things centered
   },
 }));
 
@@ -52,12 +52,12 @@ function OriginRow({ origin, onOriginDeletion, isUserAuthorized }) {
 
   const handleSaveChangesFail = () => {
     // TODO: show the user there was a failed save
-    console.log('failed save -- origins');
+    console.log("failed save -- origins");
   };
 
   const handleDeletionFail = () => {
     // TODO: show the user there was a failed delete
-    console.log('failed delete -- origins');
+    console.log("failed delete -- origins");
   };
 
   const handleEditOriginClick = (e) => {

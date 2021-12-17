@@ -1,7 +1,7 @@
 /**
  * Helpers for the coffee entry input page.
  */
-import { today } from '../../../consts.js';
+import { today } from "../../../consts.js";
 
 /**
  * Creates a mapping of roaster_ids to coffees so users can filter coffees by roaster when selecting a coffee for a coffee entry

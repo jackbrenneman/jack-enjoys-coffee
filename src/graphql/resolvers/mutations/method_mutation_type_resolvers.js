@@ -1,8 +1,8 @@
 /**
  * Methods Mutation Resolvers. Writes new information for methods on a GraphQL request. Do I need this?
  */
-import { query } from '../../../db/index.js';
-import { insertIntoMethods } from '../../../db/queries/methods_queries.js';
+import { query } from "../../../db/index.js";
+import { insertIntoMethods } from "../../../db/queries/methods_queries.js";
 
 /**
  * Resolver mutation for all origins.

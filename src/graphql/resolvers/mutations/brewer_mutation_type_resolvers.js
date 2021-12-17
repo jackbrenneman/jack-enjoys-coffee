@@ -1,12 +1,12 @@
 /**
  * Brewers Mutation Resolvers. Writes information for brewers through GraphQL.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   deleteBrewer,
   insertIntoBrewers,
   updateBrewer,
-} from '../../../db/queries/brewers_queries.js';
+} from "../../../db/queries/brewers_queries.js";
 
 /**
  * Resolver mutation for all brewers.

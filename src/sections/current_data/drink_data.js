@@ -1,43 +1,43 @@
 /**
  * Drink Data. Shows all drink stored in the DB
  */
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import CardHeader from '@material-ui/core/CardHeader';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import CardHeader from "@material-ui/core/CardHeader";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import EditTwoToneIcon from "@material-ui/icons/EditTwoTone";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 // Custom Components
-import EditDrinkData from './edit/drink/edit_drink_data.js';
+import EditDrinkData from "./edit/drink/edit_drink_data.js";
 // Queries and Fetching
-import { deleteDrinkMutation } from '../../graphql/mutations/drink_gql_mutations.js';
-import { writeGQL } from '../../graphql/fetch.js';
+import { deleteDrinkMutation } from "../../graphql/mutations/drink_gql_mutations.js";
+import { writeGQL } from "../../graphql/fetch.js";
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    padding: '0',
+    padding: "0",
   },
   header: {
-    padding: '0',
-    paddingTop: '10px',
+    padding: "0",
+    paddingTop: "10px",
   },
   content: {
-    padding: '0',
-    '&:last-child': {
+    padding: "0",
+    "&:last-child": {
       padding: 0,
     },
   },
   emptyBox: {
-    width: '36px', // Same width as icon to make things centered
-    height: '36px', // Same height as icon to make things centered
+    width: "36px", // Same width as icon to make things centered
+    height: "36px", // Same height as icon to make things centered
   },
 }));
 
@@ -61,12 +61,12 @@ function DrinkRow({ drink, onDrinkDeletion, currentData, isUserAuthorized }) {
 
   const handleSaveChangesFail = () => {
     // TODO: show the user there was a failed save
-    console.log('failed save -- drinks');
+    console.log("failed save -- drinks");
   };
 
   const handleDeletionFail = () => {
     // TODO: show the user there was a failed delete
-    console.log('failed delete -- drinks');
+    console.log("failed delete -- drinks");
   };
 
   const handleEditBrewerClick = (e) => {
@@ -104,7 +104,7 @@ function DrinkRow({ drink, onDrinkDeletion, currentData, isUserAuthorized }) {
         <CardContent className={classes.content}>
           <CardHeader
             className={classes.header}
-            titleTypographyProps={{ variant: 'body2' }}
+            titleTypographyProps={{ variant: "body2" }}
             title={currentName}
           />
           <Grid

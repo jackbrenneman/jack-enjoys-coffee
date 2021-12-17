@@ -1,16 +1,16 @@
 /**
  * Roaster Mutation Resolvers. Fetches the information for roasters on a GraphQL request.
  */
-import { query } from '../../../db/index.js';
+import { query } from "../../../db/index.js";
 import {
   deleteCoffee,
   insertIntoCoffees,
   updateCoffee,
-} from '../../../db/queries/coffees_queries.js';
+} from "../../../db/queries/coffees_queries.js";
 import {
   normalizeCreateCoffeeMutation,
   normalizeUpdateCoffeeMutation,
-} from '../../../db/normalizers/coffees_normalizers.js';
+} from "../../../db/normalizers/coffees_normalizers.js";
 
 /**
  * Resolver mutation for all coffees.

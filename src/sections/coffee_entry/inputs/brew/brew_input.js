@@ -7,20 +7,20 @@
  *   - Grinder and Grinder Setting
  *   - Water
  */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Divider from '@material-ui/core/Divider';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Divider from "@material-ui/core/Divider";
 // Custom Components
-import AutocompleteWrapperSimple from '../../helpers/autocomplete_container_simple';
-import MethodAndMethodStuffInput from './method_and_method_stuff_input.js';
+import AutocompleteWrapperSimple from "../../helpers/autocomplete_container_simple";
+import MethodAndMethodStuffInput from "./method_and_method_stuff_input.js";
 // Constants
-import { coffeeEntryPropTypesShape } from '../../../../consts.js';
+import { coffeeEntryPropTypesShape } from "../../../../consts.js";
 
 function BrewInput({
   coffeeEntry,
@@ -37,14 +37,14 @@ function BrewInput({
   const { brew } = coffeeEntry;
   const useStyles = makeStyles(() => ({
     form: {
-      width: '200px',
+      width: "200px",
     },
     formSmall: {
-      width: '130px',
+      width: "130px",
     },
     resize: {
       fontSize: 14,
-      textAlign: 'center',
+      textAlign: "center",
     },
   }));
 
@@ -154,7 +154,7 @@ function BrewInput({
                     className={classes.form}
                     id="grinder"
                     variant="outlined"
-                    InputLabelProps={{ style: { textAlign: 'center' } }}
+                    InputLabelProps={{ style: { textAlign: "center" } }}
                   />
                 )}
               />

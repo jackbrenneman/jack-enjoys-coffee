@@ -1,24 +1,24 @@
 /**
  * The Coffee Info for a Coffee Entry.
  */
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import TextField from '@material-ui/core/TextField';
-import AutocompleteWrapperSimple from '../helpers/autocomplete_container_simple.js';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import TextField from "@material-ui/core/TextField";
+import AutocompleteWrapperSimple from "../helpers/autocomplete_container_simple.js";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 // Custom Components
-import IconButton from '@material-ui/core/IconButton';
-import Divider from '@material-ui/core/Divider';
+import IconButton from "@material-ui/core/IconButton";
+import Divider from "@material-ui/core/Divider";
 // Constants
-import { coffeeEntryPropTypesShape } from '../../../consts.js';
+import { coffeeEntryPropTypesShape } from "../../../consts.js";
 
 function CoffeeInput({
   coffeeEntry,
@@ -30,35 +30,35 @@ function CoffeeInput({
 }) {
   const useStyles = makeStyles(() => ({
     card: {
-      padding: '0',
+      padding: "0",
     },
     content: {
-      padding: '0',
-      '&:last-child': {
+      padding: "0",
+      "&:last-child": {
         padding: 0,
       },
     },
     form: {
-      width: '200px',
+      width: "200px",
     },
     accordion: {
-      width: '250px',
+      width: "250px",
     },
     paper: {
-      width: '150px',
-      padding: '5px',
-      backgroundColor: '#EEEEEE',
+      width: "150px",
+      padding: "5px",
+      backgroundColor: "#EEEEEE",
     },
     name: {
-      fontWeight: 'bold',
+      fontWeight: "bold",
     },
     resize: {
       fontSize: 14,
-      textAlign: 'center',
+      textAlign: "center",
     },
     resizeSmall: {
       fontSize: 12,
-      textAlign: 'center',
+      textAlign: "center",
     },
   }));
 
@@ -77,7 +77,7 @@ function CoffeeInput({
   const [selectedCoffee, setSelectedCoffee] = useState(null);
 
   // State used for the coffee name so we can have an initial coffee populated correctly
-  const [coffeeName, setCoffeeName] = useState('');
+  const [coffeeName, setCoffeeName] = useState("");
 
   // State used to reset inputs
   const [key, setKey] = useState(true);
@@ -85,7 +85,7 @@ function CoffeeInput({
   // When the component renders, check to see if mostRecentCoffee has updated
   useEffect(() => {
     if (mostRecentCoffee) {
-      setCoffeeName(mostRecentCoffee?.name ?? '');
+      setCoffeeName(mostRecentCoffee?.name ?? "");
       setSelectedCoffee(mostRecentCoffee);
     }
   }, [mostRecentCoffee]);
@@ -103,7 +103,7 @@ function CoffeeInput({
         ...coffeeEntry,
         coffee_id: null,
       });
-      setCoffeeName('');
+      setCoffeeName("");
       setSelectedCoffee(null);
       setKey(!key);
     }

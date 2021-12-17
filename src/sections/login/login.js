@@ -1,41 +1,41 @@
 /**
  * The page to Login a user.
  */
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 // React Router
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
-import TextField from '@material-ui/core/TextField';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
+import TextField from "@material-ui/core/TextField";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import IconButton from "@material-ui/core/IconButton";
 // Queries and Fetching
-import { signinMutation } from '../../graphql/mutations/signin_gql_mutations.js';
-import { writeGQL } from '../../graphql/fetch.js';
+import { signinMutation } from "../../graphql/mutations/signin_gql_mutations.js";
+import { writeGQL } from "../../graphql/fetch.js";
 // Cookies
-import Cookies from 'universal-cookie';
+import Cookies from "universal-cookie";
 
 function Login() {
   const useStyles = makeStyles((theme) => ({
     page: {
-      backgroundColor: '#EEEEEE',
-      minHeight: '100vh',
+      backgroundColor: "#EEEEEE",
+      minHeight: "100vh",
     },
     form: {
-      width: '225px',
+      width: "225px",
     },
     section: {
-      maxWidth: '800px',
+      maxWidth: "800px",
     },
   }));
 
@@ -47,7 +47,7 @@ function Login() {
 
   const onLoginFailure = () => {
     // TODO: surface to the user that login failed for some reason.
-    console.log('failure :(');
+    console.log("failure :(");
     return;
   };
 
@@ -57,16 +57,16 @@ function Login() {
 
   const onLoginSuccess = (token, user_id, user_name) => {
     const cookies = new Cookies();
-    cookies.set('user_token', token, {
-      path: '/',
+    cookies.set("user_token", token, {
+      path: "/",
       expires: new Date(Date.now() + 3600000),
     });
     cookies.set(
-      'user',
+      "user",
       { user_id: user_id, user_name: user_name },
-      { path: '/', expires: new Date(Date.now() + 3600000) }
+      { path: "/", expires: new Date(Date.now() + 3600000) }
     );
-    window.location.replace('/profile');
+    window.location.replace("/profile");
     return;
   };
 
@@ -86,16 +86,16 @@ function Login() {
         onLoginFailure();
         setToast({
           open: true,
-          severity: 'error',
-          message: 'Something went wrong...please try again',
+          severity: "error",
+          message: "Something went wrong...please try again",
         });
       })
       .catch((e) => {
         onLoginFailure();
         setToast({
           open: true,
-          severity: 'error',
-          message: 'Something went wrong...please try again',
+          severity: "error",
+          message: "Something went wrong...please try again",
         });
         console.log(e);
       });
@@ -121,8 +121,8 @@ function Login() {
   // State used for popping toast message for when write is successful or not
   const [toast, setToast] = useState({
     open: false,
-    severity: 'success',
-    message: '',
+    severity: "success",
+    message: "",
   });
 
   const handleToastClose = () => {
@@ -168,11 +168,11 @@ function Login() {
           </Typography>
           <form autoComplete="off">
             <OutlinedInput
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               className={classes.form}
               id="password"
               onKeyPress={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                   e.preventDefault();
                   handleLoginClick();
                 }
@@ -216,7 +216,7 @@ function Login() {
       </Grid>
       <Grid item xs={12}>
         <Box>
-          <NavLink to={'/signup'}>
+          <NavLink to={"/signup"}>
             <Typography variant="caption" align="center">
               Sign Up Here
             </Typography>
