@@ -83,9 +83,19 @@ function CurrentCoffeeEntries({
     currentlyAppliedEndDate,
   } = currentlyAppliedDates;
   const formattedStartDateObject = new Date(currentlyAppliedStartDate);
-  const formattedStartDateString = formattedStartDateObject.toDateString();
+  const formattedStartDateString = formattedStartDateObject.toLocaleDateString(
+    "en-US",
+    {
+      timeZone: "UTC",
+    }
+  );
   const formattedEndDateObject = new Date(currentlyAppliedEndDate);
-  const formattedEndDateString = formattedEndDateObject.toDateString();
+  const formattedEndDateString = formattedEndDateObject.toLocaleDateString(
+    "en-US",
+    {
+      timeZone: "UTC",
+    }
+  );
 
   const handleStartDateChange = (e) => {
     const date = e.target.value;
