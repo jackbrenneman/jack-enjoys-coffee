@@ -520,9 +520,13 @@ function EditCoffeeEntry({
   // Gets the date in the form we want
   const getDate = () => {
     const realDate = new Date(date);
-    const year = realDate.getFullYear();
-    const month = realDate.getMonth() + 1;
-    const day = realDate.getDate();
+    const dateString = realDate.toLocaleDateString("en-US", {
+      timeZone: "UTC",
+    });
+    const monthDayYearArray = dateString.split("/");
+    const year = monthDayYearArray[2];
+    const month = monthDayYearArray[0];
+    const day = monthDayYearArray[1];
     return `${year}-${month > 9 ? month : `0${month}`}-${
       day > 9 ? day : `0${day}`
     }`;
