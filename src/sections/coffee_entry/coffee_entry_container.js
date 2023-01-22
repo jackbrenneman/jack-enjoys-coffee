@@ -93,7 +93,6 @@ function CoffeeEntryContainer({ user }) {
   // When the component renders, we fetch all the current data
   useEffect(() => {
     if (user?.user_id) {
-      console.log(user?.user_id);
       queryGQL(latestEntryAndCurrentDataQuery(user.user_id))
         .then(({ data }) => {
           if (data) {
@@ -112,7 +111,6 @@ function CoffeeEntryContainer({ user }) {
               let mostRecentEntry = coffeeEntries[0];
               if (coffeeEntries.length > 1) {
                 coffeeEntries.forEach((coffeeEntry) => {
-                  console.log(coffeeEntry);
                   if (
                     coffeeEntry.coffee_entry_id >
                     mostRecentEntry.coffee_entry_id

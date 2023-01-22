@@ -151,9 +151,7 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
             );
           }
           if (latest) {
-            return latestCoffeeEntryByUserIdResolver(
-              user_id
-            );
+            return latestCoffeeEntryByUserIdResolver(user_id);
           }
           // If no date given, get all coffeeEntries
           return coffeeEntriesByUserIdResolver(user_id);
