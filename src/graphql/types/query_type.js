@@ -23,6 +23,7 @@ import {
 } from "../resolvers/queries/cafe_query_type_resolvers.js";
 import {
   coffeeEntriesByUserIdResolver,
+  latestCoffeeEntryByUserIdResolver,
   coffeeEntriesByUserIdAndDataRangeResolver,
 } from "../resolvers/queries/coffee_entry_query_type_resolvers.js";
 import {
@@ -138,14 +139,20 @@ export const JackEnjoysCoffeeQueryType = new GraphQLObjectType({
         user_id: { type: GraphQLInt },
         date_start: { type: GraphQLString },
         date_end: { type: GraphQLString },
+        latest: { type: GraphQLBoolean },
       },
-      resolve(parentValue, { user_id, date_start, date_end }) {
+      resolve(parentValue, { user_id, date_start, date_end, latest }) {
         if (user_id) {
           if (date_start) {
             return coffeeEntriesByUserIdAndDataRangeResolver(
               user_id,
               date_start,
               date_end ? date_end : defaultDate
+            );
+          }
+          if (latest) {
+            return latestCoffeeEntryByUserIdResolver(
+              user_id
             );
           }
           // If no date given, get all coffeeEntries

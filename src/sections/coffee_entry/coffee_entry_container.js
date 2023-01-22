@@ -14,7 +14,7 @@ import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 // Queries and Fetching
-import { activeCurrentDataQuery } from "../../graphql/queries/data_entry_queries.js";
+import { latestEntryAndCurrentDataQuery } from "../../graphql/queries/data_entry_queries.js";
 import { coffeeEntryMutation } from "../../graphql/mutations/coffee_entry_gql_mutations";
 import { queryGQL, writeGQL } from "../../graphql/fetch.js";
 // Components
@@ -29,8 +29,6 @@ import {
   currentDataDefault,
   defaultCoffeeEntry,
   defaultMostRecentCoffeeEntry,
-  yesterday,
-  today,
 } from "../../consts.js";
 // Helpers
 import {
@@ -95,7 +93,8 @@ function CoffeeEntryContainer({ user }) {
   // When the component renders, we fetch all the current data
   useEffect(() => {
     if (user?.user_id) {
-      queryGQL(activeCurrentDataQuery(user.user_id, yesterday, today))
+      console.log(user?.user_id);
+      queryGQL(latestEntryAndCurrentDataQuery(user.user_id))
         .then(({ data }) => {
           if (data) {
             const { coffees, coffeeEntries, brewers, drinks } = data;
@@ -113,6 +112,7 @@ function CoffeeEntryContainer({ user }) {
               let mostRecentEntry = coffeeEntries[0];
               if (coffeeEntries.length > 1) {
                 coffeeEntries.forEach((coffeeEntry) => {
+                  console.log(coffeeEntry);
                   if (
                     coffeeEntry.coffee_entry_id >
                     mostRecentEntry.coffee_entry_id
