@@ -90,7 +90,7 @@ export const currentDataQuery = (user_id) => `
 /**
  * Gets all the ACTIVE current info for all the stuff we can add data for.
  */
-export const activeCurrentDataQuery = (user_id, date_start, date_end) => `
+export const latestEntryAndCurrentDataQuery = (user_id) => `
  query {
    brewers(only_active: true, user_id: ${user_id}) {
      brewer_id
@@ -111,7 +111,7 @@ export const activeCurrentDataQuery = (user_id, date_start, date_end) => `
      website
      is_active
    }
-   coffeeEntries(user_id:${user_id}, date_start:"${date_start}", date_end:"${date_end}" ) {
+   coffeeEntries(user_id:${user_id}, latest:true) {
     coffee_entry_id
     user_id
     date
